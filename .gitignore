@@ -286,3 +286,6 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,eclipse,intellij,visualstudiocode,macos,java
 target
+
+*.properties
+src/main/resources/database/config/databaseConfig.properties
