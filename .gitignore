@@ -289,3 +289,4 @@ target
 
 *.properties
 src/main/resources/database/config/databaseConfig.properties
+.idea
