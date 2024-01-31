@@ -7,6 +7,7 @@
 
 <configuration>
     <typeAliases>
-
+		<typeAlias type="com.workmotion.app.member.MemberDTO" alias="MemberDTO"/>
+		<typeAlias type="com.workmotion.app.member.Avatar" alias="Avatar"/>
     </typeAliases>
 </configuration>
