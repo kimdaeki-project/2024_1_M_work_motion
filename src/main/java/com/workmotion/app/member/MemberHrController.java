@@ -41,10 +41,18 @@ public class MemberHrController {
 		int result =  memberService.deleteMember(memberDTO);
 		return "/";
 	}
-	@PostMapping("create")
+//	@PostMapping("create")
+//	public String createMember(MemberDTO memberDTO,Model model)throws Exception{
+//		int result =  memberService.createMember(memberDTO);
+//		model.addAttribute("result",result);
+//		model.addAttribute("page","hr/create");
+//		return "index";
+//	}
+	@GetMapping("create")
 	public String createMember(MemberDTO memberDTO,Model model)throws Exception{
-		int result =  memberService.createMember(memberDTO);
-		model.addAttribute("result",result);
-		return "hr/create";
+//		int result =  memberService.createMember(memberDTO);
+//		model.addAttribute("result",result);
+		model.addAttribute("page","hr/create");
+		return "index";
 	}
 }
