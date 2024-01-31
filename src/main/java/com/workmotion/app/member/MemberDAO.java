@@ -12,7 +12,7 @@ public class MemberDAO {
 	
 	@Autowired
 	private SqlSession sqlSession;
-	private final String NAMESPACE="com.workmotion.app.member.MemberDTO.";
+	private final String NAMESPACE="com.workmotion.app.member.MemberDAO.";
 	
 	
 	public List<MemberDTO> getMemberList(Map<String,Object> map) throws Exception {

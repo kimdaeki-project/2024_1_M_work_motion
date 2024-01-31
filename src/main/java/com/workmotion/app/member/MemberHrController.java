@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.workmotion.app.util.Pager;
 
 @Controller
-@RequestMapping("/hr/*")
+@RequestMapping(value = "/hr/*")
 public class MemberHrController {
 
 	@Autowired
@@ -41,17 +41,17 @@ public class MemberHrController {
 		int result =  memberService.deleteMember(memberDTO);
 		return "/";
 	}
-//	@PostMapping("create")
-//	public String createMember(MemberDTO memberDTO,Model model)throws Exception{
-//		int result =  memberService.createMember(memberDTO);
-//		model.addAttribute("result",result);
-//		model.addAttribute("page","hr/create");
-//		return "index";
-//	}
-	@GetMapping("create")
+	
+	@PostMapping("create")
 	public String createMember(MemberDTO memberDTO,Model model)throws Exception{
-//		int result =  memberService.createMember(memberDTO);
-//		model.addAttribute("result",result);
+		System.out.println("email :" +memberDTO.getEmail());
+		int result =  memberService.createMember(memberDTO);
+		System.out.println("email :" +memberDTO.getEmail());
+		model.addAttribute("page","hr/create");
+		return "index";
+	}
+	@GetMapping("create")
+	public String createMember(Model model)throws Exception{
 		model.addAttribute("page","hr/create");
 		return "index";
 	}
