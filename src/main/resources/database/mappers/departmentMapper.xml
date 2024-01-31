@@ -2,7 +2,26 @@
 		<!DOCTYPE mapper
 		    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-		    
+
 <mapper namespace="com.workmotion.app.department.DepartmentDAO">
 
+	<select id="getTotalCount" resultType="Long"
+		parameterType="Pager">
+		SELECT Count(id) FROM department
+	</select>
+
+	<select id="getDepartmentList" resultType="DepartmentDTO"
+		parameterType="Pager">
+		SELECT * FROM
+		(SELECT ROWNUM N, R.* FROM
+		(SELECT * FROM
+		DEPARTMENT) R)RG
+		WHERE N BETWEEN #{startRow} AND #{lastRow}
+	</select>
+
+	<select id="getDepartmentDetail" resultType="MemberDTO"
+		parameterType="MemberDTO">
+		SELECT * FROM member
+		WHERE DEPARTMENT_ID =#{department_id}
+	</select>
 </mapper>
