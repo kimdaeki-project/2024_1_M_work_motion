@@ -21,16 +21,16 @@ public class MemberService {
 		map.put("memberDTO",memberDTO);
 		return memberDAO.getMemberList(map);
 	}
-	public void getMemberDetail(MemberDTO memberDTO) throws Exception {
-		memberDAO.getMemberDetail(memberDTO);
+	public int getMemberDetail(MemberDTO memberDTO) throws Exception {
+	return 	memberDAO.getMemberDetail(memberDTO);
 	}
-	public void updateMember(MemberDTO memberDTO) throws Exception {
-		memberDAO.updateMember(memberDTO);
+	public int updateMember(MemberDTO memberDTO) throws Exception {
+		return	memberDAO.updateMember(memberDTO);
 	}
-	public void deleteMember(MemberDTO memberDTO) throws Exception {
-		memberDAO.deleteMember(memberDTO);
+	public int deleteMember(MemberDTO memberDTO) throws Exception {
+		return memberDAO.deleteMember(memberDTO);
 	}
-	public void createMember(MemberDTO memberDTO) throws Exception {
-		memberDAO.createMember(memberDTO);
+	public int createMember(MemberDTO memberDTO) throws Exception {
+		return memberDAO.createMember(memberDTO);
 	}
 }

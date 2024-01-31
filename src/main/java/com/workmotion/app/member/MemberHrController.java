@@ -19,25 +19,32 @@ public class MemberHrController {
 	private MemberService memberService;
 	
 	@GetMapping("list")
-	public void getMemberList(Pager pager,MemberDTO memberDTO,Model model) throws Exception {
+	public String getMemberList(Pager pager,MemberDTO memberDTO,Model model) throws Exception {
 		List<MemberDTO>ar = memberService.getMemberList(pager,memberDTO);
 		model.addAttribute("list",ar);
 		model.addAttribute("pager",pager);
+		return "/";
 	}
 	@GetMapping("detail")
-	public void getMemberDetail (MemberDTO memberDTO) throws Exception{
-		memberService.getMemberDetail(memberDTO);
+	public String getMemberDetail (MemberDTO memberDTO,Model model) throws Exception{
+		int result =  memberService.getMemberDetail(memberDTO);
+		model.addAttribute("result",result);
+		return "/";
 	}
 	@PostMapping("update")
-	public void updateMember (MemberDTO memberDTO) throws Exception{
-		memberService.updateMember(memberDTO);
+	public String updateMember (MemberDTO memberDTO,Model model) throws Exception{
+		int result =  memberService.updateMember(memberDTO);
+		return "/";
 	}
 	@PostMapping("delete")
-	public void deleteMember(MemberDTO memberDTO) throws Exception {
-		memberService.deleteMember(memberDTO);
+	public String deleteMember(MemberDTO memberDTO,Model model) throws Exception {
+		int result =  memberService.deleteMember(memberDTO);
+		return "/";
 	}
 	@PostMapping("create")
-	public void createMember(MemberDTO memberDTO)throws Exception{
-		memberService.createMember(memberDTO);
+	public String createMember(MemberDTO memberDTO,Model model)throws Exception{
+		int result =  memberService.createMember(memberDTO);
+		model.addAttribute("result",result);
+		return "hr/create";
 	}
 }
