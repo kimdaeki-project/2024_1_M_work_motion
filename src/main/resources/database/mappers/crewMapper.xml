@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.workmotion.app.project.crew.CrewDAO">
+    <insert id="addCrew" parameterType="Map">
+        INSERT INTO CREW (PROJECT_ID, MEMBER_ID) VALUES (#{project_id}, #{member_id})
+    </insert>
+    <delete id="removeCrew" parameterType="Map">
+        DELETE FROM CREW WHERE project_id = #{project_id} AND member_id = #{member_id}
+    </delete>
+</mapper>
