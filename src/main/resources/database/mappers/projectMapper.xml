@@ -1,8 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-		<!DOCTYPE mapper
-		    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-		    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-		    
-<mapper namespace="com.workmotion.app.project.ProjectDAO">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<mapper namespace="com.workmotion.app.project.ProjectDAO">
+    <select id="getProjectList" parameterType="MemberDTO" resultType="ProjectDTO">
+        SELECT p.*
+        FROM CREW c
+        LEFT JOIN PROJECT p
+        ON c.PROJECT_ID = p.ID
+        WHERE c.MEMBER_ID = #{id}
+    </select>
+    <select id="getProjectDetail" parameterType="ProjectDTO" resultType="ProjectDTO">
+        SELECT * FROM PROJECT WHERE ID = #{id}
+    </select>
+
+    <insert id="createProject" parameterType="ProjectDTO">
+        <selectKey keyProperty="id" order="BEFORE" resultType="Long">
+            SELECT PROJECT_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO PROJECT (ID,NAME,CREATE_DT,INFO,OWNER_ID) VALUES (#{id}, #{name}, SYSDATE, #{info}, #{owner_id})
+    </insert>
+    <update id="updateProject" parameterType="ProjectDTO">
+        UPDATE PROJECT SET NAME = #{name}, INFO = #{info}, OWNER_ID = #{owner_id} WHERE ID = #{id}
+    </update>
+    <delete id="deleteProject" parameterType="ProjectDTO">
+        DELETE FROM PROJECT WHERE ID=#{id}
+    </delete>
 </mapper>
