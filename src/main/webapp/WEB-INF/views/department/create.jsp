@@ -21,6 +21,3 @@
 		</c:forEach>
 	</tbody>
 </table>
-<div>
-<a href="./memberList"><button type="button" class="btn btn-success">사원추가하기</button></a>
-</div>

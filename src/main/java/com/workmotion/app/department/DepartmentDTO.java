@@ -1,9 +1,15 @@
 package com.workmotion.app.department;
 
+import java.util.List;
+
+import com.workmotion.app.member.MemberDTO;
+
 public class DepartmentDTO {
 	private Long id;
 	private String name;
 	private String phone_num;
+	private List<MemberDTO> memberDTOs;
+	
 	public String getName() {
 		return name;
 	}

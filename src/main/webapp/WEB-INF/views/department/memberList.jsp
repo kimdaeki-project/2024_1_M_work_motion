@@ -4,16 +4,18 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th scope="col">#</th>
+			<th scope="col">편집</th>
+			<th scope="col">부서번호</th>
 			<th scope="col">사원번호</th>
 			<th scope="col">사원이름</th>
 			<th scope="col">사원이메일</th>
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach items="${detail}" var="dto" varStatus="status">
+		<c:forEach items="${list}" var="dto" varStatus="status">
 			<tr>
-				<th scope="row">${status.count}</th>
+				<td><input type="checkbox" name="check" id="check"></td>
+				<td>${dto. }</td>
 				<td>${dto.id}</td>
 				<td>${dto.name}</td>
 				<td>${dto.email}</td>
@@ -21,6 +23,3 @@
 		</c:forEach>
 	</tbody>
 </table>
-<div>
-<a href="./memberList"><button type="button" class="btn btn-success">사원추가하기</button></a>
-</div>

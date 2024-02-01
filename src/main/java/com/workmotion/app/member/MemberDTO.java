@@ -1,6 +1,8 @@
 package com.workmotion.app.member;
 
-public class MemberDTO {
+import com.workmotion.app.department.DepartmentDTO;
+
+public class MemberDTO{
 	
 	private Long id;
 	private Long role_id;
@@ -9,11 +11,18 @@ public class MemberDTO {
 	private String password;
 	private String name;
 	private Long department_id;
+	private Long phone;
 	private Avatar avatar;
 	
 	
 	
 	
+	public Long getPhone() {
+		return phone;
+	}
+	public void setPhone(Long phone) {
+		this.phone = phone;
+	}
 	public Avatar getAvatar() {
 		return avatar;
 	}

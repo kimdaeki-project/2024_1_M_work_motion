@@ -23,9 +23,18 @@ public class DepartmentService {
 		return departmentDAO.getDepartmentList(pager);		
 		}
 	//디테일 디테일 디테일@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	public MemberDTO getDepartmentDetail(MemberDTO memberDTO) throws Exception{
+	public List<MemberDTO> getDepartmentDetail(MemberDTO memberDTO) throws Exception{
 		return departmentDAO.getDepartmentDetail(memberDTO);
 		
 	}
+	
+	public List<MemberDTO> getMemberList(Pager pager)throws Exception{
+		pager.makeRow();
+		return departmentDAO.getMemberList(pager);
+	}
+	
+//	public int createDepartment(MemberDTO memberDTO) throws Exception{
+//		return departmentDAO.createDepartment(memberDTO);
+//	}
 	
 }

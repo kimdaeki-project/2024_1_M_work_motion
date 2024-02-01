@@ -22,6 +22,44 @@
 	<select id="getDepartmentDetail" resultType="MemberDTO"
 		parameterType="MemberDTO">
 		SELECT * FROM member
-		WHERE DEPARTMENT_ID =#{department_id}
+		WHERE DEPARTMENT_ID
+		=#{department_id}
 	</select>
+
+	<select id="getMemberList" resultMap="DepartmentDTO"
+		parameterType="Pager">
+		SELECT * FROM
+		(SELECT ROWNUM RG ,R.* FROM
+		(SELECT * FROM
+		DEPARTMENT d
+		LEFT JOIN
+		MEMBER m
+		ON(d.id = m.department_id)
+		ORDER BY m.department_id ASC, m.id ASC) R)
+		WHERE RG BETWEEN #{startRow} AND #{lastRow}
+	</select>
+	<resultMap type="DepartmentDTO" id="DepartmentDTO">
+	<id column="id" property="id"/>
+	<result column="name" property="name"/>
+	<result column="phone_num" property="phone_num"/>
+	<collection property="memberDTOs" ofType="MemberDTO" javaType="List">
+	<id column="id" property="id"/>
+	<result column="role_id" property="role_id"/>
+	<result column="company_id" property="company_id"/>
+	<result column="email" property="email"/>
+	<result column="password" property="password"/>
+	<result column="name" property="name"/>
+	<result column="department_id" property="department_id"/>
+	<result column="position_id" property="position_id"/>
+	<result column="phone" property="phone"/>
+	</collection>
+	</resultMap>
+
+	<update id="createDepartment" parameterType="MemberDTO">
+		UPDATE
+		(SELECT * FROM
+		MEMBER
+		WHERE id =#{id}) T
+		SET T.department_id=#{department_id}
+	</update>
 </mapper>
