@@ -10,7 +10,7 @@ public class DocumentDTO {
 	private Long templete_id;
 	private Date create_dt;
 	private Long member_id;
-	private String document_id;
+	private String document_nb;
 	
 	
 	public Long getId() {
@@ -49,11 +49,11 @@ public class DocumentDTO {
 	public void setMember_id(Long member_id) {
 		this.member_id = member_id;
 	}
-	public String getDocument_id() {
-		return document_id;
+	public String getDocument_nb() {
+		return document_nb;
 	}
-	public void setDocument_id(String document_id) {
-		this.document_id = document_id;
+	public void setDocument_nb(String document_id) {
+		this.document_nb = document_id;
 	}
 
 
