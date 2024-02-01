@@ -19,19 +19,21 @@ public class MemberService {
 	
 	public MemberDTO getlogin(MemberDTO memberDTO) throws Exception {
 		MemberDTO m = memberDAO.getMemberDetail(memberDTO);
+		
 		if(m!=null) {
 			if(m.getPassword().equals(memberDTO.getPassword())) {
 				//이메일이 맞고 비밀번호도 맞다
-				return m;
+
+				return memberDTO;
 			}else {
 				//이메일은 맞고 비밀번호는 다르다
-				return null;
-			}
+				 m = null;
+			} 
 		}else {
-			//id 가 맞지않는다
-			return null;
+			m=null;
+			
 		}
-		
+		return m;
 		
 	}
 	public int updateMember(MemberDTO memberDTO) throws Exception {

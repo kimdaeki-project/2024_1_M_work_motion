@@ -16,11 +16,11 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	@PostMapping("logout")
+	@GetMapping("logout")
 	public String getlogout(HttpSession session,Model model)throws Exception {
 		session.invalidate();
-		model.addAttribute("page","home");
-		return "index";
+		
+		return "redirect:member/login";
 	}
 	
 	@GetMapping("login")
@@ -29,17 +29,21 @@ public class MemberController {
 	}
 	@PostMapping("login")
 	public String getlogin(MemberDTO memberDTO,HttpSession session,Model model)throws Exception{
-		System.out.println(memberDTO.getEmail());  
+		
 		memberDTO = memberService.getlogin(memberDTO);
 		
 		  if(memberDTO==null) {
 			  model.addAttribute("msg","아이이디 또는 비밀번호를 확인하세요");
+			
+	
 			  return"member/login";
 		  }else {
 			  session.setAttribute("member",memberDTO);
 			  model.addAttribute("page","home");
 			  return "index";
+			  
 		  }
+		  
 		
 	}
 	@PostMapping("create")
