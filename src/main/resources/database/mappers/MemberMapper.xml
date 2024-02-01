@@ -19,6 +19,9 @@
 			WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
 		</select> -->
 		
+		
+		
+		
 		<select id="getMemberDetail" parameterType="MemberDTO" resultMap="getMemberDetailResult">
 		SELECT * FROM member LEFT JOIN avatar USING(id) WHERE email = #{email}	
 		</select>
@@ -49,26 +52,20 @@
 		DELETE member WHERE #{id}
 		</delete> -->
 	
-<!-- 		<update id="updateMember" parameterType="MemberDTO">
-		UPDATE member <set>
-		<if test="role_id != null or role_id !=''">
-		role_id = #{role_id},</if>
-		<if test="company_id !=null or company_id !=''">
-		company_id = #{company_id},</if>		
+	<update id="updateMember" parameterType="MemberDTO">
+		UPDATE member <set>	
 		<if test="email != null or email !=''">
 		email = #{email},</if>
 		<if test="password !=null or password !=''">
 		password = #{password},</if>
 		<if test="name != null or name !=''">
 		name = #{name},</if>
-		<if test="department_id !=null or department_id !=''">
-		department_id = #{department_id},</if>
-		<if test="position_id !=null or position_id != ''">
-		position_id = #{position_id}
+		<if test="phone !=null or phone != ''">
+		phone = #{phone}
 		</if>
 
 		</set>
 		WHERE id = #{id}
-		</update>   -->
+		</update>   
 	
 </mapper>

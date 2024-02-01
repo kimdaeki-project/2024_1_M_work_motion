@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping(value = "/member/*")
@@ -20,7 +21,7 @@ public class MemberController {
 	public String getlogout(HttpSession session,Model model)throws Exception {
 		session.invalidate();
 		
-		return "redirect:member/login";
+		return "member/login";
 	}
 	
 	@GetMapping("login")
@@ -48,17 +49,32 @@ public class MemberController {
 	}
 	@PostMapping("create")
 	public String createMember(MemberDTO memberDTO,Model model)throws Exception{
-		System.out.println("email :" +memberDTO.getEmail());
+
 		int result =  memberService.createMember(memberDTO);
-		System.out.println("email :" +memberDTO.getEmail());
-		model.addAttribute("page","hr/create");
+		model.addAttribute("page","home");
 		return "index";
 	}
 	@GetMapping("create")
 	public String createMember(Model model)throws Exception{
-		model.addAttribute("page","hr/create");
-		return "hr/create";
+		model.addAttribute("page","member/create");
+		return "member/create";
 	}
-
+	
+	@GetMapping("mypage")
+	public String getmypage(HttpSession session,Model model)throws Exception {
+		MemberDTO m = (MemberDTO)session.getAttribute("member");
+		System.out.println(m.getEmail());
+		memberService.updateMember(m);
+		model.addAttribute("page","member/mypage");
+		return "index";
+	}
+	
+	@PostMapping("update")
+	public String updateMember(MemberDTO memberDTO,Model model,MultipartFile file) throws Exception { 
+		int result = memberService.updateMember(memberDTO);
+		 
+		 model.addAttribute("page","home");
+		 return "index";
+	}
 	
 }

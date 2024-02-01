@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -29,7 +28,7 @@ pageEncoding="UTF-8"%>
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">회원 가입</h3></div>
                                     <div class="card-body">
-                                        <form action="/" method="post" id="frm">
+                                        <form action="/member/create" method="post" id="frm">
 											<div class="row mb-3">
 												<div class="col-md-6">
 													<div class="form-floating mb-3 mb-md-0">
@@ -75,7 +74,7 @@ pageEncoding="UTF-8"%>
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="../index.jsp">Go to login</a></div>
+                                        <div class="small"><a href="/member/login">Go to login</a></div>
 										
                                     </div>
                                 </div>
