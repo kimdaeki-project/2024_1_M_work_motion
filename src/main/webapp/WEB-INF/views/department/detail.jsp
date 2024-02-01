@@ -11,6 +11,8 @@
 		</tr>
 	</thead>
 	<tbody>
+	<tr>
+	</tr>
 		<c:forEach items="${detail}" var="dto" varStatus="status">
 			<tr>
 				<th scope="row">${status.count}</th>
@@ -22,5 +24,5 @@
 	</tbody>
 </table>
 <div>
-<a href="./memberList"><button type="button" class="btn btn-success">사원추가하기</button></a>
+<a href="./memberList?department_id=${member.department_id}"><button type="button" class="btn btn-success">사원추가하기</button></a>
 </div>

@@ -1,6 +1,7 @@
 package com.workmotion.app.department;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class DepartmentService {
 		
 	}
 	
-	public List<MemberDTO> getMemberList(Pager pager)throws Exception{
+	public List<Map<String, Object>> getMemberList(Pager pager)throws Exception{
 		pager.makeRow();
 		return departmentDAO.getMemberList(pager);
 	}

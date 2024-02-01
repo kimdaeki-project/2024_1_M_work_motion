@@ -1,6 +1,8 @@
 package com.workmotion.app.department;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +36,8 @@ public class DepartmentController {
 	 List<MemberDTO> ar = departmentService.getDepartmentDetail(memberDTO);	
 		model.addAttribute("detail", ar);
 		model.addAttribute("page", "department/detail");
+		memberDTO.setDepartment_id(departmentDTO.getId());
+		model.addAttribute("member", memberDTO);
 		return "index"; 
 		
 	}
@@ -45,13 +49,21 @@ public class DepartmentController {
 	}
 	
 	@GetMapping("memberList")
-	public String getMemberList(Pager pager, Model model) throws Exception{
-		List<MemberDTO> ar = departmentService.getMemberList(pager);
-		model.addAttribute("list", ar);
-		model.addAttribute("page", "department/memberList");
-		MemberDTO memberDTO = new MemberDTO();
+	public String getMemberList(MemberDTO memberDTO,Pager pager, Model model) throws Exception{
+		List<Map<String, Object>> dtos = departmentService.getMemberList(pager);
+//		model.addAttribute("list", dto);
+//		model.addAttribute("page", "department/memberList");
 		
+		System.out.println("department_id : "+memberDTO.getDepartment_id());
+		model.addAttribute("member", memberDTO);
+		model.addAttribute("list", dtos);
+		model.addAttribute("page", "department/memberList");
 		return "index";
+	}
+	
+	@PostMapping("memberList")
+	public void getMemberList(MemberDTO memberDTO, Model model) throws Exception{
+		System.out.println("department_id :"+memberDTO.getDepartment_id()+"member_id : "+memberDTO.getId());
 	}
 	
 //	@PostMapping("create")

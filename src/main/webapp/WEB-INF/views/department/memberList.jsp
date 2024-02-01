@@ -5,21 +5,28 @@
 	<thead>
 		<tr>
 			<th scope="col">편집</th>
-			<th scope="col">부서번호</th>
+			<th scope="col">부서이름</th>
 			<th scope="col">사원번호</th>
 			<th scope="col">사원이름</th>
 			<th scope="col">사원이메일</th>
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach items="${list}" var="dto" varStatus="status">
+				<input type="hidden" id="department_id" value="${member.department_id}">
+		<c:forEach items="${list}" var="member">
 			<tr>
-				<td><input type="checkbox" name="check" id="check"></td>
-				<td>${dto. }</td>
-				<td>${dto.id}</td>
-				<td>${dto.name}</td>
-				<td>${dto.email}</td>
+				<input type="hidden" value="${member.ID}" class="member_id">
+				<td><input type="checkbox" class="check"></td>
+				<td>${member.DEPARTMENT_NAME}</td>
+				<td>${member.ID}</td>
+				<td>${member.NAME}</td>
+				<td>${member.EMAIL}</td>
 			</tr>
 		</c:forEach>
+
 	</tbody>
 </table>
+
+<button type="submit" id="createbtn">추가하기</button>
+
+<script src="/resources/departmentjs/department.js"></script>

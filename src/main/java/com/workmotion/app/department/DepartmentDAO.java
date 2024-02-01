@@ -1,6 +1,7 @@
 package com.workmotion.app.department;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class DepartmentDAO {
 		return sqlSession.selectOne(namespace+"getTotalCount", pager);
 	}
 	
-	public List<MemberDTO> getMemberList(Pager pager) throws Exception{
+	public List<Map<String, Object>> getMemberList(Pager pager) throws Exception{
 		return sqlSession.selectList(namespace+"getMemberList", pager);
 	}
 	

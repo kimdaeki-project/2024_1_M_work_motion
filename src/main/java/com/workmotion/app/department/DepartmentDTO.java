@@ -22,6 +22,12 @@ public class DepartmentDTO {
 	public void setPhone_num(String phone_num) {
 		this.phone_num = phone_num;
 	}
+	public List<MemberDTO> getMemberDTOs() {
+		return memberDTOs;
+	}
+	public void setMemberDTOs(List<MemberDTO> memberDTOs) {
+		this.memberDTOs = memberDTOs;
+	}
 	public Long getId() {
 		return id;
 	}
