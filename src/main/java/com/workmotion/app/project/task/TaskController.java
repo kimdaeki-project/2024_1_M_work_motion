@@ -1,5 +1,7 @@
 package com.workmotion.app.project.task;
 
+import com.workmotion.app.project.ProjectDTO;
+import com.workmotion.app.project.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,8 @@ import java.util.List;
 public class TaskController {
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private ProjectService projectService;
 
     @PostMapping("/projects/{project_id}/tasks")
     public ResponseEntity<?> createTask(TaskDTO taskDTO, @PathVariable Long project_id) throws Exception {
@@ -30,12 +34,24 @@ public class TaskController {
     }
 
     @GetMapping("/projects/{project_id}/tasks")
-    public String getTaskList(TaskDTO taskDTO, @PathVariable Long project_id, Model model) throws Exception {
+    public ResponseEntity<List<TaskDTO>> getTaskList(TaskDTO taskDTO, @PathVariable Long project_id, Model model) throws Exception {
         System.out.println("Hello");
         taskDTO.setProject_id(project_id);
         List<TaskDTO> tasks = taskService.getTaskList(taskDTO);
+
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
+
+    @GetMapping("/projects/{project_id}/task")
+    public String sendTaskPage(TaskDTO taskDTO, @PathVariable Long project_id, Model model) throws Exception {
+        taskDTO.setProject_id(project_id);
+        List<TaskDTO> tasks = taskService.getTaskList(taskDTO);
+        ProjectDTO projectDTO = new ProjectDTO();
+        projectDTO.setId(project_id);
+        projectDTO = projectService.getProjectDetail(projectDTO);
         model.addAttribute("page", "project/task");
         model.addAttribute("list", tasks);
+        model.addAttribute("project", projectDTO);
         return "index";
     }
 

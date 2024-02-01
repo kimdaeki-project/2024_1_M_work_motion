@@ -10,4 +10,11 @@
     <delete id="removeCrew" parameterType="Map">
         DELETE FROM CREW WHERE project_id = #{project_id} AND member_id = #{member_id}
     </delete>
+    <select id="getCrewList" parameterType="ProjectDTO" resultType="MemberDTO">
+        SELECT *
+        FROM CREW c
+        LEFT JOIN MEMBER m
+        ON c.MEMBER_ID = m.id
+        WHERE c.PROJECT_ID = #{id}
+    </select>
 </mapper>

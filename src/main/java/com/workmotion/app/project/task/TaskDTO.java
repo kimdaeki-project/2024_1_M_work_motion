@@ -6,7 +6,7 @@ public class TaskDTO {
     private Long id;
     private Long project_id;
     private String name;
-    private Date created_dt;
+    private Date create_dt;
     private String content;
 
     public Long getId() {
@@ -33,12 +33,12 @@ public class TaskDTO {
         this.name = name;
     }
 
-    public Date getCreated_dt() {
-        return created_dt;
+    public Date getCreate_dt() {
+        return create_dt;
     }
 
-    public void setCreated_dt(Date created_dt) {
-        this.created_dt = created_dt;
+    public void setCreate_dt(Date create_dt) {
+        this.create_dt = create_dt;
     }
 
     public String getContent() {

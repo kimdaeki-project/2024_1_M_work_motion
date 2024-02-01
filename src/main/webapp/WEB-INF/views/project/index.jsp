@@ -24,7 +24,7 @@ prefix="c" %>
     <h2>나의 프로젝트</h2>
     <div style="background-color: #2e3337" id="projectList">
         <c:forEach items="${list}" var="item">
-            <a href="/projects/${item.id}/tasks" class="projectCard">
+            <a href="/projects/${item.id}/task" class="projectCard">
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title">${item.name}</h5>
@@ -37,7 +37,6 @@ prefix="c" %>
     <h2>공통 프로젝트</h2>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 
 <!-- 윈도우 사이즈 변경할 때 프로젝트 리스트 높이 조절 -->
