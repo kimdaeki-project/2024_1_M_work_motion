@@ -9,5 +9,6 @@
     <typeAliases>
         <typeAlias type="com.workmotion.app.project.MemberDTO" alias="MemberDTO"/>
         <typeAlias type="com.workmotion.app.project.ProjectDTO" alias="ProjectDTO"/>
+        <typeAlias type="com.workmotion.app.project.task.TaskDTO" alias="TaskDTO"/>
     </typeAliases>
 </configuration>
