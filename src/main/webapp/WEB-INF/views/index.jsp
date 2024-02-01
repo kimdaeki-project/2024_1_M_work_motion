@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 
 <!doctype html>
 <html lang="kr">
@@ -18,8 +17,8 @@ pageEncoding="UTF-8"%>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
      <!-- Jquery -->
-     <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
-  </head>
+     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    </head>
   <body>
         <body class="sb-nav-fixed">
             <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -57,17 +56,12 @@ pageEncoding="UTF-8"%>
                                     Dashboard
                                 </a>
                                 <div class="sb-sidenav-menu-heading">메뉴</div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <a class="nav-link collapsed" href="/projects" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                     프로젝트
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                        <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
-                                    </nav>
-                                </div>
+                         
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                     전자결제
@@ -76,32 +70,41 @@ pageEncoding="UTF-8"%>
                                 <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                            Authentication
+                                            문서작성
                                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                         </a>
                                         <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                             <nav class="sb-sidenav-menu-nested nav">
-                                                <a class="nav-link" href="login.html">로그인</a>
-                                                <a class="nav-link" href="register.html">회원가입</a>
-                                                <a class="nav-link" href="password.html">비밀번호 찾기</a>
+                                                <a class="nav-link" href="/docTemplete/list">서류 종류</a>
+                                                <a class="nav-link" href="/tempDoc/list">임시저장</a>
                                             </nav>
                                         </div>
                                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                            Error
+                                            보관함
                                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                         </a>
                                         <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                             <nav class="sb-sidenav-menu-nested nav">
-                                                <a class="nav-link" href="401.html">401 Page</a>
-                                                <a class="nav-link" href="404.html">404 Page</a>
-                                                <a class="nav-link" href="500.html">500 Page</a>
+                                                <a class="nav-link" href="/approval/list">결재함</a>
+                                                <a class="nav-link" href="/document/list">발신함</a>
+                                                <a class="nav-link" href="/receiver/list">참조함</a>
                                             </nav>
                                         </div>
                                     </nav>
                                 </div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
+                                <a class="nav-link collapsed" href="/hr/list" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
                                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                     인사 관리
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <a class="nav-link collapsed" href="/department/list"  data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                    부서 관리
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <a class="nav-link collapsed" href="/company/list" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                    회사 관리
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
                                 <div class="sb-sidenav-menu-heading">Addons</div>
@@ -115,10 +118,10 @@ pageEncoding="UTF-8"%>
                                 </a>
                             </div>
                         </div>
-                        <div class="sb-sidenav-footer">
+                        <!-- <div class="sb-sidenav-footer">
                             <div class="small">Logged in as:</div>
                             Start Bootstrap
-                        </div>
+                        </div> -->
                     </nav>
                 </div>
                 <div id="layoutSidenav_content">
