@@ -53,6 +53,6 @@ public class MemberHrController {
 	@GetMapping("create")
 	public String createMember(Model model)throws Exception{
 		model.addAttribute("page","hr/create");
-		return "index";
+		return "hr/create";
 	}
 }

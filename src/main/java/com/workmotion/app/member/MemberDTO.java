@@ -10,7 +10,7 @@ public class MemberDTO {
 	private String name;
 	private Long department_id;
 	private Avatar avatar;
-	
+	private Long phone;
 	
 	
 	
@@ -61,6 +61,12 @@ public class MemberDTO {
 	}
 	public void setDepartment_id(Long department_id) {
 		this.department_id = department_id;
+	}
+	public Long getPhone() {
+		return phone;
+	}
+	public void setPhone(Long phone) {
+		this.phone = phone;
 	}
 	
 	

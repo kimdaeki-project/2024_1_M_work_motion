@@ -6,17 +6,15 @@ btn.addEventListener("click",()=>{
     console.log(form);
     console.log(btn);
     console.log(frm);
-    fetch("/hr/create",{
-        method:"POST",
-        body:form
-    }).then(r=>r.text())
-    .then(r=>{
-        console.log(r.trim());
-        r= r.trim();
-        if(r>0){
-            alert("성공");
-        }else{
-            alert("실패");
+    $.ajax({
+        type:"POST",
+        url:"/hr/create",
+        data:form,
+        success:function(){
+        
+            alert("회원가입 성공");
+            location.href = "/hr/login";
         }
     })
+   
 });

@@ -41,7 +41,7 @@
 	
 		<insert id="createMember" parameterType="MemberDTO">
 		INSERT INTO member VALUES(member_SEQ.NEXTVAL,0,0,
-		#{email},#{password},#{name},0,0)
+		#{email},#{password},#{name},0,0,#{phone})
 		</insert>
 	
 <!-- 		<delete id="deleteMember" parameterType="MemberDTO">
