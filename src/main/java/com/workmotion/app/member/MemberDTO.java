@@ -11,9 +11,17 @@ public class MemberDTO {
 	private Long department_id;
 	private Avatar avatar;
 	private Long phone;
+	private Long position_id;
 	
 	
 	
+	
+	public Long getPosition_id() {
+		return position_id;
+	}
+	public void setPosition_id(Long position_id) {
+		this.position_id = position_id;
+	}
 	public Avatar getAvatar() {
 		return avatar;
 	}

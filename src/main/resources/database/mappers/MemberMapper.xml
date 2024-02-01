@@ -5,11 +5,11 @@
 		    
 <mapper namespace="com.workmotion.app.member.MemberDAO">
 
-<!-- 		<select id="totalCount" resultType="MemberDTO">
+<!--  		<select id="totalCount" resultType="MemberDTO">
 		SELECT COUNT(*)FROM member
-		</select>
+		</select> -->
 		
-		<select id="getMemberList" parameterType="map" resultType="MemberDTO">
+<!-- 		<select id="getMemberList" parameterType="map" resultType="MemberDTO">
 			SELECT * FROM
 			(
 			SELECT ROWNUM R , MR.* FROM
@@ -17,10 +17,10 @@
 			SELECT * FROM member ORDER BY id DESC)
 			MR) 
 			WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
-		</select>
+		</select> -->
 		
 		<select id="getMemberDetail" parameterType="MemberDTO" resultMap="getMemberDetailResult">
-		SELECT * FROM member LEFT JOIN avatar USING(id) WHERE #{id}	
+		SELECT * FROM member LEFT JOIN avatar USING(id) WHERE email = #{email}	
 		</select>
 		<resultMap type="MemberDTO" id="getMemberDetailResult">
 		<id column="id" property="id"/>
@@ -31,24 +31,24 @@
 		<result column="name" property="name"/>
 		<result column="department_id" property="department_id"/>
 		<result column="position_id" property="position_id"/>
-		<association property="avatar" javaType="Avatar">
+		<association property="avatar" javaType="Avatar" >
 		<id column="id" property="id"/>
 		<result column="name" property="name"/>
-		<result column="origin_name" property="origin_name"/>
+		<result column="ori_name" property="ori_name"/>
 		</association>
-		</resultMap> -->
+		</resultMap> 
 		
 	
-		<insert id="createMember" parameterType="MemberDTO">
+ 		<insert id="createMember" parameterType="MemberDTO">
 		INSERT INTO member VALUES(member_SEQ.NEXTVAL,0,0,
 		#{email},#{password},#{name},0,0,#{phone})
 		</insert>
 	
 <!-- 		<delete id="deleteMember" parameterType="MemberDTO">
 		DELETE member WHERE #{id}
-		</delete>
+		</delete> -->
 	
-		<update id="updateMember" parameterType="MemberDTO">
+<!-- 		<update id="updateMember" parameterType="MemberDTO">
 		UPDATE member <set>
 		<if test="role_id != null or role_id !=''">
 		role_id = #{role_id},</if>
@@ -68,6 +68,6 @@
 
 		</set>
 		WHERE id = #{id}
-		</update> -->
+		</update>   -->
 	
 </mapper>

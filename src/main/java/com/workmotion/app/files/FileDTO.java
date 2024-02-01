@@ -4,7 +4,7 @@ public class FileDTO {
 	
 	private Long id;
 	private String name;
-	private String origin_name;
+	private String ori_name;
 	
 	
 	
@@ -20,12 +20,14 @@ public class FileDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getOrigin_name() {
-		return origin_name;
+	public String getOri_name() {
+		return ori_name;
 	}
-	public void setOrigin_name(String origin_name) {
-		this.origin_name = origin_name;
+	public void setOri_name(String ori_name) {
+		this.ori_name = ori_name;
 	}
+	
+	
 	
 	
 	

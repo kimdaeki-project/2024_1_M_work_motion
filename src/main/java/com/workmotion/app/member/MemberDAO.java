@@ -15,20 +15,20 @@ public class MemberDAO {
 	private final String NAMESPACE="com.workmotion.app.member.MemberDAO.";
 	
 	
-	public List<MemberDTO> getMemberList(Map<String,Object> map) throws Exception {
-		return sqlSession.selectList(NAMESPACE+"getMemberList",map);
-	}
-	public int getMemberDetail(MemberDTO memberDTO) throws Exception {
-		return sqlSession.selectOne(NAMESPACE+"getMemberList",memberDTO);
+//	public List<MemberDTO> getMemberList(Map<String,Object> map) throws Exception {
+//		return sqlSession.selectList(NAMESPACE+"getMemberList",map);
+//	}
+	public MemberDTO getMemberDetail(MemberDTO memberDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getMemberDetail",memberDTO);
 	}
 
 	public int updateMember(MemberDTO memberDTO) throws Exception {
 		return sqlSession.update(NAMESPACE+"updateMember",memberDTO);
 	}
 
-	public int deleteMember(MemberDTO memberDTO) throws Exception {
-		return sqlSession.delete(NAMESPACE+"deleteMember",memberDTO);
-	}
+//	public int deleteMember(MemberDTO memberDTO) throws Exception {
+//		return sqlSession.delete(NAMESPACE+"deleteMember",memberDTO);
+//	}
 	public int createMember(MemberDTO memberDTO) throws Exception {
 		return sqlSession.insert(NAMESPACE+"createMember",memberDTO);
 	}

@@ -1,13 +1,13 @@
 package com.workmotion.app.member;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.workmotion.app.util.Pager;
+
 
 @Service
 public class MemberService {
@@ -15,21 +15,31 @@ public class MemberService {
 	@Autowired
 	private MemberDAO memberDAO;
 
-	public List<MemberDTO> getMemberList (Pager pager,MemberDTO memberDTO) throws Exception {
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("pager",pager);
-		map.put("memberDTO",memberDTO);
-		return memberDAO.getMemberList(map);
-	}
-	public int getMemberDetail(MemberDTO memberDTO) throws Exception {
-	return 	memberDAO.getMemberDetail(memberDTO);
+
+	
+	public MemberDTO getlogin(MemberDTO memberDTO) throws Exception {
+		MemberDTO m = memberDAO.getMemberDetail(memberDTO);
+		if(m!=null) {
+			if(m.getPassword().equals(memberDTO.getPassword())) {
+				//이메일이 맞고 비밀번호도 맞다
+				return m;
+			}else {
+				//이메일은 맞고 비밀번호는 다르다
+				return null;
+			}
+		}else {
+			//id 가 맞지않는다
+			return null;
+		}
+		
+		
 	}
 	public int updateMember(MemberDTO memberDTO) throws Exception {
 		return	memberDAO.updateMember(memberDTO);
 	}
-	public int deleteMember(MemberDTO memberDTO) throws Exception {
-		return memberDAO.deleteMember(memberDTO);
-	}
+//	public int deleteMember(MemberDTO memberDTO) throws Exception {
+//		return memberDAO.deleteMember(memberDTO);
+//	}
 	public int createMember(MemberDTO memberDTO) throws Exception {
 		return memberDAO.createMember(memberDTO);
 	}
