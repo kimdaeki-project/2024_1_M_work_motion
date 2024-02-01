@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+		<!DOCTYPE mapper
+		    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.workmotion.app.templete.TempleteDAO">
+
+
+
+	<sql id="search">
+		<where>
+			<if test="kind=='kind1' or kind=='kind3'">
+				ID LIKE '%'||#{search}||'%'
+			</if>
+			<if test="kind=='kind2' or kind=='kind3'">
+				OR FILE_NM LIKE '%'||#{search}||'%'
+			</if>
+		</where>
+	</sql>
+
+
+	<select id="getTempleteList" parameterType="Pager"
+		resultType="TempleteDTO">
+		SELECT * FROM
+		(SELECT ROWNUM T,TP.* FROM
+		(SELECT * FROM TEMPLETE
+		<include refid="search"></include>
+		 ORDER BY ID DESC)TP)
+		WHERE T BETWEEN #{startRow} AND #{lastRow} 
+	</select>
+	
+	<select id="getTotalCount" resultType="Long">
+		SELECT COUNT(id) FROM TEMPLETE
+		<include refid="search"></include>  
+	</select>
+
+
+
+	<insert id="createTempleteAdd" parameterType="TempleteDTO">
+		INSERT INTO
+		TEMPLETE
+		(ID,NAME,FILE_NM)
+		VALUES
+		(TEMPLETE_SEQ.NEXTVAL,
+		#{name},#{file_nm})
+	</insert>
+
+
+</mapper>
