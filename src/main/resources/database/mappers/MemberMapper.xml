@@ -5,27 +5,15 @@
 		    
 <mapper namespace="com.workmotion.app.member.MemberDAO">
 
-<!--  		<select id="totalCount" resultType="MemberDTO">
-		SELECT COUNT(*)FROM member
-		</select> -->
-		
-<!-- 		<select id="getMemberList" parameterType="map" resultType="MemberDTO">
-			SELECT * FROM
-			(
-			SELECT ROWNUM R , MR.* FROM
-			(
-			SELECT * FROM member ORDER BY id DESC)
-			MR) 
-			WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
-		</select> -->
+
 		
 		
 		
-		
-		<select id="getMemberDetail" parameterType="MemberDTO" resultMap="getMemberDetailResult">
+		<!-- 디테일 조회  -->
+		<select id="detailMember" parameterType="MemberDTO" resultMap="getDetailMemberResult">
 		SELECT * FROM member LEFT JOIN avatar USING(id) WHERE email = #{email}	
 		</select>
-		<resultMap type="MemberDTO" id="getMemberDetailResult">
+		<resultMap type="MemberDTO" id="getDetailMemberResult">
 		<id column="id" property="id"/>
 		<result column="rold_id" property="role_id"/>
 		<result column="company_id" property="company_id"/>
@@ -42,28 +30,28 @@
 		</association>
 		</resultMap> 
 		
-	
+		
+		<!--회원가입-->
  		<insert id="createMember" parameterType="MemberDTO">
 		INSERT INTO member VALUES(member_SEQ.NEXTVAL,0,0,
 		#{email},#{password},#{name},0,0,#{phone})
 		</insert>
 	
-<!-- 		<delete id="deleteMember" parameterType="MemberDTO">
-		DELETE member WHERE #{id}
-		</delete> -->
+
 	
+	
+	<!--마이페이지 수정-->
 	<update id="updateMember" parameterType="MemberDTO">
 		UPDATE member <set>	
 		<if test="email != null or email !=''">
 		email = #{email},</if>
-		<if test="password !=null or password !=''">
+		<if test="password != null or password !=''">
 		password = #{password},</if>
 		<if test="name != null or name !=''">
 		name = #{name},</if>
 		<if test="phone !=null or phone != ''">
 		phone = #{phone}
 		</if>
-
 		</set>
 		WHERE id = #{id}
 		</update>   

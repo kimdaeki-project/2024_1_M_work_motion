@@ -41,7 +41,7 @@ pageEncoding="UTF-8"%>
                                                 <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
                                                 <label class="form-check-label" for="inputRememberPassword">Remember Password</label> 
                                                 <div id="msg" style="color: red;">
-                                                   
+                                                   ${msg}
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
@@ -51,7 +51,7 @@ pageEncoding="UTF-8"%>
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="/member/create">Need an account? Sign up!</a></div>
+                                        <div class="small"><a href="/member/join">Need an account? Sign up!</a></div>
                                     </div>
                                 </div>
                             </div>
