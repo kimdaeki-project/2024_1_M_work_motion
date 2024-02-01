@@ -40,8 +40,8 @@
 
 	
 	
-	<!--마이페이지 수정-->
-	<update id="updateMember" parameterType="MemberDTO">
+		<!--마이페이지 수정-->
+		<update id="updateMember" parameterType="MemberDTO">
 		UPDATE member <set>	
 		<if test="email != null or email !=''">
 		email = #{email},</if>

@@ -21,16 +21,16 @@ public class MemberService {
 		MemberDTO m = memberDAO.detailMember(memberDTO);
 		if(m!=null) {
 			if(m.getPassword().equals(memberDTO.getPassword())) {
-				//이메일이 맞고 비밀번호도 맞다
+				  //이메일이 맞고 비밀번호도 맞다
 				return memberDTO;
+				}else {
+				  //이메일은 맞고 비밀번호는 다르다
+				   m = null;
+				} 
 			}else {
-				//이메일은 맞고 비밀번호는 다르다
-				 m = null;
-			} 
-		}else {
-			m=null;	
-		}
-		return m;
+				m=null;	
+			}
+			return m;
 		
 	}
 	
