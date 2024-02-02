@@ -28,4 +28,5 @@ public class MemberDAO {
 		return sqlSession.insert(NAMESPACE+"createMember",memberDTO);
 	}
 	
+	
 }

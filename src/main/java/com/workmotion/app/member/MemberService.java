@@ -4,6 +4,8 @@ package com.workmotion.app.member;
 
 
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,9 +39,14 @@ public class MemberService {
 	public int updateMember(MemberDTO memberDTO) throws Exception {
 		return	memberDAO.updateMember(memberDTO);
 	}
-	
-	public MemberDTO detailMember(MemberDTO memberDTO) throws Exception {
+	public MemberDTO mypage (MemberDTO memberDTO) throws Exception {
 		return memberDAO.detailMember(memberDTO);
+	}
+	
+	public MemberDTO getupdate(MemberDTO memberDTO) throws Exception {
+		
+		return memberDAO.detailMember(memberDTO);
+		
 	}
 
 	public int getjoin(MemberDTO memberDTO) throws Exception {

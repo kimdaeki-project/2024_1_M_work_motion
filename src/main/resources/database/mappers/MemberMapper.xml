@@ -9,7 +9,7 @@
 		
 		
 		
-		<!-- 디테일 조회  -->
+		<!-- 로그인 조회  -->
 		<select id="detailMember" parameterType="MemberDTO" resultMap="getDetailMemberResult">
 		SELECT * FROM member LEFT JOIN avatar USING(id) WHERE email = #{email}	
 		</select>
@@ -37,19 +37,18 @@
 		#{email},#{password},#{name},0,0,#{phone})
 		</insert>
 	
-
 	
 	
 		<!--마이페이지 수정-->
 		<update id="updateMember" parameterType="MemberDTO">
 		UPDATE member <set>	
-		<if test="email != null or email !=''">
+		<if test="email != null and email !=''">
 		email = #{email},</if>
-		<if test="password != null or password !=''">
+		<if test="password != null and password !=''">
 		password = #{password},</if>
-		<if test="name != null or name !=''">
+		<if test="name != null and name !=''">
 		name = #{name},</if>
-		<if test="phone !=null or phone != ''">
+		<if test="phone !=null and phone != ''">
 		phone = #{phone}
 		</if>
 		</set>

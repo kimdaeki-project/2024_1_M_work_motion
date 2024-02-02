@@ -68,14 +68,15 @@ public class MemberController {
 	@GetMapping("mypage")
 	public String mypage(HttpSession session,Model model)throws Exception {
 		MemberDTO m = (MemberDTO)session.getAttribute("member");
+		MemberDTO memberDTO = memberService.mypage(m);
+		model.addAttribute("dto",memberDTO);
 		model.addAttribute("page","member/mypage");
 		return "index";
 	}
 	
 	//마이페이지 정보수정
 	@PostMapping("update")
-	public String getupdate(MemberDTO memberDTO,HttpSession session,Model model) throws Exception { 
-		memberService.detailMember(memberDTO);
+	public String getupdate(MemberDTO memberDTO,Model model) throws Exception { 
 		int result = memberService.updateMember(memberDTO);
 		 model.addAttribute("page","home");
 		 return "index";

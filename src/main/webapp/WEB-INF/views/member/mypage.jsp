@@ -21,14 +21,16 @@
                                 <label for="password">Password</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="name" name="name" type="text" placeholder="name" />
-                                <label for="password">text</label>
+                                <input class="form-control" id="name" name="name" type="text" placeholder="이름" />
+                                <label for="password">이름</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="phone" name="phone" type="text" placeholder="phone" />
-                                <label for="password">phone</label>
+                                <input class="form-control" id="phone" name="phone" type="text" placeholder="번호" />
+                                <label for="password">핸드폰번호</label>
                             </div>
-                            
+                            <div>
+                            <input type="hidden" name="id" value="${dto.id}">
+                            </div>
                             <div class="d-flex align-items-center justify-content-between ml-5 mt-2 mb-3">
                                
                                 <button class="btn btn-primary">정보 수정</button>
