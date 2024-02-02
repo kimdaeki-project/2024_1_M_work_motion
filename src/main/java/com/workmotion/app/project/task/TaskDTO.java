@@ -9,6 +9,16 @@ public class TaskDTO {
     private Date create_dt;
     private String content;
 
+    private Long writer_id;
+
+    public Long getWriter_id() {
+        return writer_id;
+    }
+
+    public void setWriter_id(Long writer_id) {
+        this.writer_id = writer_id;
+    }
+
     public Long getId() {
         return id;
     }
@@ -32,6 +42,7 @@ public class TaskDTO {
     public void setName(String name) {
         this.name = name;
     }
+
 
     public Date getCreate_dt() {
         return create_dt;
