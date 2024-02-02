@@ -10,11 +10,23 @@
     <delete id="removeCrew" parameterType="Map">
         DELETE FROM CREW WHERE project_id = #{project_id} AND member_id = #{member_id}
     </delete>
-    <select id="getCrewList" parameterType="ProjectDTO" resultType="MemberDTO">
-        SELECT *
+    <select id="getCrewList" parameterType="ProjectDTO" resultMap="getCrewList">
+        SELECT m.*, p.NAME as POSITION
         FROM CREW c
         LEFT JOIN MEMBER m
         ON c.MEMBER_ID = m.id
+        LEFT JOIN POSITION p
+        ON m.POSITION_ID = p.ID
         WHERE c.PROJECT_ID = #{id}
     </select>
+    <resultMap id="getCrewList" type="MemberDTO">
+        <id column="ID" property="id"/>
+        <result column="EMAIL" property="email"/>
+        <result column="NAME" property="name"/>
+        <result column="PHONE" property="phone"/>
+        <association property="positionDTO" javaType="PositionDTO">
+            <id column="POSITION_ID" property="id"/>
+            <result column="POSITION" property="name"/>
+        </association>
+    </resultMap>
 </mapper>

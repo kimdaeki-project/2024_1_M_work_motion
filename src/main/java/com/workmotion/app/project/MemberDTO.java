@@ -8,7 +8,26 @@ public class MemberDTO {
     private String password;
     private String name;
     private Long department_id;
-    private Long position_id;
+
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    private PositionDTO positionDTO;
+
+    public PositionDTO getPositionDTO() {
+        return positionDTO;
+    }
+
+    public void setPositionDTO(PositionDTO positionDTO) {
+        this.positionDTO = positionDTO;
+    }
 
     public Long getId() {
         return id;
@@ -66,11 +85,4 @@ public class MemberDTO {
         this.department_id = department_id;
     }
 
-    public Long getPosition_id() {
-        return position_id;
-    }
-
-    public void setPosition_id(Long position_id) {
-        this.position_id = position_id;
-    }
 }
