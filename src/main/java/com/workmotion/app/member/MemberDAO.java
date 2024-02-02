@@ -27,6 +27,8 @@ public class MemberDAO {
 	public int createMember(MemberDTO memberDTO) throws Exception {
 		return sqlSession.insert(NAMESPACE+"createMember",memberDTO);
 	}
-	
+	public MemberDTO emailCheck(MemberDTO memberDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"emailCheck",memberDTO);
+	}
 	
 }

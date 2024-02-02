@@ -24,7 +24,7 @@ public class MemberController {
 	@GetMapping("emailcheck")
 	public int getemailcheck(MemberDTO memberDTO,Model model) throws Exception {
 		int result = 0;	
-		memberDTO = memberService.detailMember(memberDTO);
+		memberDTO = memberService.emailCheck(memberDTO);
 		if(memberDTO==null){
 			result = 1;
 		}

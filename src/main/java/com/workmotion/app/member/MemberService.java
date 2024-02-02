@@ -18,7 +18,7 @@ public class MemberService {
 	private MemberDAO memberDAO;
 
 
-	//로그인
+	//濡쒓렇�씤
 	public MemberDTO getlogin(MemberDTO memberDTO) throws Exception {
 		MemberDTO m = memberDAO.detailMember(memberDTO);
 		if(m!=null) {
@@ -42,7 +42,9 @@ public class MemberService {
 	public MemberDTO detailMember (MemberDTO memberDTO) throws Exception {
 		return memberDAO.detailMember(memberDTO);
 	}
-	
+	public MemberDTO emailCheck(MemberDTO memberDTO) throws Exception {
+		return memberDAO.emailCheck(memberDTO);
+	}
 
 	public int getjoin(MemberDTO memberDTO) throws Exception {
 		return memberDAO.createMember(memberDTO);
