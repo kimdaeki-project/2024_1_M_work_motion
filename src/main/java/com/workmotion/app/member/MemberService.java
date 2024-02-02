@@ -18,15 +18,15 @@ public class MemberService {
 	private MemberDAO memberDAO;
 
 
-	//·Î±×ÀÎ
+	//ë¡œê·¸ì¸
 	public MemberDTO getlogin(MemberDTO memberDTO) throws Exception {
 		MemberDTO m = memberDAO.detailMember(memberDTO);
 		if(m!=null) {
 			if(m.getPassword().equals(memberDTO.getPassword())) {
-				  //ÀÌ¸ŞÀÏÀÌ ¸Â°í ºñ¹Ğ¹øÈ£µµ ¸Â´Ù
+				
 				return memberDTO;
 				}else {
-				  //ÀÌ¸ŞÀÏÀº ¸Â°í ºñ¹Ğ¹øÈ£´Â ´Ù¸£´Ù
+				 
 				   m = null;
 				} 
 			}else {
@@ -39,15 +39,10 @@ public class MemberService {
 	public int updateMember(MemberDTO memberDTO) throws Exception {
 		return	memberDAO.updateMember(memberDTO);
 	}
-	public MemberDTO mypage (MemberDTO memberDTO) throws Exception {
+	public MemberDTO detailMember (MemberDTO memberDTO) throws Exception {
 		return memberDAO.detailMember(memberDTO);
 	}
 	
-	public MemberDTO getupdate(MemberDTO memberDTO) throws Exception {
-		
-		return memberDAO.detailMember(memberDTO);
-		
-	}
 
 	public int getjoin(MemberDTO memberDTO) throws Exception {
 		return memberDAO.createMember(memberDTO);

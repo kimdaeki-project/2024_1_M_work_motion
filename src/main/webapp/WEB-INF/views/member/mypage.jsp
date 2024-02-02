@@ -30,6 +30,7 @@
                             </div>
                             <div>
                             <input type="hidden" name="id" value="${dto.id}">
+                             <input type="hidden" name="session_email" value="${member.email}">
                             </div>
                             <div class="d-flex align-items-center justify-content-between ml-5 mt-2 mb-3">
                                

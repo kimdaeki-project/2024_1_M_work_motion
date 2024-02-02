@@ -6,8 +6,10 @@
 <mapper namespace="com.workmotion.app.member.MemberDAO">
 
 
-		
-		
+		<!--이메일 체크 -->
+		<select id="emailCheck" parameterType="MemberDTO">
+		SELECT email FROM member WHERE email = #{email}
+		</select>
 		
 		<!-- 로그인 조회  -->
 		<select id="detailMember" parameterType="MemberDTO" resultMap="getDetailMemberResult">

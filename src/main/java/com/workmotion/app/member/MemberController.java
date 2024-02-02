@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -18,18 +19,31 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
+	//ì´ë©”ì¼ ì¤‘ë³µí™•ì¸
+	@ResponseBody
+	@GetMapping("emailcheck")
+	public int getemailcheck(MemberDTO memberDTO,Model model) throws Exception {
+		int result = 0;	
+		memberDTO = memberService.detailMember(memberDTO);
+		if(memberDTO==null){
+			result = 1;
+		}
+		return result;
+	}
 	
+	//ë™ì˜ì•½ê´€
+	@GetMapping("agree")
+	public void getagree()throws Exception {
+	}
 	
-	
-	
-	//·Î±×¾Æ¿ô
+	//ë¡œê·¸ì•„ì›ƒ
 	@GetMapping("logout")
 	public String getlogout(HttpSession session,Model model)throws Exception {
 		session.invalidate();
-		return "member/login";
+		return "/member/login";
 	}
 	
-    //·Î±×ÀÎ
+    //ë¡œê·¸ì¸
 	@GetMapping("login")
 	public void getlogin()throws Exception{	
 	}
@@ -38,7 +52,7 @@ public class MemberController {
 		memberDTO = memberService.getlogin(memberDTO);
 		
 		  if(memberDTO==null) {
-			  model.addAttribute("msg","¾ÆÀÌÀÌµğ ¶Ç´Â ºñ¹Ğ¹øÈ£¸¦ È®ÀÎÇÏ¼¼¿ä");
+			  model.addAttribute("msg","ì•„ì´ë”” ë¹„ë²ˆì„ í™•ì¸í•´ì£¼ì„¸ìš”");
 			  return"member/login";
 		  }else {
 			  session.setAttribute("member",memberDTO);
@@ -47,15 +61,15 @@ public class MemberController {
 		  }
 		
 	}
-	//È¸¿ø°¡ÀÔ
+	//íšŒì›ê°€ì…
 	@PostMapping("join")
 	public String getjoin(MemberDTO memberDTO,Model model)throws Exception{
 
 		int result =  memberService.getjoin(memberDTO);
-		model.addAttribute("page","member/login");
-		return "index";
+		
+		return "member/join";
 	}
-	//È¸¿ø°¡ÀÔ
+	//íšŒì›ê°€ì…
 	@GetMapping("join")
 	public String getjoin(Model model)throws Exception{
 		model.addAttribute("page","member/join");
@@ -64,17 +78,17 @@ public class MemberController {
 	
 	
 	
-	//¸¶ÀÌÆäÀÌÁö
+	//ë§ˆì´í˜ì´ì§€
 	@GetMapping("mypage")
 	public String mypage(HttpSession session,Model model)throws Exception {
 		MemberDTO m = (MemberDTO)session.getAttribute("member");
-		MemberDTO memberDTO = memberService.mypage(m);
+		MemberDTO memberDTO = memberService.detailMember(m);
 		model.addAttribute("dto",memberDTO);
 		model.addAttribute("page","member/mypage");
 		return "index";
 	}
 	
-	//¸¶ÀÌÆäÀÌÁö Á¤º¸¼öÁ¤
+	//ì •ë³´ìˆ˜ì •
 	@PostMapping("update")
 	public String getupdate(MemberDTO memberDTO,Model model) throws Exception { 
 		int result = memberService.updateMember(memberDTO);

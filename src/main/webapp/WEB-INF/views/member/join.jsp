@@ -19,14 +19,14 @@ pageEncoding="UTF-8"%>
 		 <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
 	  </head>
     <body class="bg-primary">
-        <div id="layoutAuthentication">
+                      <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
                     <div class="container">
                         <div class="row justify-content-center">
-                            <div class="col-lg-7">
+                            <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">회원 가입</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">회원가입</h3></div>
                                     <div class="card-body">
                                         <form action="/member/join" method="post" id="frm">
 											<div class="row mb-3">
@@ -36,37 +36,52 @@ pageEncoding="UTF-8"%>
                                                         <label for="name">이름</label>
                                                     </div>
                                                 </div>
+                                                
+                                            </div>
+                                            <div class="row mb-3">
                                                 <div class="col-md-6">
-													<div class="form-floating">
-														<input class="form-control" id="phone" type="text" name="phone" placeholder="phone" />
+                                                    <div class="form-floating">
+                                                        <input class="form-control" id="phone" type="text" name="phone" placeholder="phone" />
+                                                        <div id="emailResult" style="color: red;" > </div>
                                                         <label for="phone">전화 번호</label>
-                                                    </div>
                                                 </div>
                                             </div>
+                                           </div>
+                                            
 											<div class="form-floating mb-3">
 												<input class="form-control" id="email" type="email" name="email" placeholder="name@example.com" />
 												<label for="email">이메일</label>
 											</div>
+
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
-                                                    <div class="form-floating mb-3">
+                                                    <div class="form-floating mb-6">
                                                         <input class="form-control" id="password" type="password" name="password"  placeholder="Create a password" />
                                                         <label for="password">비밀번호</label>
+                                                        <div id="passResult" style="color: red;"></div>
                                                     </div>
+                                                    
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="passwordCheck" type="password" name="passwordCheck" placeholder="Confirm password" />
-                                                        <label for="passwordCheck">비밀번호 확인</label>
-                                                    </div>
+                                                
+                                            </div>
+                                            <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-6 mb-md-0">
+                                                    <input class="form-control" id="passwordCheck" type="password" name="passwordCheck" placeholder="Confirm password" />
+                                                    <label for="passwordCheck">비밀번호 확인</label>
+                                                    <div id="passCheckResult" style="color: red;"></div>
                                                 </div>
-												<div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="company_id" type="password" name="company_id" placeholder="회사 아이디" />
-                                                        <label for="company_id">회사 아이디</label>
-                                                    </div>
+                                             
+                                            </div>
+                                            </div>
+                                            
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-6 mb-md-0">
+                                                    <input class="form-control" id="company_id" type="password" name="company_id" placeholder="회사 아이디" />
+                                                    <label for="company_id">회사 아이디</label>
                                                 </div>
                                             </div>
+                                                
                                             <div class="mt-4 mb-0">
                                                 
 												<button class="d-grid btn btn-primary">회원 가입</button>
@@ -74,8 +89,7 @@ pageEncoding="UTF-8"%>
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="/member/login">Go to login</a></div>
-										
+                                        <div class="small"><a href="/member/agree">Need an account? Sign up!</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -98,11 +112,12 @@ pageEncoding="UTF-8"%>
                 </footer>
             </div>
         </div>
+        
 
      <!-- Bootstrap JS -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
      <script src="/resources/js/scripts.js"></script>
-	 
+	 <script src="/resources/js/member/joinCheck.js"></script>
     </body>
 </html>
