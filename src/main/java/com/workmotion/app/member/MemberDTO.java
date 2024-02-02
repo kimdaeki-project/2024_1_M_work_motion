@@ -78,6 +78,12 @@ public class MemberDTO{
 	public void setPosition_id(Long position_id) {
 		this.position_id = position_id;
 	}
+	@Override
+	public String toString() {
+		return "MemberDTO [id=" + id + ", role_id=" + role_id + ", company_id=" + company_id + ", email=" + email
+				+ ", password=" + password + ", name=" + name + ", department_id=" + department_id + ", phone=" + phone
+				+ ", position_id=" + position_id + ", avatar=" + avatar + "]";
+	}
 	
 	
 	

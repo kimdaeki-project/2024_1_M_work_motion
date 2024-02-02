@@ -27,6 +27,7 @@
 	</tbody>
 </table>
 
-<button type="submit" id="createbtn">추가하기</button>
+<button type="button" id="createbtn">추가하기</button>
+<button type="button" id="deletebtn">삭제하기</button>
 
 <script src="/resources/departmentjs/department.js"></script>

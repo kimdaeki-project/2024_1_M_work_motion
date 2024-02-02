@@ -24,5 +24,5 @@
 	</tbody>
 </table>
 <div>
-<a href="./memberList?department_id=${member.department_id}"><button type="button" class="btn btn-success">사원추가하기</button></a>
+<a href="./memberList?department_id=${member.department_id}"><button type="button" class="btn btn-success">수정하기</button></a>
 </div>

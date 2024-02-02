@@ -15,8 +15,11 @@
 		SELECT * FROM
 		(SELECT ROWNUM N, R.* FROM
 		(SELECT * FROM
-		DEPARTMENT) R)RG
-		WHERE N BETWEEN #{startRow} AND #{lastRow}
+		DEPARTMENT
+		WHERE ID != 0
+		ORDER BY ID) R)RG
+		WHERE N BETWEEN #{startRow}
+		AND #{lastRow}
 	</select>
 
 	<select id="getDepartmentDetail" resultType="MemberDTO"
@@ -26,30 +29,48 @@
 		=#{department_id}
 	</select>
 
-	<select id="getMemberList" resultType="Map"
-		parameterType="Pager">
+	<select id="getMemberList" resultType="Map" parameterType="Map">
 		SELECT * FROM
 		(
 		SELECT ROWNUM RG ,R.* FROM
-			(
-				SELECT m.*, d.name AS department_name
-				FROM MEMBER m
-				JOIN DEPARTMENT d
-				ON (m.DEPARTMENT_ID = d.ID)
-				ORDER BY
-				m.department_id ASC, m.id ASC
-			)R
+		(
+		SELECT m.*, d.name AS department_name
+		FROM MEMBER m
+		JOIN DEPARTMENT d
+		ON (m.DEPARTMENT_ID = d.ID)
+		WHERE d.ID != #{member.department_id}
+		ORDER BY
+		m.department_id ASC, m.id ASC
+		)R
 		)
-		WHERE RG BETWEEN #{startRow} AND
-		#{lastRow}
+		WHERE RG BETWEEN #{pager.startRow} AND
+		#{pager.lastRow}
 	</select>
 
 
-	<update id="createDepartment" parameterType="MemberDTO">
+	<update id="createMember" parameterType="MemberDTO">
 		UPDATE
 		(SELECT * FROM
 		MEMBER
 		WHERE id =#{id}) T
 		SET T.department_id=#{department_id}
+	</update>
+
+	<update id="deleteMember" parameterType="MemberDTO">
+		UPDATE
+		(SELECT * FROM
+		MEMBER
+		WHERE id =#{id}) T
+		SET T.department_id=0
+	</update>
+
+	<insert id="createDepartment" parameterType="DepartmentDTO">
+	INSERT INTO DEPARTMENT
+	VALUES(DEPARTMENT_SEQ.NEXTVAL,#{name},#{phone_num})
+	</insert>
+	
+	<update id="updateDepartment" parameterType="DepartmentDTO">
+		UPDATE DEPARTMENT SET NAME=#{name}, phone_num=#{phone_num}
+		WHERE ID=#{id}
 	</update>
 </mapper>

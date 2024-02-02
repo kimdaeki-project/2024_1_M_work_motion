@@ -32,11 +32,24 @@ public class DepartmentDAO {
 		return sqlSession.selectOne(namespace+"getTotalCount", pager);
 	}
 	
-	public List<Map<String, Object>> getMemberList(Pager pager) throws Exception{
-		return sqlSession.selectList(namespace+"getMemberList", pager);
+	public List<Map<String, Object>> getMemberList(Map<String, Object> map) throws Exception{
+		return sqlSession.selectList(namespace+"getMemberList", map);
 	}
-	
-//	public int createDepartment(MemberDTO memberDTO)throws Exception {
-//		return sqlSession.update(namespace+"createDepartment", memberDTO);
-//	}
+
+		public int createMember(MemberDTO memberDTO) throws Exception{
+			return sqlSession.update(namespace+"createMember", memberDTO);
+			
+		}
+		
+		public int deleteMember(MemberDTO memberDTO)throws Exception {
+			return sqlSession.update(namespace+"deleteMember", memberDTO);
+		}
+		
+		public int createDepartment(DepartmentDTO departmentDTO) throws Exception{
+			return sqlSession.insert(namespace+"createDepartment", departmentDTO);
+		}
+		
+		public int updateDepartment(DepartmentDTO departmentDTO)throws Exception{
+			return sqlSession.update(namespace+"updateDepartment", departmentDTO);
+		}
 }
