@@ -26,7 +26,7 @@ public class ProjectController {
     }
 
     @PostMapping("/projects")
-    public ResponseEntity<ProjectDTO> createProject(ProjectDTO projectDTO, Long[] member_ids) throws Exception {
+    public ResponseEntity<ProjectDTO> createProject(ProjectDTO projectDTO, String member_ids) throws Exception {
         projectDTO.setOwner_id(memberDTO.getId());
         int result = projectService.createProject(projectDTO);
         result = crewService.addCrew(projectDTO.getId(), member_ids);

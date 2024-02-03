@@ -59,8 +59,14 @@ addCrewButton.addEventListener("click", async function () {
 });
 
 submitButton.addEventListener("click", function () {
-    const form = document.getElementById("frm");
-    const formData = new FormData(form);
+    const checked = document.querySelectorAll("input[type=checkbox]:checked");
+    let addMembers = [];
+    const formData = new FormData();
+    for (let i = 0; i < checked.length; i++) {
+        const member_id = checked[i].value;
+        addMembers.push(member_id);
+    }
+    formData.append("member_id", addMembers.join(","));
     fetch(`/projects/${project_id}/crews`, {
         method: "POST",
         body: formData,

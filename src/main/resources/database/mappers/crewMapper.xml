@@ -5,10 +5,16 @@
 
 <mapper namespace="com.workmotion.app.project.crew.CrewDAO">
     <insert id="addCrew" parameterType="Map">
-        INSERT INTO CREW (PROJECT_ID, MEMBER_ID) VALUES (#{project_id}, #{member_id})
+        INSERT INTO CREW (PROJECT_ID, MEMBER_ID)
+        <foreach item="id" index="index" collection="member_id.split(',')" separator="UNION ALL">
+            SELECT #{project_id}, #{id} FROM DUAL
+        </foreach>
     </insert>
     <delete id="removeCrew" parameterType="Map">
-        DELETE FROM CREW WHERE project_id = #{project_id} AND member_id = #{member_id}
+        DELETE FROM CREW WHERE project_id = #{project_id} AND member_id IN
+        <foreach item="id" index="index" collection="member_id.split(',')" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
     <select id="getCrewList" parameterType="ProjectDTO" resultMap="getCrewList">
         SELECT m.*, p.NAME as POSITION

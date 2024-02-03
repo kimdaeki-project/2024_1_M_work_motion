@@ -38,26 +38,20 @@ loadCrewList();
 
 async function deleteCrew(members) {}
 
-deleteButton.addEventListener("click", function () {
+deleteButton.addEventListener("click", async function () {
     const checked = document.querySelectorAll("input[type=checkbox]:checked");
+    let deleteMembers = [];
     for (let i = 0; i < checked.length; i++) {
         const member_id = checked[i].value;
-        if (i == checked.length - 1) {
-            fetch(`/projects/${project_id}/crews/${member_id}`, {
-                method: "DELETE",
-            }).then(function () {
-                loadCrewList();
-            });
-        } else {
-            fetch(`/projects/${project_id}/crews/${member_id}`, {
-                method: "DELETE",
-            });
-        }
+        deleteMembers.push(member_id);
     }
-    // const response = await fetch(`/projects/${project_id}/crews`, {
-    //     method: "DELETE",
-    //     body: formData,
-    // });
-    // const data = await response.json();
-    // loadCrewList();
+    const response = await fetch(
+        `/projects/${project_id}/crews/` + deleteMembers.join(","),
+        {
+            method: "DELETE",
+        }
+    );
+
+    const data = await response.json();
+    loadCrewList();
 });
