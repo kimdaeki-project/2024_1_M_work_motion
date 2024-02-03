@@ -6,7 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -46,11 +49,12 @@ public class ProjectController {
         return "index";
     }
 
-    @PutMapping("/projects/{project_id}")
-    public ResponseEntity<?> updateProject(@PathVariable Long project_id, ProjectDTO projectDTO) throws Exception {
+    @PostMapping("/projects/{project_id}")
+    public String updateProject(@PathVariable Long project_id, ProjectDTO projectDTO, Model model) throws Exception {
         projectDTO.setId(project_id);
+        System.out.println("Put");
         int result = projectService.updateProject(projectDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return "redirect:/projects/" + project_id + "/task";
     }
 
     @DeleteMapping("/projects/{project_id}")
@@ -58,6 +62,15 @@ public class ProjectController {
         projectDTO.setId(project_id);
         int result = projectService.deleteProject(projectDTO);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/projects/{project_id}/setting")
+    public String getProjectSetting(@PathVariable Long project_id, Model model, ProjectDTO projectDTO) throws Exception {
+        projectDTO.setId(project_id);
+        projectDTO = projectService.getProjectDetail(projectDTO);
+        model.addAttribute("project", projectDTO);
+        model.addAttribute("page", "project/setting");
+        return "index";
     }
 
 

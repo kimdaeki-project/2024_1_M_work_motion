@@ -29,14 +29,16 @@ public class CrewService {
         return result;
     }
 
-    public int removeCrew(Long projectId, Long[] memberId) throws Exception {
+    public int removeCrew(Long projectId, Long member_id) throws Exception {
         int result = 0;
         Map<String, Object> map = new HashMap<>();
         map.put("project_id", projectId);
-        for (Long member_id : memberId) {
-            map.put("member_id", member_id);
-            result = crewDAO.removeCrew(map);
-        }
+        map.put("member_id", member_id);
+        result = crewDAO.removeCrew(map);
         return result;
+    }
+
+    public List<MemberDTO> getMemberList(ProjectDTO projectDTO) {
+        return crewDAO.getMemberList(projectDTO);
     }
 }

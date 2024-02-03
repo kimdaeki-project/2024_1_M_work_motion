@@ -29,4 +29,13 @@
             <result column="POSITION" property="name"/>
         </association>
     </resultMap>
+
+    <select id="getMemberList" parameterType="ProjectDTO" resultMap="getCrewList">
+        SELECT m.*, p.NAME as POSITION
+        FROM
+        MEMBER m
+        LEFT JOIN POSITION p
+        ON m.POSITION_ID = p.ID
+        WHERE m.id NOT IN (SELECT c.MEMBER_ID id FROM CREW c WHERE PROJECT_ID = #{id} )
+    </select>
 </mapper>

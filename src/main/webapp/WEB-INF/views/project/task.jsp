@@ -108,8 +108,10 @@ prefix="c" %>
                     <span class="title"> ${project.name}</span>
                     <span class="info">${project.info}</span>
                 </div>
+                
                 <div>
-                    <button class="btn btn-primary">멤버 추가</button>
+                    <a class="btn btn-primary" href="/projects/${project.id}/setting">설정</a>
+                    <button class="btn btn-primary" id="addCrewButton"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">멤버 추가</button>
                 </div>
             </div>
             <div class="body pl-2">
@@ -161,10 +163,30 @@ prefix="c" %>
                     </div>
                 </c:forEach>
             </div>
-            <div class="side d-none d-xl-block" id="projectMemberList"></div>
+            <div class="side d-none d-xl-block overflow-auto" id="projectMemberList"></div>
         </div>
     </div>
 </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">멤버 추가</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modalBody">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+          <button type="button" class="btn btn-primary" id="submitButton" data-bs-dismiss="modal">추가하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 <script type="text/javascript" src="/resources/js/task.js"></script>
 <script type="text/javascript">

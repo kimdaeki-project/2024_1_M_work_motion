@@ -28,14 +28,23 @@ public class CrewController {
 
     @PostMapping("/projects/{project_id}/crews")
     public ResponseEntity<?> addCrew(@PathVariable Long project_id, Long[] member_id, ProjectDTO projectDTO) throws Exception {
+        System.out.println(member_id.length);
         int result = crewService.addCrew(project_id, member_id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @DeleteMapping("/projects/{project_id}/crews")
-    public ResponseEntity<?> removeCrew(@PathVariable Long project_id, @PathVariable Long[] member_id, ProjectDTO projectDTO) throws Exception {
-        int result = crewService.removeCrew(project_id, member_id);
+    @DeleteMapping("/projects/{project_id}/crews/{crew_id}")
+    public ResponseEntity<?> removeCrew(@PathVariable Long project_id, @PathVariable Long crew_id, ProjectDTO projectDTO) throws Exception {
+        int result = crewService.removeCrew(project_id, crew_id);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping("/projects/{project_id}/crews/memberList")
+    public ResponseEntity<List<MemberDTO>> getMemberList(@PathVariable Long project_id, ProjectDTO projectDTO) throws Exception {
+        projectDTO.setId(project_id);
+        List<MemberDTO> list = crewService.getMemberList(projectDTO);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
 }
