@@ -10,6 +10,12 @@
         LEFT JOIN PROJECT p
         ON c.PROJECT_ID = p.ID
         WHERE c.MEMBER_ID = #{id}
+
+        UNION ALL
+
+        SELECT * FROM
+        PROJECT p2
+        WHERE OWNER_ID = #{id}
     </select>
     <select id="getProjectDetail" parameterType="ProjectDTO" resultType="ProjectDTO">
         SELECT * FROM PROJECT WHERE ID = #{id}
