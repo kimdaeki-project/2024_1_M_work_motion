@@ -28,6 +28,7 @@ public class MemberController {
 		if(memberDTO==null){
 			result = 1;
 		}
+		model.addAttribute("result",result);
 		return result;
 	}
 	

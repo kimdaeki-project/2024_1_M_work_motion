@@ -17,6 +17,11 @@ pageEncoding="UTF-8"%>
 	
 		 <!-- Jquery -->
 		 <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+		<style>
+			.red{color: red;
+			}
+            .green{color:green;}
+		</style>
 	  </head>
     <body class="bg-primary">
                       <div id="layoutAuthentication">
@@ -42,7 +47,6 @@ pageEncoding="UTF-8"%>
                                                 <div class="col-md-6">
                                                     <div class="form-floating">
                                                         <input class="form-control" id="phone" type="text" name="phone" placeholder="phone" />
-                                                        <div id="emailResult" style="color: red;" > </div>
                                                         <label for="phone">전화 번호</label>
                                                 </div>
                                             </div>
@@ -50,7 +54,8 @@ pageEncoding="UTF-8"%>
                                             
 											<div class="form-floating mb-3">
 												<input class="form-control" id="email" type="email" name="email" placeholder="name@example.com" />
-												<label for="email">이메일</label>
+												<label for="email">이메일</label>					
+												<div id="emailResult" class="red" > </div>                                           
 											</div>
 
                                             <div class="row mb-3">

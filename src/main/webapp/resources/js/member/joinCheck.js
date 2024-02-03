@@ -15,7 +15,7 @@ pass.addEventListener("click",()=>{
 pass.addEventListener("blur",()=>{
     val = pass.value;
     if(val.length>7){
-        result.innerHTML = 'ok';
+        result.innerHTML = '비밀번호 사용 가능';
         p1 = true;
     }else{
         result.innerHTML = '최소글자는 8글자 입니다';
@@ -34,6 +34,10 @@ passCheck.addEventListener('keyup',()=>{
     }
 })
 
+emailCheck.addEventListener("click",()=>{
+    this.value = '';
+})
+
 emailCheck.addEventListener("blur",()=>{
     fetch("/member/emailcheck?email="+emailCheck.value,{
         method:"GET"
@@ -43,9 +47,10 @@ emailCheck.addEventListener("blur",()=>{
         let result = r.trim();
         console.log(r);
         if(result==1){
-            emailResult.innerHTML = "중복 사용 가능";
+            emailResult.setAttribute("class","green");
+            emailResult.innerHTML = "이메일 사용 가능";
         }else{
-            emailResult.innerHTML = "중복 사용 불가 "
+            emailResult.innerHTML = "이메일 중복 사용 불가 "
         }
     })
 
