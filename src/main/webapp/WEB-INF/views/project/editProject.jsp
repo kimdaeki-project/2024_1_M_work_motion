@@ -125,9 +125,11 @@ prefix="c" %>
                         <div class="card-body">
                             <form
                                 id="frm"
-                                action="/projects/${project.id}"
+                                action="/projects/update?"
                                 method="post"
                             >
+                                <input
+                                    type="hidden" name="id" value="${project.id}">
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="form-group">
@@ -212,8 +214,21 @@ ${project.info}</textarea
                                 method="post"
                                 enctype="application/x-www-form-urlencoded"
                             >
-                                <div id="memberList"></div>
-
+                                <div id="memberList">
+                                    <c:forEach items="${crews}" var="crew">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="member_id" value="${crew.id}">
+                                            <div class="memberCard">
+                                                <div class="avatar">
+                                                </div>
+                                                <div class="info">
+                                                    <div class="name">${crew.name}</div>
+                                                    <div class="role">${crew.position.name}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div>
                                 <button
                                     type="button"
                                     class="btn btn-primary"

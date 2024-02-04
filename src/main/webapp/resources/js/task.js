@@ -11,7 +11,7 @@ function createCrewList(memberList) {
                     </div>
                     <div class="info">
                         <div class="name">${member.name}</div>
-                        <div class="role">${member.positionDTO.name}</div>
+                        <div class="role">${member.position.name}</div>
                     </div>
                 </div>
             `;
@@ -29,7 +29,7 @@ function createMemberList(memberList) {
                         </div>
                         <div class="info">
                             <div class="name">${member.name}</div>
-                            <div class="role">${member.positionDTO.name}</div>
+                            <div class="role">${member.position.name}</div>
                         </div>
                     </div>
                 </div>
@@ -38,20 +38,22 @@ function createMemberList(memberList) {
     return html;
 }
 async function loadCrewList() {
-    const response = await fetch(`/projects/${project_id}/crews`);
+    const response = await fetch(`/v1/projects/${project_id}/crews`);
     const data = await response.json();
     projectMemberList.innerHTML = createCrewList(data);
 }
-loadCrewList();
+//loadCrewList();
 
 //멤버 추가
 const addCrewButton = document.getElementById("addCrewButton");
 const submitButton = document.getElementById("submitButton");
 const settingProjectButton = document.getElementById("settingProjectButton");
 addCrewButton.addEventListener("click", async function () {
-    const response = await fetch(`/projects/${project_id}/crews/memberList`);
-    const data = await response.json();
     const modalBody = document.getElementById("modalBody");
+    modalBody.innerHTML = "";
+    const response = await fetch(`/v1/projects/${project_id}/members`);
+    const data = await response.json();
+
     let html = "<form id='frm'>";
     html += createMemberList(data);
     html += "</form>";
@@ -66,8 +68,8 @@ submitButton.addEventListener("click", function () {
         const member_id = checked[i].value;
         addMembers.push(member_id);
     }
-    formData.append("member_id", addMembers.join(","));
-    fetch(`/projects/${project_id}/crews`, {
+    formData.append("member_ids", addMembers.join(","));
+    fetch(`/v1/projects/${project_id}/crews`, {
         method: "POST",
         body: formData,
     })

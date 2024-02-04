@@ -58,16 +58,27 @@ public class ProjectController {
     public String getProjectDetail(Model model, ProjectDTO projectDTO) throws Exception {
         model.addAttribute("project", projectService.getProjectDetail(projectDTO));
         model.addAttribute("tasks", taskService.getTaskList(projectDTO));
-        //model.addAttribute("crews", crewService.getCrewList(projectDTO));
+        model.addAttribute("crews", crewService.getCrewList(projectDTO));
         model.addAttribute("page", "project/task");
         return "index";
     }
 
     @GetMapping("setting")
-    public String updateProject(Model model, ProjectDTO projectDTO) throws Exception {
+    public String settingProject(Model model, ProjectDTO projectDTO) throws Exception {
         model.addAttribute("project", projectService.getProjectDetail(projectDTO));
-//        model.addAttribute("crews", crewService.getCrewList(projectDTO));
+        model.addAttribute("crews", crewService.getCrewList(projectDTO));
         model.addAttribute("page", "project/editProject");
+        return "index";
+    }
+
+    @PostMapping("update")
+    public String updateProject(Model model, ProjectDTO projectDTO) throws Exception {
+        int result = projectService.updateProject(projectDTO);
+        customResponse.setResult(result);
+        customResponse.setRedirectUrl("/projects/setting?id=" + projectDTO.getId());
+        customResponse.setMessage("프로젝트 수정");
+        model.addAttribute("response", customResponse);
+        model.addAttribute("page", "project/result");
         return "index";
     }
 

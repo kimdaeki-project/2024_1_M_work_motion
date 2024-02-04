@@ -34,7 +34,7 @@ function createCrewList(memberList) {
                         </div>
                         <div class="info">
                             <div class="name">${member.name}</div>
-                            <div class="role">${member.positionDTO.name}</div>
+                            <div class="role">${member.position.name}</div>
                         </div>
                     </div>
                 </div>
@@ -44,11 +44,11 @@ function createCrewList(memberList) {
 }
 
 async function loadCrewList() {
-    const response = await fetch(`/projects/${project_id}/crews`);
+    const response = await fetch(`/v1/projects/${project_id}/crews`);
     const data = await response.json();
     memberList.innerHTML = createCrewList(data);
 }
-loadCrewList();
+//loadCrewList();
 
 async function deleteCrew(members) {}
 
@@ -59,8 +59,9 @@ deleteButton.addEventListener("click", async function () {
         const member_id = checked[i].value;
         deleteMembers.push(member_id);
     }
+    console.log(deleteMembers);
     const response = await fetch(
-        `/projects/${project_id}/crews/` + deleteMembers.join(","),
+        `/v1/projects/${project_id}/crews/` + deleteMembers.join(","),
         {
             method: "DELETE",
         }

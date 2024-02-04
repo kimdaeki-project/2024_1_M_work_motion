@@ -123,47 +123,29 @@ prefix="c" %>
         <div class="article">
             <div class="content mt-3" id="taskContentSection">
                 <span style="padding:10px">전체</span>
-                <c:forEach items="${list}" var="item">
+                <c:forEach items="${tasks}" var="task">
                     <div class="taskCard">
                         <div class="cardHead">
-                            <span class="title">${item.name}</span>
-                            <span class="date">${item.create_dt}</span>
+                            <span class="title">${task.name}</span>
+                            <span class="date">${task.create_dt}</span>
                         </div>
                         <hr>
-                        <div class="cardBody">${item.content}</div>
-                    </div>
-                </c:forEach>
-                <c:forEach items="${list}" var="item">
-                    <div class="taskCard">
-                        <div class="cardHead">
-                            <span class="title">${item.name}</span>
-                            <span class="date">${item.create_dt}</span>
-                        </div>
-                        <div class="cardBody">${item.content}</div>
-                    </div>
-                </c:forEach>
-                <c:forEach items="${list}" var="item">
-                    <div class="taskCard">
-                        <div class="cardHead">
-                            <span class="title">${item.name}</span>
-                            <span class="date">${item.create_dt}</span>
-                        </div>
-                        <div class="cardBody">${item.content}</div>
-                    </div>
-                </c:forEach>
-                <c:forEach items="${list}" var="item">
-                    <div class="taskCard">
-                        <div class="cardHead">
-                            <div class="profile">
-                            </div>
-                            <span class="title">${item.name}</span>
-                            <span class="date">${item.create_dt}</span>
-                        </div>
-                        <div class="cardBody">${item.content}</div>
+                        <div class="cardBody">${task.content}</div>
                     </div>
                 </c:forEach>
             </div>
-            <div class="side d-none d-xl-block overflow-auto" id="projectMemberList"></div>
+            <div class="side d-none d-xl-block overflow-auto" id="projectMemberList">
+                <c:forEach items="${crews}" var="crew">
+                    <div class="memberCard">
+                        <div class="avatar">
+                        </div>
+                        <div class="info">
+                            <div class="name">${crew.name}</div>
+                            <div class="role">${crew.position.name}</div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
         </div>
     </div>
 </div>

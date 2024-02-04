@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.workmotion.app.project.dao.CrewDAO">
+    <sql id="getMember">
+        SELECT m.*, r.name as role_name, d.name as department_name, p.name as position_name
+        FROM MEMBER m
+        LEFT JOIN ROLE r ON m.ROLE_ID = r.ID
+        LEFT JOIN DEPARTMENT d ON m.DEPARTMENT_ID = d.ID
+        LEFT JOIN POSITION p ON m.POSITION_ID = p.ID
+    </sql>
+
+    <resultMap id="getMemberResult" type="MemberDTO" autoMapping="true">
+        <association property="role" javaType="RoleDTO">
+            <result column="role_name" property="name"/>
+        </association>
+        <association property="department" javaType="DepartmentDTO">
+            <result column="department_name" property="name"/>
+        </association>
+        <association property="position" javaType="positionDTO">
+            <result column="position_name" property="name"/>
+        </association>
+    </resultMap>
+
+    <insert id="addCrew" parameterType="Map">
+        INSERT INTO CREW (MEMBER_ID, PROJECT_ID)
+        <foreach collection="member_ids.split(',')" item="member_id" separator="UNION ALL">
+            SELECT #{member_id}, #{project_id} FROM DUAL
+        </foreach>
+    </insert>
+
+    <select id="getCrewList" parameterType="ProjectDTO" resultMap="getMemberResult">
+        SELECT m.* FROM CREW c
+        LEFT JOIN
+        (
+        <include refid="getMember">
+        </include>
+        ) m
+        ON c.MEMBER_ID = m.ID
+        WHERE c.PROJECT_ID = #{id}
+    </select>
+
+    <select id="getOwner" parameterType="ProjectDTO" resultMap="getMemberResult">
+        <include refid="getMember">
+        </include>
+        WHERE m.ID = (SELECT OWNER_ID FROM PROJECT WHERE ID = #{id})
+    </select>
+
+    <select id="getCrewDetail" parameterType="Map" resultMap="getMemberResult">
+        SELECT m.* FROM CREW c
+        LEFT JOIN
+        (
+        <include refid="getMember"/>
+        )
+        m
+        ON c.MEMBER_ID = m.ID
+        WHERE c.PROJECT_ID = #{project_id} AND c.MEMBER_ID = #{member_id}
+        UNION ALL
+        SELECT * FROM (<include refid="getMember"/>)
+        WHERE ID = (SELECT OWNER_ID FROM PROJECT WHERE ID=#{project_id} AND OWNER_ID = #{member_id})
+    </select>
+
+    <delete id="removeCrew" parameterType="Map">
+        DELETE FROM CREW WHERE PROJECT_ID = #{project_id} AND MEMBER_ID IN
+        <foreach collection="member_ids.split(',')" item="member_id" open="(" separator="," close=")">
+            #{member_id}
+        </foreach>
+    </delete>
+
+    <select id="getMemberList" parameterType="ProjectDTO" resultMap="getMemberResult">
+        <include refid="getMember"/>
+        WHERE m.ID NOT IN (SELECT MEMBER_ID FROM CREW WHERE PROJECT_ID = #{id})
+        AND m.ID != (SELECT OWNER_ID FROM PROJECT WHERE ID = #{id})
+    </select>
+</mapper>
