@@ -17,4 +17,16 @@ public class TaskDAO {
     public List<TaskDTO> getTaskList(ProjectDTO projectDTO) {
         return sqlSession.selectList(NAMESPACE + "getTaskList", projectDTO);
     }
+
+    public int createTask(TaskDTO taskDTO) {
+        return sqlSession.insert(NAMESPACE + "createTask", taskDTO);
+    }
+
+    public int updateTask(TaskDTO taskDTO) {
+        return sqlSession.update(NAMESPACE + "updateTask", taskDTO);
+    }
+
+    public int deleteTask(TaskDTO taskDTO) {
+        return sqlSession.delete(NAMESPACE + "deleteTask", taskDTO);
+    }
 }

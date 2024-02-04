@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.workmotion.app.project.dao.TaskDAO">
+    <select id="getTaskList" parameterType="ProjectDTO" resultType="TaskDTO">
+        SELECT * FROM TASK WHERE PROJECT_ID = #{id}
+    </select>
+
+    <insert id="createTask" parameterType="TaskDTO">
+        INSERT INTO TASK (ID, NAME, CREATE_DT, PROJECT_ID, CONTENT, WRITER_ID)
+        VALUES (TASK_SEQ.NEXTVAL, #{name}, SYSDATE, #{project_id}, #{content}, #{writer_id})
+    </insert>
+
+    <update id="updateTask" parameterType="TaskDTO">
+        UPDATE TASK SET NAME = #{name}, CONTENT = #{content} WHERE ID = #{id}
+    </update>
+
+    <delete id="deleteTask" parameterType="TaskDTO">
+        DELETE FROM TASK WHERE ID = #{id}
+    </delete>
+</mapper>

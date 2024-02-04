@@ -16,4 +16,16 @@ public class TaskService {
     public List<TaskDTO> getTaskList(ProjectDTO projectDTO) {
         return taskDAO.getTaskList(projectDTO);
     }
+
+    public int createTask(TaskDTO taskDTO) {
+        return taskDAO.createTask(taskDTO);
+    }
+
+    public int updateTask(TaskDTO taskDTO) {
+        return taskDAO.updateTask(taskDTO);
+    }
+
+    public int deleteTask(TaskDTO taskDTO) {
+        return taskDAO.deleteTask(taskDTO);
+    }
 }

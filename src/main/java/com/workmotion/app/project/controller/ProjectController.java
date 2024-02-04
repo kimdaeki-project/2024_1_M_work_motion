@@ -57,7 +57,7 @@ public class ProjectController {
     @GetMapping("detail")
     public String getProjectDetail(Model model, ProjectDTO projectDTO) throws Exception {
         model.addAttribute("project", projectService.getProjectDetail(projectDTO));
-        //model.addAttribute("tasks", taskService.getTaskList(projectDTO));
+        model.addAttribute("tasks", taskService.getTaskList(projectDTO));
         //model.addAttribute("crews", crewService.getCrewList(projectDTO));
         model.addAttribute("page", "project/task");
         return "index";
@@ -67,7 +67,7 @@ public class ProjectController {
     public String updateProject(Model model, ProjectDTO projectDTO) throws Exception {
         model.addAttribute("project", projectService.getProjectDetail(projectDTO));
 //        model.addAttribute("crews", crewService.getCrewList(projectDTO));
-        model.addAttribute("page", "project/edit");
+        model.addAttribute("page", "project/editProject");
         return "index";
     }
 
