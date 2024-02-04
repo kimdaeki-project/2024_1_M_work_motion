@@ -59,7 +59,7 @@ pageEncoding="UTF-8"%>
                                     Dashboard
                                 </a>
                                 <div class="sb-sidenav-menu-heading">메뉴</div>
-                                <a class="nav-link collapsed" href="/projects" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <a class="nav-link collapsed" href="/projects/list" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                     프로젝트
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>

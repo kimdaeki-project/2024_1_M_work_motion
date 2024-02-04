@@ -6,7 +6,19 @@ const project_id = container.getAttribute("data-bs-projectId");
 const memberList = document.getElementById("memberList");
 const deleteProjectButton = document.getElementById("deleteProjectButton");
 
-deleteProjectButton.addEventListener("click", () => {});
+deleteProjectButton.addEventListener("click", () => {
+    if (confirm("정말 삭제하시겠습니까?")) {
+        const form = document.createElement("form");
+        const input = document.createElement("input");
+        input.setAttribute("name", "id");
+        input.setAttribute("value", project_id);
+        form.appendChild(input);
+        form.setAttribute("method", "POST");
+        form.setAttribute("action", "/projects/delete");
+        document.body.appendChild(form);
+        form.submit();
+    }
+});
 pillsMember.addEventListener("click", () => {
     console.log("Project");
 });

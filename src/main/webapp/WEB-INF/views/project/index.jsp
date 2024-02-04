@@ -23,12 +23,12 @@ prefix="c" %>
     <h1>프로젝트</h1>
     <h2>나의 프로젝트</h2>
     <div style="background-color: #2e3337" id="projectList">
-        <c:forEach items="${list}" var="item">
-            <a href="/projects/${item.id}/task" class="projectCard">
+        <c:forEach items="${projects}" var="project">
+            <a href="/projects/detail?id=${project.id}" class="projectCard">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">${item.name}</h5>
-                        <p class="card-text">${item.info}</p>
+                        <h5 class="card-title">${project.name}</h5>
+                        <p class="card-text">${project.info}</p>
                     </div>
                 </div>
             </a>

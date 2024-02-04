@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.workmotion.app.project.dao.ProjectDAO">
+    <sql id="getMember">
+        SELECT m.*, r.name as role_name, d.name as department_name, p.name as position_name
+        FROM MEMBER m
+        LEFT JOIN ROLE_ID r ON m.ROLE_ID = r.ID
+        LEFT JOIN DEPARTMENT_ID d ON m.DEPARTMENT_ID = d.ID
+        LEFT JOIN POSITION_ID p ON m.POSITION_ID = p.ID
+        WHERE m.ID = ${id}
+    </sql>
+    <insert id="createProject" parameterType="ProjectDTO">
+        INSERT INTO PROJECT (ID, NAME, CREATE_DT, INFO, OWNER_ID) VALUES (PROJECT_SEQ.NEXTVAL, #{name}, SYSDATE,
+        #{info}, #{owner_id})
+    </insert>
+    <select id="getProjectList" parameterType="MemberDTO" resultType="ProjectDTO">
+        SELECT c.* FROM
+        (
+        SELECT p.*
+        FROM CREW c
+        LEFT JOIN PROJECT p
+        ON c.PROJECT_ID = p.ID
+        WHERE c.MEMBER_ID = #{id}
+        ) c
+        UNION ALL
+        SELECT * FROM
+        PROJECT p2
+        WHERE OWNER_ID = #{id}
+    </select>
+    <select id="getProjectDetail" parameterType="ProjectDTO" resultType="ProjectDTO">
+        SELECT p.*
+        FROM PROJECT p
+        LEFT JOIN MEMBER m
+        ON p.OWNER_ID = m.ID
+        WHERE p.ID = #{id}
+    </select>
+    <resultMap id="getProjectDetailResult" type="ProjectDTO">
+        <association property="role" javaType="RoleDTO">
+            <result column="role_name" property="name"/>
+        </association>
+        <association property="department" javaType="DepartmentDTO">
+            <result column="department_name" property="name"/>
+        </association>
+        <association property="position" javaType="positionDTO">
+            <result column="position_name" property="name"/>
+        </association>
+    </resultMap>
+
+    <delete id="deleteProject" parameterType="ProjectDTO">
+        DELETE FROM PROJECT WHERE ID = #{id}
+    </delete>
+
+    <update id="updateProject" parameterType="ProjectDTO">
+        UPDATE PROJECT SET NAME = #{name}, INFO = #{info}, OWNER_ID = #{owner_id} WHERE ID = #{id}
+    </update>
+</mapper>

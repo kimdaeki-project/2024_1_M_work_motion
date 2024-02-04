@@ -50,6 +50,7 @@ prefix="c" %>
                         class="list-group-item list-group-item-action text-danger"
                         id="deleteProjectButton"
                         aria-selected="true"
+                        href="#"
                     >
                         프로젝트 삭제
                     </a>
@@ -229,4 +230,4 @@ ${project.info}</textarea
     </div>
 </div>
 
-<script type="text/javascript" src="/resources/js/project/setting.js"></script>
+<script type="text/javascript" src="/resources/js/project/edit.js"></script>

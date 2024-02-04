@@ -110,7 +110,7 @@ prefix="c" %>
                 </div>
                 
                 <div>
-                    <a class="btn btn-primary" href="/projects/${project.id}/setting">설정</a>
+                    <a class="btn btn-primary" href="/projects/setting?id=${project.id}">설정</a>
                     <button class="btn btn-primary" id="addCrewButton"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">멤버 추가</button>
                 </div>
             </div>
