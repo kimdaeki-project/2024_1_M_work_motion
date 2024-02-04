@@ -28,4 +28,8 @@ public class TaskService {
     public int deleteTask(TaskDTO taskDTO) {
         return taskDAO.deleteTask(taskDTO);
     }
+
+    public TaskDTO getTaskDetail(TaskDTO taskDTO) {
+        return taskDAO.getTaskDetail(taskDTO);
+    }
 }

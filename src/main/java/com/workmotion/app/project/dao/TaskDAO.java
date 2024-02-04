@@ -29,4 +29,8 @@ public class TaskDAO {
     public int deleteTask(TaskDTO taskDTO) {
         return sqlSession.delete(NAMESPACE + "deleteTask", taskDTO);
     }
+
+    public TaskDTO getTaskDetail(TaskDTO taskDTO) {
+        return sqlSession.selectOne(NAMESPACE + "getTaskDetail", taskDTO);
+    }
 }

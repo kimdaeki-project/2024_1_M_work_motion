@@ -20,4 +20,8 @@
     <delete id="deleteTask" parameterType="TaskDTO">
         DELETE FROM TASK WHERE ID = #{id}
     </delete>
+
+    <select id="getTaskDetail" parameterType="TaskDTO" resultType="TaskDTO">
+        SELECT * FROM TASK WHERE ID = #{id}
+    </select>
 </mapper>

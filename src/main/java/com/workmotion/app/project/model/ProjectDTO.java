@@ -10,6 +10,13 @@ public class ProjectDTO {
     private Long owner_id;
     private MemberDTO owner;
 
+    public ProjectDTO() {
+    }
+
+    public ProjectDTO(Long projectId) {
+        this.id = projectId;
+    }
+
     @Override
     public String toString() {
         return "ProjectDTO{" +
