@@ -47,13 +47,9 @@ prefix="c" %>
                         멤버
                     </a>
                     <a
-                        class="list-group-item list-group-item-action"
-                        aria-controls="pills-home"
+                        class="list-group-item list-group-item-action text-danger"
+                        id="deleteProjectButton"
                         aria-selected="true"
-                        data-bs-toggle="pill"
-                        data-bs-target="#pills-home"
-                        href="#delete"
-                        role="tab"
                     >
                         프로젝트 삭제
                     </a>

@@ -4,7 +4,9 @@ const pillsMember = document.querySelector("[aria-controls=pills-member]");
 const container = document.getElementById("container");
 const project_id = container.getAttribute("data-bs-projectId");
 const memberList = document.getElementById("memberList");
+const deleteProjectButton = document.getElementById("deleteProjectButton");
 
+deleteProjectButton.addEventListener("click", () => {});
 pillsMember.addEventListener("click", () => {
     console.log("Project");
 });
