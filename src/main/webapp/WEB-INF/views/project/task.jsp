@@ -104,6 +104,11 @@ prefix="c" %>
                         href="/projects/setting?id=${project.id}"
                         >설정</a
                     >
+                    <a
+                        class="btn btn-primary"
+                        href="/tasks/create?id=${project.id}"
+                        >업무 추가</a
+                    >
                     <button
                         class="btn btn-primary"
                         id="addCrewButton"

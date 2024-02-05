@@ -9,8 +9,13 @@
     </select>
 
     <insert id="createTask" parameterType="TaskDTO">
+        <selectKey keyProperty="id" resultType="Long" order="BEFORE">
+            SELECT TASK_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
         INSERT INTO TASK (ID, NAME, CREATE_DT, PROJECT_ID, CONTENT, WRITER_ID, START_DT, END_DT, HAS_LIMIT)
-        VALUES (TASK_SEQ.NEXTVAL, #{name}, SYSDATE, #{project_id}, #{content}, #{writer_id}, #{start_dt}, #{end_dt},
+        VALUES (#{id}, #{name}, SYSDATE, #{project_id}, #{content}, #{writer_id},
+        #{start_dt,jdbcType=DATE},
+        #{end_dt,jdbcType=DATE},
         #{has_limit})
     </insert>
 
@@ -25,4 +30,11 @@
     <select id="getTaskDetail" parameterType="TaskDTO" resultType="TaskDTO">
         SELECT * FROM TASK WHERE ID = #{id}
     </select>
+
+    <insert id="addCharge" parameterType="Map">
+        INSERT INTO TASK_MEMBER (MEMBER_ID,TASK_ID)
+        <foreach collection="charge.split(',')" item="member_id" separator="UNION ALL">
+            SELECT #{member_id}, #{task_id} FROM DUAL
+        </foreach>
+    </insert>
 </mapper>

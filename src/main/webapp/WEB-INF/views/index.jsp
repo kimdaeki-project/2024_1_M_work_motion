@@ -21,6 +21,15 @@ pageEncoding="UTF-8"%>
 
      <!-- Jquery -->
      <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- Tagify 다운 -->
+    <script src="https://unpkg.com/@yaireo/tagify"></script>
+    <!-- 폴리필 (구버젼 브라우저 지원) -->
+    <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+    <link
+        href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
+        rel="stylesheet"
+        type="text/css"
+    />
     </head>
   <body>
         <body class="sb-nav-fixed">

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class TaskDAO {
@@ -32,5 +33,9 @@ public class TaskDAO {
 
     public TaskDTO getTaskDetail(TaskDTO taskDTO) {
         return sqlSession.selectOne(NAMESPACE + "getTaskDetail", taskDTO);
+    }
+
+    public int addCharge(Map<String, Object> map) {
+        return sqlSession.insert(NAMESPACE + "addCharge", map);
     }
 }

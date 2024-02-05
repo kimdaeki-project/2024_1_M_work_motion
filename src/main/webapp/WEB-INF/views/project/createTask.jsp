@@ -9,8 +9,13 @@ prefix="c" %>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
 <div class="container mt-3">
-    <form action="/tasks/create" method="post">
-        <input type="hidden" name="project_id" value="${project.id}" />
+    <form action="/tasks/create" method="post" enctype="multipart/form-data">
+        <input
+            type="hidden"
+            name="project_id"
+            value="${project.id}"
+            id="projectId"
+        />
         <div class="mb-3">
             <label for="name" class="form-label">제목</label>
             <input type="text" class="form-control" id="name" name="name" />
@@ -21,19 +26,27 @@ prefix="c" %>
         </div>
         <div class="mb-3">
             <label for="charge" class="form-label">담당자</label>
+            <input
+                type="hidden"
+                name="charge"
+                class="form-control"
+                id="charge"
+            />
             <div class="input-group mb-1">
                 <input
                     type="text"
                     class="form-control"
                     placeholder="담당자를 선택해주세요"
                     aria-label="charge"
+                    name="basic"
                     aria-describedby="addChargeButton"
-                    name="charge"
                 />
                 <button
                     class="btn btn-outline-primary"
                     type="button"
                     id="addChargeButton"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
                 >
                     추가하기
                 </button>
@@ -54,18 +67,24 @@ prefix="c" %>
                 <input
                     type="date"
                     class="form-control inputDate"
-                    name="end-dt"
+                    name="end_dt"
                 />
             </div>
         </div>
         <div class="mb-3">
             <div class="form-check form-switch">
                 <input
+                    type="hidden"
+                    class="form-control"
+                    name="has_limit"
+                    id="has_limitInput"
+                    value="0"
+                />
+                <input
                     class="form-check-input"
                     type="checkbox"
                     role="switch"
                     id="has_limit"
-                    name="has_limit"
                 />
                 <label class="form-check-label" for="has_limit"
                     >스케줄에 등록하기</label
@@ -75,29 +94,52 @@ prefix="c" %>
         <button type="submit" class="btn btn-primary">작성하기</button>
     </form>
 </div>
+<!-- Modal -->
+<div
+    class="modal fade"
+    id="staticBackdrop"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                    멤버 추가
+                </h1>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+                    닫기
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="submitButton"
+                    data-bs-dismiss="modal"
+                >
+                    추가하기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<script>
-    // 시작날짜(min 속성)
-    let sDate = new Date();
-    let minStr = sDate.toISOString().split("T")[0];
-    const inputDate = document.getElementsByClassName("inputDate");
-    for (let i = 0; i < inputDate.length; i++) {
-        inputDate[i].setAttribute("min", minStr);
-    }
-</script>
-
-<script>
-    $("#summernote").summernote({
-        placeholder: "내용을 입력해주세요.",
-        tabsize: 4,
-        height: 400,
-        toolbar: [
-            ["style", ["style"]],
-            ["font", ["bold", "underline", "clear"]],
-            ["color", ["color"]],
-            ["para", ["ul", "ol", "paragraph"]],
-            ["table", ["table"]],
-            ["insert", ["link", "picture", "video"]],
-        ],
-    });
-</script>
+<script
+    type="text/javascript"
+    src="/resources/js/project/createTask.js"
+></script>

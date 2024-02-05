@@ -1,5 +1,7 @@
 package com.workmotion.app.project.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class TaskDTO {
@@ -10,11 +12,23 @@ public class TaskDTO {
     private String content;
     private Long writer_id;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date start_dt;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date end_dt;
 
     private Integer has_limit;
+
+    private String charge;
+
+    public String getCharge() {
+        return charge;
+    }
+
+    public void setCharge(String charge) {
+        this.charge = charge;
+    }
 
     public Date getStart_dt() {
         return start_dt;

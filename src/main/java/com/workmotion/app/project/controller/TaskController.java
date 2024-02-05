@@ -29,6 +29,8 @@ public class TaskController {
     public String create(Model model, TaskDTO taskDTO) throws Exception {
         taskDTO.setWriter_id(7L);
         int result = taskService.createTask(taskDTO);
+        System.out.println(taskDTO.getCharge());
+        result = taskService.addCharge(taskDTO, taskDTO.getCharge());
         customResponse.setResult(result);
         customResponse.setMessage("업무 생성");
         customResponse.setRedirectUrl("/projects/detail?id=" + taskDTO.getProject_id());
