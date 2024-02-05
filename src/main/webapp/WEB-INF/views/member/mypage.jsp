@@ -27,7 +27,9 @@
                                 <label for="email">Email address</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="password" name="password" type="password" value="${dto.password}" placeholder="Password" />
+                                <input class="form-control" id="password" name="password" type="password" value="${dto.password}" placeholder="현재비밀번호" />
+                                <label for="password">Password</label>
+                             	<input class="form-control" id="password" name="password" type="password" value="${dto.password}" placeholder="변경할비밀번호" />
                                 <label for="password">Password</label>
                             </div>
                             <div class="form-floating mb-3">
