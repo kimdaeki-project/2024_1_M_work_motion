@@ -14,6 +14,8 @@
         <typeAlias type="com.workmotion.app.project.model.ProjectDTO" alias="ProjectDTO"/>
         <typeAlias type="com.workmotion.app.project.model.RoleDTO" alias="RoleDTO"/>
         <typeAlias type="com.workmotion.app.project.model.TaskDTO" alias="TaskDTO"/>
+        <typeAlias type="com.workmotion.app.project.model.ArticleDTO" alias="ArticleDTO"/>
+
         <typeAlias type="com.workmotion.app.member.Avatar" alias="Avatar"/>
         <typeAlias type="com.workmotion.app.util.Pager" alias="Pager"/>
         <typeAlias type="com.workmotion.app.department.DepartmentDTO" alias="DepartmentDTO"/>

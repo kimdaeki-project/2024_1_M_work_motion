@@ -86,7 +86,9 @@ addCrewButton.addEventListener("click", async function () {
 });
 
 submitButton.addEventListener("click", function () {
-    const checked = document.querySelectorAll("input[type=checkbox]:checked");
+    const checked = document.querySelectorAll(
+        "#modalBody input[type=checkbox]:checked"
+    );
     let addMembers = [];
     const formData = new FormData();
     for (let i = 0; i < checked.length; i++) {
@@ -151,3 +153,121 @@ async function createProfile(member_id) {
         </div>
     `;
 }
+
+const submitArticleButton = document.getElementById("submitArticleButton");
+const articleForm = document.getElementById("articleForm");
+
+submitArticleButton.addEventListener("click", async function () {
+    const formData = new FormData(articleForm);
+    const response = await fetch(`/v1/projects/${project_id}/articles`, {
+        method: "POST",
+        body: formData,
+    });
+    const data = await response.json();
+    articleForm.reset();
+    loadArticle();
+});
+
+async function loadArticle() {
+    const response = await fetch(`/v1/projects/${project_id}/articles`);
+    const data = await response.json();
+    console.log(data);
+    const article = document.getElementById("article");
+    article.innerHTML = createArticle(data).join("");
+}
+loadArticle();
+
+async function deleteArticle(id) {
+    if (confirm("삭제하시겠습니까?")) {
+        const article = document.querySelector(
+            `.taskArticle[data-bs-id='${id}']`
+        );
+        const response = await fetch(
+            `/v1/projects/${project_id}/articles/` + id,
+            { method: "delete" }
+        );
+        const data = await response.json();
+        article.remove();
+    }
+}
+
+function createArticle(datas) {
+    return datas.map((article) => {
+        return `
+        <div class='border border-light p-2 mb-3 taskArticle' data-bs-id=${
+            article.id
+        }>
+            <div class='d-flex align-items-start'>
+                <img
+                    class='me-2 avatar-sm rounded-circle'
+                    src='https://bootdey.com/img/Content/avatar/avatar3.png'
+                    alt='Generic placeholder image'
+                />
+                <div class='w-100'>
+                    <h5 class='m-0'>${article.writer.name}</h5>
+                    <p class='text-muted'>
+                        <small>${new Date(article.create_dt).toLocaleString(
+                            "ko-KR"
+                        )}</small>
+                    </p>
+                </div>
+                <div class="dropdown float-end">
+                    <a
+                        href="#"
+                        class="dropdown-toggle arrow-none card-drop"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        <i class="mdi mdi-dots-vertical"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <!-- item-->
+                        <a
+                            href="javascript:void(0);"
+                            class="dropdown-item"
+                            >수정하기</a
+                        >
+                        <!-- item-->
+                        <a
+                            href="javascript:void(0); deleteArticle(${
+                                article.id
+                            });"
+                            class="dropdown-item"
+                            >삭제하기</a
+                        >
+                    </div>
+                </div>
+            </div>
+            ${article.content}
+            <div class='mt-2'>
+                <a href='javascript: void(0);' class='btn btn-sm btn-link text-muted'>
+                    <i class='mdi mdi-reply'></i> Reply
+                </a>
+                <a href='javascript: void(0);' class='btn btn-sm btn-link text-muted'>
+                    <i class='mdi mdi-heart-outline'></i>
+                    Like
+                </a>
+                <a href='javascript: void(0);' class='btn btn-sm btn-link text-muted'>
+                    <i class='mdi mdi-share-variant'></i>
+                    Share
+                </a>
+            </div>
+        </div>
+        `;
+    });
+}
+
+//summernote init
+$("#summernote").summernote({
+    placeholder: "내용을 입력해주세요.",
+    tabsize: 4,
+    height: 150,
+    toolbar: [
+        ["style", ["style"]],
+        ["font", ["bold", "underline", "clear"]],
+        ["color", ["color"]],
+        ["para", ["ul", "ol", "paragraph"]],
+        ["table", ["table"]],
+        ["insert", ["link", "picture", "video"]],
+    ],
+});
