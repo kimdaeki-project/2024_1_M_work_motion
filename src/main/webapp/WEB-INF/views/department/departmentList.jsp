@@ -22,11 +22,11 @@
 					<th scope="row">${dto.id}</th>
 					<td><a href="./departmentDetail?id=${dto.id}">${dto.name}</a></td>
 					<td>${dto.phone_num}</td>
-					<td><a href="./departmentUpdate?id=${dto.id}"><button type="button">부서수정</button></a></td>
+					<td><a href="./departmentUpdate?id=${dto.id}"><button type="button" class="btn btn-primary">부서수정</button></a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-	<a href="./departmentCreate"><button type="button">부서 추가</button></a>
-	<button type="button" id="deleteDepartment">부서 삭제</button>
+	<a href="./departmentCreate"><button type="button" class="btn btn-success">부서 추가</button></a>
+	<button type="button" id="deleteDepartment" class="btn btn-danger">부서 삭제</button>
 	<script src="/resources/departmentjs/deletedepartment.js"></script>

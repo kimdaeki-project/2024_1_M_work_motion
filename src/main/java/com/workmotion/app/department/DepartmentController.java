@@ -135,6 +135,7 @@ public class DepartmentController {
 	//updateDepartment
 	@GetMapping("departmentUpdate")
 	public String updateDepartment(DepartmentDTO departmentDTO, Model model)throws Exception{
+		departmentDTO = departmentService.departmentDetail(departmentDTO);
 		model.addAttribute("update", departmentDTO);
 		model.addAttribute("page", "/department/departmentUpdate");
 		return "index";

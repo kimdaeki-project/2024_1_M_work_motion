@@ -78,4 +78,9 @@
 	DELETE FROM DEPARTMENT 
 	WHERE ID = #{id}
 	</delete>
+	
+	<select id="departmentDetail" resultType="DepartmentDTO" parameterType="DepartmentDTO">
+	SELECT * FROM department
+	WHERE id = #{id}
+	</select>
 </mapper>

@@ -27,5 +27,5 @@
 	</tbody>
 </table>
 
-<button type="button" id="createbtn">추가하기</button>
+<button type="button" id="createbtn" class="btn btn-success">추가하기</button>
 <script src="/resources/departmentjs/createmember.js"></script>

@@ -26,5 +26,5 @@
 	</tbody>
 </table>
 <a href="./memberList?department_id=${member.department_id}"><button type="button" class="btn btn-success">사원 추가하기</button></a>
-<button type="button" id="deletebtn">사원 삭제하기</button>
+<button type="button" id="deletebtn" class="btn btn-danger">사원 삭제하기</button>
 <script src="/resources/departmentjs/deletemember.js"></script>

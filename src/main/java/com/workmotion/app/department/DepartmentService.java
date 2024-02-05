@@ -55,4 +55,8 @@ public class DepartmentService {
 		return departmentDAO.deleteDepartment(departmentDTO);
 	}
 	
+	public DepartmentDTO departmentDetail(DepartmentDTO departmentDTO)throws Exception {
+		return departmentDAO.departmentDetail(departmentDTO);
+	}
+	
 }
