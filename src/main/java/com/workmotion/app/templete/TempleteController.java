@@ -3,6 +3,8 @@ package com.workmotion.app.templete;
 import java.util.List;
 import java.util.Random;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.workmotion.app.document.util.MemberDTO;
 import com.workmotion.app.document.util.Pager;
 
 @Controller
@@ -21,12 +24,15 @@ public class TempleteController {
 	private TempleteService templeteService;
 	
 	@GetMapping("detail")
-	public String getTemplaeDetail(TempleteDTO templeteDTO,Model model)throws Exception{
-		templeteDTO = templeteService.getTempleteDetail(templeteDTO);
-		model.addAttribute("dto", templeteDTO);
-		model.addAttribute("page", "docTemplete/detail");		
+	public String getTempleteDetail(TempleteDTO templeteDTO,Model model)throws Exception{
+				
+		templeteDTO = templeteService.getTempleteDetail(templeteDTO);		
+		model.addAttribute("dto", templeteDTO);		
+		
+		model.addAttribute("page","docTemplete/detail");	
 		return "index";
 	}
+	
 	
 	@GetMapping("list")
 	public String getTempleteList(Pager pager,Model model)throws Exception {

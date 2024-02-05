@@ -25,13 +25,13 @@
 		(SELECT ROWNUM T,TP.* FROM
 		(SELECT * FROM TEMPLETE
 		<include refid="search"></include>
-		 ORDER BY ID DESC)TP)
-		WHERE T BETWEEN #{startRow} AND #{lastRow} 
+		ORDER BY ID DESC)TP)
+		WHERE T BETWEEN #{startRow} AND #{lastRow}
 	</select>
-	
+
 	<select id="getTotalCount" resultType="Long">
 		SELECT COUNT(id) FROM TEMPLETE
-		<include refid="search"></include>  
+		<include refid="search"></include>
 	</select>
 
 	<insert id="createTempleteAdd" parameterType="TempleteDTO">
@@ -42,10 +42,13 @@
 		(TEMPLETE_SEQ.NEXTVAL,
 		#{name},#{file_nm})
 	</insert>
-	
-	<select id="getTempleteDetail" resultType="TempleteDTO" parameterType="TempleteDTO">	
-			SELECT * FROM TEMPLETE WHERE id = #{id}	
+
+	<select id="getTempleteDetail" resultType="TempleteDTO"
+		parameterType="TempleteDTO">
+		SELECT * FROM TEMPLETE WHERE ID = #{id}
 	</select>
+	
+
 
 
 </mapper>

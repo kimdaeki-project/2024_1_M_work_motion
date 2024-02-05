@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+		<!DOCTYPE mapper
+		    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		    
+<mapper namespace="com.workmotion.app.document.DocumentDAO">
+
+<!-- 	<insert id="createDocument" parameterType="DocumentDTO">	
+		INSERT INTO DOCUMENT
+		(ID,TITLE,CONTENT,TEMPLETE_ID,CREATE_DT,MEMBER_ID,DOCUMENT_NB,DOCUMENT_LIST,REFERRER)
+		VALUES(DOCUMENT_SEQ.NEXTVAL,#{제목},#{내용},#{서류번호},#{보낸날짜},#{멤버아이디},#{문서번호},#{서류항목},#{참조자}
+	</insert> -->
+
+
+</mapper>

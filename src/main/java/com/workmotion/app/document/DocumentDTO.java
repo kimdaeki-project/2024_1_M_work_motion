@@ -2,6 +2,9 @@ package com.workmotion.app.document;
 
 import java.sql.Date;
 
+import com.workmotion.app.document.util.MemberDTO;
+import com.workmotion.app.templete.TempleteDTO;
+
 public class DocumentDTO {
 	
 	private Long id;
@@ -11,6 +14,13 @@ public class DocumentDTO {
 	private Date create_dt;
 	private Long member_id;
 	private String document_nb;
+	private String document_list;
+	private String referrer;
+	
+	
+	// dto 2개 getter setter 해야함
+	private MemberDTO memberDTO;
+	private TempleteDTO templeteDTO;
 	
 	
 	public Long getId() {

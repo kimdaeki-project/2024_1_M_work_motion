@@ -11,6 +11,7 @@
   		<typeAlias type="java.util.List" alias="List"/>	
   		<typeAlias type="java.util.Map" alias="Map"/> 
 		<typeAlias type="com.workmotion.app.templete.TempleteDTO" alias="TempleteDTO"/>
-		<typeAlias type="com.workmotion.app.document.util.Pager" alias="Pager" />   
+		<typeAlias type="com.workmotion.app.document.util.Pager" alias="Pager" />
+		<typeAlias type="com.workmotion.app.document.DocumentDTO" alias="DocumentDTO"/>		    
     </typeAliases>
 </configuration>

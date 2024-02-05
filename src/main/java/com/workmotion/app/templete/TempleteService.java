@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.workmotion.app.document.util.FileManager;
+import com.workmotion.app.document.util.MemberDTO;
 import com.workmotion.app.document.util.Pager;
 
 @Service
@@ -61,9 +62,13 @@ public class TempleteService {
 	} 
 	
 	public TempleteDTO getTempleteDetail(TempleteDTO templeteDTO)throws Exception{
+		
 		templeteDTO = templeteDAO.getTempleteDetail(templeteDTO);
 		
 		return templeteDTO;
 	}
+	
+
+	
 
 }
