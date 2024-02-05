@@ -70,3 +70,33 @@ deleteButton.addEventListener("click", async function () {
     const data = await response.json();
     loadCrewList();
 });
+
+const changeOwnerButton = document.getElementById("changeOwnerButton");
+
+changeOwnerButton.addEventListener("click", async function () {
+    if (confirm("그룹장을 변경하겠습니까?")) {
+        const checked = document.querySelectorAll(
+            "input[type=checkbox]:checked"
+        );
+        let owner = [];
+        for (let i = 0; i < checked.length; i++) {
+            const member_id = checked[i].value;
+            owner.push(member_id);
+        }
+        if (owner.length != 1) {
+            alert("한 명을 선택해주세요.");
+            return;
+        }
+        const response = await fetch(
+            `/v1/projects/${project_id}/changeOwner/` + owner.join(""),
+            {
+                method: "PUT",
+            }
+        );
+        const data = await response.json();
+        if (data == 1) {
+            alert("성공적으로 변경되었습니다.");
+            location.href = "/projects/detail?id=" + project_id;
+        }
+    }
+});

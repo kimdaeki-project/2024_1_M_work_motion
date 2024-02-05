@@ -38,4 +38,7 @@ public class ProjectDAO {
         return sqlSession.update(NAMESPACE + "updateProject", projectDTO);
     }
 
+    public int changeOwner(ProjectDTO projectDTO) {
+        return sqlSession.update(NAMESPACE + "changeOwner", projectDTO);
+    }
 }

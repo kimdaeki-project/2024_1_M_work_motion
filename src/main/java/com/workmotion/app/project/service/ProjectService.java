@@ -38,4 +38,7 @@ public class ProjectService {
     }
 
 
+    public int changeOwner(ProjectDTO projectDTO) {
+        return projectDAO.changeOwner(projectDTO);
+    }
 }

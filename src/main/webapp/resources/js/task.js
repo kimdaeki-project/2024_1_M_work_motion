@@ -194,7 +194,7 @@ async function deleteArticle(id) {
 function createArticle(datas) {
     return datas.map((article) => {
         return `
-        <div class='border border-light p-2 mb-3 taskArticle' data-bs-id=${
+        <div class='border border-light shadow p-2 mb-3 taskArticle' data-bs-id=${
             article.id
         }>
             <div class='d-flex align-items-start'>

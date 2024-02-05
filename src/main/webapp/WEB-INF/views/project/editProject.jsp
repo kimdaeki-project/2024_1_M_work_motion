@@ -236,6 +236,13 @@ ${project.info}</textarea
                                 >
                                     삭제하기
                                 </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    id="changeOwnerButton"
+                                >
+                                    그룹 위임
+                                </button>
                             </form>
                         </div>
                     </div>

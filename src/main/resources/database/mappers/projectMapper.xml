@@ -61,4 +61,8 @@
     <update id="updateProject" parameterType="ProjectDTO">
         UPDATE PROJECT SET NAME = #{name}, INFO = #{info}, OWNER_ID = #{owner_id} WHERE ID = #{id}
     </update>
+
+    <update id="changeOwner" parameterType="ProjectDTO">
+        UPDATE PROJECT SET OWNER_ID = #{owner_id} WHERE ID = #{id}
+    </update>
 </mapper>

@@ -181,6 +181,39 @@ prefix="c" %>
                     <div class="card">
                         <div class="card-body">
                             <h4 class="header-title mb-3">
+                                그룹장
+                                <i class="mdi mdi-account ms-1"></i>
+                            </h4>
+                            <button
+                                class="list-group-item list-group-item-action"
+                                data-bs-toggle="modal"
+                                data-bs-target="#profileModal"
+                                data-bs-memberId="${owner.id}"
+                                onclick="createProfile(${owner.id})"
+                            >
+                                <div
+                                    class="d-flex align-items-center pb-1"
+                                    id="tooltips-container"
+                                >
+                                    <img
+                                        src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                        class="rounded-circle img-fluid avatar-md img-thumbnail bg-transparent"
+                                        alt=""
+                                    />
+                                    <div class="w-100 ms-2">
+                                        <h5 class="mb-1">
+                                            ${owner.name}<i
+                                                class="mdi mdi-check-decagram text-info ms-1"
+                                            ></i>
+                                        </h5>
+                                        <p class="mb-0 font-13 text-muted">
+                                            ${owner.position.name}
+                                        </p>
+                                    </div>
+                                    <i class="mdi mdi-chevron-right h2"></i>
+                                </div>
+                            </button>
+                            <h4 class="header-title mb-3 mt-3">
                                 프로젝트 멤버
                                 <i class="mdi mdi-account-multiple ms-1"></i>
                             </h4>

@@ -2,6 +2,7 @@ package com.workmotion.app.project.api;
 
 import com.workmotion.app.project.model.MemberDTO;
 import com.workmotion.app.project.model.ProjectDTO;
+import com.workmotion.app.project.service.CrewService;
 import com.workmotion.app.project.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,8 @@ import java.util.List;
 public class ProjectAPI {
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private CrewService crewService;
     private final MemberDTO memberDTO = new MemberDTO();
 
     {
@@ -54,6 +57,15 @@ public class ProjectAPI {
     public ResponseEntity<?> deleteProject(@PathVariable Long project_id, @RequestBody ProjectDTO projectDTO) throws Exception {
         projectDTO.setId(project_id);
         int result = projectService.deleteProject(projectDTO);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PutMapping("/projects/{project_id}/changeOwner/{owner_id}")
+    public ResponseEntity<?> changeOwner(@PathVariable Long project_id, @PathVariable String owner_id, ProjectDTO projectDTO) throws Exception {
+        projectDTO.setId(project_id);
+        int result = crewService.addCrew(project_id, projectService.getProjectDetail(projectDTO).getOwner_id().toString());
+        result = projectService.changeOwner(projectDTO);
+        result = crewService.removeCrew(project_id, owner_id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
