@@ -8,7 +8,10 @@ pageEncoding="UTF-8"%>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Work Motion</title>
-
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!-- Template -->
     <link href="/resources/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -125,7 +128,7 @@ pageEncoding="UTF-8"%>
                     </nav>
                 </div>
                 <div id="layoutSidenav_content">
-                    <main>
+                    <main class="h-100">
                         <c:import url="/WEB-INF/views/${page}.jsp"/>
                     </main>
                     <footer class="py-4 bg-light mt-auto">
