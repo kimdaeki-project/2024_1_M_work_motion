@@ -52,4 +52,8 @@ public class DepartmentDAO {
 		public int updateDepartment(DepartmentDTO departmentDTO)throws Exception{
 			return sqlSession.update(namespace+"updateDepartment", departmentDTO);
 		}
+		
+		public int deleteDepartment(DepartmentDTO departmentDTO) throws Exception{
+			return sqlSession.delete(namespace+"deleteDepartment", departmentDTO);
+		}
 }

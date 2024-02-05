@@ -25,30 +25,43 @@ public class DepartmentController {
   private DepartmentService departmentService;
   
   
-  	@GetMapping("list")
+  //memberUpdate
+	@GetMapping("memberupdate")
+	public String memberUpdate (MemberDTO memberDTO, Model model)throws Exception {
+		model.addAttribute("member", memberDTO);
+	 List<MemberDTO> ar = departmentService.getDepartmentDetail(memberDTO);	
+		model.addAttribute("detail", ar);
+		model.addAttribute("page", "department/memberupdate");
+		return "index"; 
+		
+	}
+  
+  //getDepartmentList
+  	@GetMapping("departmentList")
 	public String getDepartmentList(Pager pager, Model model)throws Exception {
 		
 		List<MemberDTO> ar = departmentService.getDepartmentList(pager);
 		model.addAttribute("list", ar);
 		model.addAttribute("pager", pager);
-		model.addAttribute("page", "department/list");
-		return "index";
-		
+		model.addAttribute("page", "department/departmentList");
+		return "index";		
 	}
-	@GetMapping("detail")
+  	
+  	//getDepartmentDetail
+	@GetMapping("departmentDetail")
 	public String getDepartmentDetail(DepartmentDTO departmentDTO, Model model)throws Exception {
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setDepartment_id(departmentDTO.getId());
 	 List<MemberDTO> ar = departmentService.getDepartmentDetail(memberDTO);	
 		model.addAttribute("detail", ar);
-		model.addAttribute("page", "department/detail");
+		model.addAttribute("page", "department/departmentDetail");
 		memberDTO.setDepartment_id(departmentDTO.getId());
 		model.addAttribute("member", memberDTO);
-		return "index"; 
-		
+		return "index"; 		
 	}
 	
 	
+	//getMemberList
 	@GetMapping("memberList")
 	public String getMemberList(MemberDTO memberDTO,Pager pager, Model model) throws Exception{
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -64,6 +77,9 @@ public class DepartmentController {
 		model.addAttribute("page", "department/memberList");
 		return "index";
 	}
+	
+	
+	//updateMember
 	@ResponseBody
 	@PostMapping("updateMember")
 	public int updateMember(Long [] id, Long department_id, Model model) throws Exception{
@@ -76,6 +92,9 @@ public class DepartmentController {
 		}
 		return result;
 	}
+	
+	
+	//deleteMember
 	@ResponseBody
 	@PostMapping("deleteMember")
 	public int deleteMember(Long [] id, Long department_id, Model model) throws Exception{
@@ -89,13 +108,17 @@ public class DepartmentController {
 		return result;
 	}
 	
-	@GetMapping("create")
+	
+	//createDepartment
+	@GetMapping("departmentCreate")
 	public String createDepartment(Model model) throws Exception{
-		model.addAttribute("page", "department/create");
+		model.addAttribute("page", "department/departmentCreate");
 		return "index";
 	}
 	
-	@PostMapping("create")
+	
+	//createDepartmentPost
+	@PostMapping("departmentCreate")
 	public String createDepartment(DepartmentDTO departmentDTO, Model model) throws Exception{
 		int result = departmentService.createDepartment(departmentDTO);
 		String msg = "실패";
@@ -103,19 +126,22 @@ public class DepartmentController {
 			msg = "성공";
 		}
 		model.addAttribute("msg", msg);
-		model.addAttribute("path", "/list");
+		model.addAttribute("path", "./departmentList");
 		return "commons/result";
 		
 	}
 	
-	@GetMapping("update")
+	
+	//updateDepartment
+	@GetMapping("departmentUpdate")
 	public String updateDepartment(DepartmentDTO departmentDTO, Model model)throws Exception{
 		model.addAttribute("update", departmentDTO);
-		model.addAttribute("page", "/department/update");
+		model.addAttribute("page", "/department/departmentUpdate");
 		return "index";
 	}
 	
-	@PostMapping("update")
+	//updateDepartmentPost
+	@PostMapping("departmentUpdate")
 	public String updateDepartment(DepartmentDTO departmentDTO, Model model,MemberDTO memberDTO)throws Exception{
 		int result = departmentService.updateDepartment(departmentDTO);
 		
@@ -125,7 +151,23 @@ public class DepartmentController {
 		}
 		
 		model.addAttribute("msg", msg);
-		model.addAttribute("path", "/list");
+		model.addAttribute("path", "./departmentList");
 		return "commons/result";
+	}
+	
+	
+	//deleteDepartmentPost
+	@ResponseBody
+	@PostMapping("departmentDelete")
+	public int deleteDepartment(Long [] id, Model model)throws Exception {
+		int result=0;
+		System.out.println("id[0] : "+id[0]);
+	DepartmentDTO departmentDTO = new DepartmentDTO();
+	
+		for(Long a : id) {
+			departmentDTO.setId(a);
+			result = departmentService.deleteDepartment(departmentDTO);
+		}
+		return result;
 	}
 }

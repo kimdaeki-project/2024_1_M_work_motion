@@ -73,4 +73,9 @@
 		UPDATE DEPARTMENT SET NAME=#{name}, phone_num=#{phone_num}
 		WHERE ID=#{id}
 	</update>
+	
+	<delete id="deleteDepartment" parameterType="DepartmentDTO">
+	DELETE FROM DEPARTMENT 
+	WHERE ID = #{id}
+	</delete>
 </mapper>

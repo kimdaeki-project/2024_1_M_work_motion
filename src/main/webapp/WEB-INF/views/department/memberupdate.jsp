@@ -4,18 +4,20 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th scope="col">#</th>
+			<th scope="col">편집</th>
 			<th scope="col">사원번호</th>
 			<th scope="col">사원이름</th>
 			<th scope="col">사원이메일</th>
 		</tr>
 	</thead>
 	<tbody>
-	<tr>
-	</tr>
+		<tr>
+		<input type="hidden" id="department_id" value="${member.department_id}">
+		</tr>
 		<c:forEach items="${detail}" var="dto" varStatus="status">
 			<tr>
-				<th scope="row">${status.count}</th>
+				<input type="hidden" value="${dto.id}" class="member_id">
+				<td><input type="checkbox" class="check"></td>
 				<td>${dto.id}</td>
 				<td>${dto.name}</td>
 				<td>${dto.email}</td>
@@ -23,6 +25,6 @@
 		</c:forEach>
 	</tbody>
 </table>
-<div>
-<a href="./memberList?department_id=${member.department_id}"><button type="button" class="btn btn-success">수정하기</button></a>
-</div>
+<a href="./memberList?department_id=${member.department_id}"><button type="button" class="btn btn-success">사원 추가하기</button></a>
+<button type="button" id="deletebtn">사원 삭제하기</button>
+<script src="/resources/departmentjs/deletemember.js"></script>

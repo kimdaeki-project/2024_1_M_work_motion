@@ -51,4 +51,8 @@ public class DepartmentService {
 		return departmentDAO.updateDepartment(departmentDTO);
 	}
 	
+	public int deleteDepartment(DepartmentDTO departmentDTO) throws Exception{
+		return departmentDAO.deleteDepartment(departmentDTO);
+	}
+	
 }
