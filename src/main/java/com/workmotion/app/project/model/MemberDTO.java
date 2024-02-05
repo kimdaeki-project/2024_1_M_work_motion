@@ -1,5 +1,7 @@
 package com.workmotion.app.project.model;
 
+import com.workmotion.app.department.DepartmentDTO;
+
 public class MemberDTO {
     private Long id;
     private Long company_id;

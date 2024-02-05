@@ -9,11 +9,13 @@
     <typeAliases>
         <typeAlias type="com.workmotion.app.project.model.ProjectDTO" alias="ProjectDTO"/>
         <typeAlias type="com.workmotion.app.project.model.CompanyDTO" alias="CompanyDTO"/>
-        <typeAlias type="com.workmotion.app.project.model.DepartmentDTO" alias="DepartmentDTO"/>
         <typeAlias type="com.workmotion.app.project.model.MemberDTO" alias="MemberDTO"/>
         <typeAlias type="com.workmotion.app.project.model.PositionDTO" alias="PositionDTO"/>
         <typeAlias type="com.workmotion.app.project.model.ProjectDTO" alias="ProjectDTO"/>
         <typeAlias type="com.workmotion.app.project.model.RoleDTO" alias="RoleDTO"/>
         <typeAlias type="com.workmotion.app.project.model.TaskDTO" alias="TaskDTO"/>
+        <typeAlias type="com.workmotion.app.member.Avatar" alias="Avatar"/>
+        <typeAlias type="com.workmotion.app.util.Pager" alias="Pager"/>
+        <typeAlias type="com.workmotion.app.department.DepartmentDTO" alias="DepartmentDTO"/>
     </typeAliases>
 </configuration>

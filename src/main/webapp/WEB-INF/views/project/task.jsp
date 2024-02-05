@@ -438,9 +438,12 @@ prefix="c" %>
 
                             <div class="list-group" id="crewList">
                                 <c:forEach items="${crews}" var="crew">
-                                    <a
-                                        href="#"
+                                    <button
                                         class="list-group-item list-group-item-action"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#profileModal"
+                                        data-bs-memberId="${crew.id}"
+                                        onclick="createProfile(${crew.id})"
                                     >
                                         <div
                                             class="d-flex align-items-center pb-1"
@@ -467,7 +470,7 @@ prefix="c" %>
                                                 class="mdi mdi-chevron-right h2"
                                             ></i>
                                         </div>
-                                    </a>
+                                    </button>
                                 </c:forEach>
                             </div>
                         </div>
@@ -784,6 +787,41 @@ prefix="c" %>
                     data-bs-dismiss="modal"
                 >
                     추가하기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div
+    class="modal fade"
+    id="profileModal"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="profileModal"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="profileModal">프로필</h1>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body" id="profileBody"></div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+                    닫기
                 </button>
             </div>
         </div>

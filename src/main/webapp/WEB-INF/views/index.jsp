@@ -100,7 +100,7 @@ pageEncoding="UTF-8"%>
                                     인사 관리
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <a class="nav-link collapsed" href="/department/list"  data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
+                                <a class="nav-link collapsed" href="/department/departmentList"  data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
                                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                     부서 관리
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
