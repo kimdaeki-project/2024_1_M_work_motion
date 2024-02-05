@@ -29,17 +29,6 @@ public class MemberService {
 	
 	public MemberDTO getlogin(MemberDTO memberDTO) throws Exception {
 		MemberDTO m = memberDAO.detailMember(memberDTO);
-		if(m!=null) {
-			if(m.getPassword().equals(memberDTO.getPassword())) {
-				
-				return memberDTO;
-				}else {
-				 
-				   m = null;
-				} 
-			}else {
-				m=null;	
-			}
 			return m;
 		
 	}

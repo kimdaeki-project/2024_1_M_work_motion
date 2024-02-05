@@ -3,6 +3,7 @@ package com.workmotion.app.member;
 
 import javax.servlet.http.HttpSession;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,7 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
-
+	
 	
 	@ResponseBody
 	@GetMapping("emailcheck")
@@ -51,25 +52,35 @@ public class MemberController {
 	}
 	@PostMapping("login")
 	public String getlogin(MemberDTO memberDTO,HttpSession session,Model model)throws Exception{
-		memberDTO = memberService.getlogin(memberDTO);
+		MemberDTO m = memberService.getlogin(memberDTO);
 		
-		  if(memberDTO==null) {
-			  model.addAttribute("msg","ID PW CHECK");
-			  return"member/login";
-		  }else {
-			  session.setAttribute("member",memberDTO);
-			  model.addAttribute("page","home");
-			  return "index";
-		  }
-		
+			if(m !=null) {
+				if(BCrypt.checkpw(memberDTO.getPassword(),m.getPassword())) {
+					session.setAttribute("member",memberDTO);
+					model.addAttribute("page","home");
+					return "index";
+						
+				}else {
+					//비번이 다른경우
+					model.addAttribute("msg","비밀번호를 확인해주세요");
+					return"member/login";
+				}
+				
+			}else {
+				//아이디가 다른경우
+				model.addAttribute("msg","아이디를 확인해주세요");
+				return"member/login";
+			}
+
 	}
 	
 	@PostMapping("join")
 	public String getjoin(MemberDTO memberDTO,Model model)throws Exception{
-
+		String hashpassword = BCrypt.hashpw(memberDTO.getPassword(),BCrypt.gensalt());
+		memberDTO.setPassword(hashpassword);
 		int result =  memberService.getjoin(memberDTO);
-		
-		return "member/join";
+
+		return "member/login";
 	}
 	
 	@GetMapping("join")
