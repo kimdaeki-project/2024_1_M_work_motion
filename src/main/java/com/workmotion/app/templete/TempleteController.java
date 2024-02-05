@@ -1,6 +1,7 @@
 package com.workmotion.app.templete;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,14 @@ public class TempleteController {
 	
 	@Autowired
 	private TempleteService templeteService;
+	
+	@GetMapping("detail")
+	public String getTemplaeDetail(TempleteDTO templeteDTO,Model model)throws Exception{
+		templeteDTO = templeteService.getTempleteDetail(templeteDTO);
+		model.addAttribute("dto", templeteDTO);
+		model.addAttribute("page", "docTemplete/detail");		
+		return "index";
+	}
 	
 	@GetMapping("list")
 	public String getTempleteList(Pager pager,Model model)throws Exception {

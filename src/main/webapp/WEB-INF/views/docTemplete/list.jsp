@@ -39,7 +39,7 @@
   <c:forEach items="${templeteList}" var="dto">
   	<tr>
   		<td>${dto.id}</td>
-  		<td>${dto.file_nm}</td>
+  		<td><a href="./detail?id=${dto.id}">${dto.file_nm}</a></td>
   	</tr>
   </c:forEach>  
 </table>

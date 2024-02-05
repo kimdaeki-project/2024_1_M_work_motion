@@ -59,5 +59,11 @@ public class TempleteService {
 		return result;
 		
 	} 
+	
+	public TempleteDTO getTempleteDetail(TempleteDTO templeteDTO)throws Exception{
+		templeteDTO = templeteDAO.getTempleteDetail(templeteDTO);
+		
+		return templeteDTO;
+	}
 
 }

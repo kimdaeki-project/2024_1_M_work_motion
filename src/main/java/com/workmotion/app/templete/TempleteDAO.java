@@ -29,5 +29,9 @@ public class TempleteDAO {
 		return sqlSession.insert(NAMESPACE+"createTempleteAdd", templeteDTO);
 	}
 	
+	public TempleteDTO getTempleteDetail(TempleteDTO templeteDTO)throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"getTempleteDetail", templeteDTO);
+	}
+	
 
 }

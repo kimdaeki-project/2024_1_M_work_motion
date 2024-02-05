@@ -34,8 +34,6 @@
 		<include refid="search"></include>  
 	</select>
 
-
-
 	<insert id="createTempleteAdd" parameterType="TempleteDTO">
 		INSERT INTO
 		TEMPLETE
@@ -44,6 +42,10 @@
 		(TEMPLETE_SEQ.NEXTVAL,
 		#{name},#{file_nm})
 	</insert>
+	
+	<select id="getTempleteDetail" resultType="TempleteDTO" parameterType="TempleteDTO">	
+			SELECT * FROM TEMPLETE WHERE id = #{id}	
+	</select>
 
 
 </mapper>

@@ -5,8 +5,16 @@ public class TempleteDTO {
 	private Long id;
 	private String name;
 	private String file_nm;
+	private String item;
 	
 	
+	
+	public String getItem() {
+		return item;
+	}
+	public void setItem(String item) {
+		this.item = item;
+	}
 	public Long getId() {
 		return id;
 	}
