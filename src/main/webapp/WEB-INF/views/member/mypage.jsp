@@ -27,11 +27,18 @@
                                 <label for="email">Email address</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="password" name="password" type="password" value="${dto.password}" placeholder="현재비밀번호" />
-                                <label for="password">Password</label>
-                             	<input class="form-control" id="password" name="password" type="password" value="${dto.password}" placeholder="변경할비밀번호" />
-                                <label for="password">Password</label>
+                                <input class="form-control" id="pw" type="password"  placeholder="현재비밀번호" />
+                                <label for="pw">현재 비밀번호</label>
+                                <div id="pwResult"></div>
                             </div>
+                            <div class="form-floating mb-3">
+                            <button  id="pwCheckBtn" type="button" class="btn btn-primary">비밀번호 확인</button>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="password" name="password" type="password" placeholder="바꿀 비밀번호" />
+                                <label for="password">바꿀 비밀번호</label>
+                            </div>
+
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="name" name="name" type="text" value="${dto.name}" placeholder="이름" />
                                 <label for="password">이름</label>
@@ -55,7 +62,7 @@
             </div>
         </div>
     </div>
-
+<script src="/resources/js/member/mypagePwCheck.js"></script>
 
 
       

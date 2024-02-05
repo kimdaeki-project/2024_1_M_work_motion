@@ -21,6 +21,17 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	@ResponseBody
+	@PostMapping("pwCheck")
+	public int pwCheck(HttpSession session,MemberDTO memberDTO) throws Exception {
+		MemberDTO m = (MemberDTO)session.getAttribute("member");
+		int result=0;
+		 	m =memberService.getlogin(m);
+		 	if(BCrypt.checkpw(memberDTO.getPassword(), m.getPassword())) {
+		 		result=1;
+		 	}
+		 	return result;
+	}
 	
 	@ResponseBody
 	@GetMapping("emailcheck")

@@ -14,16 +14,20 @@ const abc = document.getElementsByClassName("abc");
 
 for(let che of checks){
     che.addEventListener("click",()=>{
-        let flag =true;
-        for(let che of checks){
-            if(!ch.checked){
-                flag =!flag;
+        let flag = true;
+        let flag2 = true;
+        for(let ched of checks){
+            if(!ched.checked){
+                flag = !flag;
                 break;
             }
         }
         all.checked=flag;
+
+
     })
 }
+
 
 
 
@@ -44,7 +48,7 @@ btn.addEventListener("click",(e)=>{
     }
 
 
- })
+ });
 
 
 
