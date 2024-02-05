@@ -35,7 +35,11 @@ public class CrewDAO {
         return sqlSession.delete(NAMESPACE + "removeCrew", map);
     }
 
-    public List<MemberDTO> getMemberList(ProjectDTO projectDTO) {
+    public List<MemberDTO> getMemberList(ProjectDTO projectDTO) throws Exception {
         return sqlSession.selectList(NAMESPACE + "getMemberList", projectDTO);
+    }
+
+    public List<MemberDTO> getAllMemberList(MemberDTO memberDTO) throws Exception {
+        return sqlSession.selectList(NAMESPACE + "getAllMemberList", memberDTO);
     }
 }

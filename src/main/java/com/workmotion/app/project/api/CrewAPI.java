@@ -16,6 +16,12 @@ public class CrewAPI {
     @Autowired
     private CrewService crewService;
 
+    private MemberDTO memberDTO = new MemberDTO();
+
+    {
+        memberDTO.setId(7L);
+    }
+
     @PostMapping("{project_id}/crews")
     public ResponseEntity<?> addCrew(@PathVariable Long project_id, String member_ids) throws Exception {
         int result = crewService.addCrew(project_id, member_ids);
@@ -51,6 +57,12 @@ public class CrewAPI {
     public ResponseEntity<List<MemberDTO>> getMemberList(@PathVariable Long project_id, ProjectDTO projectDTO) throws Exception {
         projectDTO.setId(project_id);
         List<MemberDTO> memberDTOs = crewService.getMemberList(projectDTO);
+        return new ResponseEntity<>(memberDTOs, HttpStatus.OK);
+    }
+
+    @GetMapping("members")
+    public ResponseEntity<List<MemberDTO>> getALLMemberList() throws Exception {
+        List<MemberDTO> memberDTOs = crewService.getAllMemberList(memberDTO);
         return new ResponseEntity<>(memberDTOs, HttpStatus.OK);
     }
 }

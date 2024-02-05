@@ -74,4 +74,8 @@
         WHERE m.ID NOT IN (SELECT MEMBER_ID FROM CREW WHERE PROJECT_ID = #{id})
         AND m.ID != (SELECT OWNER_ID FROM PROJECT WHERE ID = #{id})
     </select>
+    <select id="getAllMemberList" parameterType="MemberDTO" resultMap="getMemberResult">
+        <include refid="getMember"/>
+        WHERE m.ID != #{id}
+    </select>
 </mapper>

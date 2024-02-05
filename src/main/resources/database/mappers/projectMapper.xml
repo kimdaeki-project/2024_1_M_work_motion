@@ -13,7 +13,10 @@
         WHERE m.ID = ${id}
     </sql>
     <insert id="createProject" parameterType="ProjectDTO">
-        INSERT INTO PROJECT (ID, NAME, CREATE_DT, INFO, OWNER_ID) VALUES (PROJECT_SEQ.NEXTVAL, #{name}, SYSDATE,
+        <selectKey keyProperty="id" order="BEFORE" resultType="Long">
+            SELECT PROJECT_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO PROJECT (ID, NAME, CREATE_DT, INFO, OWNER_ID) VALUES (#{id}, #{name}, SYSDATE,
         #{info}, #{owner_id})
     </insert>
     <select id="getProjectList" parameterType="MemberDTO" resultType="ProjectDTO">
@@ -25,11 +28,13 @@
         ON c.PROJECT_ID = p.ID
         WHERE c.MEMBER_ID = #{id}
         ) c
-        UNION ALL
+    </select>
+    <select id="getMyProjectList" parameterType="MemberDTO" resultType="ProjectDTO">
         SELECT * FROM
-        PROJECT p2
+        PROJECT
         WHERE OWNER_ID = #{id}
     </select>
+
     <select id="getProjectDetail" parameterType="ProjectDTO" resultType="ProjectDTO">
         SELECT p.*
         FROM PROJECT p

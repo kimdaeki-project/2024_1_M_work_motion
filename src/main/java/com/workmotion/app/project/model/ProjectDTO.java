@@ -10,6 +10,16 @@ public class ProjectDTO {
     private Long owner_id;
     private MemberDTO owner;
 
+    private String crew;
+
+    public String getCrew() {
+        return crew;
+    }
+
+    public void setCrew(String crew) {
+        this.crew = crew;
+    }
+
     public ProjectDTO() {
     }
 

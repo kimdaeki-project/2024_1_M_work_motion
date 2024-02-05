@@ -44,7 +44,11 @@ public class CrewService {
         return crewDAO.removeCrew(map);
     }
 
-    public List<MemberDTO> getMemberList(ProjectDTO projectDTO) {
+    public List<MemberDTO> getMemberList(ProjectDTO projectDTO) throws Exception {
         return crewDAO.getMemberList(projectDTO);
+    }
+
+    public List<MemberDTO> getAllMemberList(MemberDTO memberDTO) throws Exception {
+        return crewDAO.getAllMemberList(memberDTO);
     }
 }

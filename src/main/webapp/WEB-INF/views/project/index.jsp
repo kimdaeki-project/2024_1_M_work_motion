@@ -9,6 +9,12 @@ prefix="c" %>
         flex-direction: column;
         padding: 20px;
     }
+    #container .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
     #projectList {
         display: flex;
         flex-direction: row;
@@ -20,10 +26,16 @@ prefix="c" %>
 </style>
 
 <div id="container">
-    <h1>프로젝트</h1>
+    <div class="header">
+        <h1>프로젝트</h1>
+        <a type="button" class="btn btn-primary" href="/projects/create"
+            >프로젝트 추가</a
+        >
+    </div>
+
     <h2>나의 프로젝트</h2>
     <div style="background-color: #2e3337" id="projectList">
-        <c:forEach items="${projects}" var="project">
+        <c:forEach items="${myProjects}" var="project">
             <a href="/projects/detail?id=${project.id}" class="projectCard">
                 <div class="card mb-3">
                     <div class="card-body">
@@ -34,7 +46,19 @@ prefix="c" %>
             </a>
         </c:forEach>
     </div>
-    <h2>공통 프로젝트</h2>
+    <h2>참여중인 프로젝트</h2>
+    <div style="background-color: #2e3337" id="projectList">
+        <c:forEach items="${includeProjects}" var="project">
+            <a href="/projects/detail?id=${project.id}" class="projectCard">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">${project.name}</h5>
+                        <p class="card-text">${project.info}</p>
+                    </div>
+                </div>
+            </a>
+        </c:forEach>
+    </div>
 </div>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>

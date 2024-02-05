@@ -32,6 +32,11 @@ public class ProjectAPI {
         return new ResponseEntity<>(projectService.getProjectList(memberDTO), HttpStatus.OK);
     }
 
+    @GetMapping("/myprojects")
+    public ResponseEntity<List<ProjectDTO>> getMyProjectList() throws Exception {
+        return new ResponseEntity<>(projectService.getMyProjectList(memberDTO), HttpStatus.OK);
+    }
+
     @GetMapping("/projects/{project_id}")
     public ResponseEntity<ProjectDTO> getProjectDetail(@PathVariable Long project_id, ProjectDTO projectDTO) throws Exception {
         projectDTO.setId(project_id);

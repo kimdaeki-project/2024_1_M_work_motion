@@ -21,6 +21,10 @@ public class ProjectService {
         return projectDAO.getProjectList(memberDTO);
     }
 
+    public List<ProjectDTO> getMyProjectList(MemberDTO memberDTO) throws Exception {
+        return projectDAO.getMyProjectList(memberDTO);
+    }
+
     public ProjectDTO getProjectDetail(ProjectDTO projectDTO) throws Exception {
         return projectDAO.getProjectDetail(projectDTO);
     }
@@ -29,7 +33,9 @@ public class ProjectService {
         return projectDAO.deleteProject(projectDTO);
     }
 
-    public int updateProject(ProjectDTO projectDTO) {
+    public int updateProject(ProjectDTO projectDTO) throws Exception {
         return projectDAO.updateProject(projectDTO);
     }
+
+
 }

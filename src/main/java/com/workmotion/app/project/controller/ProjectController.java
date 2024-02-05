@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/projects/*")
 public class ProjectController {
@@ -31,17 +33,22 @@ public class ProjectController {
 
     @GetMapping("create")
     public String createProject(Model model) throws Exception {
+        List<MemberDTO> memberDTOList = crewService.getAllMemberList(memberDTO);
+        model.addAttribute("members", memberDTOList);
         model.addAttribute("member", memberDTO);
-        model.addAttribute("page", "create");
+        model.addAttribute("page", "project/createProject");
         return "index";
     }
 
     @PostMapping("create")
     public String createProject(ProjectDTO projectDTO, Model model) throws Exception {
         projectDTO.setOwner_id(memberDTO.getId());
+
         int result = projectService.createProject(projectDTO);
+        result = crewService.addCrew(projectDTO.getId(), projectDTO.getCrew());
         customResponse.setResult(result);
-        customResponse.setRedirectUrl("/projects");
+        customResponse.setMessage("프로젝트 생성");
+        customResponse.setRedirectUrl("/projects/detail?id=" + projectDTO.getId());
         model.addAttribute("response", customResponse);
         model.addAttribute("page", "project/result");
         return "index";
@@ -49,7 +56,8 @@ public class ProjectController {
 
     @GetMapping("list")
     public String getProjectList(Model model) throws Exception {
-        model.addAttribute("projects", projectService.getProjectList(memberDTO));
+        model.addAttribute("myProjects", projectService.getMyProjectList(memberDTO));
+        model.addAttribute("includeProjects", projectService.getProjectList(memberDTO));
         model.addAttribute("page", "project/index");
         return "index";
     }

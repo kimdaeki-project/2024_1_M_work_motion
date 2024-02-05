@@ -14,23 +14,28 @@ public class ProjectDAO {
     private SqlSession sqlSession;
     private final String NAMESPACE = "com.workmotion.app.project.dao.ProjectDAO.";
 
-    public int createProject(ProjectDTO projectDTO) {
+    public int createProject(ProjectDTO projectDTO) throws Exception {
         return sqlSession.insert(NAMESPACE + "createProject", projectDTO);
     }
 
-    public List<ProjectDTO> getProjectList(MemberDTO memberDTO) {
+    public List<ProjectDTO> getProjectList(MemberDTO memberDTO) throws Exception {
         return sqlSession.selectList(NAMESPACE + "getProjectList", memberDTO);
     }
 
-    public ProjectDTO getProjectDetail(ProjectDTO projectDTO) {
+    public List<ProjectDTO> getMyProjectList(MemberDTO memberDTO) throws Exception {
+        return sqlSession.selectList(NAMESPACE + "getMyProjectList", memberDTO);
+    }
+
+    public ProjectDTO getProjectDetail(ProjectDTO projectDTO) throws Exception {
         return sqlSession.selectOne(NAMESPACE + "getProjectDetail", projectDTO);
     }
 
-    public int deleteProject(ProjectDTO projectDTO) {
+    public int deleteProject(ProjectDTO projectDTO) throws Exception {
         return sqlSession.delete(NAMESPACE + "deleteProject", projectDTO);
     }
 
-    public int updateProject(ProjectDTO projectDTO) {
+    public int updateProject(ProjectDTO projectDTO) throws Exception {
         return sqlSession.update(NAMESPACE + "updateProject", projectDTO);
     }
+
 }
