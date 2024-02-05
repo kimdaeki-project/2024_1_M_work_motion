@@ -14,7 +14,13 @@ public class MemberDAO {
 	private SqlSession sqlSession;
 	private final String NAMESPACE="com.workmotion.app.member.MemberDAO.";
 	
+	public int setFileDelete (Avatar avatar) throws Exception{
+		return sqlSession.delete(NAMESPACE+"setFileDelete",avatar);
+	}
 	
+	public int setFileAdd (Avatar avatar) throws Exception {
+		return sqlSession.insert(NAMESPACE+"setFileAdd",avatar);
+	}
 	
 	public MemberDTO detailMember(MemberDTO memberDTO) throws Exception {
 		return sqlSession.selectOne(NAMESPACE+"detailMember",memberDTO);

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col">
@@ -7,30 +8,39 @@
                     <div class="card-header"><h3 class="text-center font-weight-light my-4">My page</h3></div>
                     <div class="card-body">
 
-            
+            			<c:if test="${not empty dto.avatar}">
+            				<div>
+            					<img  src="/resources/upload/member/${dto.avatar.name}">
+            				</div>
+            				
+            			</c:if>
+					
 
-
-                        <form action="/member/update" method="post">
-
+                        <form action="/member/update" method="post" enctype="multipart/form-data">
+							 <div class="form-floating mb-3">
+                                <input class="form-control" id="picture" type="file" name="picture" placeholder="name@example.com" />
+                                <label for="picture">사진추가</label>
+                            </div>	
+		
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" name="email" placeholder="name@example.com" />
+                                <input class="form-control" id="email" type="email" name="email" value="${dto.email}" placeholder="name@example.com" />
                                 <label for="email">Email address</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="password" name="password" type="password" placeholder="Password" />
+                                <input class="form-control" id="password" name="password" type="password" value="${dto.password}" placeholder="Password" />
                                 <label for="password">Password</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="name" name="name" type="text" placeholder="이름" />
+                                <input class="form-control" id="name" name="name" type="text" value="${dto.name}" placeholder="이름" />
                                 <label for="password">이름</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="phone" name="phone" type="text" placeholder="번호" />
+                                <input class="form-control" id="phone" name="phone" type="text" value="${dto.phone}" placeholder="번호" />
                                 <label for="password">핸드폰번호</label>
                             </div>
                             <div>
                             <input type="hidden" name="id" value="${dto.id}">
-                             <input type="hidden" name="session_email" value="${member.email}">
+                             <input type="hidden" name="" value="${member.email}">
                             </div>
                             <div class="d-flex align-items-center justify-content-between ml-5 mt-2 mb-3">
                                

@@ -5,7 +5,18 @@
 		    
 <mapper namespace="com.workmotion.app.member.MemberDAO">
 
-
+		
+		
+		<!-- 파일 삭제 -->
+		<delete id="setFileDelete" parameterType="Avatar" >
+		DELETE avatar WHERE name = #{name}
+		</delete>
+		
+		<!--파일추가-->
+		<insert id="setFileAdd" parameterType="Avatar">
+		INSERT INTO avatar VALUES(AVATAR_SEQ.NEXTVAL,#{member_id},#{name},#{ori_name})
+		</insert>
+		
 		<!--이메일 체크 -->
 		<select id="emailCheck" parameterType="MemberDTO">
 		SELECT email FROM member WHERE email = #{email}
@@ -13,7 +24,9 @@
 		
 		<!-- 로그인 조회  -->
 		<select id="detailMember" parameterType="MemberDTO" resultMap="getDetailMemberResult">
-		SELECT * FROM member LEFT JOIN avatar USING(id) WHERE email = #{email}	
+		SELECT M.*, A.name avatar_name ,A.ori_name FROM member M 
+		LEFT JOIN avatar A ON (M.id = A.MEMBER_ID) 
+		WHERE email = #{email}	
 		</select>
 		<resultMap type="MemberDTO" id="getDetailMemberResult">
 		<id column="id" property="id"/>
@@ -27,7 +40,7 @@
 		<result column="phone" property="phone"/>
 		<association property="avatar" javaType="Avatar" >
 		<id column="id" property="id"/>
-		<result column="name" property="name"/>
+		<result column="avatar_name" property="name"/>
 		<result column="ori_name" property="ori_name"/>
 		</association>
 		</resultMap> 

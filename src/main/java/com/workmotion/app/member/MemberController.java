@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
@@ -19,7 +20,7 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
-	//이메일 중복확인
+	
 	@ResponseBody
 	@GetMapping("emailcheck")
 	public int getemailcheck(MemberDTO memberDTO,Model model) throws Exception {
@@ -32,19 +33,19 @@ public class MemberController {
 		return result;
 	}
 	
-	//동의약관
+	
 	@GetMapping("agree")
 	public void getagree()throws Exception {
 	}
 	
-	//로그아웃
+	
 	@GetMapping("logout")
 	public String getlogout(HttpSession session,Model model)throws Exception {
 		session.invalidate();
 		return "/member/login";
 	}
 	
-    //로그인
+  
 	@GetMapping("login")
 	public void getlogin()throws Exception{	
 	}
@@ -53,7 +54,7 @@ public class MemberController {
 		memberDTO = memberService.getlogin(memberDTO);
 		
 		  if(memberDTO==null) {
-			  model.addAttribute("msg","아이디 비번을 확인해주세요");
+			  model.addAttribute("msg","ID PW CHECK");
 			  return"member/login";
 		  }else {
 			  session.setAttribute("member",memberDTO);
@@ -62,7 +63,7 @@ public class MemberController {
 		  }
 		
 	}
-	//회원가입
+	
 	@PostMapping("join")
 	public String getjoin(MemberDTO memberDTO,Model model)throws Exception{
 
@@ -70,7 +71,7 @@ public class MemberController {
 		
 		return "member/join";
 	}
-	//회원가입
+	
 	@GetMapping("join")
 	public String getjoin(Model model)throws Exception{
 		model.addAttribute("page","member/join");
@@ -79,7 +80,7 @@ public class MemberController {
 	
 	
 	
-	//마이페이지
+	
 	@GetMapping("mypage")
 	public String mypage(HttpSession session,Model model)throws Exception {
 		MemberDTO m = (MemberDTO)session.getAttribute("member");
@@ -89,10 +90,11 @@ public class MemberController {
 		return "index";
 	}
 	
-	//정보수정
+	
 	@PostMapping("update")
-	public String getupdate(MemberDTO memberDTO,Model model) throws Exception { 
+	public String getupdate(MemberDTO memberDTO,Model model,MultipartFile picture) throws Exception { 
 		int result = memberService.updateMember(memberDTO);
+				     memberService.setFileAdd(memberDTO,picture);
 		 model.addAttribute("page","home");
 		 return "index";
 	}
