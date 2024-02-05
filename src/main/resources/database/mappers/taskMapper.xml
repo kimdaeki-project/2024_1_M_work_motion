@@ -9,8 +9,9 @@
     </select>
 
     <insert id="createTask" parameterType="TaskDTO">
-        INSERT INTO TASK (ID, NAME, CREATE_DT, PROJECT_ID, CONTENT, WRITER_ID)
-        VALUES (TASK_SEQ.NEXTVAL, #{name}, SYSDATE, #{project_id}, #{content}, #{writer_id})
+        INSERT INTO TASK (ID, NAME, CREATE_DT, PROJECT_ID, CONTENT, WRITER_ID, START_DT, END_DT, HAS_LIMIT)
+        VALUES (TASK_SEQ.NEXTVAL, #{name}, SYSDATE, #{project_id}, #{content}, #{writer_id}, #{start_dt}, #{end_dt},
+        #{has_limit})
     </insert>
 
     <update id="updateTask" parameterType="TaskDTO">

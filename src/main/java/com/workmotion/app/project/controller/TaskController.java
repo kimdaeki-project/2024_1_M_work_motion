@@ -27,6 +27,7 @@ public class TaskController {
 
     @PostMapping("create")
     public String create(Model model, TaskDTO taskDTO) throws Exception {
+        taskDTO.setWriter_id(7L);
         int result = taskService.createTask(taskDTO);
         customResponse.setResult(result);
         customResponse.setMessage("업무 생성");
