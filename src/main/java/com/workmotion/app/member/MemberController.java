@@ -122,8 +122,10 @@ public class MemberController {
 		String hashpassword = BCrypt.hashpw(memberDTO.getPassword(),BCrypt.gensalt());
 		memberDTO.setPassword(hashpassword);
 		int result = memberService.updateMember(memberDTO);
-		memberService.setFileDelete(memberDTO);
-		memberService.setFileAdd(memberDTO,picture);
+		if(picture!=null) {
+			memberService.setFileDelete(memberDTO);
+			memberService.setFileAdd(memberDTO,picture);			
+		}
 		 model.addAttribute("page","home");
 		 return "index";
 	}
