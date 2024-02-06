@@ -37,10 +37,10 @@
 	<insert id="createTempleteAdd" parameterType="TempleteDTO">
 		INSERT INTO
 		TEMPLETE
-		(ID,NAME,FILE_NM)
+		(ID,NAME,FILE_NM,ITEM)
 		VALUES
 		(TEMPLETE_SEQ.NEXTVAL,
-		#{name},#{file_nm})
+		#{name},#{file_nm},#{item})
 	</insert>
 
 	<select id="getTempleteDetail" resultType="TempleteDTO"

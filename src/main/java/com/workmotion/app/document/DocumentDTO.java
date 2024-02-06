@@ -12,15 +12,13 @@ public class DocumentDTO {
 	private String content;
 	private Long templete_id;
 	private Date create_dt;
-	private Long member_id;
-	private String document_nb;
-	private String document_list;
+	private Long member_id;	
 	private String referrer;
+	private Long save;
+	private String period;
+	private String phone;
+	private Date deadline;
 	
-	
-	// dto 2개 getter setter 해야함
-	private MemberDTO memberDTO;
-	private TempleteDTO templeteDTO;
 	
 	
 	public Long getId() {
@@ -59,12 +57,42 @@ public class DocumentDTO {
 	public void setMember_id(Long member_id) {
 		this.member_id = member_id;
 	}
-	public String getDocument_nb() {
-		return document_nb;
+	public String getReferrer() {
+		return referrer;
 	}
-	public void setDocument_nb(String document_id) {
-		this.document_nb = document_id;
+	public void setReferrer(String referrer) {
+		this.referrer = referrer;
 	}
-
-
+	public Long getSave() {
+		return save;
+	}
+	public void setSave(Long save) {
+		this.save = save;
+	}
+	public String getPeriod() {
+		return period;
+	}
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public Date getDeadline() {
+		return deadline;
+	}
+	public void setDeadline(Date deadline) {
+		this.deadline = deadline;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

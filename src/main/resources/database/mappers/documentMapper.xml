@@ -5,11 +5,11 @@
 		    
 <mapper namespace="com.workmotion.app.document.DocumentDAO">
 
-<!-- 	<insert id="createDocument" parameterType="DocumentDTO">	
+ 	<insert id="createDocument" parameterType="DocumentDTO">	
 		INSERT INTO DOCUMENT
-		(ID,TITLE,CONTENT,TEMPLETE_ID,CREATE_DT,MEMBER_ID,DOCUMENT_NB,DOCUMENT_LIST,REFERRER)
-		VALUES(DOCUMENT_SEQ.NEXTVAL,#{제목},#{내용},#{서류번호},#{보낸날짜},#{멤버아이디},#{문서번호},#{서류항목},#{참조자}
-	</insert> -->
-
+		(ID,TITLE,CONTENT,TEMPLETE_ID,CREATE_DT,MEMBER_ID,REFERRER,SAVE,PERIOD,PHONE,DEADLINE)
+		VALUES
+		(DOCUMENT_SEQ.NEXTVAL,#{title},#{content},#{templete_id},#{create_dt},#{member_id},#{referrer},#{save},#{period},#{phone},{deadline})
+	</insert> 
 
 </mapper>

@@ -9,7 +9,15 @@
 </head>
 <body>	
 	
-	<c:import url="/resources/upload/templete/${dto.name}"></c:import>	
+	<form class="form-control" id="form" method="POST" action="../document/add" enctype="multipart/form-data">
+	<c:import url="/resources/upload/templete/${dto.name}"></c:import>
 	
+    <div class="button-container">
+    
+           <button name="svae" value="1">보내기</button>
+           <button name="save" value="0">임시저장</button>
+           
+    </div>    	
+	</form>	
 </body>
 </html>
