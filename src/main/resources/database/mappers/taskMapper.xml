@@ -56,7 +56,7 @@
     </insert>
 
     <update id="changeStatus" parameterType="TaskDTO">
-        UPDATE TASK SET STATUS = #{status} WHERE TASK_ID = #{id}
+        UPDATE TASK SET STATUS = #{status} WHERE ID = #{id}
     </update>
 
 </mapper>

@@ -267,7 +267,7 @@ async function loadTask() {
 
     const changeStatus = document.getElementsByClassName("changeStatus");
     for (let i = 0; i < changeStatus.length; i++) {
-        changeStatus[i].addEventListener("click", function (e) {
+        changeStatus[i].addEventListener("click", async function (e) {
             const selectedEl = e.target.parentElement.parentElement;
             const taskId = selectedEl.getAttribute("data-bs-taskId");
             const selectedValue = e.target.innerText;
@@ -275,9 +275,23 @@ async function loadTask() {
                 `.status[data-bs-taskId='${taskId}']`
             );
             if (statusButton.innerText != selectedValue) {
-                statusButton.innerText = selectedValue;
-                statusButton.classList.toggle("text-bg-primary");
-                statusButton.classList.toggle("text-bg-success");
+                const value = selectedValue == "완료" ? 1 : 0;
+                const response = await fetch(
+                    `/v1/projects/${project_id}/tasks/${taskId}/status`,
+                    {
+                        method: "PUT",
+                        body: JSON.stringify({ status: value }),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+                const data = await response.json();
+                if (data == 1) {
+                    statusButton.innerText = selectedValue;
+                    statusButton.classList.toggle("text-bg-primary");
+                    statusButton.classList.toggle("text-bg-success");
+                }
             }
         });
     }
