@@ -12,9 +12,9 @@
 		(DOCUMENT_SEQ.NEXTVAL,#{title},#{content},#{templete_id},#{create_dt},#{member_id},#{referrer},#{save},#{period},#{phone},{deadline})
 	</insert> 
 	
-	<insert id="">
-	
-	
+	<insert id="createFiles" parameterType="DocumentFileDTO">
+		INSERT INTO DOCUMENT_FILE 
+		VALUES(DOCUMENT_FILE_SEQ.NEXTVAL,#{document_id},#{name},#{ori_name})	
 	</insert>
 
 </mapper>
