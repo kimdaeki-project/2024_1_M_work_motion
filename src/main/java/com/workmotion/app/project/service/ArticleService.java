@@ -29,4 +29,5 @@ public class ArticleService {
     public int deleteArticle(ArticleDTO articleDTO) throws Exception {
         return articleDAO.deleteArticle(articleDTO);
     }
+
 }

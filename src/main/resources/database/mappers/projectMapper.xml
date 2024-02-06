@@ -65,4 +65,12 @@
     <update id="changeOwner" parameterType="ProjectDTO">
         UPDATE PROJECT SET OWNER_ID = #{owner_id} WHERE ID = #{id}
     </update>
+
+    <select id="getCharge" parameterType="TaskDTO" resultType="MemberDTO">
+        SELECT m.*
+        FROM TASK_MEMBER tm
+        LEFT JOIN MEMBER m
+        ON tm.MEMBER_ID = m.ID
+        WHERE tm.TASK_ID = #{id}
+    </select>
 </mapper>

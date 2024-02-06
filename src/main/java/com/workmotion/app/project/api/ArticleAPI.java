@@ -19,12 +19,11 @@ public class ArticleAPI {
     private final MemberDTO memberDTO = new MemberDTO();
 
     {
-        memberDTO.setId(7L);
+        memberDTO.setId(15L);
     }
 
     @PostMapping("{project_id}/articles")
-    public ResponseEntity<?> createArticle(@PathVariable Long project_id, ArticleDTO articleDTO) throws Exception {
-        articleDTO.setProject_id(project_id);
+    public ResponseEntity<?> createArticle(ArticleDTO articleDTO) throws Exception {
         articleDTO.setWriter_id(memberDTO.getId());
         int result = articleService.createArticle(articleDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);

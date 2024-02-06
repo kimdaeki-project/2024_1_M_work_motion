@@ -1,6 +1,7 @@
 package com.workmotion.app.project.service;
 
 import com.workmotion.app.project.dao.TaskDAO;
+import com.workmotion.app.project.model.MemberDTO;
 import com.workmotion.app.project.model.ProjectDTO;
 import com.workmotion.app.project.model.TaskDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,9 @@ public class TaskService {
         map.put("charge", charge);
         map.put("task_id", taskDTO.getId());
         return taskDAO.addCharge(map);
+    }
+
+    public List<MemberDTO> getCharge(TaskDTO taskDTO) throws Exception {
+        return taskDAO.getCharge(taskDTO);
     }
 }

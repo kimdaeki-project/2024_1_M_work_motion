@@ -171,7 +171,6 @@ submitArticleButton.addEventListener("click", async function () {
 async function loadArticle() {
     const response = await fetch(`/v1/projects/${project_id}/articles`);
     const data = await response.json();
-    console.log(data);
     const article = document.getElementById("article");
     article.innerHTML = createArticle(data).join("");
 }
@@ -255,6 +254,164 @@ function createArticle(datas) {
         </div>
         `;
     });
+}
+
+const homeButton = document.getElementById("homeButton");
+const taskButton = document.getElementById("taskButton");
+
+async function loadTask() {
+    const response = await fetch(`/v1/projects/${project_id}/tasks`);
+    const data = await response.json();
+    const task = document.getElementById("task");
+    task.innerHTML = createTask(data).join("");
+}
+const status = { 0: "진행", 1: "완료" };
+function createTask(tasks) {
+    return tasks.map((task) => {
+        console.log(task);
+        return `
+        <div class='border border-light shadow p-2 mb-3 taskArticle' data-bs-id=${
+            task.id
+        }>
+            <div class='d-flex align-items-start'>
+                <img
+                    class='me-2 avatar-sm rounded-circle'
+                    src='https://bootdey.com/img/Content/avatar/avatar3.png'
+                    alt='Generic placeholder image'
+                />
+                
+                <div class='w-100'>
+                    <h5 class='m-0'>${task.writer.name}</h5>
+                    <p class='text-muted'>
+                        <small>${new Date(task.create_dt).toLocaleString(
+                            "ko-KR"
+                        )}</small>
+                    </p>
+                </div>
+                <div class='float-end'>
+                    <div class="dropdown">
+                    <h3 class='m-0'>
+                    ${
+                        task.status == 0
+                            ? `
+                        <a class="btn badge rounded-pill text-bg-primary" data-bs-toggle="dropdown" aria-expanded="false">${
+                            status[task.status]
+                        }</a> <ul class="dropdown-menu">
+                        <a class="dropdown-item" type="button">완료</a>
+                        `
+                            : `
+                        <a class="btn badge rounded-pill text-bg-success" data-bs-toggle="dropdown" aria-expanded="false">${
+                            status[task.status]
+                        }</a> <ul class="dropdown-menu">
+                        <li><button class="dropdown-item" type="button">진행</button></li>
+                        `
+                    }
+                   
+                    </h3>
+                    
+                    
+                  
+                    </div>
+                </div>
+                <div class="dropdown float-end">
+                    <a
+                        href="#"
+                        class="dropdown-toggle arrow-none card-drop"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        <i class="mdi mdi-dots-vertical"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <!-- item-->
+                        <a
+                            href="javascript:void(0);"
+                            class="dropdown-item"
+                            >수정하기</a
+                        >
+                        <!-- item-->
+                        <a
+                            href="javascript:void(0); deleteTask(${task.id});"
+                            class="dropdown-item"
+                            >삭제하기</a
+                        >
+                    </div>
+                </div>
+            </div>
+            <div class='mb-3'>
+                    <h3 class='m-0'>${task.name}</h3>
+            </div>
+            ${
+                task.start_dt != null && task.end_dt != null
+                    ? `
+                <div class="mb-3">
+                    <h6 class='m-0'>일정</h6>
+                    <small>시작일: ${new Date(task.start_dt).toLocaleString(
+                        "ko-KR"
+                    )}</small><br>
+                    <small>종료일: ${new Date(task.end_dt).toLocaleString(
+                        "ko-KR"
+                    )}</small><br>
+                </div>
+                `
+                    : ""
+            }
+            
+            ${
+                task.task_member.length > 0
+                    ? `
+                <div class="mb-3">
+                <h6 class='m-0'>담당자</h6>
+                <small>${task.task_member
+                    .map(
+                        (member) =>
+                            `<span class="badge text-bg-primary">${member.name}</span>`
+                    )
+                    .join(" ")}</small><br>
+              
+                </div>`
+                    : ""
+            }
+            
+            
+            ${task.content}
+            <div class='mt-2'>
+                <a href='javascript: void(0);' class='btn btn-sm btn-link text-muted'>
+                    <i class='mdi mdi-reply'></i> Reply
+                </a>
+                <a href='javascript: void(0);' class='btn btn-sm btn-link text-muted'>
+                    <i class='mdi mdi-heart-outline'></i>
+                    Like
+                </a>
+                <a href='javascript: void(0);' class='btn btn-sm btn-link text-muted'>
+                    <i class='mdi mdi-share-variant'></i>
+                    Share
+                </a>
+            </div>
+        </div>
+        `;
+    });
+}
+
+taskButton.addEventListener("click", function () {
+    console.log("Task clicked");
+    loadTask();
+});
+
+async function deleteTask(id) {
+    if (confirm("삭제하시겠습니까?")) {
+        const task = document.querySelector(`.taskArticle[data-bs-id='${id}']`);
+        const response = await fetch(`/v1/projects/${project_id}/tasks/` + id, {
+            method: "delete",
+        });
+        const data = await response.json();
+        if (data == 1) {
+            alert("삭제 되었습니다.");
+            task.remove();
+        } else {
+            alert("삭제 실패했습니다.");
+        }
+    }
 }
 
 //summernote init

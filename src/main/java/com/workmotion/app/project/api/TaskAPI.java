@@ -26,6 +26,7 @@ public class TaskAPI {
     @GetMapping("{project_id}/tasks")
     public ResponseEntity<?> getTaskList(@PathVariable Long project_id) throws Exception {
         List<TaskDTO> taskDTOList = taskService.getTaskList(new ProjectDTO(project_id));
+
         return new ResponseEntity<>(taskDTOList, HttpStatus.OK);
     }
 

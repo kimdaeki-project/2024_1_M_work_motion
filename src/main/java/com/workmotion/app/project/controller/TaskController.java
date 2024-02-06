@@ -27,7 +27,7 @@ public class TaskController {
 
     @PostMapping("create")
     public String create(Model model, TaskDTO taskDTO) throws Exception {
-        taskDTO.setWriter_id(7L);
+        taskDTO.setWriter_id(15L);
         int result = taskService.createTask(taskDTO);
         System.out.println(taskDTO.getCharge());
         result = taskService.addCharge(taskDTO, taskDTO.getCharge());

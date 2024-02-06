@@ -21,7 +21,7 @@ public class ProjectAPI {
     private final MemberDTO memberDTO = new MemberDTO();
 
     {
-        memberDTO.setId(7L);
+        memberDTO.setId(15L);
     }
 
     @PostMapping("/projects")

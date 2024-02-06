@@ -4,19 +4,36 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.workmotion.app.project.dao.TaskDAO">
-    <select id="getTaskList" parameterType="ProjectDTO" resultType="TaskDTO">
-        SELECT * FROM TASK WHERE PROJECT_ID = #{id}
+
+    <select id="getTaskList" parameterType="ProjectDTO" resultMap="getResult">
+        SELECT t.*, m.id as member_id, m.name as member_name, m2.name as writer_name
+        FROM TASK t
+        LEFT JOIN TASK_MEMBER tm ON t.ID = tm.TASK_ID
+        LEFT JOIN MEMBER m ON tm.MEMBER_ID = m.ID
+        LEFT JOIN MEMBER m2 ON t.WRITER_ID = m2.ID
+        WHERE PROJECT_ID = #{id}
     </select>
+    <resultMap id="getResult" type="TaskDTO" autoMapping="true">
+        <id column="id" property="id"/>
+        <association property="writer" javaType="MemberDTO">
+            <result column="writer_id" property="id"/>
+            <result column="writer_name" property="name"/>
+        </association>
+        <collection property="task_member" javaType="List" ofType="MemberDTO">
+            <result column="member_id" property="id"/>
+            <result column="member_name" property="name"/>
+        </collection>
+    </resultMap>
 
     <insert id="createTask" parameterType="TaskDTO">
         <selectKey keyProperty="id" resultType="Long" order="BEFORE">
             SELECT TASK_SEQ.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO TASK (ID, NAME, CREATE_DT, PROJECT_ID, CONTENT, WRITER_ID, START_DT, END_DT, HAS_LIMIT)
+        INSERT INTO TASK (ID, NAME, CREATE_DT, PROJECT_ID, CONTENT, WRITER_ID, START_DT, END_DT, HAS_LIMIT, STATUS)
         VALUES (#{id}, #{name}, SYSDATE, #{project_id}, #{content}, #{writer_id},
         #{start_dt,jdbcType=DATE},
         #{end_dt,jdbcType=DATE},
-        #{has_limit})
+        #{has_limit}, 0)
     </insert>
 
     <update id="updateTask" parameterType="TaskDTO">

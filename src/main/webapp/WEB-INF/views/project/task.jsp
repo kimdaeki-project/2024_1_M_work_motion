@@ -39,12 +39,13 @@ prefix="c" %>
     .section .projectInfo .body {
         margin: 0px;
         display: flex;
-        margin-left: 4vh;
+        margin-left: 10vh;
     }
     .section .projectInfo .body a {
         margin-right: 2vh;
         text-decoration: none;
     }
+
     .section .projectInfo .body a:link {
         color: black;
     }
@@ -109,72 +110,146 @@ prefix="c" %>
                         href="/tasks/create?id=${project.id}"
                         >업무 추가</a
                     >
-                    <button
-                        class="btn btn-primary"
-                        id="addCrewButton"
-                        data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop"
-                    >
-                        멤버 추가
-                    </button>
                 </div>
+            </div>
+            <div class="body">
+                <ul class="nav nav-underline" role="tablist" id="pills-tab">
+                    <li class="nav-item">
+                        <a
+                            class="nav-link active"
+                            aria-current="page"
+                            href="#"
+                            role="tab"
+                            aria-controls="pills-home"
+                            aria-selected="true"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-home"
+                            id="homeButton"
+                            >홈</a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="#"
+                            role="tab"
+                            aria-controls="pills-task"
+                            aria-selected="true"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-task"
+                            id="taskButton"
+                            >업무</a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="#"
+                            role="tab"
+                            aria-controls="pills-scadule"
+                            aria-selected="true"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-scadule"
+                            id="scaduleButton"
+                            >스케줄</a
+                        >
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="container">
             <div class="row">
                 <!-- end col-->
-
-                <div class="col-xl-7">
-                    <div class="card">
-                        <div class="card-body">
-                            <!-- comment box -->
-                            <form
-                                action="#"
-                                class="comment-area-box mb-3"
-                                id="articleForm"
-                            >
-                                <input
+                <div class="col-xl-7 tab-content" id="pills-tabContent">
+                    <div
+                        class="tab-pane fade show active"
+                        id="pills-home"
+                        role="tabpanel"
+                        aria-labelledby="pills-home-tab"
+                    >
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- comment box -->
+                                <form
+                                    action="#"
+                                    class="comment-area-box mb-3"
+                                    id="articleForm"
+                                >
+                                    <!-- <input
                                     type="hidden"
                                     name="project_id"
                                     value="${project.id}"
-                                />
-                                <span class="input-icon">
-                                    <textarea
-                                        rows="3"
-                                        class="form-control"
-                                        placeholder="Write something..."
-                                        id="summernote"
-                                        name="content"
-                                    ></textarea>
-                                </span>
-                                <div class="comment-area-btn">
-                                    <div class="float-end">
-                                        <button
-                                            type="button"
-                                            class="btn btn-sm btn-dark waves-effect waves-light"
-                                            id="submitArticleButton"
-                                        >
-                                            Post
-                                        </button>
+                                /> -->
+                                    <span class="input-icon">
+                                        <textarea
+                                            rows="3"
+                                            class="form-control"
+                                            placeholder="Write something..."
+                                            id="summernote"
+                                            name="content"
+                                        ></textarea>
+                                    </span>
+                                    <div class="comment-area-btn">
+                                        <div class="float-end">
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-dark waves-effect waves-light"
+                                                id="submitArticleButton"
+                                            >
+                                                Post
+                                            </button>
+                                        </div>
                                     </div>
+                                </form>
+
+                                <div id="article"></div>
+
+                                <div class="text-center">
+                                    <a
+                                        href="javascript:void(0);"
+                                        class="text-danger"
+                                        ><i
+                                            class="mdi mdi-spin mdi-loading me-1"
+                                        ></i>
+                                        Load more
+                                    </a>
                                 </div>
-                            </form>
-
-                            <div id="article"></div>
-
-                            <div class="text-center">
-                                <a
-                                    href="javascript:void(0);"
-                                    class="text-danger"
-                                    ><i
-                                        class="mdi mdi-spin mdi-loading me-1"
-                                    ></i>
-                                    Load more
-                                </a>
                             </div>
                         </div>
+                        <!-- end card-->
                     </div>
-                    <!-- end card-->
+
+                    <div
+                        class="tab-pane fade"
+                        id="pills-task"
+                        role="tabpanel"
+                        aria-labelledby="pills-task-tab"
+                    >
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- comment box -->
+
+                                <!-- <input
+                                    type="hidden"
+                                    name="project_id"
+                                    value="${project.id}"
+                                /> -->
+                                <div id="task"></div>
+
+                                <div class="text-center">
+                                    <a
+                                        href="javascript:void(0);"
+                                        class="text-danger"
+                                        ><i
+                                            class="mdi mdi-spin mdi-loading me-1"
+                                        ></i>
+                                        Load more
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card-->
+                    </div>
                 </div>
                 <div class="col-xl-5">
                     <!-- end card-->
@@ -183,7 +258,16 @@ prefix="c" %>
                             <h4 class="header-title mb-3">
                                 그룹장
                                 <i class="mdi mdi-account ms-1"></i>
+                                <button
+                                    class="btn btn-primary float-end"
+                                    id="addCrewButton"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop"
+                                >
+                                    멤버 추가
+                                </button>
                             </h4>
+
                             <button
                                 class="list-group-item list-group-item-action"
                                 data-bs-toggle="modal"
