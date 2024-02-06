@@ -47,13 +47,11 @@ public class MemberService {
 	public void setFileDelete (MemberDTO memberDTO) throws Exception {
 		MemberDTO m = memberDAO.detailMember(memberDTO);
 		String path = servletContext.getRealPath("resources/upload/member");
-		Avatar avatar = new Avatar();
-		avatar.setName(m.getAvatar().getName());
-		int result = fileManager.fileDelete(path, avatar.getName());
-		if(result>0) {
-			memberDAO.setFileDelete(avatar);
+		if(m.getAvatar()!=null) {
+			int result = fileManager.fileDelete(path, m.getAvatar().getName());			
+			memberDAO.setFileDelete(m.getAvatar());
 		}
-		
+
 	}
 	 
 	public int updateMember(MemberDTO memberDTO) throws Exception {

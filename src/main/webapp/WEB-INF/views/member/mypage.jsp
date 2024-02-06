@@ -16,7 +16,7 @@
             			</c:if>
 					
 
-                        <form action="/member/update" method="post" enctype="multipart/form-data">
+                        <form action="/member/update" method="post" id="mypageFrm" enctype="multipart/form-data">
 							 <div class="form-floating mb-3">
                                 <input class="form-control" id="picture" type="file" name="picture" placeholder="name@example.com" />
                                 <label for="picture">사진추가</label>
@@ -27,16 +27,16 @@
                                 <label for="email">Email address</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="pw" type="password"  placeholder="현재비밀번호" />
-                                <label for="pw">현재 비밀번호</label>
+                                <input class="form-control" id="pw" type="password" name="password" placeholder="현재비밀번호" />
+                                <label for="pw">비밀번호 확인</label>
                                 <div id="pwResult"></div>
                             </div>
                             <div class="form-floating mb-3">
                             <button  id="pwCheckBtn" type="button" class="btn btn-primary">비밀번호 확인</button>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="password" name="password" type="password" placeholder="바꿀 비밀번호" />
-                                <label for="password">바꿀 비밀번호</label>
+                                <input class="form-control" id="updatePw"  type="password" name="password" placeholder="비밀번호 변경" />
+                                <label for="updatePw">비밀번호 변경</label>
                             </div>
 
                             <div class="form-floating mb-3">
@@ -53,7 +53,7 @@
                             </div>
                             <div class="d-flex align-items-center justify-content-between ml-5 mt-2 mb-3">
                                
-                                <button class="btn btn-primary">정보 수정</button>
+                                <button class="btn btn-primary" id="updateBtn" type="button">정보 수정</button>
                             </div>
                         </form>
                     </div>

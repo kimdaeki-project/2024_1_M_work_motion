@@ -2,9 +2,10 @@ const pass = document.getElementById("password");
 const passCheck = document.getElementById("passwordCheck");
 const result = document.getElementById("passResult");
 const checkResult = document.getElementById("passCheckResult");
-const emailCheck = document.getElementById("email");
+const email = document.getElementById("email");
 const emailResult =document.getElementById("emailResult");
-const joinbtn = document.getElementById("joinbtn");
+const joinBtn = document.getElementById("joinBtn");
+const frm = document.getElementById("frm");
 const reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$/;
 let p1 = false;
 let p2 = false;
@@ -40,21 +41,20 @@ passCheck.addEventListener('keyup',()=>{
     }
 })
 
-emailCheck.addEventListener("click",()=>{
-    this.value = '';
-})
 
-emailCheck.addEventListener("blur",()=>{
-    fetch("/member/emailcheck?email="+emailCheck.value,{
-        method:"GET"
+
+email.addEventListener("blur",()=>{
+    fetch("/member/emailcheck?email="+email.value,{
+        method:"GET",
     }).then((r)=>r.text())
     .then(r=>{
         let result = r.trim();
-        if(result==1){
+        if(result>0){
             emailResult.innerHTML = "이메일 사용 가능";
             p3=true;
         }else{
-            emailResult.innerHTML = "이메일 중복 사용 불가 "
+         
+            emailResult.innerHTML = "이메일 중복 사용 불가 ";
             p3=false;
         }
     })
@@ -63,12 +63,18 @@ emailCheck.addEventListener("blur",()=>{
 
 })
 
-joinbtn.addEventListener("click",()=>{
+joinBtn.addEventListener("click",()=>{
     if(p3){
-        if(p2&&p1){
-            submit();
+        if(p2){
+            if(p1){
+                alert("회원가입 성공");
+                frm.submit();
+            }else{
+                alert("비밀번호를 확인해주세요")
+            }
+        
         }else{
-            alert("비밀번호를 확인해주세요");
+            alert("비밀번호가 맞지않습니다");
         }
 
     }else{

@@ -89,7 +89,7 @@ pageEncoding="UTF-8"%>
                                                 
                                             <div class="mt-4 mb-0">
                                                 
-												<button class="d-grid btn btn-primary" id="joinbtn" type="button">회원 가입</button>
+												<button class="d-grid btn btn-primary" id="joinBtn" type="button">회원 가입</button>
                                             </div>
                                         </form>
                                     </div>

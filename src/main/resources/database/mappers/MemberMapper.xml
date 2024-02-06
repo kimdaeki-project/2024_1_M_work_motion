@@ -18,7 +18,7 @@
 		</insert>
 		
 		<!--이메일 체크 -->
-		<select id="emailCheck" parameterType="MemberDTO">
+		<select id="emailCheck" parameterType="MemberDTO" resultType="MemberDTO">
 		SELECT email FROM member WHERE email = #{email}
 		</select>
 		

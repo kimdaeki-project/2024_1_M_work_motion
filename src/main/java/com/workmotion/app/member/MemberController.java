@@ -1,6 +1,8 @@
 package com.workmotion.app.member;
 
 
+import java.util.StringTokenizer;
+
 import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -25,12 +27,14 @@ public class MemberController {
 	@PostMapping("pwCheck")
 	public int pwCheck(HttpSession session,MemberDTO memberDTO) throws Exception {
 		MemberDTO m = (MemberDTO)session.getAttribute("member");
-		int result=0;
-		 	m =memberService.getlogin(m);
-		 	if(BCrypt.checkpw(memberDTO.getPassword(), m.getPassword())) {
-		 		result=1;
-		 	}
-		 	return result;
+		 	m = memberService.getlogin(m);
+		 	StringTokenizer tokenizer = new StringTokenizer(memberDTO.getPassword(),",");
+		 		memberDTO.setPassword(tokenizer.nextToken());	
+		 	int result=0;
+			if(BCrypt.checkpw(memberDTO.getPassword(),m.getPassword())) {
+				result=1;
+			}
+			return result;
 	}
 	
 	@ResponseBody
@@ -41,7 +45,6 @@ public class MemberController {
 		if(memberDTO==null){
 			result = 1;
 		}
-		model.addAttribute("result",result);
 		return result;
 	}
 	
@@ -52,7 +55,7 @@ public class MemberController {
 	
 	
 	@GetMapping("logout")
-	public String getlogout(HttpSession session,Model model)throws Exception {
+	public String getlogout(HttpSession session)throws Exception {
 		session.invalidate();
 		return "/member/login";
 	}
@@ -69,14 +72,12 @@ public class MemberController {
 				if(BCrypt.checkpw(memberDTO.getPassword(),m.getPassword())) {
 					session.setAttribute("member",memberDTO);
 					model.addAttribute("page","home");
-					return "index";
-						
+					return "index";	
 				}else {
 					//비번이 다른경우
 					model.addAttribute("msg","비밀번호를 확인해주세요");
 					return"member/login";
 				}
-				
 			}else {
 				//아이디가 다른경우
 				model.addAttribute("msg","아이디를 확인해주세요");
@@ -90,7 +91,6 @@ public class MemberController {
 		String hashpassword = BCrypt.hashpw(memberDTO.getPassword(),BCrypt.gensalt());
 		memberDTO.setPassword(hashpassword);
 		int result =  memberService.getjoin(memberDTO);
-
 		return "member/login";
 	}
 	
@@ -106,17 +106,24 @@ public class MemberController {
 	@GetMapping("mypage")
 	public String mypage(HttpSession session,Model model)throws Exception {
 		MemberDTO m = (MemberDTO)session.getAttribute("member");
-		MemberDTO memberDTO = memberService.detailMember(m);
-		model.addAttribute("dto",memberDTO);
-		model.addAttribute("page","member/mypage");
+		if(m==null) {
+			model.addAttribute("page","home");
+		}else {
+			MemberDTO memberDTO = memberService.detailMember(m);
+			model.addAttribute("dto",memberDTO);
+			model.addAttribute("page","member/mypage");
+		}
 		return "index";
 	}
 	
 	
 	@PostMapping("update")
 	public String getupdate(MemberDTO memberDTO,Model model,MultipartFile picture) throws Exception { 
+		String hashpassword = BCrypt.hashpw(memberDTO.getPassword(),BCrypt.gensalt());
+		memberDTO.setPassword(hashpassword);
 		int result = memberService.updateMember(memberDTO);
-				     memberService.setFileAdd(memberDTO,picture);
+		memberService.setFileDelete(memberDTO);
+		memberService.setFileAdd(memberDTO,picture);
 		 model.addAttribute("page","home");
 		 return "index";
 	}
