@@ -14,8 +14,7 @@ public class MemberDTO{
 	private Long phone;
 	private Long position_id;
 	private Avatar avatar;
-	private Long phone;
-	private Long position_id;
+
 	
 	
 	
@@ -74,8 +73,7 @@ public class MemberDTO{
 	public Long getPhone() {
 		return phone;
 	}
-	public void setPhone(Long phone) {
-		this.phone = phone;
+
 
 	public Long getPosition_id() {
 		return position_id;
