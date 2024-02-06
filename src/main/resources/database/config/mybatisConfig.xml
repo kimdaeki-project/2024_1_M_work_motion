@@ -13,6 +13,6 @@
 		<typeAlias type="com.workmotion.app.templete.TempleteDTO" alias="TempleteDTO"/>
 		<typeAlias type="com.workmotion.app.document.util.Pager" alias="Pager" />
 		<typeAlias type="com.workmotion.app.document.DocumentDTO" alias="DocumentDTO"/>	
-		<typeAlias type="com.workmotion.app.document.file.DocumentFileDTO" alias="DocumentFileDTO"/>	    
+		<typeAlias type="com.workmotion.app.document.file.DocumentFileDTO" alias="DocumentFileDTO"/>		    
     </typeAliases>
 </configuration>

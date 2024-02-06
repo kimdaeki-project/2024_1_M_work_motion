@@ -45,5 +45,12 @@ public class DocumentService {
 		return result;
 	} 
 	
+	
+	public DocumentDTO getDepartment(DocumentDTO documentDTO)throws Exception{
+		return documentDAO.getDepartment(documentDTO);
+	}
+	
+	
+	
 
 }

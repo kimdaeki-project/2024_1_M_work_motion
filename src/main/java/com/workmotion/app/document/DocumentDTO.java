@@ -2,7 +2,8 @@ package com.workmotion.app.document;
 
 import java.sql.Date;
 
-
+import com.workmotion.app.department.DepartmentDTO;
+import com.workmotion.app.member.MemberDTO;
 import com.workmotion.app.templete.TempleteDTO;
 
 public class DocumentDTO {
@@ -19,10 +20,25 @@ public class DocumentDTO {
 	private String phone;
 	private Date deadline;
 	
+	private MemberDTO memberDTO;
+	private DepartmentDTO departmentDTO;
+
 	
 	
 	
 	
+	public MemberDTO getMemberDTO() {
+		return memberDTO;
+	}
+	public void setMemberDTO(MemberDTO memberDTO) {
+		this.memberDTO = memberDTO;
+	}
+	public DepartmentDTO getDepartmentDTO() {
+		return departmentDTO;
+	}
+	public void setDepartmentDTO(DepartmentDTO departmentDTO) {
+		this.departmentDTO = departmentDTO;
+	}
 	public Long getId() {
 		return id;
 	}

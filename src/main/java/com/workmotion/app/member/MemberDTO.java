@@ -14,13 +14,14 @@ public class MemberDTO{
 	private Long phone;
 	private Long position_id;
 	private Avatar avatar;
-	private Long phone;
-	private Long position_id;
+	
+	
 	
 	
 	
 	
 
+	
 	
 	public Avatar getAvatar() {
 		return avatar;
@@ -76,6 +77,7 @@ public class MemberDTO{
 	}
 	public void setPhone(Long phone) {
 		this.phone = phone;
+	}
 
 	public Long getPosition_id() {
 		return position_id;

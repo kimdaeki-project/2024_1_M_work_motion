@@ -16,5 +16,14 @@
 		INSERT INTO DOCUMENT_FILE 
 		VALUES(DOCUMENT_FILE_SEQ.NEXTVAL,#{document_id},#{name},#{ori_name})	
 	</insert>
+	
+	<select id="getDepartment" parameterType="DocumentDTO" resultType="DocumentDTO" >
+	
+		SELECT D.NAME FROM MEMBER M
+			 LEFT JOIN DEPARTMENT D
+			 ON M.DEPARTMENT_ID = D.ID
+			 WHERE M.ID=#{member_id}
+	
+	</select>
 
 </mapper>

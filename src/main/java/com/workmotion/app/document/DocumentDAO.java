@@ -21,5 +21,9 @@ public class DocumentDAO {
 	public int createFiles(DocumentFileDTO fileDTO)throws Exception{
 		return sqlSession.insert(NAMESPACE+"createFiles", fileDTO);
 	}
+	
+	public DocumentDTO getDepartment(DocumentDTO documentDTO)throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"getDepartment", documentDTO);
+	}
 
 }
