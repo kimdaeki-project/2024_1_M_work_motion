@@ -1,6 +1,8 @@
 package com.workmotion.app.member;
 
-public class MemberDTO {
+import com.workmotion.app.department.DepartmentDTO;
+
+public class MemberDTO{
 	
 	private Long id;
 	private Long role_id;
@@ -9,6 +11,8 @@ public class MemberDTO {
 	private String password;
 	private String name;
 	private Long department_id;
+	private Long phone;
+	private Long position_id;
 	private Avatar avatar;
 	private Long phone;
 	private Long position_id;
@@ -16,12 +20,8 @@ public class MemberDTO {
 	
 	
 	
-	public Long getPosition_id() {
-		return position_id;
-	}
-	public void setPosition_id(Long position_id) {
-		this.position_id = position_id;
-	}
+
+	
 	public Avatar getAvatar() {
 		return avatar;
 	}
@@ -70,11 +70,25 @@ public class MemberDTO {
 	public void setDepartment_id(Long department_id) {
 		this.department_id = department_id;
 	}
+
 	public Long getPhone() {
 		return phone;
 	}
 	public void setPhone(Long phone) {
 		this.phone = phone;
+
+	public Long getPosition_id() {
+		return position_id;
+	}
+	public void setPosition_id(Long position_id) {
+		this.position_id = position_id;
+	}
+	@Override
+	public String toString() {
+		return "MemberDTO [id=" + id + ", role_id=" + role_id + ", company_id=" + company_id + ", email=" + email
+				+ ", password=" + password + ", name=" + name + ", department_id=" + department_id + ", phone=" + phone
+				+ ", position_id=" + position_id + ", avatar=" + avatar + "]";
+
 	}
 	
 	
