@@ -61,7 +61,11 @@
 		(SELECT * FROM
 		MEMBER
 		WHERE id =#{id}) T
-		SET T.department_id=0
+		<set>
+		<if test="department_id != null or department_id != ''"> 
+		T.department_id=0
+		</if>
+		</set>
 	</update>
 
 	<insert id="createDepartment" parameterType="DepartmentDTO">
@@ -70,7 +74,14 @@
 	</insert>
 	
 	<update id="updateDepartment" parameterType="DepartmentDTO">
-		UPDATE DEPARTMENT SET NAME=#{name}, phone_num=#{phone_num}
+		UPDATE DEPARTMENT <set>
+		<if test="name != null or name != ''"> 
+		NAME=#{name}, 
+		</if>
+		<if test="phone_num != null or phone_num != ''">
+		phone_num=#{phone_num}
+		</if>
+		</set>
 		WHERE ID=#{id}
 	</update>
 	
