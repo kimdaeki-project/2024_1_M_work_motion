@@ -1,36 +1,68 @@
 package com.workmotion.app.member;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+
+
+
+
+
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.workmotion.app.util.Pager;
+import com.workmotion.app.util.FileManager;
+
+
 
 @Service
 public class MemberService {
 
 	@Autowired
 	private MemberDAO memberDAO;
+	@Autowired
+	private FileManager fileManager;
+	@Autowired
+	private ServletContext servletContext;
 
-	public List<MemberDTO> getMemberList (Pager pager,MemberDTO memberDTO) throws Exception {
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("pager",pager);
-		map.put("memberDTO",memberDTO);
-		return memberDAO.getMemberList(map);
+	
+	public MemberDTO getlogin(MemberDTO memberDTO) throws Exception {
+		MemberDTO m = memberDAO.detailMember(memberDTO);
+			return m;
+		
 	}
-	public int getMemberDetail(MemberDTO memberDTO) throws Exception {
-	return 	memberDAO.getMemberDetail(memberDTO);
+	
+	public int setFileAdd (MemberDTO memberDTO,MultipartFile picture) throws Exception {
+		String path = servletContext.getRealPath("resources/upload/member");
+		String fileName = fileManager.fileSave(path, picture);
+		Avatar avatar = new Avatar();
+		avatar.setMember_id(memberDTO.getId());
+		avatar.setName(fileName);
+		avatar.setOri_name(picture.getOriginalFilename());
+		return memberDAO.setFileAdd(avatar);
 	}
+	public void setFileDelete (MemberDTO memberDTO) throws Exception {
+		MemberDTO m = memberDAO.detailMember(memberDTO);
+		String path = servletContext.getRealPath("resources/upload/member");
+			if(m.getAvatar().getName()!=null) {
+			fileManager.fileDelete(path, m.getAvatar().getName());			
+			memberDAO.setFileDelete(m.getAvatar());
+		}
+
+	}
+	 
 	public int updateMember(MemberDTO memberDTO) throws Exception {
 		return	memberDAO.updateMember(memberDTO);
 	}
-	public int deleteMember(MemberDTO memberDTO) throws Exception {
-		return memberDAO.deleteMember(memberDTO);
+	public MemberDTO detailMember (MemberDTO memberDTO) throws Exception {
+		return memberDAO.detailMember(memberDTO);
 	}
-	public int createMember(MemberDTO memberDTO) throws Exception {
+	public MemberDTO emailCheck(MemberDTO memberDTO) throws Exception {
+		return memberDAO.emailCheck(memberDTO);
+	}
+
+	public int getjoin(MemberDTO memberDTO) throws Exception {
 		return memberDAO.createMember(memberDTO);
 	}
 }
