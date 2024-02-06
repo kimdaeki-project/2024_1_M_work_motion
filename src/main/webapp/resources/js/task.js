@@ -264,6 +264,23 @@ async function loadTask() {
     const data = await response.json();
     const task = document.getElementById("task");
     task.innerHTML = createTask(data).join("");
+
+    const changeStatus = document.getElementsByClassName("changeStatus");
+    for (let i = 0; i < changeStatus.length; i++) {
+        changeStatus[i].addEventListener("click", function (e) {
+            const selectedEl = e.target.parentElement.parentElement;
+            const taskId = selectedEl.getAttribute("data-bs-taskId");
+            const selectedValue = e.target.innerText;
+            const statusButton = document.querySelector(
+                `.status[data-bs-taskId='${taskId}']`
+            );
+            if (statusButton.innerText != selectedValue) {
+                statusButton.innerText = selectedValue;
+                statusButton.classList.toggle("text-bg-primary");
+                statusButton.classList.toggle("text-bg-success");
+            }
+        });
+    }
 }
 const status = { 0: "진행", 1: "완료" };
 function createTask(tasks) {
@@ -294,19 +311,24 @@ function createTask(tasks) {
                     ${
                         task.status == 0
                             ? `
-                        <a class="btn badge rounded-pill text-bg-primary" data-bs-toggle="dropdown" aria-expanded="false">${
-                            status[task.status]
-                        }</a> <ul class="dropdown-menu">
-                        <a class="dropdown-item" type="button">완료</a>
+                        <a class="btn badge rounded-pill text-bg-primary status" data-bs-taskId="${
+                            task.id
+                        }" data-bs-toggle="dropdown" aria-expanded="false">${
+                                  status[task.status]
+                              }</a> 
                         `
                             : `
-                        <a class="btn badge rounded-pill text-bg-success" data-bs-toggle="dropdown" aria-expanded="false">${
-                            status[task.status]
-                        }</a> <ul class="dropdown-menu">
-                        <li><button class="dropdown-item" type="button">진행</button></li>
+                        <a class="btn badge rounded-pill text-bg-success status" data-bs-taskId="${
+                            task.id
+                        }" data-bs-toggle="dropdown" aria-expanded="false">${
+                                  status[task.status]
+                              }</a> 
                         `
                     }
-                   
+                    <ul class="dropdown-menu" data-bs-taskId="${task.id}">
+                        <li><button class="dropdown-item changeStatus" type="button">완료</button></li>
+                        <li><button class="dropdown-item changeStatus" type="button">진행</button></li>
+                    </ul>
                     </h3>
                     
                     

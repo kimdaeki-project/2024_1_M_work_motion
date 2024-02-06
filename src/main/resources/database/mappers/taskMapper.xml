@@ -54,4 +54,9 @@
             SELECT #{member_id}, #{task_id} FROM DUAL
         </foreach>
     </insert>
+
+    <update id="changeStatus" parameterType="TaskDTO">
+        UPDATE TASK SET STATUS = #{status} WHERE TASK_ID = #{id}
+    </update>
+
 </mapper>

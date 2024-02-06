@@ -44,4 +44,7 @@ public class TaskDAO {
         return sqlSession.selectList(NAMESPACE + "getCharge", taskDTO);
     }
 
+    public int changeStatus(TaskDTO taskDTO) {
+        return sqlSession.update(NAMESPACE + "changeStatus", taskDTO);
+    }
 }

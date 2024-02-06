@@ -53,4 +53,12 @@ public class TaskAPI {
         int result = taskService.deleteTask(taskDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @PutMapping("{project_id}/tasks/{task_id}/status")
+    public ResponseEntity<?> changeStatus(@PathVariable Long project_id, @PathVariable Long task_id, @RequestBody TaskDTO taskDTO) throws Exception {
+        taskDTO.setId(task_id);
+        taskDTO.setProject_id(project_id);
+        int result = taskService.changeStatus(taskDTO);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

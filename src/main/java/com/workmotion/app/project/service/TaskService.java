@@ -47,4 +47,8 @@ public class TaskService {
     public List<MemberDTO> getCharge(TaskDTO taskDTO) throws Exception {
         return taskDAO.getCharge(taskDTO);
     }
+
+    public int changeStatus(TaskDTO taskDTO) {
+        return taskDAO.changeStatus(taskDTO);
+    }
 }
