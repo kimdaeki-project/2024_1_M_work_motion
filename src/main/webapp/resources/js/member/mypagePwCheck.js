@@ -5,8 +5,8 @@ const mypageFrm = document.getElementById("mypageFrm");
 const updateBtn = document.getElementById("updateBtn");
 const updatePw = document.getElementById("updatePw");
 const check = true;
-
 pwCheckBtn.addEventListener("click",()=>{
+   
     let formdata = new FormData(mypageFrm);
     updatePw.disabled = true;
     fetch("/member/pwCheck",{
@@ -29,14 +29,17 @@ pwCheckBtn.addEventListener("click",()=>{
     
     updatePw.disabled = false;
 })
-
+   
 updateBtn.addEventListener("click",()=>{
-    if(check){
-        pw.disabled = true;
-        mypageFrm.submit();
-    }else{
-        alert("비밀번호를 확인해주세요");
-    }
+
+        if(check){
+            pw.disabled = true;
+            mypageFrm.submit();
+        }else{
+            alert("비밀번호를 확인해주세요");
+        }
+
+
 
 
 })

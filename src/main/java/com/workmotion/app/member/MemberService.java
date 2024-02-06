@@ -35,8 +35,6 @@ public class MemberService {
 	
 	public int setFileAdd (MemberDTO memberDTO,MultipartFile picture) throws Exception {
 		String path = servletContext.getRealPath("resources/upload/member");
-		System.out.println(servletContext.getRealPath("resources/upload/member"));
-		System.out.println(path);
 		String fileName = fileManager.fileSave(path, picture);
 		Avatar avatar = new Avatar();
 		avatar.setMember_id(memberDTO.getId());
@@ -47,8 +45,8 @@ public class MemberService {
 	public void setFileDelete (MemberDTO memberDTO) throws Exception {
 		MemberDTO m = memberDAO.detailMember(memberDTO);
 		String path = servletContext.getRealPath("resources/upload/member");
-		if(m.getAvatar()!=null) {
-			int result = fileManager.fileDelete(path, m.getAvatar().getName());			
+			if(m.getAvatar().getName()!=null) {
+			fileManager.fileDelete(path, m.getAvatar().getName());			
 			memberDAO.setFileDelete(m.getAvatar());
 		}
 

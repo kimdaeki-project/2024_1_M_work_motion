@@ -67,7 +67,6 @@ public class MemberController {
 	@PostMapping("login")
 	public String getlogin(MemberDTO memberDTO,HttpSession session,Model model)throws Exception{
 		MemberDTO m = memberService.getlogin(memberDTO);
-		
 			if(m !=null) {
 				if(BCrypt.checkpw(memberDTO.getPassword(),m.getPassword())) {
 					session.setAttribute("member",memberDTO);
@@ -119,13 +118,15 @@ public class MemberController {
 	
 	@PostMapping("update")
 	public String getupdate(MemberDTO memberDTO,Model model,MultipartFile picture) throws Exception { 
-		String hashpassword = BCrypt.hashpw(memberDTO.getPassword(),BCrypt.gensalt());
-		memberDTO.setPassword(hashpassword);
-		int result = memberService.updateMember(memberDTO);
 		if(picture!=null) {
 			memberService.setFileDelete(memberDTO);
 			memberService.setFileAdd(memberDTO,picture);			
 		}
+		if(memberDTO.getPassword()!=null) {
+			String hashpassword = BCrypt.hashpw(memberDTO.getPassword(),BCrypt.gensalt());
+			memberDTO.setPassword(hashpassword);
+		}
+		int result = memberService.updateMember(memberDTO);
 		 model.addAttribute("page","home");
 		 return "index";
 	}

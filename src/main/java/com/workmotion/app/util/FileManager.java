@@ -24,16 +24,10 @@ public class FileManager {
 		return fileName;		
 	}
 
-	public int fileDelete(String path,String fileName) throws Exception {
-		int result=0;
-		File f =  new File(path);
-		if(f.isFile()) {
-			f = new File(path,fileName);
-			f.delete();
-			result=1;
-		}else {
-			
-		}
-		return result;
+	public boolean fileDelete(String path,String fileName) throws Exception {
+	
+		File f =  new File(path,fileName);
+			return f.delete();
+
 	}
 }
