@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.workmotion.app.document.util.FileManager;
-import com.workmotion.app.document.util.MemberDTO;
 import com.workmotion.app.document.util.Pager;
 
 @Service

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.workmotion.app.document.util.MemberDTO;
+
 import com.workmotion.app.document.util.Pager;
 
 @Controller

@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class DocumentController {
 	
 	@PostMapping("add")
-	public void createDocument(MultipartFile file)throws Exception{
+	public void createDocument(MultipartFile[] file)throws Exception{
 		System.out.println("연결됨");
 		
 		

@@ -2,7 +2,7 @@ package com.workmotion.app.document;
 
 import java.sql.Date;
 
-import com.workmotion.app.document.util.MemberDTO;
+
 import com.workmotion.app.templete.TempleteDTO;
 
 public class DocumentDTO {
@@ -18,6 +18,8 @@ public class DocumentDTO {
 	private String period;
 	private String phone;
 	private Date deadline;
+	
+	
 	
 	
 	

@@ -11,5 +11,10 @@
 		VALUES
 		(DOCUMENT_SEQ.NEXTVAL,#{title},#{content},#{templete_id},#{create_dt},#{member_id},#{referrer},#{save},#{period},#{phone},{deadline})
 	</insert> 
+	
+	<insert id="">
+	
+	
+	</insert>
 
 </mapper>
