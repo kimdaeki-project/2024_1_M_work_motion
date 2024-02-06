@@ -14,16 +14,14 @@ public class MemberDTO{
 	private Long phone;
 	private Long position_id;
 	private Avatar avatar;
+	private Long phone;
+	private Long position_id;
 	
 	
 	
 	
-	public Long getPhone() {
-		return phone;
-	}
-	public void setPhone(Long phone) {
-		this.phone = phone;
-	}
+
+	
 	public Avatar getAvatar() {
 		return avatar;
 	}
@@ -72,6 +70,13 @@ public class MemberDTO{
 	public void setDepartment_id(Long department_id) {
 		this.department_id = department_id;
 	}
+
+	public Long getPhone() {
+		return phone;
+	}
+	public void setPhone(Long phone) {
+		this.phone = phone;
+
 	public Long getPosition_id() {
 		return position_id;
 	}
@@ -83,6 +88,7 @@ public class MemberDTO{
 		return "MemberDTO [id=" + id + ", role_id=" + role_id + ", company_id=" + company_id + ", email=" + email
 				+ ", password=" + password + ", name=" + name + ", department_id=" + department_id + ", phone=" + phone
 				+ ", position_id=" + position_id + ", avatar=" + avatar + "]";
+
 	}
 	
 	
