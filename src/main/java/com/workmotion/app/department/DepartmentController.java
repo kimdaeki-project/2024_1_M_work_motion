@@ -27,9 +27,10 @@ public class DepartmentController {
   
   //memberUpdate
 	@GetMapping("memberupdate")
-	public String memberUpdate (MemberDTO memberDTO, Model model)throws Exception {
+	public String memberUpdate (MemberDTO memberDTO,Pager pager, Model model)throws Exception {
+		
 		model.addAttribute("member", memberDTO);
-	 List<MemberDTO> ar = departmentService.getDepartmentDetail(memberDTO);	
+	 List<MemberDTO> ar = departmentService.getDepartmentDetail(memberDTO,pager);	
 		model.addAttribute("detail", ar);
 		model.addAttribute("page", "department/memberupdate");
 		return "index"; 
@@ -43,17 +44,20 @@ public class DepartmentController {
 		List<MemberDTO> ar = departmentService.getDepartmentList(pager);
 		model.addAttribute("list", ar);
 		model.addAttribute("pager", pager);
+		System.out.println(pager.getLastNum());
 		model.addAttribute("page", "department/departmentList");
 		return "index";		
 	}
   	
   	//getDepartmentDetail
 	@GetMapping("departmentDetail")
-	public String getDepartmentDetail(DepartmentDTO departmentDTO, Model model)throws Exception {
+	public String getDepartmentDetail(DepartmentDTO departmentDTO,Pager pager, Model model)throws Exception {
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setDepartment_id(departmentDTO.getId());
-	 List<MemberDTO> ar = departmentService.getDepartmentDetail(memberDTO);	
-		model.addAttribute("detail", ar);
+	   List<MemberDTO> dtos = departmentService.getDepartmentDetail(memberDTO,pager);	
+	   System.out.println(pager);
+		model.addAttribute("detail", dtos);
+		model.addAttribute("pager", pager);
 		model.addAttribute("page", "department/departmentDetail");
 		memberDTO.setDepartment_id(departmentDTO.getId());
 		model.addAttribute("member", memberDTO);
@@ -65,6 +69,7 @@ public class DepartmentController {
 	@GetMapping("memberList")
 	public String getMemberList(MemberDTO memberDTO,Pager pager, Model model) throws Exception{
 		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(pager);
 		map.put("pager", pager);
 		map.put("member", memberDTO);
 		List<Map<String, Object>> dtos = departmentService.getMemberList(map);

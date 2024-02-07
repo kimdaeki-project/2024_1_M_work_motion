@@ -12,7 +12,8 @@
 		</tr>
 	</thead>
 	<tbody>
-				<input type="hidden" id="department_id" value="${member.department_id}">
+		<input type="hidden" id="department_id"
+			value="${member.department_id}">
 		<c:forEach items="${list}" var="member">
 			<tr>
 				<input type="hidden" value="${member.ID}" class="member_id">
@@ -26,6 +27,44 @@
 
 	</tbody>
 </table>
+
+
+<nav aria-label="...">
+	<ul class="pagination">
+
+		<!-- 이전@@@@@@@@@@ -->
+		<c:if test="${!pager.start}">
+			<li class="page-item"><a class="page-link"
+				href="./memberList?department_id=${member.department_id}&page=${pager.startNum-1}&search=${pager.search}">Previous</a>
+			</li>
+		</c:if>
+
+		<!-- 번호@@@@@@@@@@@@ -->
+		<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">
+			<li class="page-item"><a class="page-link"
+				href="./memberList?department_id=${member.department_id}&page=${i}&search=${pager.search}">${i}</a></li>
+		</c:forEach>
+		<!-- 다음@@@@@@@@@@@@@@@ -->
+
+		<c:if test="${!pager.last}">
+			<li class="page-item"><a class="page-link"
+				href="./memberList?department_id=${member.department_id}&page=${pager.lastNum+1}&search=${pager.search}">Next</a></li>
+		</c:if>
+	</ul>
+</nav>
+
+
+
+<!-- 검색@@@@@@@@@@@@@@@@ -->
+<form action="./memberList">
+	<div class="input-group mb-3">
+		<input type="text" class="form-control" name="search"
+			aria-label="Text input with dropdown button"> <input
+			type="hidden" value="${member.department_id}" name="department_id">
+		<button class="btn btn-outline-secondary" type="submit">찾기</button>
+	</div>
+</form>
+
 
 <button type="button" id="createbtn" class="btn btn-success">추가하기</button>
 <script src="/resources/departmentjs/createmember.js"></script>
