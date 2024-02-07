@@ -12,6 +12,23 @@ prefix="c" %>
     href="/resources/css/project/createTask.css"
     type="text/css"
 />
+
+<!-- fullcalendar CDN -->
+<link
+    href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css"
+    rel="stylesheet"
+/>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js"></script>
+<!-- fullcalendar 언어 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"></script>
+<style>
+    /* 캘린더 위의 해더 스타일(날짜가 있는 부분) */
+    .fc-header-toolbar {
+        padding-top: 1em;
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+</style>
 <style>
     #container {
         height: 100%;
@@ -245,6 +262,24 @@ prefix="c" %>
                                         ></i>
                                         Load more
                                     </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card-->
+                    </div>
+
+                    <div
+                        class="tab-pane fade"
+                        id="pills-scadule"
+                        role="tabpanel"
+                        aria-labelledby="pills-scadule-tab"
+                    >
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="scadule">
+                                    <div id="calendar-container">
+                                        <div id="calendar"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -694,6 +729,49 @@ prefix="c" %>
     </div>
 </div>
 
+<!-- Modal -->
+<div
+    class="modal fade"
+    id="calandarModal"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="calandarModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">일정</h1>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body" id="calandarModalBody"></div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+                    닫기
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="deleteEventButton"
+                    data-bs-dismiss="modal"
+                >
+                    삭제하기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript" src="/resources/js/task.js"></script>
 <script type="text/javascript">
     //높이 리사이즈
@@ -710,3 +788,5 @@ prefix="c" %>
         container.style.height = firstHeight + diff - 125 + "px";
     });
 </script>
+
+<script></script>
