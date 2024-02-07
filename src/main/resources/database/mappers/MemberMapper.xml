@@ -3,27 +3,32 @@
 		    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 		    
-<mapper namespace="com.workmotion.app.member.MemberDTO">
+<mapper namespace="com.workmotion.app.member.MemberDAO">
 
-		<select id="totalCount" resultType="MemberDTO">
-		SELECT COUNT(*)FROM member
-		</select>
-
-
-		<select id="getMemberList" parameterType="map" resultType="MemberDTO">
-			SELECT * FROM
-			(
-			SELECT ROWNUM R , MR.* FROM
-			(
-			SELECT * FROM member ORDER BY id DESC)
-			MR) 
-			WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
+		
+		
+		<!-- 파일 삭제 -->
+		<delete id="setFileDelete" parameterType="Avatar" >
+		DELETE avatar WHERE name = #{name}
+		</delete>
+		
+		<!--파일추가-->
+		<insert id="setFileAdd" parameterType="Avatar">
+		INSERT INTO avatar VALUES(AVATAR_SEQ.NEXTVAL,#{member_id},#{name},#{ori_name})
+		</insert>
+		
+		<!--이메일 체크 -->
+		<select id="emailCheck" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT email FROM member WHERE email = #{email}
 		</select>
 		
-		<select id="getMemberDetail" parameterType="MemberDTO" resultMap="getMemberDetailResult">
-		SELECT * FROM member LEFT JOIN avatar USING(id) WHERE #{id}	
+		<!-- 로그인 조회  -->
+		<select id="detailMember" parameterType="MemberDTO" resultMap="getDetailMemberResult">
+		SELECT M.*, A.name avatar_name ,A.ori_name FROM member M 
+		LEFT JOIN avatar A ON (M.id = A.MEMBER_ID) 
+		WHERE email = #{email}	
 		</select>
-		<resultMap type="MemberDTO" id="getMemberDetailResult">
+		<resultMap type="MemberDTO" id="getDetailMemberResult">
 		<id column="id" property="id"/>
 		<result column="rold_id" property="role_id"/>
 		<result column="company_id" property="company_id"/>
@@ -32,43 +37,37 @@
 		<result column="name" property="name"/>
 		<result column="department_id" property="department_id"/>
 		<result column="position_id" property="position_id"/>
-		<association property="avatar" javaType="Avatar">
+		<result column="phone" property="phone"/>
+		<association property="avatar" javaType="Avatar" >
 		<id column="id" property="id"/>
-		<result column="name" property="name"/>
-		<result column="origin_name" property="origin_name"/>
+		<result column="avatar_name" property="name"/>
+		<result column="ori_name" property="ori_name"/>
 		</association>
-		</resultMap>
+		</resultMap> 
 		
 		
-		<insert id="createMember" parameterType="MemberDTO">
-		INSERT INTO member VALUES(#{id},#{role_id},#{company_id},
-		#{email},#{password},#{name},#{department_id},#{position_id})
+		<!--회원가입-->
+ 		<insert id="createMember" parameterType="MemberDTO">
+		INSERT INTO member VALUES(member_SEQ.NEXTVAL,0,0,
+		#{email},#{password},#{name},0,0,#{phone})
 		</insert>
 	
-		<delete id="deleteMember" parameterType="MemberDTO">
-		DELETE member WHERE #{id}
-		</delete>
 	
+	
+		<!--마이페이지 수정-->
 		<update id="updateMember" parameterType="MemberDTO">
-		UPDATE member <set>
-		<if test="role_id != null or role_id !=''">
-		role_id = #{role_id},</if>
-		<if test="company_id !=null or company_id !=''">
-		company_id = #{company_id},</if>		
-		<if test="email != null or email !=''">
+		UPDATE member <set>	
+		<if test="email != null and email !=''">
 		email = #{email},</if>
-		<if test="password !=null or password !=''">
+		<if test="password != null and password !=''">
 		password = #{password},</if>
-		<if test="name != null or name !=''">
+		<if test="name != null and name !=''">
 		name = #{name},</if>
-		<if test="department_id !=null or department_id !=''">
-		department_id = #{department_id},</if>
-		<if test="position_id !=null or position_id != ''">
-		position_id = #{position_id}
+		<if test="phone !=null and phone != ''">
+		phone = #{phone}
 		</if>
-
 		</set>
 		WHERE id = #{id}
-		</update>
+		</update>   
 	
 </mapper>
