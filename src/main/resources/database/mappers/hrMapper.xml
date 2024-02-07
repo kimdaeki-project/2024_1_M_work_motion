@@ -6,8 +6,15 @@
 <mapper namespace="com.workmotion.app.hr.HrDAO">
 	
 		
-		<select id="totalCount" resultType="Long" parameterType="MemberDTO">
-		SELECT COUNT(*) FROM MEMBER WHERE company_id = #{company_id}
+		<sql id="search">
+		LIKE '%'||#{pager.search}||'%'
+		</sql>
+		
+		
+		
+		<select id="totalCount" resultType="Long" parameterType="Map">
+		SELECT COUNT(*) FROM MEMBER WHERE company_id = #{memberDTO.company_id}
+		AND name <include refid="search"></include>
 		</select>
 		
 		<!--인사 리스트 -->
@@ -18,7 +25,9 @@
 		department D 
  		JOIN member M on(D.id=M.department_id) 
 		LEFT JOIN position P ON (m.position_id=p.id) 
-		WHERE company_id = #{memberDTO.company_id} ORDER BY position_id ASC)ML)
+		WHERE company_id = #{memberDTO.company_id} 
+		AND M.name <include refid="search"></include>
+		ORDER BY position_id ASC)ML)
 		WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
 		</select>
 		

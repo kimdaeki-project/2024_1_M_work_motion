@@ -18,6 +18,12 @@ public class Pager {
 	private boolean start;
 	private boolean last;
 	
+	private String search;
+	private String kind;
+	
+	
+	
+	
 	
 	
 	public void makeRow() throws Exception {
@@ -50,7 +56,7 @@ public class Pager {
 		this.setLastNum(lastNum);
 		
 		if(curBlock==1) {
-			this.setStart(start);
+			this.setStart(true);
 		}
 		if(curBlock==totalBlock) {
 			this.setLastNum(totalPage);
@@ -124,6 +130,25 @@ public class Pager {
 	}
 	public void setLast(boolean last) {
 		this.last = last;
+	}
+
+	public String getSearch() {
+		if(this.search==null) {
+			this.search ="";
+		}
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+	public String getKind() {
+		return kind;
+	}
+
+	public void setKind(String kind) {
+		this.kind = kind;
 	}
 	
 	

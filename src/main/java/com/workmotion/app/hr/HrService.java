@@ -24,12 +24,13 @@ public class HrService {
 	public List<Map<String,Object>> getMemberList (MemberDTO memberDTO,HttpSession session,Pager pager) throws Exception {	
 		 MemberDTO m = (MemberDTO)session.getAttribute("member");
 		 memberDTO = hrDAO.getMemberDetail(m);
-		 pager.makeRow();
-		 Long totalCount = hrDAO.totalCount(memberDTO);
-		 pager.makePage(totalCount);
 		 Map<String,Object> ar = new HashMap<String, Object>();
 		 ar.put("memberDTO",memberDTO);
+		 pager.makeRow();
 		 ar.put("pager",pager);
+		 Long totalCount = hrDAO.totalCount(ar);
+		 pager.makePage(totalCount);
+		 ar.put("pager",pager); //°Ë»ö¾î
 		return hrDAO.getMemberList(ar);	
 	}
 }

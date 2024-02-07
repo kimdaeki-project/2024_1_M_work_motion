@@ -16,8 +16,8 @@ public class HrDAO {
 	private SqlSession sqlSession;
 	private final String NAMESPACE = "com.workmotion.app.hr.HrDAO.";
 	
-	public Long totalCount(MemberDTO memberDTO) throws Exception {
-		return sqlSession.selectOne(NAMESPACE+"totalCount", memberDTO);
+	public Long totalCount(Map<String,Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"totalCount", map);
 	}
 	
 	public List<Map<String,Object>> getMemberList (Map<String,Object> map) throws Exception {
