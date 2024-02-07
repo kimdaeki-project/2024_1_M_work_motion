@@ -27,7 +27,7 @@ public class Pager {
 	
 	public void makePage(Long totalCount)throws Exception {
 		totalPage=totalCount/this.getPerPage();
-		if(totalPage%this.getPerPage()!=0) {
+		if(totalCount%this.getPerPage()!=0) {
 			totalPage++;
 		}
 		

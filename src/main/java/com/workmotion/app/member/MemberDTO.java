@@ -11,7 +11,7 @@ public class MemberDTO{
 	private String password;
 	private String name;
 	private Long department_id;
-	private Long phone;
+	private String phone;
 	private Long position_id;
 	private Avatar avatar;
 
@@ -70,11 +70,12 @@ public class MemberDTO{
 		this.department_id = department_id;
 	}
 
-	public Long getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-
-
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	public Long getPosition_id() {
 		return position_id;
 	}
