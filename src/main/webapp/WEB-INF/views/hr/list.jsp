@@ -33,6 +33,8 @@
 			</tbody>
 			</table>
 		</div> 
+		
+		
 		<nav aria-label="Page navigation example">
 			<ul class="pagination ml-3">
 				<c:if test="${!pager.start}">

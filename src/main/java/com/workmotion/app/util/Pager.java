@@ -52,8 +52,12 @@ public class Pager {
 		Long startNum = 0L;
 		Long lastNum = curBlock*perBlock;
 		startNum = lastNum-perBlock+1;
+		if(totalPage<perBlock) {
+			lastNum =totalPage;
+		}
 		this.setStartNum(startNum);
 		this.setLastNum(lastNum);
+		
 		
 		if(curBlock==1) {
 			this.setStart(true);
