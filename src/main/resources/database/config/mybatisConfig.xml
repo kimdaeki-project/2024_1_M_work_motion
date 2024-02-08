@@ -15,6 +15,7 @@
 		<typeAlias type="com.workmotion.app.document.DocumentDTO" alias="DocumentDTO"/>	
 		<typeAlias type="com.workmotion.app.document.file.DocumentFileDTO" alias="DocumentFileDTO"/>
 		<typeAlias type="com.workmotion.app.department.DepartmentDTO" alias="DepartmentDTO"/>
+		<typeAlias type="com.workmotion.app.referrer.ReferrerDTO" alias="ReferrerDTO"/>
 
 		<typeAlias type="com.workmotion.app.member.MemberDTO" alias="MemberDTO"/>
 		<typeAlias type="com.workmotion.app.member.Avatar" alias="Avatar"/>		    

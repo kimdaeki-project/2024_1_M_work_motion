@@ -26,10 +26,12 @@ public class TempleteController {
 	
 	@GetMapping("detail")
 	public String getTempleteDetail(TempleteDTO templeteDTO,Model model,HttpSession session)throws Exception{
-		//이름,부서 session 에서 꺼내기  
+		//이름,부서 session 에서 꺼내기
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");		
 		
 		templeteDTO = templeteService.getTempleteDetail(templeteDTO);		
-		model.addAttribute("dto", templeteDTO);		
+		model.addAttribute("dto", templeteDTO);
+		model.addAttribute("member", memberDTO);
 		
 		model.addAttribute("page","docTemplete/detail");	
 		return "index";

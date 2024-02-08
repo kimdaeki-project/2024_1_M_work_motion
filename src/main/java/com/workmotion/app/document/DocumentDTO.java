@@ -6,6 +6,7 @@ import java.util.List;
 import com.workmotion.app.department.DepartmentDTO;
 import com.workmotion.app.document.file.DocumentFileDTO;
 import com.workmotion.app.member.MemberDTO;
+import com.workmotion.app.referrer.ReferrerDTO;
 import com.workmotion.app.templete.TempleteDTO;
 
 public class DocumentDTO {
@@ -15,38 +16,26 @@ public class DocumentDTO {
 	private String content;
 	private Long templete_id;
 	private Date create_dt;
-	private Long member_id;	
-	private String referrer;
+	private Long member_id;		
 	private Long temporary_save;
 	private String period;
 	private String phone;
 	private Date deadline;
 	private List<DocumentFileDTO> documentFileDTOs;
+	private List<ReferrerDTO> referrerDTOs;
 
 	
-	private MemberDTO memberDTO;
-	private DepartmentDTO departmentDTO;
 
-	
-	
-	
-	
-	public MemberDTO getMemberDTO() {
-		return memberDTO;
-	}
-	public void setMemberDTO(MemberDTO memberDTO) {
-		this.memberDTO = memberDTO;
-	}
-	public DepartmentDTO getDepartmentDTO() {
-		return departmentDTO;
-	}
-	public void setDepartmentDTO(DepartmentDTO departmentDTO) {
-		this.departmentDTO = departmentDTO;
-	}
 	
 	
 
 	
+	public List<ReferrerDTO> getReferrerDTOs() {
+		return referrerDTOs;
+	}
+	public void setReferrerDTOs(List<ReferrerDTO> referrerDTOs) {
+		this.referrerDTOs = referrerDTOs;
+	}
 	public List<DocumentFileDTO> getDocumentFileDTOs() {
 		return documentFileDTOs;
 	}
@@ -94,12 +83,6 @@ public class DocumentDTO {
 	}
 	public void setMember_id(Long member_id) {
 		this.member_id = member_id;
-	}
-	public String getReferrer() {
-		return referrer;
-	}
-	public void setReferrer(String referrer) {
-		this.referrer = referrer;
 	}
 
 	public String getPeriod() {

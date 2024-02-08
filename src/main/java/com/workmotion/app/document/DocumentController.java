@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.workmotion.app.member.MemberDTO;
+import com.workmotion.app.referrer.ReferrerDTO;
 
 @Controller
 @RequestMapping("/document/*")
@@ -25,12 +26,12 @@ public class DocumentController {
 	}
 	
 	@PostMapping("add")
-	public String createDocument(DocumentDTO documentDTO,MultipartFile[] file,Model model,HttpSession session)throws Exception{
+	public String createDocument(DocumentDTO documentDTO,MultipartFile[] file,Model model,ReferrerDTO[] referrerDTO,HttpSession session)throws Exception{
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");		
 				
 		documentDTO.setMember_id(memberDTO.getId());				
 		
-		int result = documentService.createDocument(documentDTO, file);
+		int result = documentService.createDocument(documentDTO, file,referrerDTO);
 		
 		String msg = "등록 실패";
 		

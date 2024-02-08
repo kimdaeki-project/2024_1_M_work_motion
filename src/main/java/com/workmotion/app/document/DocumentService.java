@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.workmotion.app.document.file.DocumentFileDTO;
 import com.workmotion.app.document.util.FileManager;
+import com.workmotion.app.referrer.ReferrerDTO;
 
 @Service
 public class DocumentService {
@@ -21,7 +22,7 @@ public class DocumentService {
 	@Autowired
 	private ServletContext servletContext;
 	
-	public int createDocument(DocumentDTO documentDTO,MultipartFile[] file)throws Exception{
+	public int createDocument(DocumentDTO documentDTO,MultipartFile[] file,ReferrerDTO[] referrerDTO)throws Exception{
 		
 		int result = documentDAO.createDocument(documentDTO);
 		
@@ -40,6 +41,15 @@ public class DocumentService {
 			fileDTO.setDocument_id(documentDTO.getId());
 			result = documentDAO.createFiles(fileDTO);
 		}
+		
+		
+			for(ReferrerDTO r:referrerDTO) {
+				
+				ReferrerDTO dto = new ReferrerDTO();
+				dto.setDocumet_id(documentDTO.getId());
+				dto.setMember_id(documentDTO.getMember_id());
+				result = documentDAO.createReferrer(r);
+			}
 		
 		
 		return result;

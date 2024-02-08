@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.workmotion.app.document.file.DocumentFileDTO;
+import com.workmotion.app.referrer.ReferrerDTO;
 
 @Repository
 public class DocumentDAO {
@@ -20,7 +21,11 @@ public class DocumentDAO {
 	
 	public int createFiles(DocumentFileDTO fileDTO)throws Exception{
 		return sqlSession.insert(NAMESPACE+"createFiles", fileDTO);
-	}	
+	}
+	
+	public int createReferrer(ReferrerDTO referrerDTO)throws Exception{
+		return sqlSession.insert(NAMESPACE+"createReferrer", referrerDTO);
+	}
 
 
 }

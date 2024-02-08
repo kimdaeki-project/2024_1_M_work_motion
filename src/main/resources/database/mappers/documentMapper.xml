@@ -8,14 +8,19 @@
 
   	<insert id="createDocument" parameterType="DocumentDTO">	
 		INSERT INTO DOCUMENT
-		(ID,TITLE,CONTENT,TEMPLETE_ID,CREATE_DT,MEMBER_ID,REFERRER,SAVE,PERIOD,PHONE,DEADLINE)
+		(ID,TITLE,CONTENT,TEMPLETE_ID,CREATE_DT,MEMBER_ID,TEMPORARY_SAVE,PERIOD,PHONE,DEADLINE)
 		VALUES
-		(DOCUMENT_SEQ.NEXTVAL,#{title},#{content},#{templete_id},#{create_dt},#{member_id},#{referrer},#{save},#{period,jdbcType=VARCHAR2},#{phone},#{deadline})
+		(DOCUMENT_SEQ.NEXTVAL,#{title},#{content},#{templete_id},#{create_dt},#{member_id},#{temporary_save},#{period,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{deadline,jdbcType=DATE})
 	</insert>  
 	
 	<insert id="createFiles" parameterType="DocumentFileDTO">
 		INSERT INTO DOCUMENT_FILE 
 		VALUES(DOCUMENT_FILE_SEQ.NEXTVAL,#{document_id},#{name},#{ori_name})	
+	</insert>
+	
+	<insert id="createReferrer" parameterType="ReferrerDTO">
+		INSERT INTO REFERRER 
+		VALUES(#{document_id},#{member_id})
 	</insert>	
 	
 
