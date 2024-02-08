@@ -94,6 +94,7 @@ public class MemberController {
 	
 	@PostMapping("join")
 	public String getjoin(MemberDTO memberDTO,Model model)throws Exception{
+		System.out.println(memberDTO.getPhone());
 		String hashpassword = BCrypt.hashpw(memberDTO.getPassword(),BCrypt.gensalt());
 		memberDTO.setPassword(hashpassword);
 		int result =  memberService.getjoin(memberDTO);

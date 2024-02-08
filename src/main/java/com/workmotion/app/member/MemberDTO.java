@@ -15,8 +15,10 @@ public class MemberDTO{
 	private String phone;
 	private Long position_id;
 	private Avatar avatar;
+
 	private DepartmentDTO department;
 	private PositionDTO position;
+
 
 	
 	
@@ -85,12 +87,6 @@ public class MemberDTO{
 		this.department_id = department_id;
 	}
 
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 	public Long getPosition_id() {
 		return position_id;
 	}
@@ -103,6 +99,12 @@ public class MemberDTO{
 				+ ", password=" + password + ", name=" + name + ", department_id=" + department_id + ", phone=" + phone
 				+ ", position_id=" + position_id + ", avatar=" + avatar + "]";
 
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 	
