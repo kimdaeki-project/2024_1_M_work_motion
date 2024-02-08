@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.workmotion.app.member.MemberDTO;
@@ -21,6 +22,15 @@ public class HrController {
 	
 	@Autowired
 	private HrService hrService;
+	
+	@PostMapping("update")
+	public void updateMember (MemberDTO memberDTO,String positionName,String departmentName) throws Exception {
+				if(memberDTO != null) {
+					
+				}
+				
+		
+	}
 	
 	@GetMapping("detail")
 	public String getMemberDetail (MemberDTO memberDTO,Model model) throws Exception {

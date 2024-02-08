@@ -8,12 +8,12 @@
                     <div class="card-header"><h3 class="text-center font-weight-light my-4">${dto.name}</h3></div>
                     <div class="card-body">
 
-            			<c:if test="${dto.avatar.name}">
+            			<c:if test="${not empty dto.avatar.name}">
             				<div>
             					<img  src="/resources/upload/member/${dto.avatar.name}">
             				</div>
             			</c:if>
-					
+
 
                         <form action="/hr/update" method="post" id="hrFrm">
           
@@ -33,13 +33,13 @@
                             </div>
 
 						<div class="form-floating mb-3">
-							<input class="form-control" id="department" type="text" name="department"
+							<input class="form-control" id="departmentName" type="text" name="departmentName"
 								value="${dto.department.name}" placeholder="name@example.com" /> <label
 								for="email">부서</label>
 						</div>
 
 						<div class="form-floating mb-3">
-							<input class="form-control" id="position" type="text" name="email"
+							<input class="form-control" id="positionName" type="text" name="positionName"
 								value="${dto.position.name}" placeholder="name@example.com" /> <label
 								for="email">직급</label>
 						</div>
