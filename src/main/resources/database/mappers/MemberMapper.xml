@@ -25,7 +25,7 @@
 		<!-- 로그인 조회  -->
 		<select id="detailMember" parameterType="MemberDTO" resultMap="getDetailMemberResult">
 		SELECT M.*, A.name avatar_name ,P.name PNAME,D.name DNAME FROM member M 
-		LEFT JOIN avatar A ON (M.id = A.MEMBER_ID) 
+		JOIN avatar A ON (M.id = A.MEMBER_ID) 
 		JOIN POSITION P ON(M.POSITION_ID=P.id)
 		JOIN DEPARTMENT D on(M.DEPARTMENT_ID=D.ID)
 		WHERE email = #{email}
