@@ -1,5 +1,6 @@
 package com.workmotion.app.department;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,15 +25,33 @@ public class DepartmentService {
 		return departmentDAO.getDepartmentList(pager);		
 		}
 	//디테일 디테일 디테일@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	public List<MemberDTO> getDepartmentDetail(MemberDTO memberDTO) throws Exception{
-		return departmentDAO.getDepartmentDetail(memberDTO);
+	public List<MemberDTO> getDepartmentDetail(MemberDTO memberDTO, Pager pager) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		pager.makeRow();
+		Pager countPager = new Pager();
+		countPager.setSearch(pager.getSearch());
+		countPager.setPage(memberDTO.getDepartment_id());
+		Long totalCount = departmentDAO.getMemberTotalCount(countPager);
+		pager.makePage(totalCount);
+		map.put("member", memberDTO);
+		map.put("Pager", pager);
+		
+		
+		return departmentDAO.getDepartmentDetail(map);
 		
 	}
 	
 	public List<Map<String, Object>> getMemberList(Map<String, Object> map)throws Exception{
 		Pager pager = (Pager)map.get("pager");
 		pager.makeRow();
-		return departmentDAO.getMemberList(map);
+		map.put("pager", pager);
+//		MemberDTO memberDTO = (MemberDTO)map.get("member");
+		 Long totalCount = departmentDAO.getMemberListTotalCount(map);
+		 pager.makePage(totalCount);
+		 map.put("pager", pager);
+	 
+		
+		 return departmentDAO.getMemberList(map);
 	}
 	
 	public int createMember(MemberDTO memberDTO) throws Exception{
