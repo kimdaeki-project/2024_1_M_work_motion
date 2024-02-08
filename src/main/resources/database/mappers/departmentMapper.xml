@@ -5,28 +5,51 @@
 
 <mapper namespace="com.workmotion.app.department.DepartmentDAO">
 
+
+
+
+
 	<select id="getTotalCount" resultType="Long"
 		parameterType="Pager">
-		SELECT Count(id) FROM department
+		SELECT Count(id) FROM department  WHERE ID != 0 AND name LIKE '%'||#{search}||'%'
 	</select>
 
+	<select id="getMemberTotalCount" resultType="Long"
+		parameterType="Pager">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE department_id=#{page} AND name LIKE '%'||#{search}||'%'
+	</select>
+
+	<select id="getMemberListTotalCount" resultType="Long" parameterType="Map">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE department_id !=#{member.department_id} AND name LIKE '%'||#{pager.search}||'%'
+	</select>
+	
 	<select id="getDepartmentList" resultType="DepartmentDTO"
 		parameterType="Pager">
 		SELECT * FROM
 		(SELECT ROWNUM N, R.* FROM
 		(SELECT * FROM
 		DEPARTMENT
-		WHERE ID != 0
+		WHERE ID != 0 AND name LIKE '%'||#{search}||'%'
 		ORDER BY ID) R)RG
 		WHERE N BETWEEN #{startRow}
 		AND #{lastRow}
 	</select>
 
 	<select id="getDepartmentDetail" resultType="MemberDTO"
-		parameterType="MemberDTO">
-		SELECT * FROM member
-		WHERE DEPARTMENT_ID
-		=#{department_id}
+		parameterType="Map">
+		SELECT * FROM
+		(
+		SELECT ROWNUM RG ,R.* FROM
+		(
+		SELECT * FROM
+		member
+		WHERE DEPARTMENT_ID=#{member.department_id} AND name LIKE '%'||#{Pager.search}||'%'
+		ORDER BY ID ASC
+		) R
+		)
+		WHERE RG BETWEEN #{Pager.startRow} AND #{Pager.lastRow}
 	</select>
 
 	<select id="getMemberList" resultType="Map" parameterType="Map">
@@ -34,13 +57,16 @@
 		(
 		SELECT ROWNUM RG ,R.* FROM
 		(
-		SELECT m.*, d.name AS department_name
+		SELECT m.*, d.name AS
+		department_name
 		FROM MEMBER m
 		JOIN DEPARTMENT d
-		ON (m.DEPARTMENT_ID = d.ID)
-		WHERE d.ID != #{member.department_id}
+		ON (m.DEPARTMENT_ID =
+		d.ID)
+		WHERE d.ID != #{member.department_id} AND d.name LIKE '%'||#{pager.search}||'%'
 		ORDER BY
-		m.department_id ASC, m.id ASC
+		m.department_id ASC,
+		m.id ASC
 		)R
 		)
 		WHERE RG BETWEEN #{pager.startRow} AND
@@ -61,26 +87,41 @@
 		(SELECT * FROM
 		MEMBER
 		WHERE id =#{id}) T
-		SET T.department_id=0
+		<set>
+			<if test="department_id != null or department_id != ''">
+				T.department_id=0
+			</if>
+		</set>
 	</update>
 
 	<insert id="createDepartment" parameterType="DepartmentDTO">
-	INSERT INTO DEPARTMENT
-	VALUES(DEPARTMENT_SEQ.NEXTVAL,#{name},#{phone_num})
+		INSERT INTO
+		DEPARTMENT
+		VALUES(DEPARTMENT_SEQ.NEXTVAL,#{name},#{phone_num})
 	</insert>
-	
+
 	<update id="updateDepartment" parameterType="DepartmentDTO">
-		UPDATE DEPARTMENT SET NAME=#{name}, phone_num=#{phone_num}
+		UPDATE DEPARTMENT
+		<set>
+			<if test="name != null or name != ''">
+				NAME=#{name},
+			</if>
+			<if test="phone_num != null or phone_num != ''">
+				phone_num=#{phone_num}
+			</if>
+		</set>
 		WHERE ID=#{id}
 	</update>
-	
+
 	<delete id="deleteDepartment" parameterType="DepartmentDTO">
-	DELETE FROM DEPARTMENT 
-	WHERE ID = #{id}
+		DELETE FROM
+		DEPARTMENT
+		WHERE ID = #{id}
 	</delete>
-	
-	<select id="departmentDetail" resultType="DepartmentDTO" parameterType="DepartmentDTO">
-	SELECT * FROM department
-	WHERE id = #{id}
+
+	<select id="departmentDetail" resultType="DepartmentDTO"
+		parameterType="DepartmentDTO">
+		SELECT * FROM department
+		WHERE id = #{id}
 	</select>
 </mapper>

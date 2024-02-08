@@ -1,8 +1,10 @@
 package com.workmotion.app.document;
 
 import java.sql.Date;
+import java.util.List;
 
 import com.workmotion.app.department.DepartmentDTO;
+import com.workmotion.app.document.file.DocumentFileDTO;
 import com.workmotion.app.member.MemberDTO;
 import com.workmotion.app.templete.TempleteDTO;
 
@@ -15,12 +17,12 @@ public class DocumentDTO {
 	private Date create_dt;
 	private Long member_id;	
 	private String referrer;
-	private Long save;
+	private Long temporary_save;
 	private String period;
 	private String phone;
 	private Date deadline;
-	private String member_name;
-	private String department_name;
+	private List<DocumentFileDTO> documentFileDTOs;
+
 	
 	private MemberDTO memberDTO;
 	private DepartmentDTO departmentDTO;
@@ -43,17 +45,19 @@ public class DocumentDTO {
 	}
 	
 	
-	public String getMember_name() {
-		return member_name;
+
+	
+	public List<DocumentFileDTO> getDocumentFileDTOs() {
+		return documentFileDTOs;
 	}
-	public void setMember_name(String member_name) {
-		this.member_name = member_name;
+	public void setDocumentFileDTOs(List<DocumentFileDTO> documentFileDTOs) {
+		this.documentFileDTOs = documentFileDTOs;
 	}
-	public String getDepartment_name() {
-		return department_name;
+	public Long getTemporary_save() {
+		return temporary_save;
 	}
-	public void setDepartment_name(String department_name) {
-		this.department_name = department_name;
+	public void setTemporary_save(Long temporary_save) {
+		this.temporary_save = temporary_save;
 	}
 	public Long getId() {
 		return id;
@@ -97,12 +101,7 @@ public class DocumentDTO {
 	public void setReferrer(String referrer) {
 		this.referrer = referrer;
 	}
-	public Long getSave() {
-		return save;
-	}
-	public void setSave(Long save) {
-		this.save = save;
-	}
+
 	public String getPeriod() {
 		return period;
 	}

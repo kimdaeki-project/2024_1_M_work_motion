@@ -23,6 +23,8 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	
+	
 	@ResponseBody
 	@PostMapping("pwCheck")
 	public int pwCheck(HttpSession session,MemberDTO memberDTO) throws Exception {
@@ -69,7 +71,12 @@ public class MemberController {
 		MemberDTO m = memberService.getlogin(memberDTO);
 			if(m !=null) {
 				if(BCrypt.checkpw(memberDTO.getPassword(),m.getPassword())) {
-					session.setAttribute("member",memberDTO);
+					m.setPassword(null);
+					session.setAttribute("member",m);
+					System.out.println(m.getDepartment().getName());
+					System.out.println(m.getPosition().getName());
+					
+					
 					model.addAttribute("page","home");
 					return "index";	
 				}else {
@@ -87,6 +94,7 @@ public class MemberController {
 	
 	@PostMapping("join")
 	public String getjoin(MemberDTO memberDTO,Model model)throws Exception{
+		System.out.println(memberDTO.getPhone());
 		String hashpassword = BCrypt.hashpw(memberDTO.getPassword(),BCrypt.gensalt());
 		memberDTO.setPassword(hashpassword);
 		int result =  memberService.getjoin(memberDTO);
