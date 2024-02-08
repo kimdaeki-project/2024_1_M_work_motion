@@ -20,7 +20,7 @@ public class Pager {
 	
 	private String search;
 	private String kind;
-	
+
 	
 	
 	public void makeRow() throws Exception {
@@ -50,16 +50,14 @@ public class Pager {
 		Long startNum = 0L;
 		Long lastNum = curBlock*perBlock;
 		startNum = lastNum-perBlock+1;
-		
-		
+
 		if(totalPage<perBlock) {
-			lastNum = totalPage;
-			System.out.println(lastNum);
-		}		
-		
-		
+			lastNum =totalPage;
+		}
+
 		this.setStartNum(startNum);
 		this.setLastNum(lastNum);
+		
 		
 		if(curBlock==1) {
 			this.setStart(true);
@@ -140,6 +138,14 @@ public class Pager {
 		this.last = last;
 	}
 
+
+	public String getSearch() {
+		if(this.search==null) {
+			this.search ="";
+      }
+		return search;
+	}
+
 	@Override
 	public String toString() {
 		return "Pager [startRow=" + startRow + ", lastRow=" + lastRow + ", perPage=" + perPage + ", page=" + page
@@ -147,16 +153,11 @@ public class Pager {
 				+ lastNum + ", start=" + start + ", last=" + last + "]";
 	}
 
-	public String getSearch() {
-		if(search==null) {
-			search="";
-		}
-		return search;
-	}
+
+		
 
 	public void setSearch(String search) {
 		this.search = search;
-		
 	}
 
 	public String getKind() {
