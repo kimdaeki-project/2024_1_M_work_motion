@@ -19,11 +19,13 @@ public class HrService {
 	private HrDAO hrDAO;
 	
 	
-
+	public Map<String,Object> getMemberDetail (MemberDTO memberDTO) throws Exception {
+		return hrDAO.getMemberDetail(memberDTO);
+	}
 	
 	public List<Map<String,Object>> getMemberList (MemberDTO memberDTO,HttpSession session,Pager pager) throws Exception {	
 		 MemberDTO m = (MemberDTO)session.getAttribute("member");
-		 memberDTO = hrDAO.getMemberDetail(m);
+		 memberDTO = hrDAO.getListDetail(m);
 		 Map<String,Object> ar = new HashMap<String, Object>();
 		 ar.put("memberDTO",memberDTO);
 		 pager.makeRow();

@@ -4,7 +4,8 @@ const pwCheckBtn = document.getElementById("pwCheckBtn");
 const mypageFrm = document.getElementById("mypageFrm");
 const updateBtn = document.getElementById("updateBtn");
 const updatePw = document.getElementById("updatePw");
-const check = true;
+const check = false;
+const check2 = true;
 pwCheckBtn.addEventListener("click",()=>{
    
     let formdata = new FormData(mypageFrm);
@@ -26,17 +27,26 @@ pwCheckBtn.addEventListener("click",()=>{
             check = false;
         }
     })
-    
+    check2=false;
     updatePw.disabled = false;
 })
    
 updateBtn.addEventListener("click",()=>{
 
-        if(check){
-            pw.disabled = true;
-            mypageFrm.submit();
+        if(check2){                     //비밀번호 확인 x 
+            if(check){                  //비밀번호 변경
+                pw.disabled = true;
+                mypageFrm.submit();
+            }else{
+                alert("비밀번호를 확인해주세요");
+
+            }
+                
         }else{
-            alert("비밀번호를 확인해주세요");
+            pw.disabled = true;
+            updatePw.disabled = true;
+            mypageFrm.submit();
+
         }
 
 

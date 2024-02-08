@@ -23,6 +23,8 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	
+	
 	@ResponseBody
 	@PostMapping("pwCheck")
 	public int pwCheck(HttpSession session,MemberDTO memberDTO) throws Exception {

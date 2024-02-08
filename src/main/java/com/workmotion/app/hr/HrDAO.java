@@ -24,7 +24,11 @@ public class HrDAO {
 		return sqlSession.selectList(NAMESPACE+"getMemberList",map);
 	}
 	
-	public MemberDTO getMemberDetail(MemberDTO memberDTO)throws Exception {
+	public Map<String,Object> getMemberDetail (MemberDTO memberDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getMemberDetail",memberDTO);
+	}
+	
+	public MemberDTO getListDetail(MemberDTO memberDTO)throws Exception {
 		return sqlSession.selectOne(NAMESPACE+"getMemberDetail",memberDTO);
 	}
 	

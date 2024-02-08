@@ -22,6 +22,14 @@ public class HrController {
 	@Autowired
 	private HrService hrService;
 	
+	@GetMapping("detail")
+	public String getMemberDetail ( MemberDTO memberDTO,Model model) throws Exception {
+		Map<String,Object> ar = hrService.getMemberDetail(memberDTO);
+		model.addAttribute("dto",ar);
+		model.addAttribute("page","hr/detail");
+		return "index";
+	}
+	
 	@GetMapping("list")
 	public String getMemberList(HttpSession session,MemberDTO memberDTO,Model model,Pager pager) throws Exception { 
 		List<Map<String,Object>> ar = hrService.getMemberList(memberDTO,session,pager);

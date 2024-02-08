@@ -11,7 +11,7 @@
 		</sql>
 		
 		
-		
+		<!--페이징처리 총 사원수  -->
 		<select id="totalCount" resultType="Long" parameterType="Map">
 		SELECT COUNT(*) FROM department D 
  		JOIN member M on(D.id=M.department_id) 
@@ -33,30 +33,22 @@
 		WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
 		</select>
 		
-
-	
-		<!--디테일-->
-		<select id="getMemberDetail" parameterType="MemberDTO" resultMap="getDetailMemberResult">
-		SELECT M.*, A.name avatar_name ,A.ori_name FROM member M 
-		LEFT JOIN avatar A ON (M.id = A.MEMBER_ID) 
-		WHERE email = #{email}	
+		
+		<!--상세 페이지 디테일-->
+		<select id="getMemberDetail" parameterType="MemberDTO" resultType="Map">
+		SELECT M.*,D.name DNAME,P.name PNAME,A.name ANAME,A.ORI_NAME AORINAME FROM DEPARTMENT D 
+		JOIN MEMBER M on(D.id = M.DEPARTMENT_ID)
+		JOIN POSITION P ON(M.POSITION_ID=P.id)
+		JOIN AVATAR A ON (M.id=A.MEMBER_ID)
+		WHERE M.EMAIL  = ${email}
 		</select>
-		<resultMap type="MemberDTO" id="getDetailMemberResult">
-		<id column="id" property="id"/>
-		<result column="rold_id" property="role_id"/>
-		<result column="company_id" property="company_id"/>
-		<result column="email" property="email"/>
-		<result column="password" property="password"/>
-		<result column="name" property="name"/>
-		<result column="department_id" property="department_id"/>
-		<result column="position_id" property="position_id"/>
-		<result column="phone" property="phone"/>
-		<association property="avatar" javaType="Avatar" >
-		<id column="id" property="id"/>
-		<result column="avatar_name" property="name"/>
-		<result column="ori_name" property="ori_name"/>
-		</association>
-		</resultMap> 
+		
+	
+		<!--리스트 조회 디테일-->
+		<select id="getListDetail" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT * FROM member M WHERE email = #{email}	
+		</select>
+
 	
 	
 	
