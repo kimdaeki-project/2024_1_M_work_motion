@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-@Component
+@Component("temFileManager")
 public class FileManager {
 	
 	public String fileSave(String path,MultipartFile templeteFile)throws Exception{
@@ -26,8 +26,7 @@ public class FileManager {
 		f = new File(f,fileName);
 		templeteFile.transferTo(f);
 		
-		return fileName;
-		
+		return fileName;		
 		
 	}
 

@@ -1,5 +1,8 @@
 package com.workmotion.app.templete;
 
+import com.workmotion.app.department.DepartmentDTO;
+import com.workmotion.app.member.MemberDTO;
+
 public class TempleteDTO {
 	
 	private Long id;
@@ -7,6 +10,8 @@ public class TempleteDTO {
 	private String file_nm;
 	private String item;
 	
+	private MemberDTO memberDTO;
+	private DepartmentDTO departmentDTO;
 	
 	
 	public String getItem() {

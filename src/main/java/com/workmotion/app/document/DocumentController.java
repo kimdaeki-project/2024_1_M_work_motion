@@ -19,8 +19,6 @@ public class DocumentController {
 	@PostMapping("add")
 	public void createDocument(DocumentDTO documentDTO,MultipartFile[] file,Model model,HttpSession session)throws Exception{
 		
-		documentDTO = documentService.getDepartment(documentDTO);
-						
 		
 		
 		

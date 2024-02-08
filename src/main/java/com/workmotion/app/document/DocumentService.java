@@ -15,40 +15,40 @@ public class DocumentService {
 	@Autowired
 	private DocumentDAO documentDAO;
 	
-	@Autowired
-	private FileManager fileManager;
+//	@Autowired
+//	private FileManager fileManager;
 	
 	@Autowired
 	private ServletContext servletContext;
 	
-	public int createDocument(DocumentDTO documentDTO,MultipartFile[] file)throws Exception{
-		
-		int result = documentDAO.createDocument(documentDTO);
-		
-		String path = servletContext.getRealPath("/resources/upload/documentFiles");
-		
-		for(MultipartFile f:file) {
-			
-			if(f.isEmpty()) {
-				continue;
-			}
-			
-			String fileName = fileManager.fileSave(path, f);
-			DocumentFileDTO fileDTO = new DocumentFileDTO();
-			fileDTO.setName(fileName);
-			fileDTO.setOri_name(f.getOriginalFilename());
-			fileDTO.setDocument_id(documentDTO.getId());
-			result = documentDAO.createFiles(fileDTO);
-			
-		}
-		
-		return result;
-	} 
-	
-	
-	public DocumentDTO getDepartment(DocumentDTO documentDTO)throws Exception{
-		return documentDAO.getDepartment(documentDTO);
-	}
+//	public int createDocument(DocumentDTO documentDTO,MultipartFile[] file)throws Exception{
+//		
+//		int result = documentDAO.createDocument(documentDTO);
+//		
+//		String path = servletContext.getRealPath("/resources/upload/documentFiles");
+//		
+//		for(MultipartFile f:file) {
+//			
+//			if(f.isEmpty()) {
+//				continue;
+//			}
+//			
+//			String fileName = fileManager.fileSave(path, f);
+//			DocumentFileDTO fileDTO = new DocumentFileDTO();
+//			fileDTO.setName(fileName);
+//			fileDTO.setOri_name(f.getOriginalFilename());
+//			fileDTO.setDocument_id(documentDTO.getId());
+//			result = documentDAO.createFiles(fileDTO);
+//			
+//		}
+//		
+//		return result;
+//	} 
+//	
+//	
+//	public DocumentDTO getDepartment(DocumentDTO documentDTO)throws Exception{
+//		return documentDAO.getDepartment(documentDTO);
+//	}
 	
 	
 	
