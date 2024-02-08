@@ -23,9 +23,9 @@ public class HrController {
 	private HrService hrService;
 	
 	@GetMapping("detail")
-	public String getMemberDetail ( MemberDTO memberDTO,Model model) throws Exception {
-		Map<String,Object> ar = hrService.getMemberDetail(memberDTO);
-		model.addAttribute("dto",ar);
+	public String getMemberDetail (MemberDTO memberDTO,Model model) throws Exception {
+		memberDTO = hrService.getMemberDetail(memberDTO);
+		model.addAttribute("dto",memberDTO);
 		model.addAttribute("page","hr/detail");
 		return "index";
 	}

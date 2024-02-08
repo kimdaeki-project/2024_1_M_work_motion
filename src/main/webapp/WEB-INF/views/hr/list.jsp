@@ -23,7 +23,7 @@
 			<tbody>
 				<c:forEach items="${list}" var="li">
 				<tr>
-				<td><a href="/hr/detail?email=${li.EMAIL}" >${li.NAME}</a></td>
+				<td><a href="/hr/detail?email=${li.EMAIL}">${li.NAME}</a></td>
 				<td>${li.PNAME}</td>
 				<td>${li.EMAIL}</td>
 				<td>${li.DNAME}</td>

@@ -19,7 +19,7 @@ public class HrService {
 	private HrDAO hrDAO;
 	
 	
-	public Map<String,Object> getMemberDetail (MemberDTO memberDTO) throws Exception {
+	public MemberDTO getMemberDetail (MemberDTO memberDTO) throws Exception {
 		return hrDAO.getMemberDetail(memberDTO);
 	}
 	
