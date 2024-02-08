@@ -26,9 +26,7 @@ public class TempleteController {
 	
 	@GetMapping("detail")
 	public String getTempleteDetail(TempleteDTO templeteDTO,Model model,HttpSession session)throws Exception{
-		
-		    //(MemberDTO)session.getAttribute("member");
-			
+							
 		templeteDTO = templeteService.getTempleteDetail(templeteDTO);		
 		model.addAttribute("dto", templeteDTO);		
 		

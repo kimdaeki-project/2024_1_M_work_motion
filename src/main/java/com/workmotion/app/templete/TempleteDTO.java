@@ -1,5 +1,7 @@
 package com.workmotion.app.templete;
 
+import java.util.Map;
+
 import com.workmotion.app.department.DepartmentDTO;
 import com.workmotion.app.member.MemberDTO;
 
@@ -8,11 +10,7 @@ public class TempleteDTO {
 	private Long id;
 	private String name;
 	private String file_nm;
-	private String item;
-	
-	private MemberDTO memberDTO;
-	private DepartmentDTO departmentDTO;
-	
+	private String item;	
 	
 	public String getItem() {
 		return item;
