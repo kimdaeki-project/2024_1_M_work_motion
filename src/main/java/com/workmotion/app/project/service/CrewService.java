@@ -1,7 +1,7 @@
 package com.workmotion.app.project.service;
 
+import com.workmotion.app.member.MemberDTO;
 import com.workmotion.app.project.dao.CrewDAO;
-import com.workmotion.app.project.model.MemberDTO;
 import com.workmotion.app.project.model.ProjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,5 +1,6 @@
 package com.workmotion.app.project.model;
 
+import com.workmotion.app.member.MemberDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;

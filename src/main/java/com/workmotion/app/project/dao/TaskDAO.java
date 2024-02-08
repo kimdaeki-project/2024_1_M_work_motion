@@ -1,6 +1,6 @@
 package com.workmotion.app.project.dao;
 
-import com.workmotion.app.project.model.MemberDTO;
+import com.workmotion.app.member.MemberDTO;
 import com.workmotion.app.project.model.ProjectDTO;
 import com.workmotion.app.project.model.TaskDTO;
 import org.apache.ibatis.session.SqlSession;

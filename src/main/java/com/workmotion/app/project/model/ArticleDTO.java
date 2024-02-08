@@ -1,5 +1,7 @@
 package com.workmotion.app.project.model;
 
+import com.workmotion.app.member.MemberDTO;
+
 import java.util.Date;
 
 public class ArticleDTO {

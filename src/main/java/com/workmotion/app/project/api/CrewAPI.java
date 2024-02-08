@@ -1,6 +1,6 @@
 package com.workmotion.app.project.api;
 
-import com.workmotion.app.project.model.MemberDTO;
+import com.workmotion.app.member.MemberDTO;
 import com.workmotion.app.project.model.ProjectDTO;
 import com.workmotion.app.project.service.CrewService;
 import org.springframework.beans.factory.annotation.Autowired;
