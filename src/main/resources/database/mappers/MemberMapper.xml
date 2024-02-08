@@ -24,9 +24,11 @@
 		
 		<!-- 로그인 조회  -->
 		<select id="detailMember" parameterType="MemberDTO" resultMap="getDetailMemberResult">
-		SELECT M.*, A.name avatar_name ,A.ori_name FROM member M 
-		LEFT JOIN avatar A ON (M.id = A.MEMBER_ID) 
-		WHERE email = #{email}	
+		SELECT M.*, A.name avatar_name ,P.name PNAME,D.name DNAME FROM member M 
+		JOIN avatar A ON (M.id = A.MEMBER_ID) 
+		JOIN POSITION P ON(M.POSITION_ID=P.id)
+		JOIN DEPARTMENT D on(M.DEPARTMENT_ID=D.ID)
+		WHERE email = #{email}
 		</select>
 		<resultMap type="MemberDTO" id="getDetailMemberResult">
 		<id column="id" property="id"/>
@@ -43,13 +45,25 @@
 		<result column="avatar_name" property="name"/>
 		<result column="ori_name" property="ori_name"/>
 		</association>
+		
+		<association property="position" javaType="PositionDTO" >
+		<id column="id" property="id"/>
+		<result column="PNAME" property="name"/>
+		</association>
+		
+		<association property="department" javaType="DepartmentDTO">
+		<id column="id" property="id"/>
+		<result column="DNAME" property="name"/>
+		</association>
 		</resultMap> 
 		
 		
 		<!--회원가입-->
  		<insert id="createMember" parameterType="MemberDTO">
-		INSERT INTO member VALUES(member_SEQ.NEXTVAL,0,0,
-		#{email},#{password},#{name},0,null,#{phone})
+
+		INSERT INTO member VALUES(member_SEQ.NEXTVAL,0,#{company_id},
+		#{email},#{password},#{name},0,10,#{phone})
+
 		</insert>
 	
 	

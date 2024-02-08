@@ -30,11 +30,11 @@ pageEncoding="UTF-8"%>
                                     <div class="card-body">
                                         <form action="/member/login" method="POST">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="email" type="email" name="email" placeholder="name@example.com" />
+                                                <input class="form-control" id="email" type="email" name="email" value="tmdrbs726@naver.com" placeholder="name@example.com" />
                                                 <label for="email">Email address</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="password" name="password" type="password" placeholder="Password" />
+                                                <input class="form-control" id="password" name="password" type="password" value="RLAtmdrbs1070@" placeholder="Password" />
                                                 <label for="password">Password</label>
                                             </div>
                                             <div class="form-check mb-3">
