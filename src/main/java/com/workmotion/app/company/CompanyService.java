@@ -16,6 +16,9 @@ public class CompanyService {
 	//컴퍼니 리스트@@@@@@@@@@@@@@
 	public List<CompanyDTO> getCompanyList(Pager pager)throws Exception{
 		pager.makeRow();
+		Long totalCount = companyDAO.companyTotalCount(pager);
+		pager.makePage(totalCount);
+		
 		return companyDAO.getCompanyList(pager);
 	}
 	

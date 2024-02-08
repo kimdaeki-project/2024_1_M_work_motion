@@ -5,6 +5,11 @@
 
 <mapper namespace="com.workmotion.app.company.CompanyDAO">
 
+	<select id="companyTotalCount" resultType="Long" parameterType="Pager">
+	SELECT COUNT(*) FROM COMPANY
+	 WHERE name LIKE '%'||#{search}||'%'
+	</select>
+
 
 	<select id="getCompanyList" resultType="CompanyDTO"
 		parameterType="Pager">
@@ -14,6 +19,7 @@
 		(
 		SELECT * FROM
 		COMPANY
+		WHERE name LIKE '%'||#{search}||'%'
 		ORDER BY ID ASC
 		) R
 		)

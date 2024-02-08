@@ -48,7 +48,10 @@ public class DepartmentService {
 //		MemberDTO memberDTO = (MemberDTO)map.get("member");
 		 Long totalCount = departmentDAO.getMemberListTotalCount(map);
 		 pager.makePage(totalCount);
-		return departmentDAO.getMemberList(map);
+		 map.put("pager", pager);
+	 
+		
+		 return departmentDAO.getMemberList(map);
 	}
 	
 	public int createMember(MemberDTO memberDTO) throws Exception{

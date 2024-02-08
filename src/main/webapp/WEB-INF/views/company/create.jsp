@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<form action="./companyCreate" method="post">
+<form action="./create" method="post">
 	<div class="mb-3">
 		<label for="name" class="form-label">회사이름</label> <input
 			name="name" type="text" class="form-control"

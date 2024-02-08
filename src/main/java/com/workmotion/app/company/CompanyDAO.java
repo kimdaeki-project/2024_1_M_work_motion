@@ -47,4 +47,9 @@ public class CompanyDAO {
 		return sqlSession.selectOne(namespace+"memberTotalCount", totalCount);
 	}
 	
+	//컴퍼니 토탈 카운트@@@@@@@@@@@@@@@@@@@
+	public Long companyTotalCount(Pager pager) throws Exception{
+		return sqlSession.selectOne(namespace+"companyTotalCount", pager);
+	}
+	
 }

@@ -76,9 +76,11 @@ public class DepartmentController {
 //		model.addAttribute("list", dto);
 //		model.addAttribute("page", "department/memberList");
 		
-		System.out.println("department_id : "+memberDTO.getDepartment_id());
+		dtos.forEach(m -> m.forEach((k,v)->System.out.println("key = " + k + " , " + "value = " + v)));;
+		
 		model.addAttribute("member", memberDTO);
 		model.addAttribute("list", dtos);
+		model.addAttribute("pager", pager);
 		model.addAttribute("page", "department/memberList");
 		return "index";
 	}

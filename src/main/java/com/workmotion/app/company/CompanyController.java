@@ -25,6 +25,7 @@ public class CompanyController {
 		List<CompanyDTO> ar = companyService.getCompanyList(pager);
 
 		model.addAttribute("list", ar);
+		model.addAttribute("Pager", pager);
 		model.addAttribute("page", "company/list");
 
 		return "manager";
@@ -61,6 +62,7 @@ public class CompanyController {
 		List<CompanyDTO> ar = companyService.getCompanyList(pager);
 
 		model.addAttribute("list", ar);
+		model.addAttribute("pager", pager);
 		model.addAttribute("page", "company/updateList");
 
 		return "manager";
