@@ -52,6 +52,12 @@
 				</c:if>
 			</ul>
 			<form action="/hr/list" method="get">
+				<select class="form-select" name="kind" aria-label="Default select example">
+					<option value="kind1">이름으로 검색</option>
+					<option value="kind2">직위로 검색</option>
+					<option value="kind3">이메일로 검색</option>
+					<option value="kind4">부서로 검색</option>
+				  </select>
 			<div class="input-group mb-3">
 				<input type="text" class="form-control" name="search"
 					aria-label="Text input with dropdown button">

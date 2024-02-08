@@ -28,6 +28,7 @@ public class HrService {
 		 ar.put("memberDTO",memberDTO);
 		 pager.makeRow();
 		 ar.put("pager",pager);
+		 ar.put("kind", pager.getKind());
 		 Long totalCount = hrDAO.totalCount(ar);
 		 pager.makePage(totalCount);
 		 ar.put("pager",pager); //°Ë»ö¾î
