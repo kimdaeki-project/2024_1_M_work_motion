@@ -10,21 +10,13 @@
 		INSERT INTO DOCUMENT
 		(ID,TITLE,CONTENT,TEMPLETE_ID,CREATE_DT,MEMBER_ID,REFERRER,SAVE,PERIOD,PHONE,DEADLINE)
 		VALUES
-		(DOCUMENT_SEQ.NEXTVAL,#{title},#{content},#{templete_id},#{create_dt},#{member_id},#{referrer},#{save},#{period},#{phone},{deadline})
+		(DOCUMENT_SEQ.NEXTVAL,#{title},#{content},#{templete_id},#{create_dt},#{member_id},#{referrer},#{save},#{period,jdbcType=VARCHAR2},#{phone},#{deadline})
 	</insert>  
 	
 	<insert id="createFiles" parameterType="DocumentFileDTO">
 		INSERT INTO DOCUMENT_FILE 
 		VALUES(DOCUMENT_FILE_SEQ.NEXTVAL,#{document_id},#{name},#{ori_name})	
-	</insert>
+	</insert>	
 	
-	<select id="getDepartment" parameterType="DocumentDTO" resultType="DocumentDTO" >
-	
-		SELECT D.NAME FROM MEMBER M
-			 LEFT JOIN DEPARTMENT D
-			 ON M.DEPARTMENT_ID = D.ID
-			 WHERE M.ID=#{member_id}
-	
-	</select> 
 
 </mapper>
