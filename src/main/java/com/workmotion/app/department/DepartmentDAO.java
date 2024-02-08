@@ -23,13 +23,21 @@ public class DepartmentDAO {
 	}
 	
 	//디테일 디테일 디테일 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	public List<MemberDTO> getDepartmentDetail(MemberDTO memberDTO) throws Exception{
-		return sqlSession.selectList(namespace+"getDepartmentDetail", memberDTO);
+	public List<MemberDTO> getDepartmentDetail(Map<String, Object> map) throws Exception{
+		return sqlSession.selectList(namespace+"getDepartmentDetail", map);
 	}
 	
 	//토탈카운트 토탈카운트 토탈카운트 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	public Long getTotalCount(Pager pager) throws Exception{
 		return sqlSession.selectOne(namespace+"getTotalCount", pager);
+	}
+	//멤버토탈카운트@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	public Long getMemberTotalCount(Pager countPager) throws Exception{
+		return sqlSession.selectOne(namespace+"getMemberTotalCount", countPager);
+	}
+	//멤버리스트토탈카운트@@@@@@@@@@@@@@@@@
+	public Long getMemberListTotalCount(Map<String, Object> map) throws Exception{
+		return sqlSession.selectOne(namespace+"getMemberListTotalCount", map);
 	}
 	
 	public List<Map<String, Object>> getMemberList(Map<String, Object> map) throws Exception{

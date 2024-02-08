@@ -7,7 +7,7 @@ public class Pager {
 	
 	private Long startRow;
 	private Long lastRow;
-	private Long perPage=10L;
+	private Long perPage=5L;
 	private Long page;
 	
 	private Long totalPage;
@@ -18,6 +18,9 @@ public class Pager {
 	private boolean start;
 	private boolean last;
 	
+	private String search;
+	private String kind;
+	
 	
 	
 	public void makeRow() throws Exception {
@@ -26,8 +29,9 @@ public class Pager {
 	}
 	
 	public void makePage(Long totalCount)throws Exception {
+		System.out.println("totalCount: "+totalCount);
 		totalPage=totalCount/this.getPerPage();
-		if(totalPage%this.getPerPage()!=0) {
+		if(totalCount%this.getPerPage()!=0) {
 			totalPage++;
 		}
 		
@@ -46,12 +50,22 @@ public class Pager {
 		Long startNum = 0L;
 		Long lastNum = curBlock*perBlock;
 		startNum = lastNum-perBlock+1;
+		
+		
+		if(totalPage<perBlock) {
+			lastNum = totalPage;
+			System.out.println(lastNum);
+		}		
+		
+		
 		this.setStartNum(startNum);
 		this.setLastNum(lastNum);
 		
 		if(curBlock==1) {
-			this.setStart(start);
+			this.setStart(true);
 		}
+		System.out.println("total Page: "+totalPage);
+		System.out.println(totalBlock);
 		if(curBlock==totalBlock) {
 			this.setLastNum(totalPage);
 			this.setLast(true);
@@ -124,6 +138,33 @@ public class Pager {
 	}
 	public void setLast(boolean last) {
 		this.last = last;
+	}
+
+	@Override
+	public String toString() {
+		return "Pager [startRow=" + startRow + ", lastRow=" + lastRow + ", perPage=" + perPage + ", page=" + page
+				+ ", totalPage=" + totalPage + ", totalCount=" + totalCount + ", startNum=" + startNum + ", lastNum="
+				+ lastNum + ", start=" + start + ", last=" + last + "]";
+	}
+
+	public String getSearch() {
+		if(search==null) {
+			search="";
+		}
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+		
+	}
+
+	public String getKind() {
+		return kind;
+	}
+
+	public void setKind(String kind) {
+		this.kind = kind;
 	}
 	
 	
