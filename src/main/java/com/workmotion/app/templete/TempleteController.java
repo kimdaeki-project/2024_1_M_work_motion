@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import com.workmotion.app.document.util.Pager;
+import com.workmotion.app.member.MemberDTO;
 
 @Controller
 @RequestMapping("/docTemplete/*")
@@ -25,7 +26,9 @@ public class TempleteController {
 	
 	@GetMapping("detail")
 	public String getTempleteDetail(TempleteDTO templeteDTO,Model model,HttpSession session)throws Exception{
-				
+		
+		    //(MemberDTO)session.getAttribute("member");
+			
 		templeteDTO = templeteService.getTempleteDetail(templeteDTO);		
 		model.addAttribute("dto", templeteDTO);		
 		
