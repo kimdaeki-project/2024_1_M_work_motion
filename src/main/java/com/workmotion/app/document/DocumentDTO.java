@@ -19,6 +19,8 @@ public class DocumentDTO {
 	private String period;
 	private String phone;
 	private Date deadline;
+	private String member_name;
+	private String department_name;
 	
 	private MemberDTO memberDTO;
 	private DepartmentDTO departmentDTO;
@@ -38,6 +40,20 @@ public class DocumentDTO {
 	}
 	public void setDepartmentDTO(DepartmentDTO departmentDTO) {
 		this.departmentDTO = departmentDTO;
+	}
+	
+	
+	public String getMember_name() {
+		return member_name;
+	}
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
+	}
+	public String getDepartment_name() {
+		return department_name;
+	}
+	public void setDepartment_name(String department_name) {
+		this.department_name = department_name;
 	}
 	public Long getId() {
 		return id;
