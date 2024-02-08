@@ -22,7 +22,7 @@ public class DocumentService {
 	@Autowired
 	private ServletContext servletContext;
 	
-	public int createDocument(DocumentDTO documentDTO,MultipartFile[] file,ReferrerDTO[] referrerDTO)throws Exception{
+	public int createDocument(DocumentDTO documentDTO,MultipartFile[] file,String referrer)throws Exception{
 		
 		int result = documentDAO.createDocument(documentDTO);
 		
@@ -42,15 +42,15 @@ public class DocumentService {
 			result = documentDAO.createFiles(fileDTO);
 		}
 		
-		
-			for(ReferrerDTO r:referrerDTO) {
-				
+		String[] referrers = referrer.split(",");
+		if(referrers.length > 0 ) {
+			for(String r:referrers) {
 				ReferrerDTO dto = new ReferrerDTO();
-				dto.setDocumet_id(documentDTO.getId());
-				dto.setMember_id(documentDTO.getMember_id());
-				result = documentDAO.createReferrer(r);
+				dto.setDocument_id(documentDTO.getId());
+				dto.setMember_id(Long.parseLong(r));
+				result = documentDAO.createReferrer(dto);
 			}
-		
+		}
 		
 		return result;
 	} 

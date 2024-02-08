@@ -3,14 +3,14 @@ package com.workmotion.app.referrer;
 
 public class ReferrerDTO {
 	
-	private Long documet_id;
+	private Long document_id;
 	private Long member_id;
 	
-	public Long getDocumet_id() {
-		return documet_id;
+	public Long getDocument_id() {
+		return document_id;
 	}
-	public void setDocumet_id(Long documet_id) {
-		this.documet_id = documet_id;
+	public void setDocument_id(Long document_id) {
+		this.document_id = document_id;
 	}
 	public Long getMember_id() {
 		return member_id;

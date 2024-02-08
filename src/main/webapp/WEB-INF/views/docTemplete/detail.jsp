@@ -17,8 +17,8 @@
     <div class="button-container">
     		
     	
-           <button name="save" value="0">보내기</button>
-           <button name="save" value="1">임시저장</button>
+           <button name="temporary_save" value="0">보내기</button>
+           <button name="temporary_save" value="1">임시저장</button>
            
     </div>    	
 	</form>	

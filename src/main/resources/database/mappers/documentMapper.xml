@@ -6,11 +6,14 @@
 <mapper namespace="com.workmotion.app.document.DocumentDAO">
 
 
-  	<insert id="createDocument" parameterType="DocumentDTO">	
+  	<insert id="createDocument" parameterType="DocumentDTO">
+  		<selectKey keyProperty="id" order="BEFORE" resultType="Long">
+  			SELECT DOCUMENT_SEQ.NEXTVAL FROM DUAL  			
+  		</selectKey>	
 		INSERT INTO DOCUMENT
 		(ID,TITLE,CONTENT,TEMPLETE_ID,CREATE_DT,MEMBER_ID,TEMPORARY_SAVE,PERIOD,PHONE,DEADLINE)
 		VALUES
-		(DOCUMENT_SEQ.NEXTVAL,#{title},#{content},#{templete_id},#{create_dt},#{member_id},#{temporary_save},#{period,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{deadline,jdbcType=DATE})
+		(#{id},#{title},#{content},#{templete_id},#{create_dt},#{member_id},#{temporary_save},#{period,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{deadline,jdbcType=DATE})
 	</insert>  
 	
 	<insert id="createFiles" parameterType="DocumentFileDTO">
