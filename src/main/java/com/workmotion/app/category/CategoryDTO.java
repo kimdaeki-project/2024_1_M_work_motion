@@ -4,7 +4,6 @@ public class CategoryDTO {
 	
 	private Long id;
 	private String name;
-	private Long category_id;
 
 	public Long getId() {
 		return id;
@@ -17,11 +16,5 @@ public class CategoryDTO {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public Long getCategory_id() {
-		return category_id;
-	}
-	public void setCategory_id(Long category_id) {
-		this.category_id = category_id;
 	}
 }

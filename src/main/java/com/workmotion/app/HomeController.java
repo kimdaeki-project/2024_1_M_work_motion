@@ -26,8 +26,8 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
-		model.addAttribute("page", "home");
-		return "manager";
+		model.addAttribute("page", "home"); 
+		return "index";
 	}
 	
 }
