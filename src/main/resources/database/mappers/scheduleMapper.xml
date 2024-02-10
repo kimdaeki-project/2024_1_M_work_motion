@@ -10,4 +10,11 @@
     <select id="getMemberSchedule" parameterType="ScheduleDTO" resultType="ScheduleDTO">
         SELECT * FROM SCHEDULE WHERE MEMBER_ID = #{member_id}
     </select>
+    <select id="getSchedule" parameterType="ScheduleDTO" resultType="ScheduleDTO">
+        SELECT * FROM SCHEDULE WHERE TASK_ID = #{task_id} OR MEMBER_ID = #{member_id}
+    </select>
+    <insert id="createSchedule" parameterType="ScheduleDTO">
+        INSERT INTO (ID, START_DT, END_DT, TITLE, TASK_ID, MEMBER_ID) SCHEDULE VALUES (SCHEDULE_SEQ.NEXTVAL,
+        #{start_dt}, #{end_dt}, #{title}, #{task_id,jdbcType=NUMBER}, #{member_id,jdbcType=NUMBER})
+    </insert>
 </mapper>

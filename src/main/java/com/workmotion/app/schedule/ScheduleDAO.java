@@ -19,4 +19,12 @@ public class ScheduleDAO {
     public List<ScheduleDTO> getMemberSchedule(ScheduleDTO scheduleDTO) throws Exception {
         return sqlSession.selectList(NAMESPACE + "getMemberSchedule", scheduleDTO);
     }
+
+    public int createTaskSchedule(ScheduleDTO scheduleDTO) throws Exception {
+        return sqlSession.insert(NAMESPACE + "createTaskSchedule", scheduleDTO);
+    }
+
+    public int createMemberSchedule(ScheduleDTO scheduleDTO) throws Exception {
+        return sqlSession.insert(NAMESPACE + "createMemberSchedule", scheduleDTO);
+    }
 }

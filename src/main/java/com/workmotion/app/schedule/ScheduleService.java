@@ -17,4 +17,12 @@ public class ScheduleService {
     public List<ScheduleDTO> getMemberSchedule(ScheduleDTO scheduleDTO) throws Exception {
         return scheduleDAO.getMemberSchedule(scheduleDTO);
     }
+
+    public int createTaskSchedule(ScheduleDTO scheduleDTO) throws Exception {
+        return scheduleDAO.createTaskSchedule(scheduleDTO);
+    }
+
+    public int createMemberSchedule(ScheduleDTO scheduleDTO) throws Exception {
+        return scheduleDAO.createMemberSchedule(scheduleDTO);
+    }
 }
