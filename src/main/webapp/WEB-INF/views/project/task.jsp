@@ -21,6 +21,7 @@ prefix="c" %>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js"></script>
 <!-- fullcalendar 언어 CDN -->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"></script>
+
 <style>
     /* 캘린더 위의 해더 스타일(날짜가 있는 부분) */
     .fc-header-toolbar {
@@ -736,6 +737,7 @@ prefix="c" %>
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
+    style="z-index: 10000"
     aria-labelledby="calandarModalLabel"
     aria-hidden="true"
 >

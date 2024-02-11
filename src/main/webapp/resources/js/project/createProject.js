@@ -10,6 +10,25 @@ const crewList = document.getElementById("crewList");
 const deleteProjectButton = document.getElementById("deleteProjectButton");
 const crewInput = document.getElementById("crewInput");
 
+saveButton.addEventListener("click", function () {
+    if (checkInput()) {
+        const frm = document.getElementById("frm");
+        frm.submit();
+    }
+});
+
+function checkInput() {
+    const projectName = document.getElementById("projectName");
+    if (projectName.value == "") {
+        projectName.classList.add("is-invalid");
+        alert("프로젝트 이름을 적어주세요.");
+        return false;
+    } else {
+        projectName.classList.remove("is-invalid");
+        return true;
+    }
+}
+
 pillsMember.addEventListener("click", () => {
     console.log("Project");
 });
