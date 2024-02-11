@@ -4,17 +4,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.workmotion.app.schedule.ScheduleDAO">
-    <select id="getTaskSchedule" parameterType="ScheduleDTO" resultType="ScheduleDTO">
-        SELECT * FROM SCHEDULE WHERE TASK_ID = #{task_id}
-    </select>
-    <select id="getMemberSchedule" parameterType="ScheduleDTO" resultType="ScheduleDTO">
-        SELECT * FROM SCHEDULE WHERE MEMBER_ID = #{member_id}
-    </select>
     <select id="getSchedule" parameterType="ScheduleDTO" resultType="ScheduleDTO">
-        SELECT * FROM SCHEDULE WHERE TASK_ID = #{task_id} OR MEMBER_ID = #{member_id}
+        SELECT * FROM SCHEDULE
+        <where>
+            <if test="member_id != null">
+                AND MEMBER_ID = #{member_id}
+            </if>
+            <if test="task_id != null">
+                AND TASK_ID = #{task_id}
+            </if>
+        </where>
     </select>
     <insert id="createSchedule" parameterType="ScheduleDTO">
         INSERT INTO (ID, START_DT, END_DT, TITLE, TASK_ID, MEMBER_ID) SCHEDULE VALUES (SCHEDULE_SEQ.NEXTVAL,
-        #{start_dt}, #{end_dt}, #{title}, #{task_id,jdbcType=NUMBER}, #{member_id,jdbcType=NUMBER})
+        #{start_dt}, #{end_dt}, #{title}, #{task_id}, #{member_id})
     </insert>
+    <delete id="deleteSchedule" parameterType="ScheduleDTO">
+        DELETE FROM SCHEDULE WHERE ID = #{id}
+    </delete>
+    <update id="updateSchedule" parameterType="ScheduleDTO">
+        UPDATE SCHEDULE SET START_DT = #{start_dt}, END_DT=#{end_dt}, TITLE=#{title} WHERE ID = #{id}
+    </update>
 </mapper>

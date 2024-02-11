@@ -476,7 +476,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         initialView: "dayGridMonth", // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
         navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
-        editable: true, // 수정 가능?
+        editable: false, // 수정 가능?
         selectable: true, // 달력 일자 드래그 설정가능
         nowIndicator: true, // 현재 시간 마크
         dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
@@ -495,18 +495,22 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         select: function (arg) {
             // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-            var title = prompt("Event Title:");
-            if (title) {
-                calendar.addEvent({
-                    title: title,
-                    start: arg.start,
-                    end: arg.end,
-                    allDay: arg.allDay,
-                });
-            }
-            calendar.unselect();
+            // var title = prompt("Event Title:");
+            // if (title) {
+            //     calendar.addEvent({
+            //         title: title,
+            //         start: arg.start,
+            //         end: arg.end,
+            //         allDay: arg.allDay,
+            //     });
+            // }
+            // calendar.unselect();
         },
         eventClick: function (info) {
+            // const popoverClose = document.querySelector(".fc-popover-close");
+            // if (popoverClose != null) {
+            //     popoverClose.click();
+            // }
             const calandarModalEl = document.getElementById("calandarModal");
             const myModal = new bootstrap.Modal(calandarModalEl);
             myModal.show();

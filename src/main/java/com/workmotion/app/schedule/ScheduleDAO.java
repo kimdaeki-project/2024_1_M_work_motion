@@ -12,19 +12,19 @@ public class ScheduleDAO {
     private SqlSession sqlSession;
     private final String NAMESPACE = "com.workmotion.app.schedule.ScheduleDAO.";
 
-    public List<ScheduleDTO> getTaskSchedule(ScheduleDTO scheduleDTO) throws Exception {
-        return sqlSession.selectList(NAMESPACE + "getTaskSchedule", scheduleDTO);
+    public int createSchedule(ScheduleDTO scheduleDTO) throws Exception {
+        return sqlSession.insert(NAMESPACE + "createSchedule", scheduleDTO);
     }
 
-    public List<ScheduleDTO> getMemberSchedule(ScheduleDTO scheduleDTO) throws Exception {
-        return sqlSession.selectList(NAMESPACE + "getMemberSchedule", scheduleDTO);
+    public List<ScheduleDTO> getSchedule(ScheduleDTO scheduleDTO) {
+        return sqlSession.selectList(NAMESPACE + "getSchedule", scheduleDTO);
     }
 
-    public int createTaskSchedule(ScheduleDTO scheduleDTO) throws Exception {
-        return sqlSession.insert(NAMESPACE + "createTaskSchedule", scheduleDTO);
+    public int deleteSchedule(ScheduleDTO scheduleDTO) {
+        return sqlSession.delete(NAMESPACE + "deleteSchedule", scheduleDTO);
     }
 
-    public int createMemberSchedule(ScheduleDTO scheduleDTO) throws Exception {
-        return sqlSession.insert(NAMESPACE + "createMemberSchedule", scheduleDTO);
+    public int updateSchedule(ScheduleDTO scheduleDTO) {
+        return sqlSession.update(NAMESPACE + "updateSchedule", scheduleDTO);
     }
 }

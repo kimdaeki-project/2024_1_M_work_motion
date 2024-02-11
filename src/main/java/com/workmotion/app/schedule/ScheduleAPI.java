@@ -16,14 +16,14 @@ public class ScheduleAPI {
     @GetMapping("tasks/{task_id}/schedules")
     public ResponseEntity<List<ScheduleDTO>> getTaskSchedule(@PathVariable Long task_id, ScheduleDTO scheduleDTO) throws Exception {
         scheduleDTO.setTask_id(task_id);
-        List<ScheduleDTO> schedules = scheduleService.getTaskSchedule(scheduleDTO);
+        List<ScheduleDTO> schedules = scheduleService.getSchedule(scheduleDTO);
         return new ResponseEntity<>(schedules, HttpStatus.OK);
     }
 
     @GetMapping("members/{member_id}/schedules")
     public ResponseEntity<List<ScheduleDTO>> getMemberSchedule(@PathVariable Long member_id, ScheduleDTO scheduleDTO) throws Exception {
         scheduleDTO.setMember_id(member_id);
-        List<ScheduleDTO> schedules = scheduleService.getMemberSchedule(scheduleDTO);
+        List<ScheduleDTO> schedules = scheduleService.getSchedule(scheduleDTO);
 
         return new ResponseEntity<>(schedules, HttpStatus.OK);
     }
@@ -31,14 +31,30 @@ public class ScheduleAPI {
     @PostMapping("tasks/{task_id}/schedules")
     public ResponseEntity<?> createTaskSchedule(@PathVariable Long task_id, ScheduleDTO scheduleDTO) throws Exception {
         scheduleDTO.setTask_id(task_id);
-        int result = scheduleService.createTaskSchedule(scheduleDTO);
+        int result = scheduleService.createSchedule(scheduleDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping("members/{member_id}/schedules")
     public ResponseEntity<?> createMemberSchedule(@PathVariable Long member_id, ScheduleDTO scheduleDTO) throws Exception {
         scheduleDTO.setMember_id(member_id);
-        int result = scheduleService.createMemberSchedule(scheduleDTO);
+        int result = scheduleService.createSchedule(scheduleDTO);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("schedules/{schedule_id}")
+    public ResponseEntity<?> deleteSchedule(@PathVariable Long schedule_id, ScheduleDTO scheduleDTO) throws Exception {
+        scheduleDTO.setId(schedule_id);
+        int result = scheduleService.deleteSchedule(scheduleDTO);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PutMapping("schedules/{schedule_id}")
+    public ResponseEntity<?> updateSchedule(@PathVariable Long schedule_id, ScheduleDTO scheduleDTO) throws Exception {
+        scheduleDTO.setId(schedule_id);
+        int result = scheduleService.updateSchedule(scheduleDTO);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

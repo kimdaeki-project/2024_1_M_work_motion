@@ -10,19 +10,20 @@ public class ScheduleService {
     @Autowired
     private ScheduleDAO scheduleDAO;
 
-    public List<ScheduleDTO> getTaskSchedule(ScheduleDTO scheduleDTO) throws Exception {
-        return scheduleDAO.getTaskSchedule(scheduleDTO);
+    public List<ScheduleDTO> getSchedule(ScheduleDTO scheduleDTO) throws Exception {
+        return scheduleDAO.getSchedule(scheduleDTO);
     }
 
-    public List<ScheduleDTO> getMemberSchedule(ScheduleDTO scheduleDTO) throws Exception {
-        return scheduleDAO.getMemberSchedule(scheduleDTO);
+    public int createSchedule(ScheduleDTO scheduleDTO) throws Exception {
+        return scheduleDAO.createSchedule(scheduleDTO);
     }
 
-    public int createTaskSchedule(ScheduleDTO scheduleDTO) throws Exception {
-        return scheduleDAO.createTaskSchedule(scheduleDTO);
+
+    public int deleteSchedule(ScheduleDTO scheduleDTO) {
+        return scheduleDAO.deleteSchedule(scheduleDTO);
     }
 
-    public int createMemberSchedule(ScheduleDTO scheduleDTO) throws Exception {
-        return scheduleDAO.createMemberSchedule(scheduleDTO);
+    public int updateSchedule(ScheduleDTO scheduleDTO) {
+        return scheduleDAO.updateSchedule(scheduleDTO);
     }
 }
