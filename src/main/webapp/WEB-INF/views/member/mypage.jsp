@@ -10,7 +10,7 @@
 
             			<c:if test="${not empty dto.avatar}">
             				<div>
-            					<img  src="/resources/upload/member/${dto.avatar.name}">
+            					<img  src="${dto.avatar.name}">
             				</div>
             				
             			</c:if>
