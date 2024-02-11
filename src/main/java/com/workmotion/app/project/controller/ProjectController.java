@@ -45,7 +45,10 @@ public class ProjectController {
         projectDTO.setOwner_id(memberDTO.getId());
 
         int result = projectService.createProject(projectDTO);
-        result = crewService.addCrew(projectDTO.getId(), projectDTO.getCrew());
+        if (!projectDTO.getCrew().isEmpty()) {
+            result = crewService.addCrew(projectDTO.getId(), projectDTO.getCrew());
+        }
+
         customResponse.setResult(result);
         customResponse.setMessage("프로젝트 생성");
         customResponse.setRedirectUrl("/projects/detail?id=" + projectDTO.getId());
