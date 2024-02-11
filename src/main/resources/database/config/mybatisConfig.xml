@@ -6,8 +6,10 @@
 
 
 <configuration>
+    <settings>
+        <setting name="jdbcTypeForNull" value="NULL"/>
+    </settings>
     <typeAliases>
-
         <typeAlias type="com.workmotion.app.project.model.ProjectDTO" alias="ProjectDTO"/>
         <typeAlias type="com.workmotion.app.company.CompanyDTO" alias="CompanyDTO"/>
         <typeAlias type="com.workmotion.app.member.MemberDTO" alias="MemberDTO"/>
@@ -22,6 +24,5 @@
         <typeAlias type="com.workmotion.app.util.Pager" alias="Pager"/>
         <typeAlias type="com.workmotion.app.department.DepartmentDTO" alias="DepartmentDTO"/>
         <typeAlias type="com.workmotion.app.company.CompanyDTO" alias="CompanyDTO"/>
-
     </typeAliases>
 </configuration>
