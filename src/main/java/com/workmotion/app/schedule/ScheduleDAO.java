@@ -16,15 +16,15 @@ public class ScheduleDAO {
         return sqlSession.insert(NAMESPACE + "createSchedule", scheduleDTO);
     }
 
-    public List<ScheduleDTO> getSchedule(ScheduleDTO scheduleDTO) {
+    public List<ScheduleDTO> getSchedule(ScheduleDTO scheduleDTO) throws Exception {
         return sqlSession.selectList(NAMESPACE + "getSchedule", scheduleDTO);
     }
 
-    public int deleteSchedule(ScheduleDTO scheduleDTO) {
+    public int deleteSchedule(ScheduleDTO scheduleDTO) throws Exception {
         return sqlSession.delete(NAMESPACE + "deleteSchedule", scheduleDTO);
     }
 
-    public int updateSchedule(ScheduleDTO scheduleDTO) {
+    public int updateSchedule(ScheduleDTO scheduleDTO) throws Exception {
         return sqlSession.update(NAMESPACE + "updateSchedule", scheduleDTO);
     }
 }

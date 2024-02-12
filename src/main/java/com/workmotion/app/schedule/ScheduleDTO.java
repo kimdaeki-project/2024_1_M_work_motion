@@ -6,13 +6,37 @@ import com.workmotion.app.project.model.TaskDTO;
 public class ScheduleDTO {
     private Long id;
     private String title;
-    private String start_dt;
-    private String end_dt;
+    private String start;
+    private String end;
     private Long task_id;
     private Long member_id;
 
+    private Long project_id;
+
+    public Long getProject_id() {
+        return project_id;
+    }
+
+    public void setProject_id(Long project_id) {
+        this.project_id = project_id;
+    }
+
     private TaskDTO task;
     private MemberDTO member;
+
+    public ScheduleDTO() {
+
+    }
+
+    public ScheduleDTO(Long id, String title, String start, String end, Long task_id, Long member_id, Long project_id) {
+        this.id = id;
+        this.title = title;
+        this.start = start;
+        this.end = end;
+        this.task_id = task_id;
+        this.member_id = member_id;
+        this.project_id = project_id;
+    }
 
     public Long getId() {
         return id;
@@ -30,20 +54,20 @@ public class ScheduleDTO {
         this.title = title;
     }
 
-    public String getStart_dt() {
-        return start_dt;
+    public String getStart() {
+        return start;
     }
 
-    public void setStart_dt(String start_dt) {
-        this.start_dt = start_dt;
+    public void setStart(String start) {
+        this.start = start;
     }
 
-    public String getEnd_dt() {
-        return end_dt;
+    public String getEnd() {
+        return end;
     }
 
-    public void setEnd_dt(String end_dt) {
-        this.end_dt = end_dt;
+    public void setEnd(String end) {
+        this.end = end;
     }
 
     public Long getTask_id() {
@@ -76,5 +100,20 @@ public class ScheduleDTO {
 
     public void setMember(MemberDTO member) {
         this.member = member;
+    }
+
+    @Override
+    public String toString() {
+        return "ScheduleDTO{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", start='" + start + '\'' +
+                ", end='" + end + '\'' +
+                ", task_id=" + task_id +
+                ", member_id=" + member_id +
+                ", project_id=" + project_id +
+                ", task=" + task +
+                ", member=" + member +
+                '}';
     }
 }

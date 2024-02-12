@@ -5,24 +5,51 @@
 
 <mapper namespace="com.workmotion.app.schedule.ScheduleDAO">
     <select id="getSchedule" parameterType="ScheduleDTO" resultType="ScheduleDTO">
-        SELECT * FROM SCHEDULE
+        SELECT s.* FROM SCHEDULE s
         <where>
             <if test="member_id != null">
-                AND MEMBER_ID = #{member_id}
+                OR MEMBER_ID = #{member_id}
             </if>
             <if test="task_id != null">
-                AND TASK_ID = #{task_id}
+                OR TASK_ID = #{task_id}
+            </if>
+            <if test="project_id != null">
+                OR PROJECT_ID = #{project_id}
+            </if>
+            <if test="id != null">
+                OR ID = #{id}
             </if>
         </where>
     </select>
     <insert id="createSchedule" parameterType="ScheduleDTO">
-        INSERT INTO (ID, START_DT, END_DT, TITLE, TASK_ID, MEMBER_ID) SCHEDULE VALUES (SCHEDULE_SEQ.NEXTVAL,
-        #{start_dt}, #{end_dt}, #{title}, #{task_id}, #{member_id})
+        INSERT INTO SCHEDULE (ID, "START", END, TITLE, TASK_ID, MEMBER_ID, PROJECT_ID)
+        VALUES (SCHEDULE_SEQ.NEXTVAL, #{start}, #{end}, #{title}, #{task_id}, #{member_id}, #{project_id})
     </insert>
     <delete id="deleteSchedule" parameterType="ScheduleDTO">
-        DELETE FROM SCHEDULE WHERE ID = #{id}
+        DELETE FROM SCHEDULE
+        <where>
+            <if test="member_id != null">
+                OR MEMBER_ID = #{member_id}
+            </if>
+            <if test="task_id != null">
+                OR TASK_ID = #{task_id}
+            </if>
+            <if test="project_id != null">
+                OR PROJECT_ID = #{project_id}
+            </if>
+            <if test="id != null">
+                OR ID = #{id}
+            </if>
+        </where>
     </delete>
     <update id="updateSchedule" parameterType="ScheduleDTO">
-        UPDATE SCHEDULE SET START_DT = #{start_dt}, END_DT=#{end_dt}, TITLE=#{title} WHERE ID = #{id}
+        MERGE INTO SCHEDULE s
+        USING DUAL
+        ON (s.TASK_ID = #{task_id})
+        WHEN MATCHED THEN
+        UPDATE SET "START"=#{start}, END=#{end}, TITLE=#{title}
+        WHEN NOT MATCHED THEN
+        INSERT (ID, "START", END, TITLE, TASK_ID, MEMBER_ID, PROJECT_ID)
+        VALUES (SCHEDULE_SEQ.NEXTVAL, #{start}, #{end}, #{title}, #{task_id}, #{member_id}, #{project_id})
     </update>
 </mapper>

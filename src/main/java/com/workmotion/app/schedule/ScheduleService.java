@@ -11,6 +11,8 @@ public class ScheduleService {
     private ScheduleDAO scheduleDAO;
 
     public List<ScheduleDTO> getSchedule(ScheduleDTO scheduleDTO) throws Exception {
+
+
         return scheduleDAO.getSchedule(scheduleDTO);
     }
 
@@ -19,11 +21,11 @@ public class ScheduleService {
     }
 
 
-    public int deleteSchedule(ScheduleDTO scheduleDTO) {
+    public int deleteSchedule(ScheduleDTO scheduleDTO) throws Exception {
         return scheduleDAO.deleteSchedule(scheduleDTO);
     }
 
-    public int updateSchedule(ScheduleDTO scheduleDTO) {
+    public int updateSchedule(ScheduleDTO scheduleDTO) throws Exception {
         return scheduleDAO.updateSchedule(scheduleDTO);
     }
 }

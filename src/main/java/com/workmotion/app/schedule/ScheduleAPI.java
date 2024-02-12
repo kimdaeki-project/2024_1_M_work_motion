@@ -1,5 +1,7 @@
 package com.workmotion.app.schedule;
 
+import com.workmotion.app.project.model.TaskDTO;
+import com.workmotion.app.project.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,22 @@ import java.util.List;
 public class ScheduleAPI {
     @Autowired
     private ScheduleService scheduleService;
+    @Autowired
+    private TaskService taskService;
+
+    @GetMapping("schedules/{schedule_id}")
+    public ResponseEntity<List<ScheduleDTO>> getAllSchedule(ScheduleDTO scheduleDTO, @PathVariable Long schedule_id) throws Exception {
+        scheduleDTO.setId(schedule_id);
+        List<ScheduleDTO> schedules = scheduleService.getSchedule(scheduleDTO);
+        return new ResponseEntity<>(schedules, HttpStatus.OK);
+    }
+
+    @GetMapping("projects/{project_id}/schedules")
+    public ResponseEntity<List<ScheduleDTO>> getProjectSchedule(@PathVariable Long project_id, ScheduleDTO scheduleDTO) throws Exception {
+        scheduleDTO.setProject_id(project_id);
+        List<ScheduleDTO> schedules = scheduleService.getSchedule(scheduleDTO);
+        return new ResponseEntity<>(schedules, HttpStatus.OK);
+    }
 
     @GetMapping("tasks/{task_id}/schedules")
     public ResponseEntity<List<ScheduleDTO>> getTaskSchedule(@PathVariable Long task_id, ScheduleDTO scheduleDTO) throws Exception {
@@ -46,8 +64,15 @@ public class ScheduleAPI {
     @DeleteMapping("schedules/{schedule_id}")
     public ResponseEntity<?> deleteSchedule(@PathVariable Long schedule_id, ScheduleDTO scheduleDTO) throws Exception {
         scheduleDTO.setId(schedule_id);
+        List<ScheduleDTO> schedule = scheduleService.getSchedule(scheduleDTO);
+        scheduleDTO = schedule.get(0);
         int result = scheduleService.deleteSchedule(scheduleDTO);
-
+        if (scheduleDTO.getTask_id() != null) {
+            TaskDTO taskDTO = new TaskDTO();
+            taskDTO.setId(scheduleDTO.getTask_id());
+            taskDTO.setHas_schedule(0);
+            taskService.updateTask(taskDTO);
+        }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
