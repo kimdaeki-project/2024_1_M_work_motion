@@ -409,7 +409,9 @@ function createTask(tasks) {
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
                         <a
-                            href="javascript:void(0);"
+                            href="javascript:void(0); location.href='/tasks/setting?id=${
+                                task.id
+                            }'"
                             class="dropdown-item"
                             >수정하기</a
                         >
@@ -426,14 +428,14 @@ function createTask(tasks) {
                     <h3 class='m-0'>${task.name}</h3>
             </div>
             ${
-                task.start_dt != null && task.end_dt != null
+                task.start != null && task.end != null
                     ? `
                 <div class="mb-3">
                     <h6 class='m-0'>일정</h6>
-                    <small>시작일: ${new Date(task.start_dt).toLocaleString(
+                    <small>시작일: ${new Date(task.start).toLocaleString(
                         "ko-KR"
                     )}</small><br>
-                    <small>종료일: ${new Date(task.end_dt).toLocaleString(
+                    <small>종료일: ${new Date(task.end).toLocaleString(
                         "ko-KR"
                     )}</small><br>
                 </div>
@@ -507,9 +509,12 @@ scaduleButton.addEventListener("click", () => {
     prev.click();
     next.click();
 });
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     // calendar element 취득
     var calendarEl = $("#calendar")[0];
+    const response = await fetch(`/v1/projects/${project_id}/schedules`);
+    const data = await response.json();
+    console.log(data);
     // full-calendar 생성하기
     var calendar = new FullCalendar.Calendar(calendarEl, {
         height: "700px", // calendar 높이 설정
@@ -570,7 +575,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
                 ) {
                     // 확인 클릭 시
-                    info.event.remove();
+                    fetch(`/v1/schedules/${info.event.id}`, {
+                        method: "delete",
+                    }).then(() => {
+                        info.event.remove();
+                    });
                 }
             }
             function removeAllEventListeners(element) {
@@ -616,64 +625,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // });
         },
         // 이벤트
-        events: [
-            {
-                id: "hello",
-                title: "All Day Event",
-                start: "2024-02-01",
-                end: "2024-02-03",
-            },
-            {
-                title: "Long Event",
-                start: "2024-02-07",
-                end: "2024-02-10",
-            },
-            {
-                groupId: 999,
-                title: "Repeating Event",
-                start: "2024-02-09T16:00:00",
-            },
-            {
-                groupId: 999,
-                title: "Repeating Event",
-                start: "2024-02-16T16:00:00",
-            },
-            {
-                title: "Conference",
-                start: "2024-02-11",
-                end: "2024-02-13",
-            },
-            {
-                title: "Meeting",
-                start: "2024-02-12T10:30:00",
-                end: "2024-02-12T12:30:00",
-            },
-            {
-                title: "Lunch",
-                start: "2024-02-12T12:00:00",
-            },
-            {
-                title: "Meeting",
-                start: "2024-02-12T14:30:00",
-            },
-            {
-                title: "Happy Hour",
-                start: "2024-02-12T17:30:00",
-            },
-            {
-                title: "Dinner",
-                start: "2024-02-12T20:00:00",
-            },
-            {
-                title: "Birthday Party",
-                start: "2024-02-13T07:00:00",
-            },
-            {
-                title: "Click for Google",
-                url: "http://google.com/", // 클릭시 해당 url로 이동
-                start: "2024-02-28",
-            },
-        ],
+        events: data,
     });
     // 캘린더 랜더링
     calendar.render();

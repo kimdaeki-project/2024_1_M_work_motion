@@ -44,7 +44,11 @@ public class TaskDAO {
         return sqlSession.selectList(NAMESPACE + "getCharge", taskDTO);
     }
 
-    public int changeStatus(TaskDTO taskDTO) {
+    public int changeStatus(TaskDTO taskDTO) throws Exception {
         return sqlSession.update(NAMESPACE + "changeStatus", taskDTO);
+    }
+
+    public int removeCharge(TaskDTO taskDTO) throws Exception {
+        return sqlSession.delete(NAMESPACE + "removeCharge", taskDTO);
     }
 }

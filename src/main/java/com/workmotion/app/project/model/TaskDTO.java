@@ -1,7 +1,6 @@
 package com.workmotion.app.project.model;
 
 import com.workmotion.app.member.MemberDTO;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -53,13 +52,20 @@ public class TaskDTO {
         this.project = project;
     }
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date start_dt;
+    private String start;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date end_dt;
+    private String end;
 
     private Integer has_limit;
+    private Integer has_schedule;
+
+    public Integer getHas_schedule() {
+        return has_schedule;
+    }
+
+    public void setHas_schedule(Integer has_schedule) {
+        this.has_schedule = has_schedule;
+    }
 
     private String charge;
 
@@ -71,20 +77,20 @@ public class TaskDTO {
         this.charge = charge;
     }
 
-    public Date getStart_dt() {
-        return start_dt;
+    public String getStart() {
+        return start;
     }
 
-    public void setStart_dt(Date start_dt) {
-        this.start_dt = start_dt;
+    public void setStart(String start) {
+        this.start = start;
     }
 
-    public Date getEnd_dt() {
-        return end_dt;
+    public String getEnd() {
+        return end;
     }
 
-    public void setEnd_dt(Date end_dt) {
-        this.end_dt = end_dt;
+    public void setEnd(String end) {
+        this.end = end;
     }
 
     public Integer getHas_limit() {

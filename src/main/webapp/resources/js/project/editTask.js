@@ -1,15 +1,20 @@
-// min 날짜 설정 및 스케줄 등록 관리
-let sDate = new Date();
-let minStr = sDate.toISOString().split("T")[0];
-const inputDate = document.getElementsByClassName("inputDate");
-for (let i = 0; i < inputDate.length; i++) {
-    inputDate[i].setAttribute("min", minStr);
-    inputDate[i].value = minStr;
+const addScheduleInput = document.getElementById("addScheduleInput");
+const has_limitInput = document.getElementById("has_limitInput");
+
+if (addScheduleInput.value == 1) {
+    const scheduleCheckbox = document.getElementById("scheduleCheckbox");
+    scheduleCheckbox.checked = true;
+}
+if (has_limitInput.value == 1) {
+    const hasLimitCheckbox = document.getElementById("has_limit");
+    hasLimitCheckbox.checked = true;
+    const dataInputContainer = document.getElementById("dataInputContainer");
+    dataInputContainer.style.display = "block";
+    const inputDate = document.getElementsByClassName("inputDate");
 }
 
 //일정 추가 토글
 const has_limitButton = document.getElementById("has_limit");
-const has_limitInput = document.getElementById("has_limitInput");
 has_limitButton.addEventListener("change", (e) => {
     const dataInputContainer = document.getElementById("dataInputContainer");
     if (e.target.checked == true) {
@@ -17,13 +22,13 @@ has_limitButton.addEventListener("change", (e) => {
         has_limitInput.value = 1;
     } else {
         has_limitInput.value = 0;
+        addScheduleInput.value = 0;
         dataInputContainer.style.display = "none";
     }
 });
 
 //스케줄 등록
 const scheduleCheckbox = document.getElementById("scheduleCheckbox");
-const addScheduleInput = document.getElementById("addScheduleInput");
 scheduleCheckbox.addEventListener("change", (e) => {
     if (e.target.checked == true) {
         addScheduleInput.value = 1;
@@ -114,6 +119,23 @@ document.addEventListener("DOMContentLoaded", async function () {
             closeOnSelect: true, // 드롭다운 메뉴에서 태그 선택하면 자동으로 꺼지는지 안꺼지는지
         },
     }); // initialize Tagify
+
+    //기존 맴버 추가
+    let member_ids = document.getElementById("member_id").value;
+    member_ids = member_ids.trim().split(/\s+/);
+
+    if (member_ids[0] != "") {
+        for (let i = 0; i < member_ids.length; i++) {
+            const member_id = member_ids[i];
+            const index = memberList.findIndex(
+                (member) => member.id == member_id
+            );
+            memberList[index].selected = true;
+            const member = memberList[index];
+            tagify.addTags(member.name + "(" + member.email + ")");
+        }
+        refreshPage();
+    }
 
     tagify.on("remove", function (e) {
         const deleteTag = e.detail.data.value;
@@ -206,3 +228,5 @@ $("#summernote").summernote({
         ["insert", ["link", "picture", "video"]],
     ],
 });
+const content = document.getElementById("content").value;
+$("#summernote").summernote("code", content);

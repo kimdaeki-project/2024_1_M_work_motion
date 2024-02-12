@@ -44,11 +44,15 @@ public class TaskService {
         return taskDAO.addCharge(map);
     }
 
+    public int removeCharge(TaskDTO taskDTO) throws Exception {
+        return taskDAO.removeCharge(taskDTO);
+    }
+
     public List<MemberDTO> getCharge(TaskDTO taskDTO) throws Exception {
         return taskDAO.getCharge(taskDTO);
     }
 
-    public int changeStatus(TaskDTO taskDTO) {
+    public int changeStatus(TaskDTO taskDTO) throws Exception {
         return taskDAO.changeStatus(taskDTO);
     }
 }

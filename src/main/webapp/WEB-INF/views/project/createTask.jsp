@@ -3,7 +3,12 @@ pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c" %>
 
 <div class="container mt-3">
-    <form action="/tasks/create" method="post" enctype="multipart/form-data">
+    <form
+        action="/tasks/create"
+        method="post"
+        enctype="multipart/form-data"
+        id="frm"
+    >
         <input
             type="hidden"
             name="project_id"
@@ -47,25 +52,6 @@ prefix="c" %>
             </div>
         </div>
         <div class="mb-3">
-            <label class="form-label">기한</label>
-            <div class="input-group mb-1">
-                <span class="input-group-text" id="start_dt">시작일</span>
-                <input
-                    type="date"
-                    class="form-control inputDate"
-                    name="start_dt"
-                />
-            </div>
-            <div class="input-group">
-                <span class="input-group-text" id="end_dt">종료일</span>
-                <input
-                    type="date"
-                    class="form-control inputDate"
-                    name="end_dt"
-                />
-            </div>
-        </div>
-        <div class="mb-3">
             <div class="form-check form-switch">
                 <input
                     type="hidden"
@@ -81,11 +67,46 @@ prefix="c" %>
                     id="has_limit"
                 />
                 <label class="form-check-label" for="has_limit"
+                    >일정 추가하기</label
+                >
+            </div>
+        </div>
+        <div class="mb-3" id="dataInputContainer" style="display: none">
+            <div class="input-group mb-1">
+                <span class="input-group-text" id="start_dt">시작일</span>
+                <input
+                    type="date"
+                    class="form-control inputDate"
+                    name="start"
+                />
+            </div>
+            <div class="input-group mb-1">
+                <span class="input-group-text" id="end_dt">종료일</span>
+                <input type="date" class="form-control inputDate" name="end" />
+            </div>
+            <div class="form-check form-switch">
+                <input
+                    type="hidden"
+                    class="form-control"
+                    name="has_schedule"
+                    id="addScheduleInput"
+                    value="0"
+                />
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="scheduleCheckbox"
+                />
+                <label class="form-check-label" for="scheduleCheckbox"
                     >스케줄에 등록하기</label
                 >
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">작성하기</button>
+
+        <button id="submitButton" type="button" class="btn btn-primary">
+            작성하기
+        </button>
     </form>
 </div>
 <!-- Modal -->
@@ -123,7 +144,7 @@ prefix="c" %>
                 <button
                     type="button"
                     class="btn btn-primary"
-                    id="submitButton"
+                    id="addMemberButton"
                     data-bs-dismiss="modal"
                 >
                     추가하기
