@@ -1,10 +1,12 @@
 const projectInfo = document.getElementsByClassName("projectInfo")[0];
 const project_id = projectInfo.getAttribute("data-bs-projectId");
 const crewList = document.getElementById("crewList");
+const owner_id = projectInfo.getAttribute("data-bs-ownerId");
 
 function createCrewList(crewList) {
     let html = "";
     for (crew of crewList) {
+        console.log(crew);
         html += `
                     <button
                     class="list-group-item list-group-item-action"
@@ -18,7 +20,11 @@ function createCrewList(crewList) {
                             id="tooltips-container"
                         >
                             <img
-                                src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                src="${
+                                    crew.avatar != null
+                                        ? crew.avatar.name
+                                        : "https://bootdey.com/img/Content/avatar/avatar5.png"
+                                }"
                                 class="rounded-circle img-fluid avatar-md img-thumbnail bg-transparent"
                                 alt=""
                             />
@@ -111,20 +117,36 @@ async function loadProfile(member_id) {
     const response = await fetch(
         `/v1/projects/${project_id}/crews/` + member_id
     );
+
+    const data = await response.json();
+    return data;
+}
+async function loadOwnerProfile() {
+    const response = await fetch(`/v1/projects/${project_id}/owner`);
+
     const data = await response.json();
     return data;
 }
 
-async function createProfile(member_id) {
+async function createProfile(member_id, is_owner) {
     const profileBody = document.getElementById("profileBody");
     profileBody.innerHTML = "";
-    const member = await loadProfile(member_id);
+    let member = null;
+    if (is_owner) {
+        member = await loadOwnerProfile();
+    } else {
+        member = await loadProfile(member_id);
+    }
     profileBody.innerHTML = `
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-start">
                     <img
-                        src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                        src="${
+                            member.avatar != null
+                                ? member.avatar.name
+                                : "https://bootdey.com/img/Content/avatar/avatar5.png"
+                        }"
                         class="rounded-circle avatar-lg img-thumbnail"
                         alt="profile-image"
                     />
@@ -192,16 +214,30 @@ async function deleteArticle(id) {
 
 function createArticle(datas) {
     return datas.map((article) => {
+        console.log(article);
         return `
         <div class='border border-light shadow p-2 mb-3 taskArticle' data-bs-id=${
             article.id
         }>
             <div class='d-flex align-items-start'>
-                <img
-                    class='me-2 avatar-sm rounded-circle'
-                    src='https://bootdey.com/img/Content/avatar/avatar3.png'
-                    alt='Generic placeholder image'
-                />
+                <a
+                    href="javascript:void(0);"
+                    data-bs-toggle="modal"
+                    data-bs-target="#profileModal"
+                    data-bs-memberId="${article.writer.id}"
+                    onclick="createProfile(${article.writer.id},
+                        ${article.writer.id == owner_id ? true : false})"
+                >
+                    <img
+                        class='me-2 avatar-sm rounded-circle'
+                        src="${
+                            article.writer.avatar != null
+                                ? article.writer.avatar.name
+                                : "https://bootdey.com/img/Content/avatar/avatar5.png"
+                        }"
+                        alt='Generic placeholder image'
+                    />
+                </a>
                 <div class='w-100'>
                     <h5 class='m-0'>${article.writer.name}</h5>
                     <p class='text-muted'>
@@ -305,12 +341,24 @@ function createTask(tasks) {
             task.id
         }>
             <div class='d-flex align-items-start'>
-                <img
-                    class='me-2 avatar-sm rounded-circle'
-                    src='https://bootdey.com/img/Content/avatar/avatar3.png'
-                    alt='Generic placeholder image'
-                />
-                
+                <a
+                    href="javascript:void(0);"
+                    data-bs-toggle="modal"
+                    data-bs-target="#profileModal"
+                    data-bs-memberId="${task.writer.id}"
+                    onclick="createProfile(${task.writer.id},
+                        ${task.writer.id == owner_id ? true : false})"
+                >
+                    <img
+                        class='me-2 avatar-sm rounded-circle'
+                        src="${
+                            task.writer.avatar != null
+                                ? task.writer.avatar.name
+                                : "https://bootdey.com/img/Content/avatar/avatar5.png"
+                        }"
+                        alt='Generic placeholder image'
+                    />
+                </a>
                 <div class='w-100'>
                     <h5 class='m-0'>${task.writer.name}</h5>
                     <p class='text-muted'>

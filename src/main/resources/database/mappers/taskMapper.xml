@@ -6,22 +6,39 @@
 <mapper namespace="com.workmotion.app.project.dao.TaskDAO">
 
     <select id="getTaskList" parameterType="ProjectDTO" resultMap="getResult">
-        SELECT t.*, m.id as member_id, m.name as member_name, m2.name as writer_name
+        SELECT
+        t.*,
+        m.id as member_id,
+        m.name as member_name,
+        m.role_id AS member_role_id,
+        m.company_id AS member_company_id,
+        m.email AS member_email,
+        m.department_id AS member_department_id,
+        m.position_id AS member_position_id,
+        m.phone AS member_phone,
+        m2.name as writer_name,
+        m2.role_id AS writer_role_id,
+        m2.company_id AS writer_company_id,
+        m2.email AS writer_email,
+        m2.department_id AS writer_department_id,
+        m2.position_id AS writer_position_id,
+        m2.phone AS writer_phone,
+        a.NAME AS writer_avatar_name
         FROM TASK t
         LEFT JOIN TASK_MEMBER tm ON t.ID = tm.TASK_ID
         LEFT JOIN MEMBER m ON tm.MEMBER_ID = m.ID
         LEFT JOIN MEMBER m2 ON t.WRITER_ID = m2.ID
+        LEFT JOIN AVATAR a ON a.MEMBER_ID = m2.ID
         WHERE PROJECT_ID = #{id}
     </select>
     <resultMap id="getResult" type="TaskDTO" autoMapping="true">
         <id column="id" property="id"/>
-        <association property="writer" javaType="MemberDTO">
-            <result column="writer_id" property="id"/>
-            <result column="writer_name" property="name"/>
+        <association property="writer" javaType="MemberDTO" autoMapping="true" columnPrefix="writer_">
+            <result column="id" property="id"/>
+            <association property="avatar" javaType="Avatar" columnPrefix="avatar_" autoMapping="true"/>
         </association>
-        <collection property="task_member" javaType="List" ofType="MemberDTO">
-            <result column="member_id" property="id"/>
-            <result column="member_name" property="name"/>
+        <collection property="task_member" javaType="List" ofType="MemberDTO" columnPrefix="member_" autoMapping="true">
+            <id column="id" property="id"/>
         </collection>
     </resultMap>
 

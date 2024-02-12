@@ -1,5 +1,6 @@
 package com.workmotion.app.member;
 
+import com.workmotion.app.company.CompanyDTO;
 import com.workmotion.app.department.DepartmentDTO;
 import com.workmotion.app.position.PositionDTO;
 import com.workmotion.app.project.model.RoleDTO;
@@ -17,6 +18,16 @@ public class MemberDTO {
     private Long position_id;
     private Avatar avatar;
     private RoleDTO role;
+
+    private CompanyDTO company;
+
+    public CompanyDTO getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyDTO company) {
+        this.company = company;
+    }
 
     public RoleDTO getRole() {
         return role;

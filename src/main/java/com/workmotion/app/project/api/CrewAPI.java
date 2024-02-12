@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -44,6 +45,7 @@ public class CrewAPI {
     @GetMapping("{project_id}/crews/{member_id}")
     public ResponseEntity<MemberDTO> getCrew(@PathVariable Long project_id, @PathVariable Long member_id) throws Exception {
         MemberDTO memberDTO = crewService.getCrewDetail(project_id, member_id);
+        System.out.println(memberDTO.getAvatar());
         return new ResponseEntity<>(memberDTO, HttpStatus.OK);
     }
 
@@ -61,8 +63,8 @@ public class CrewAPI {
     }
 
     @GetMapping("members")
-    public ResponseEntity<List<MemberDTO>> getALLMemberList() throws Exception {
-        List<MemberDTO> memberDTOs = crewService.getAllMemberList(memberDTO);
+    public ResponseEntity<List<MemberDTO>> getALLMemberList(HttpSession session) throws Exception {
+        List<MemberDTO> memberDTOs = crewService.getAllMemberList((MemberDTO) session.getAttribute("member"));
         return new ResponseEntity<>(memberDTOs, HttpStatus.OK);
     }
 }

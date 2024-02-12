@@ -29,16 +29,16 @@
         VALUES (ARTICLE_SEQ.NEXTVAL, #{project_id}, #{title,jdbcType=VARCHAR}, #{content}, SYSDATE, #{writer_id})
     </insert>
     <select id="getArticleList" parameterType="ProjectDTO" resultMap="getArticleResult">
-        SELECT a.*, m.NAME writer_name
-        FROM ARTICLE a
-        LEFT JOIN MEMBER m
-        ON a.WRITER_ID = m.ID
-        WHERE a.PROJECT_ID = #{id}
+        <include refid="com.workmotion.app.project.dao.CrewDAO.getMember">
+            <property name="alias" value=",at.*"/>
+        </include>
+        LEFT JOIN ARTICLE at ON at.writer_id = m.id
+        WHERE at.project_id = #{id}
+
     </select>
     <resultMap id="getArticleResult" type="ArticleDTO" autoMapping="true">
-        <association property="writer" javaType="MemberDTO">
-            <result column="writer_name" property="name"/>
-        </association>
+        <association property="writer" javaType="MemberDTO"
+                     resultMap="com.workmotion.app.project.dao.CrewDAO.getMember"/>
     </resultMap>
 
     <update id="updateArticle" parameterType="ArticleDTO">

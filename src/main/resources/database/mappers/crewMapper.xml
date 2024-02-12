@@ -18,6 +18,7 @@
         com.phone_num as company_phone_num,
         com.info as company_info,
         com.create_dt as company_create_dt
+        ${alias}
         FROM MEMBER m
         LEFT JOIN ROLE r ON m.ROLE_ID = r.ID
         LEFT JOIN DEPARTMENT d ON m.DEPARTMENT_ID = d.ID
@@ -27,6 +28,7 @@
     </sql>
 
     <resultMap id="getMember" type="MemberDTO" autoMapping="true">
+        <id property="id" column="id"/>
         <association property="role" javaType="RoleDTO" columnPrefix="role_" autoMapping="true"/>
         <association property="department" javaType="DepartmentDTO" columnPrefix="department_" autoMapping="true"/>
         <association property="position" javaType="positionDTO" columnPrefix="position_" autoMapping="true"/>
@@ -42,7 +44,9 @@
     </insert>
 
     <select id="getCrewList" parameterType="ProjectDTO" resultMap="getMember">
-        <include refid="getMember"/>
+        <include refid="getMember">
+            <property name="alias" value=""/>
+        </include>
         LEFT JOIN CREW c
         ON c.MEMBER_ID = m.ID
         WHERE c.PROJECT_ID = #{id}
@@ -50,13 +54,17 @@
     </select>
 
     <select id="getOwner" parameterType="ProjectDTO" resultMap="getMember">
-        <include refid="getMember"/>
+        <include refid="getMember">
+            <property name="alias" value=""/>
+        </include>
         LEFT JOIN PROJECT pj ON pj.OWNER_ID = m.ID
         WHERE pj.ID = #{id}
     </select>
 
     <select id="getCrewDetail" parameterType="Map" resultMap="getMember">
-        <include refid="getMember"/>
+        <include refid="getMember">
+            <property name="alias" value=""/>
+        </include>
         LEFT JOIN CREW c
         ON c.MEMBER_ID = m.ID
         WHERE c.PROJECT_ID = #{project_id} AND c.MEMBER_ID = #{member_id}
@@ -70,7 +78,9 @@
     </delete>
     <!--  프로젝트에 속하지 않는 멤버 리스트  -->
     <select id="getMemberList" parameterType="ProjectDTO" resultMap="getMember">
-        <include refid="getMember"/>
+        <include refid="getMember">
+            <property name="alias" value=""/>
+        </include>
         LEFT JOIN CREW cw ON m.ID = cw.MEMBER_ID AND cw.PROJECT_ID = #{id}
         LEFT JOIN PROJECT pj ON m.ID = pj.OWNER_ID AND pj.ID = #{id}
         WHERE cw.MEMBER_ID IS NULL
@@ -82,7 +92,9 @@
 
     <!-- 자신을 제외한 모든 멤버 -->
     <select id="getAllMemberList" parameterType="MemberDTO" resultMap="getMember">
-        <include refid="getMember"/>
+        <include refid="getMember">
+            <property name="alias" value=""/>
+        </include>
         WHERE m.ID != #{id} AND m.COMPANY_ID = #{company_id}
         ORDER BY m.COMPANY_ID, m.ROLE_ID ASC
     </select>

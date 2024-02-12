@@ -110,7 +110,7 @@ prefix="c" %>
 </style>
 <div id="container">
     <div class="section">
-        <div class="projectInfo mb-3" data-bs-projectId="${project.id}">
+        <div class="projectInfo mb-3" data-bs-projectId="${project.id}" data-bs-ownerId="${project.owner_id}">
             <div class="top p-3">
                 <div class="head">
                     <span class="title"> ${project.name}</span>
@@ -309,14 +309,14 @@ prefix="c" %>
                                 data-bs-toggle="modal"
                                 data-bs-target="#profileModal"
                                 data-bs-memberId="${owner.id}"
-                                onclick="createProfile(${owner.id})"
+                                onclick="createProfile(${owner.id}, true)"
                             >
                                 <div
                                     class="d-flex align-items-center pb-1"
                                     id="tooltips-container"
                                 >
                                     <img
-                                        src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                        src="${owner.avatar.name}"
                                         class="rounded-circle img-fluid avatar-md img-thumbnail bg-transparent"
                                         alt=""
                                     />
@@ -351,8 +351,16 @@ prefix="c" %>
                                             class="d-flex align-items-center pb-1"
                                             id="tooltips-container"
                                         >
+                                                
+                                            
                                             <img
+                                            
+                                            <c:if test="${crew.avatar.name != null}">
+                                                src="${crew.avatar.name}"
+                                            </c:if>
+                                            <c:if test="${crew.avatar.name == null}">
                                                 src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                            </c:if>
                                                 class="rounded-circle img-fluid avatar-md img-thumbnail bg-transparent"
                                                 alt=""
                                             />
