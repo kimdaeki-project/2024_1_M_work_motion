@@ -16,7 +16,7 @@
 		SELECT COUNT(*) FROM department D 
  		JOIN member M on(D.id=M.department_id) 
 		LEFT JOIN position P ON (m.position_id=p.id) 
-		WHERE company_id = #{memberDTO.company_id} 
+		WHERE M.company_id = #{memberDTO.company_id} 
 		AND <include refid="search"></include>
 		</select>
 		
@@ -27,7 +27,7 @@
 		(SELECT M.*,P.name PNAME,D.name DNAME FROM department D 
  		JOIN member M on(D.id=M.department_id) 
 		LEFT JOIN position P ON (m.position_id=p.id) 
-		WHERE company_id = #{memberDTO.company_id} 
+		WHERE M.company_id = #{memberDTO.company_id} 
 		AND <include refid="search"></include>
 		ORDER BY position_id ASC)ML)
 		WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
@@ -78,16 +78,23 @@
 
 	
 		<!-- 사원 인사페이지에서 수정 -->
-		<update id="">
-		
+		<update id="updateMember" parameterType="MemberDTO">
+		UPDATE member <set>
+		<if test="email != null and email != '' ">
+		email = #{email},</if>
+		<if test="name != null and name != '' ">
+		name = #{name},</if>
+		<if test="department_id != null and department_id != '' ">
+		department_id = #{department_id},</if>
+		<if test="position_id != null and position_id != '' ">
+		position_id = #{position_id},</if>
+		<if test="phone != null and phone != '' ">
+		phone = #{phone}</if>
+		</set>
+		WHERE id = #{id}
 		</update>
-	
-	
-	
-	
-	
-	
-	
+		
+
 	
 	
 	

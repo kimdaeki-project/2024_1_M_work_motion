@@ -7,7 +7,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.workmotion.app.department.DepartmentDTO;
 import com.workmotion.app.member.MemberDTO;
+import com.workmotion.app.position.PositionDTO;
 
 @Repository
 public class HrDAO {
@@ -31,5 +33,8 @@ public class HrDAO {
 	public MemberDTO getListDetail(MemberDTO memberDTO)throws Exception {
 		return sqlSession.selectOne(NAMESPACE+"getMemberDetail",memberDTO);
 	}
-	
+	public int updateMember(MemberDTO memberDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"updateMember",memberDTO);
+	}
+
 }

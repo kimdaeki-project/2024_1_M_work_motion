@@ -9,7 +9,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.workmotion.app.department.DepartmentDTO;
 import com.workmotion.app.member.MemberDTO;
+import com.workmotion.app.position.PositionDTO;
 import com.workmotion.app.util.Pager;
 
 @Service
@@ -33,7 +35,12 @@ public class HrService {
 		 ar.put("kind", pager.getKind());
 		 Long totalCount = hrDAO.totalCount(ar);
 		 pager.makePage(totalCount);
-		 ar.put("pager",pager); //°Ë»ö¾î
+		 ar.put("pager",pager); //ï¿½Ë»ï¿½ï¿½ï¿½
 		return hrDAO.getMemberList(ar);	
 	}
+	public int updateMember(MemberDTO memberDTO) throws Exception {
+			 return	hrDAO.updateMember(memberDTO);
+	}
+	
+	
 }

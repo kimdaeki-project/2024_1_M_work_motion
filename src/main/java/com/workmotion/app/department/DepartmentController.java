@@ -40,7 +40,6 @@ public class DepartmentController {
   //getDepartmentList
   	@GetMapping("departmentList")
 	public String getDepartmentList(Pager pager, Model model)throws Exception {
-		
 		List<MemberDTO> ar = departmentService.getDepartmentList(pager);
 		model.addAttribute("list", ar);
 		model.addAttribute("pager", pager);
