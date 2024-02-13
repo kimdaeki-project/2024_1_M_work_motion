@@ -4,7 +4,8 @@
 
 
 
-<h1>${detail.content}</h1>
+
+<p>${detail.content}</p>
 
 <a href="./update?id=${detail.id}"><button type="button" class="btn btn-primary">수정하기</button></a>
 
