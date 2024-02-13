@@ -3,6 +3,8 @@ package com.workmotion.app.project.api;
 import com.workmotion.app.project.model.ProjectDTO;
 import com.workmotion.app.project.model.TaskDTO;
 import com.workmotion.app.project.service.TaskService;
+import com.workmotion.app.schedule.ScheduleDTO;
+import com.workmotion.app.schedule.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import java.util.List;
 public class TaskAPI {
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private ScheduleService scheduleService;
 
     @PostMapping("{project_id}/tasks")
     public ResponseEntity<?> createTask(@PathVariable Long project_id, TaskDTO taskDTO) throws Exception {
@@ -59,6 +63,10 @@ public class TaskAPI {
         taskDTO.setId(task_id);
         taskDTO.setProject_id(project_id);
         int result = taskService.changeStatus(taskDTO);
+        ScheduleDTO scheduleDTO = new ScheduleDTO();
+        scheduleDTO.setTask_id(task_id);
+        scheduleDTO.setStatus(taskDTO.getStatus());
+        scheduleService.updateSchedule(scheduleDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

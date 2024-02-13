@@ -327,6 +327,21 @@ async function loadTask() {
                     statusButton.innerText = selectedValue;
                     statusButton.classList.toggle("text-bg-primary");
                     statusButton.classList.toggle("text-bg-success");
+
+                    const response = await fetch(
+                        `/v1/projects/${project_id}/schedules`
+                    );
+                    const data = await response.json();
+                    for (let i in data) {
+                        if (data[i].status == 1) {
+                            data[i].backgroundColor = "green";
+                        }
+                    }
+                    const eventSource = calendar.getEventSources();
+                    for (let i in eventSource) {
+                        eventSource[i].remove();
+                    }
+                    calendar.addEventSource(data);
                 }
             }
         });
@@ -509,14 +524,20 @@ scaduleButton.addEventListener("click", () => {
     prev.click();
     next.click();
 });
+let calendar;
 document.addEventListener("DOMContentLoaded", async () => {
     // calendar element 취득
     var calendarEl = $("#calendar")[0];
     const response = await fetch(`/v1/projects/${project_id}/schedules`);
     const data = await response.json();
+    for (let i in data) {
+        if (data[i].status == 1) {
+            data[i].backgroundColor = "green";
+        }
+    }
     console.log(data);
     // full-calendar 생성하기
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+    calendar = new FullCalendar.Calendar(calendarEl, {
         height: "700px", // calendar 높이 설정
         expandRows: true, // 화면에 맞게 높이 재설정
         slotMinTime: "08:00", // Day 캘린더에서 시작 시간

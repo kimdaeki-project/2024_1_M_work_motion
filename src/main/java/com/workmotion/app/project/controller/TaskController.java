@@ -35,7 +35,7 @@ public class TaskController {
         int result = taskService.createTask(taskDTO);
         result = taskService.addCharge(taskDTO, taskDTO.getCharge());
         if (taskDTO.getHas_schedule() == 1) {
-            result = scheduleService.createSchedule(new ScheduleDTO(null, taskDTO.getName(), taskDTO.getStart(), taskDTO.getEnd(), taskDTO.getId(), taskDTO.getWriter_id(), taskDTO.getProject_id()));
+            result = scheduleService.createSchedule(new ScheduleDTO(null, taskDTO.getName(), taskDTO.getStart(), taskDTO.getEnd(), taskDTO.getId(), taskDTO.getWriter_id(), taskDTO.getProject_id(), 0));
         }
         customResponse.setResult(result);
         customResponse.setMessage("업무 생성");
@@ -59,9 +59,9 @@ public class TaskController {
         result = taskService.removeCharge(taskDTO);
         result = taskService.addCharge(taskDTO, taskDTO.getCharge());
         if (taskDTO.getHas_schedule() == 0) {
-            result = scheduleService.deleteSchedule(new ScheduleDTO(null, null, null, null, taskDTO.getId(), null, null));
+            result = scheduleService.deleteSchedule(new ScheduleDTO(null, null, null, null, taskDTO.getId(), null, null, null));
         } else if (taskDTO.getHas_schedule() == 1) {
-            result = scheduleService.updateSchedule(new ScheduleDTO(null, taskDTO.getName(), taskDTO.getStart(), taskDTO.getEnd(), taskDTO.getId(), taskDTO.getWriter_id(), taskDTO.getProject_id()));
+            result = scheduleService.updateSchedule(new ScheduleDTO(null, taskDTO.getName(), taskDTO.getStart(), taskDTO.getEnd(), taskDTO.getId(), taskDTO.getWriter_id(), taskDTO.getProject_id(), taskDTO.getStatus()));
         }
 
         customResponse.setResult(result);

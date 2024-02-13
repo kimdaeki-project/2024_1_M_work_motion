@@ -13,6 +13,16 @@ public class ScheduleDTO {
 
     private Long project_id;
 
+    private Integer status;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Long getProject_id() {
         return project_id;
     }
@@ -28,7 +38,7 @@ public class ScheduleDTO {
 
     }
 
-    public ScheduleDTO(Long id, String title, String start, String end, Long task_id, Long member_id, Long project_id) {
+    public ScheduleDTO(Long id, String title, String start, String end, Long task_id, Long member_id, Long project_id, Integer status) {
         this.id = id;
         this.title = title;
         this.start = start;
@@ -36,6 +46,7 @@ public class ScheduleDTO {
         this.task_id = task_id;
         this.member_id = member_id;
         this.project_id = project_id;
+        this.status = status;
     }
 
     public Long getId() {

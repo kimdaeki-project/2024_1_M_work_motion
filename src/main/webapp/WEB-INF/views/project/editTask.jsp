@@ -9,6 +9,7 @@ prefix="c" %>
         enctype="multipart/form-data"
         id="frm"
     >
+        <input type="hidden" name="status" value="${task.status}" />
         <input
             type="hidden"
             name="project_id"

@@ -22,8 +22,8 @@
         </where>
     </select>
     <insert id="createSchedule" parameterType="ScheduleDTO">
-        INSERT INTO SCHEDULE (ID, "START", END, TITLE, TASK_ID, MEMBER_ID, PROJECT_ID)
-        VALUES (SCHEDULE_SEQ.NEXTVAL, #{start}, #{end}, #{title}, #{task_id}, #{member_id}, #{project_id})
+        INSERT INTO SCHEDULE (ID, "START", END, TITLE, TASK_ID, MEMBER_ID, PROJECT_ID, STATUS)
+        VALUES (SCHEDULE_SEQ.NEXTVAL, #{start}, #{end}, #{title}, #{task_id}, #{member_id}, #{project_id}, #{status})
     </insert>
     <delete id="deleteSchedule" parameterType="ScheduleDTO">
         DELETE FROM SCHEDULE
@@ -47,9 +47,23 @@
         USING DUAL
         ON (s.TASK_ID = #{task_id})
         WHEN MATCHED THEN
-        UPDATE SET "START"=#{start}, END=#{end}, TITLE=#{title}
+        UPDATE
+        <set>
+            <if test="start != null">
+                "START"=#{start},
+            </if>
+            <if test="end != null">
+                END=#{end},
+            </if>
+            <if test="title != null">
+                TITLE=#{title},
+            </if>
+            <if test="status != null">
+                STATUS=#{status}
+            </if>
+        </set>
         WHEN NOT MATCHED THEN
-        INSERT (ID, "START", END, TITLE, TASK_ID, MEMBER_ID, PROJECT_ID)
-        VALUES (SCHEDULE_SEQ.NEXTVAL, #{start}, #{end}, #{title}, #{task_id}, #{member_id}, #{project_id})
+        INSERT (ID, "START", END, TITLE, TASK_ID, MEMBER_ID, PROJECT_ID, STATUS)
+        VALUES (SCHEDULE_SEQ.NEXTVAL, #{start}, #{end}, #{title}, #{task_id}, #{member_id}, #{project_id}, #{status})
     </update>
 </mapper>
