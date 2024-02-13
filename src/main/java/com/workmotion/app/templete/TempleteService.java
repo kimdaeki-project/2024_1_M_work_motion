@@ -1,6 +1,8 @@
 package com.workmotion.app.templete;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -10,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.workmotion.app.document.util.FileManager;
 import com.workmotion.app.document.util.Pager;
+import com.workmotion.app.member.MemberDTO;
 
 @Service
 public class TempleteService {
@@ -23,6 +26,18 @@ public class TempleteService {
 	@Autowired
 	private FileManager fileManager;
 	
+	public List<MemberDTO> getReferrerList(Pager pager)throws Exception{
+		
+		pager.makeRow();
+		Long totalCount = templeteDAO.getReferrerTotalCount(pager);
+		pager.makeNum(totalCount);
+		List<MemberDTO> ar = templeteDAO.getReferrerList(pager);
+				
+		return ar;		
+		
+	}
+	
+	//서류종류 리스트 
 	public List<TempleteDTO> getTempleteList(Pager pager)throws Exception{
 		
 		pager.makeRow();
@@ -34,10 +49,7 @@ public class TempleteService {
 		return ar;
 		
 	}
-	
-	
-	
-	
+	//서류종류 추가 
 	public int createTempleteAdd(TempleteDTO templeteDTO,MultipartFile templeteFile)throws Exception{
 		
 		if(templeteFile.isEmpty()) {
@@ -59,7 +71,7 @@ public class TempleteService {
 		return result;
 		
 	} 
-	
+	//서류 디테일 
 	public TempleteDTO getTempleteDetail(TempleteDTO templeteDTO)throws Exception{
 		
 		templeteDTO = templeteDAO.getTempleteDetail(templeteDTO);

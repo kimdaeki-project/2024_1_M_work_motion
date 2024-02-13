@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.workmotion.app.document.util.Pager;
 import com.workmotion.app.member.MemberDTO;
+import com.workmotion.app.position.PositionDTO;
 
 @Controller
 @RequestMapping("/docTemplete/*")
@@ -25,13 +26,25 @@ public class TempleteController {
 	private TempleteService templeteService;
 	
 	@GetMapping("detail")
-	public String getTempleteDetail(TempleteDTO templeteDTO,Model model,HttpSession session)throws Exception{
+	public String getTempleteDetail(TempleteDTO templeteDTO,Model model,HttpSession session,Pager pager)throws Exception{
+			
 		//이름,부서 session 에서 꺼내기
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");		
 		
+		//서류종류 디테일
 		templeteDTO = templeteService.getTempleteDetail(templeteDTO);		
 		model.addAttribute("dto", templeteDTO);
 		model.addAttribute("member", memberDTO);
+		
+		//직원리스트 
+		List<MemberDTO> ar = templeteService.getReferrerList(pager);	
+		System.out.println(ar.size());
+		for(MemberDTO m : ar) {
+			System.out.println(m.getDepartment().getName());
+		}	
+		
+		model.addAttribute("list", ar);
+		model.addAttribute("pager", pager);
 		
 		model.addAttribute("page","docTemplete/detail");	
 		return "index";
@@ -70,6 +83,16 @@ public class TempleteController {
 		model.addAttribute("msg", msg);
 		model.addAttribute("path","./list");
 		return "commons/result";
+		
+	}
+	
+	@GetMapping("test")
+	public String test(Model model)throws Exception{
+		model.addAttribute("page", "docTemplete/test");
+		
+		
+		
+		return "index";
 		
 	}
 	
