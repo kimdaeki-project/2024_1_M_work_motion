@@ -22,8 +22,10 @@ public class DepartmentService {
 			Long totalCount = departmentDAO.getTotalCount(pager);
 			pager.makePage(totalCount);
 			
+			
 		return departmentDAO.getDepartmentList(pager);		
 		}
+	
 	//디테일 디테일 디테일@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	public List<MemberDTO> getDepartmentDetail(MemberDTO memberDTO, Pager pager) throws Exception{
 		Map<String, Object> map = new HashMap<String, Object>();
