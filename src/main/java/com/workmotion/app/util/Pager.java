@@ -20,6 +20,8 @@ public class Pager {
 	
 	private String search;
 	private String kind;
+	
+	private Long count;
 
 	
 	
@@ -166,6 +168,14 @@ public class Pager {
 
 	public void setKind(String kind) {
 		this.kind = kind;
+	}
+
+	public Long getCount() {
+		return count;
+	}
+
+	public void setCount(Long count) {
+		this.count = count;
 	}
 	
 	

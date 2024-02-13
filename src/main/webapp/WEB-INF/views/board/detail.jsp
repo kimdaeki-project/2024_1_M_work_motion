@@ -5,3 +5,10 @@
 
 
 <h1>${detail.content}</h1>
+
+<a href="./update?id=${detail.id}"><button type="button" class="btn btn-primary">수정하기</button></a>
+
+<form action="./delete" method="post">
+<input type="hidden" value="${category_ID}" name="category_ID">
+<button type="submit" class="btn btn-danger" name="id" value="${detail.id}">삭제하기</button>
+</form>

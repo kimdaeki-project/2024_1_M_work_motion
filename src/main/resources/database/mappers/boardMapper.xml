@@ -6,8 +6,9 @@
 <mapper namespace="com.workmotion.app.board.BoardDAO">
 
 	<select id="totalCount" resultType="Long" parameterType="Pager">
-		SELECT COUNT(*) FROM BOARD b
-		WHERE title LIKE '%'||#{search}||'%'
+		SELECT
+		COUNT(*) FROM BOARD b
+		WHERE category_id = #{count} AND title LIKE '%'||#{search}||'%'
 	</select>
 
 	<select id="getBoardList" resultType="Map" parameterType="Map">
@@ -21,16 +22,39 @@
 		LEFT JOIN
 		CATEGORY c
 		ON(B.category_id = c.id)
-		WHERE c.name = #{category.name}, B.title LIKE '%'||#{search}||'%'
+		WHERE c.id = #{category.id} AND
+		B.TITLE LIKE '%'||#{pager.search}||'%'
 		) A
 		) R
-		WHERE RG BETWEEN #{pager.startRow} AND #{pager.lastRow}
+		WHERE RG BETWEEN
+		#{pager.startRow} AND #{pager.lastRow}
 	</select>
 
 	<select id="getBoardDetail" resultType="BoardDTO"
 		parameterType="BoardDTO">
 		SELECT * FROM BOARD
-		WHERE ID = #{id}
+		WHERE ID = #{id} 
 	</select>
+
+	<insert id="create"  parameterType="BoardDTO">
+		INSERT INTO BOARD
+		VALUES(BOARD_SEQ.NEXTVAL,#{title},#{content},0,SYSDATE,41,#{category_id})
+	</insert>
+	
+	<update id="getViews" parameterType="BoardDTO">
+	UPDATE BOARD SET VIEWS = #{views}
+	WHERE id = #{id}
+	</update>
+	
+	<update id="setUpdate" parameterType="BoardDTO">
+	UPDATE BOARD SET title = #{title}, content = #{content}
+	WHERE id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="BoardDTO">
+	DELETE FROM BOARD
+	WHERE id = #{id}
+	</delete>
+	
 
 </mapper>

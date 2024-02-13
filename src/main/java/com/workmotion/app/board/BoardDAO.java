@@ -28,4 +28,20 @@ public class BoardDAO {
 	public BoardDTO getBoardDetail(BoardDTO boardDTO) throws Exception{
 		return sqlSession.selectOne(namespace+"getBoardDetail", boardDTO);
 	}
+	
+	public int create(BoardDTO boardDTO) throws Exception{
+		return sqlSession.insert(namespace+"create", boardDTO);
+	}
+	
+	public int getViews(BoardDTO boardDTO)throws Exception {
+		return sqlSession.update(namespace+"getViews", boardDTO);
+	}
+	
+	public int setUpdate(BoardDTO boardDTO) throws Exception{
+		return sqlSession.update(namespace+"setUpdate", boardDTO);
+	}
+	
+	public int delete (BoardDTO boardDTO) throws Exception{
+		return sqlSession.delete(namespace+"delete", boardDTO);
+	}
 }

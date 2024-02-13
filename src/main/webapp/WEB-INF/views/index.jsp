@@ -110,17 +110,17 @@ pageEncoding="UTF-8"%>
                                     회사 관리
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <a class="nav-link collapsed" href="/board/list?name=QnA" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
+                                <a class="nav-link collapsed" href="/board/list?id=1" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
                                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                     QnA
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <a class="nav-link collapsed" href="/board/list?name=공지사항" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
+                                <a class="nav-link collapsed" href="/board/list?id=3" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
                                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                     공지사항
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <a class="nav-link collapsed" href="/board/list?name=익명게시판" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
+                                <a class="nav-link collapsed" href="/board/list?id=2" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
                                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                     익명게시판
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>

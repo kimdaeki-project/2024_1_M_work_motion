@@ -17,6 +17,7 @@ public class BoardService {
 	
 	public List<Map<String, Object>> getBoardList(CategoryDTO categoryDTO,Pager pager)throws Exception{
 		Map<String, Object> map = new HashMap<String, Object>();
+		pager.setCount(categoryDTO.getId());
 		pager.makeRow();
 		Long totalCount = boardDAO.totalCount(pager);
 		pager.makePage(totalCount);
@@ -28,7 +29,23 @@ public class BoardService {
 		 
 	}
 	
+	public int getViews(BoardDTO boardDTO) throws Exception{
+		return boardDAO.getViews(boardDTO);
+	}
+	
 	public BoardDTO getBoardDetail(BoardDTO boardDTO)throws Exception {
 		return boardDAO.getBoardDetail(boardDTO);
+	}
+	
+	public int create(BoardDTO boardDTO) throws Exception{
+		return boardDAO.create(boardDTO);
+	}
+	
+	public int setUpdate(BoardDTO boardDTO) throws Exception{
+		return boardDAO.setUpdate(boardDTO);
+	}
+	
+	public int delete(BoardDTO boardDTO) throws Exception{
+		return boardDAO.delete(boardDTO);
 	}
 }
