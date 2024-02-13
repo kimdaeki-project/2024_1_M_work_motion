@@ -24,5 +24,7 @@
         <typeAlias type="com.workmotion.app.util.Pager" alias="Pager"/>
         <typeAlias type="com.workmotion.app.department.DepartmentDTO" alias="DepartmentDTO"/>
         <typeAlias type="com.workmotion.app.company.CompanyDTO" alias="CompanyDTO"/>
+
+        <typeAlias type="com.workmotion.app.board.BoardDTO" alias="BoardDTO"/>
     </typeAliases>
 </configuration>
