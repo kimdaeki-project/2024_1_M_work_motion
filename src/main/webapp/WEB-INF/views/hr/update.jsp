@@ -18,7 +18,7 @@
                         <form action="/hr/update" method="post" id="hrFrm">
           
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="id" type="text" name="id" value="${dto.id}" placeholder="id" />
+                                <input class="form-control" id="memberid" type="text" name="id" value="${dto.id}" placeholder="id" />
                                 <label for="id">사원 번호</label>
                             </div>
      
@@ -36,8 +36,8 @@
 						<div class="form-floating mb-3">
 								<select class="form-select"  name="department_id" aria-label="Default select example">
 								 <option selected>부서 변경</option>
-								<c:forEach items="${department}" var="dd"> 
-								<option value="${dd.id}">${dd.name}</option>		
+								<c:forEach items="${department}" var="d"> 
+								<option value="${d.id}">${d.name}</option>		
 								</c:forEach>
 							</select>
 						</div>
@@ -46,8 +46,8 @@
 						<div class="form-floating mb-3">
 								<select class="form-select"  name="position_id" aria-label="Default select example">
 								 <option selected>직위 변경</option>
-								<c:forEach items="${position}" var="pp"> 
-								<option value="${pp.id}">${pp.name}</option>		
+								<c:forEach items="${position}" var="p"> 
+								<option value="${p.id}">${p.name}</option>		
 								</c:forEach>
 							</select>
 						</div>
@@ -63,11 +63,11 @@
                                 <button class="btn btn-primary">사원 정보 수정</button>
                             </div>
                         </form>
-                        
-                        		<button class="btn btn-danger">사원 정보 삭제</button>
+                        		<button class="btn btn-danger" id="deleteBtn" type="button">사원 정보 삭제</button>
                     </div>
                   
                 </div>
             </div>
         </div>
     </div>
+	<script src="/resources/js/hr/delete.js"></script>

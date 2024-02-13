@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.workmotion.app.department.DepartmentDTO;
 import com.workmotion.app.department.DepartmentService;
@@ -30,6 +31,16 @@ public class HrController {
 	private DepartmentService departmentService;
 	@Autowired
 	private PositionService positionService;
+	
+	
+	@PostMapping("delete")
+	public String deleteMember(MemberDTO memberDTO,HttpSession session,Pager pager,Model model) throws Exception {
+		System.out.println(memberDTO.getId());
+		int result = hrService.deleteMember(memberDTO);
+		List<Map<String,Object>> ar = hrService.getMemberList(memberDTO,session,pager);
+		model.addAttribute("list",ar);
+		return "hr/list";
+	}
 	
 	@GetMapping("update")
 	public String updateMember(MemberDTO memberDTO,Model model,Pager pager) throws Exception {	

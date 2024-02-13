@@ -42,5 +42,8 @@ public class HrService {
 			 return	hrDAO.updateMember(memberDTO);
 	}
 	
+	public int deleteMember(MemberDTO memberDTO) throws Exception {
+			return hrDAO.deleteMember(memberDTO);
+	}
 	
 }

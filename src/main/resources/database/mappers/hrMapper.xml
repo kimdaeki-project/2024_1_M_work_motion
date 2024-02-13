@@ -94,6 +94,11 @@
 		WHERE id = #{id}
 		</update>
 		
+		
+		<!-- 사원 인사페이지에서 삭제 -->
+		<delete id="deleteMember" parameterType="MemberDTO">
+		DELETE member WHERE id = #{id}
+		</delete>
 
 	
 	
