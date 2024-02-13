@@ -58,6 +58,7 @@ public class TaskController {
         int result = taskService.updateTask(taskDTO);
         result = taskService.removeCharge(taskDTO);
         result = taskService.addCharge(taskDTO, taskDTO.getCharge());
+        System.out.println(taskDTO.getProject_id());
         if (taskDTO.getHas_schedule() == 0) {
             result = scheduleService.deleteSchedule(new ScheduleDTO(null, null, null, null, taskDTO.getId(), null, null, null));
         } else if (taskDTO.getHas_schedule() == 1) {

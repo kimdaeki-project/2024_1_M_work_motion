@@ -1,7 +1,6 @@
 package com.workmotion.app.project.dao;
 
 import com.workmotion.app.member.MemberDTO;
-import com.workmotion.app.project.model.ProjectDTO;
 import com.workmotion.app.project.model.TaskDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,8 @@ public class TaskDAO {
     private SqlSession sqlSession;
     private final String NAMESPACE = "com.workmotion.app.project.dao.TaskDAO.";
 
-    public List<TaskDTO> getTaskList(ProjectDTO projectDTO) throws Exception {
-        return sqlSession.selectList(NAMESPACE + "getTaskList", projectDTO);
+    public List<TaskDTO> getTaskList(Map<String, Object> map) throws Exception {
+        return sqlSession.selectList(NAMESPACE + "getTaskList", map);
     }
 
     public int createTask(TaskDTO taskDTO) throws Exception {

@@ -30,9 +30,19 @@
         LEFT JOIN AVATAR a ON a.MEMBER_ID = m2.ID
     </sql>
 
-    <select id="getTaskList" parameterType="ProjectDTO" resultMap="getResult">
+    <select id="getTaskList" parameterType="Map" resultMap="getResult">
+        SELECT * FROM
+        (
+        SELECT ROWNUM rn, t.* FROM
+        (
         <include refid="getTask"></include>
-        WHERE PROJECT_ID = #{id}
+        ORDER BY CREATE_DT DESC
+        ) t
+        WHERE PROJECT_ID = #{project.id}
+        )
+        <if test="pager != null">
+            WHERE rn BETWEEN #{pager.startNum} AND #{pager.lastNum}
+        </if>
     </select>
     <resultMap id="getResult" type="TaskDTO" autoMapping="true">
         <id column="id" property="id"/>

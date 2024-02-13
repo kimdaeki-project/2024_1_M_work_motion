@@ -295,15 +295,37 @@ function createArticle(datas) {
 const homeButton = document.getElementById("homeButton");
 const taskButton = document.getElementById("taskButton");
 
+const $result = document.querySelector("#task");
+let $end;
+let temp;
+const callback = (entries, observer) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            page++;
+            observer.unobserve($end);
+            loadTask();
+        }
+    });
+};
+let options = {
+    threshold: 0,
+};
+let page = 1;
+const observer = new IntersectionObserver(callback, options);
 async function loadTask() {
-    const response = await fetch(`/v1/projects/${project_id}/tasks`);
+    console.log("Loading ");
+    const response = await fetch(
+        `/v1/projects/${project_id}/tasks?page=${page}`
+    );
     const data = await response.json();
+    console.log(data);
     const task = document.getElementById("task");
-    task.innerHTML = createTask(data).join("");
+    task.innerHTML += createTask(data).join("");
 
     const changeStatus = document.getElementsByClassName("changeStatus");
     for (let i = 0; i < changeStatus.length; i++) {
         changeStatus[i].addEventListener("click", async function (e) {
+            console.log("change status ");
             const selectedEl = e.target.parentElement.parentElement;
             const taskId = selectedEl.getAttribute("data-bs-taskId");
             const selectedValue = e.target.innerText;
@@ -346,6 +368,9 @@ async function loadTask() {
             }
         });
     }
+    $end = $result.children[$result.children.length - 5];
+    if (data.length < 10) return;
+    observer.observe($end);
 }
 const status = { 0: "진행", 1: "완료" };
 function createTask(tasks) {

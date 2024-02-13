@@ -4,6 +4,7 @@ import com.workmotion.app.member.MemberDTO;
 import com.workmotion.app.project.dao.TaskDAO;
 import com.workmotion.app.project.model.ProjectDTO;
 import com.workmotion.app.project.model.TaskDTO;
+import com.workmotion.app.util.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,14 @@ public class TaskService {
     @Autowired
     private TaskDAO taskDAO;
 
-    public List<TaskDTO> getTaskList(ProjectDTO projectDTO) throws Exception {
-        return taskDAO.getTaskList(projectDTO);
+    public List<TaskDTO> getTaskList(ProjectDTO projectDTO, Pager pager) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        pager.setLastNum(pager.getPage() * 10);
+        pager.setStartNum(pager.getLastNum() - 9);
+        System.out.println(pager.getStartNum() + " " + pager.getLastNum());
+        map.put("project", projectDTO);
+        map.put("pager", pager);
+        return taskDAO.getTaskList(map);
     }
 
     public int createTask(TaskDTO taskDTO) throws Exception {

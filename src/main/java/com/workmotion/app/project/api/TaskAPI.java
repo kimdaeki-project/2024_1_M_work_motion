@@ -5,6 +5,7 @@ import com.workmotion.app.project.model.TaskDTO;
 import com.workmotion.app.project.service.TaskService;
 import com.workmotion.app.schedule.ScheduleDTO;
 import com.workmotion.app.schedule.ScheduleService;
+import com.workmotion.app.util.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +29,8 @@ public class TaskAPI {
     }
 
     @GetMapping("{project_id}/tasks")
-    public ResponseEntity<?> getTaskList(@PathVariable Long project_id) throws Exception {
-        List<TaskDTO> taskDTOList = taskService.getTaskList(new ProjectDTO(project_id));
+    public ResponseEntity<?> getTaskList(@PathVariable Long project_id, Pager pager) throws Exception {
+        List<TaskDTO> taskDTOList = taskService.getTaskList(new ProjectDTO(project_id), pager);
 
         return new ResponseEntity<>(taskDTOList, HttpStatus.OK);
     }
