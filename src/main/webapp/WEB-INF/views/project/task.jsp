@@ -221,17 +221,6 @@ prefix="c" %>
                                 </form>
 
                                 <div id="article"></div>
-
-                                <div class="text-center">
-                                    <a
-                                        href="javascript:void(0);"
-                                        class="text-danger"
-                                        ><i
-                                            class="mdi mdi-spin mdi-loading me-1"
-                                        ></i>
-                                        Load more
-                                    </a>
-                                </div>
                             </div>
                         </div>
                         <!-- end card-->
@@ -254,16 +243,6 @@ prefix="c" %>
                                 /> -->
                                 <div id="task"></div>
 
-                                <div class="text-center">
-                                    <a
-                                        href="javascript:void(0);"
-                                        class="text-danger"
-                                        ><i
-                                            class="mdi mdi-spin mdi-loading me-1"
-                                        ></i>
-                                        Load more
-                                    </a>
-                                </div>
                             </div>
                         </div>
                         <!-- end card-->
