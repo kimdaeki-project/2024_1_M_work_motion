@@ -188,6 +188,7 @@ submitArticleButton.addEventListener("click", async function () {
     const data = await response.json();
     articleForm.reset();
     loadArticle();
+    $("#summernote").summernote("code", "");
 });
 
 async function loadArticle() {
@@ -208,9 +209,74 @@ async function deleteArticle(id) {
             { method: "delete" }
         );
         const data = await response.json();
-        article.remove();
+        console.log(data);
+        if (data == 1) {
+            article.remove();
+            alert("삭제 되었습니다.");
+        } else {
+            alert("삭제 실패했습니다.");
+        }
     }
 }
+
+function updateArticle(article_id) {
+    const article = document.querySelector(
+        `.taskArticle[data-bs-id='${article_id}']`
+    );
+    const wyswyg = document.querySelector(
+        `.article_content[data-bs-id='${article_id}']`
+    );
+    const bottom_menu = document.querySelector(
+        `.bottom-menu[data-bs-id='${article_id}']`
+    );
+    console.log(wyswyg);
+
+    bottom_menu.innerHTML += `
+        <button class='btn btn-sm btn-primary float-end' id="updateArticleContent" >
+            저장하기
+        </button>
+    `;
+    $(wyswyg).summernote({
+        placeholder: "내용을 입력해주세요.",
+        tabsize: 4,
+        height: 150,
+        toolbar: [
+            ["style", ["style"]],
+            ["font", ["bold", "underline", "clear"]],
+            ["color", ["color"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["table", ["table"]],
+            ["insert", ["link", "picture", "video"]],
+        ],
+    });
+    const updateArticleContent = document.getElementById(
+        "updateArticleContent"
+    );
+    updateArticleContent.addEventListener("click", async function () {
+        console.log($(wyswyg).summernote("code"));
+        const response = await fetch(
+            `/v1/projects/${project_id}/articles/${article_id}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ content: $(wyswyg).summernote("code") }),
+            }
+        );
+        const data = await response.json();
+        if (data == 1) {
+            this.remove();
+            $(wyswyg).summernote("destroy");
+
+            alert("수정 성공했습니다.");
+        }
+    });
+}
+
+// function updateArticleContent(article_id) {
+//     console.log(this);
+// }
 
 function createArticle(datas) {
     return datas.map((article) => {
@@ -258,7 +324,9 @@ function createArticle(datas) {
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
                         <a
-                            href="javascript:void(0);"
+                            href="javascript:void(0); updateArticle(${
+                                article.id
+                            });"
                             class="dropdown-item"
                             >수정하기</a
                         >
@@ -273,8 +341,10 @@ function createArticle(datas) {
                     </div>
                 </div>
             </div>
-            ${article.content}
-            <div class='mt-2'>
+            <div class="article_content" data-bs-id=${article.id}>
+                ${article.content}
+            </div>
+            <div class='mt-2 bottom-menu'  data-bs-id=${article.id}>
                 <a href='javascript: void(0);' class='btn btn-sm btn-link text-muted'>
                     <i class='mdi mdi-reply'></i> Reply
                 </a>

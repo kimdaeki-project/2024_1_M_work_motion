@@ -34,9 +34,11 @@ public class ArticleAPI {
         return new ResponseEntity<>(articleService.getArticleList(new ProjectDTO(project_id)), HttpStatus.OK);
     }
 
-    @PutMapping("{project_id}/articles")
-    public ResponseEntity<?> updateArticle(@PathVariable Long project_id, @RequestBody ArticleDTO articleDTO) throws Exception {
+    @PutMapping("{project_id}/articles/{article_id}")
+    public ResponseEntity<?> updateArticle(@PathVariable Long project_id, @PathVariable Long article_id, @RequestBody ArticleDTO articleDTO) throws Exception {
         articleDTO.setProject_id(project_id);
+        articleDTO.setId(article_id);
+        System.out.println(articleDTO.getContent());
         int result = articleService.updateArticle(articleDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
