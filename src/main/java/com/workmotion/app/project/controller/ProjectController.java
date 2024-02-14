@@ -61,6 +61,13 @@ public class ProjectController {
     public String getProjectList(Model model) throws Exception {
         model.addAttribute("myProjects", projectService.getMyProjectList(memberDTO));
         model.addAttribute("includeProjects", projectService.getProjectList(memberDTO));
+        List<ProjectDTO> dtos = projectService.getMyProjectList(memberDTO);
+        for (ProjectDTO project : dtos) {
+            System.out.println(project.getCrews().size());
+            for (MemberDTO memberDTO1 : project.getCrews()) {
+                System.out.println(memberDTO1.getName());
+            }
+        }
         model.addAttribute("page", "project/index");
         return "index";
     }

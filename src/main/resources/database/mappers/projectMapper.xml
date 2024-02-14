@@ -19,22 +19,37 @@
         INSERT INTO PROJECT (ID, NAME, CREATE_DT, INFO, OWNER_ID) VALUES (#{id}, #{name}, SYSDATE,
         #{info}, #{owner_id})
     </insert>
-    <select id="getProjectList" parameterType="MemberDTO" resultType="ProjectDTO">
-        SELECT c.* FROM
-        (
-        SELECT p.*
-        FROM CREW c
-        LEFT JOIN PROJECT p
-        ON c.PROJECT_ID = p.ID
-        WHERE c.MEMBER_ID = #{id}
-        ) c
+    <select id="getProjectList" parameterType="MemberDTO" resultMap="getProject">
+        <include refid="com.workmotion.app.project.dao.CrewDAO.getMember">
+            <property name="alias"
+                      value=",pj.ID project_id, pj.name project_name, pj.create_dt project_create_dt, pj.info project_info, pj.owner_id project_owner_id,cr.MEMBER_ID crew_id"/>
+        </include>
+        LEFT JOIN PROJECT pj ON pj.OWNER_ID != #{id} AND m.ID = pj.OWNER_ID
+        LEFT JOIN CREW cr ON cr.PROJECT_ID = pj.ID
+        WHERE pj.ID IS NOT NULL
     </select>
-    <select id="getMyProjectList" parameterType="MemberDTO" resultType="ProjectDTO">
-        SELECT * FROM
-        PROJECT
-        WHERE OWNER_ID = #{id}
+    <select id="getMyProjectList" parameterType="MemberDTO" resultMap="getProject">
+        <include refid="com.workmotion.app.project.dao.CrewDAO.getMember">
+            <property name="alias"
+                      value=",pj.ID project_id, pj.name project_name, pj.create_dt project_create_dt, pj.info project_info, pj.owner_id project_owner_id,cr.MEMBER_ID crew_id"/>
+        </include>
+        LEFT JOIN PROJECT pj ON pj.OWNER_ID = #{id} AND m.ID = pj.OWNER_ID
+        LEFT JOIN CREW cr ON cr.PROJECT_ID = pj.ID
+        WHERE pj.ID IS NOT NULL
     </select>
-
+    <resultMap id="getProject" type="ProjectDTO" autoMapping="true">
+        <id column="PROJECT_ID" property="id"/>
+        <result column="PROJECT_NAME" property="name"/>
+        <result column="PROJECT_CREATE_DT" property="create_dt"/>
+        <result column="PROJECT_INFO" property="info"/>
+        <result column="PROJECT_OWNER_ID" property="owner_id"/>
+        <association property="owner" javaType="MemberDTO" autoMapping="true">
+            <id column="id" property="id"/>
+        </association>
+        <collection property="crews" javaType="List" ofType="MemberDTO" columnPrefix="crew_">
+            <id column="id" property="id"/>
+        </collection>
+    </resultMap>
     <select id="getProjectDetail" parameterType="ProjectDTO" resultType="ProjectDTO">
         SELECT p.*
         FROM PROJECT p

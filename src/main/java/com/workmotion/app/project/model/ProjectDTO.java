@@ -3,6 +3,7 @@ package com.workmotion.app.project.model;
 import com.workmotion.app.member.MemberDTO;
 
 import java.util.Date;
+import java.util.List;
 
 public class ProjectDTO {
     private Long id;
@@ -11,34 +12,14 @@ public class ProjectDTO {
     private String info;
     private Long owner_id;
     private MemberDTO owner;
-
+    private List<MemberDTO> crews;
     private String crew;
-
-    public String getCrew() {
-        return crew;
-    }
-
-    public void setCrew(String crew) {
-        this.crew = crew;
-    }
 
     public ProjectDTO() {
     }
 
     public ProjectDTO(Long projectId) {
         this.id = projectId;
-    }
-
-    @Override
-    public String toString() {
-        return "ProjectDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", create_dt=" + create_dt +
-                ", info='" + info + '\'' +
-                ", owner_id=" + owner_id +
-                ", owner=" + owner +
-                '}';
     }
 
     public Long getId() {
@@ -87,5 +68,21 @@ public class ProjectDTO {
 
     public void setOwner(MemberDTO owner) {
         this.owner = owner;
+    }
+
+    public List<MemberDTO> getCrews() {
+        return crews;
+    }
+
+    public void setCrews(List<MemberDTO> crews) {
+        this.crews = crews;
+    }
+
+    public String getCrew() {
+        return crew;
+    }
+
+    public void setCrew(String crew) {
+        this.crew = crew;
     }
 }
