@@ -16,10 +16,8 @@ public class Pager {
 	private boolean last;
 	
 	private String search;
-	private String kind;
-	
-	private String referrerSearch;
-//	private String referrerKind;
+	private String kind;	
+
 	
 	
 	//페이지게시물 1~10 ,11~20 계산식  
@@ -91,25 +89,7 @@ public class Pager {
 	
 	
 	
-	public String getReferrerSearch() {
-		if(this.referrerSearch == null) {
-			this.referrerSearch = "";
-		}
-		this.referrerSearch = referrerSearch;
-			return referrerSearch;
-		}
 
-		public void setReferrerSearch(String referrerSearch) {
-			this.referrerSearch = referrerSearch;
-		}
-
-//		public String getReferrerKind() {
-//			return referrerKind;
-//		}
-//
-//		public void setReferrerKind(String referrerKind) {
-//			this.referrerKind = referrerKind;
-//		}
 		
 		
 

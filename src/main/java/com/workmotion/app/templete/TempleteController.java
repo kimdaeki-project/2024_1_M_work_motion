@@ -38,10 +38,11 @@ public class TempleteController {
 		
 		//직원리스트 
 		List<MemberDTO> ar = templeteService.getReferrerList(pager);	
-		System.out.println(ar.size());
-		for(MemberDTO m : ar) {
-			System.out.println(m.getDepartment().getName());
-		}	
+		
+//		System.out.println(ar.size());
+//		for(MemberDTO m : ar) {
+//			System.out.println(m.getDepartment().getName());
+//		}	
 		
 		model.addAttribute("list", ar);
 		model.addAttribute("pager", pager);
@@ -49,6 +50,19 @@ public class TempleteController {
 		model.addAttribute("page","docTemplete/detail");	
 		return "index";
 	}
+	
+	@GetMapping("referrer")
+	public String getReferrerList(Pager pager,Model model)throws Exception{
+		System.out.println("dddd");
+		List<MemberDTO> ar = templeteService.getReferrerList(pager);
+		model.addAttribute("list", ar);
+		model.addAttribute("pager", pager);
+		
+		System.out.println(ar.size());
+				
+		return "docTemplete/referrer";
+	}	
+	
 	
 	
 	@GetMapping("list")
