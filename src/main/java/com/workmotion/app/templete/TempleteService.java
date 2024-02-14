@@ -26,12 +26,15 @@ public class TempleteService {
 	@Autowired
 	private FileManager fileManager;
 	
+	//사원리스트 
 	public List<MemberDTO> getReferrerList(Pager pager)throws Exception{
 		
 		pager.makeRow();
-		Long totalCount = templeteDAO.getReferrerTotalCount(pager);
+		Long totalCount = templeteDAO.getReferrerTotalCount(pager);		
+		
 		pager.makeNum(totalCount);
-		List<MemberDTO> ar = templeteDAO.getReferrerList(pager);
+		List<MemberDTO> ar = templeteDAO.getReferrerList(pager);		
+
 				
 		return ar;		
 		

@@ -110,6 +110,8 @@ public class Pager {
 //		public void setReferrerKind(String referrerKind) {
 //			this.referrerKind = referrerKind;
 //		}
+		
+		
 
 	public Long getStartRow() {
 		return startRow;
