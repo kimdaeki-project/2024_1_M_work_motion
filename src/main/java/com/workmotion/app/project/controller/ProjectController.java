@@ -61,13 +61,6 @@ public class ProjectController {
     public String getProjectList(Model model) throws Exception {
         model.addAttribute("myProjects", projectService.getMyProjectList(memberDTO));
         model.addAttribute("includeProjects", projectService.getProjectList(memberDTO));
-        List<ProjectDTO> dtos = projectService.getMyProjectList(memberDTO);
-        for (ProjectDTO project : dtos) {
-            System.out.println(project.getCrews().size());
-            for (MemberDTO memberDTO1 : project.getCrews()) {
-                System.out.println(memberDTO1.getName());
-            }
-        }
         model.addAttribute("page", "project/index");
         return "index";
     }
@@ -94,7 +87,7 @@ public class ProjectController {
     public String updateProject(Model model, ProjectDTO projectDTO) throws Exception {
         int result = projectService.updateProject(projectDTO);
         customResponse.setResult(result);
-        customResponse.setRedirectUrl("/projects/setting?id=" + projectDTO.getId());
+        customResponse.setRedirectUrl("/projects/detail?id=" + projectDTO.getId());
         customResponse.setMessage("프로젝트 수정");
         model.addAttribute("response", customResponse);
         model.addAttribute("page", "project/result");

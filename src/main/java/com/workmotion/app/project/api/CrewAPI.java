@@ -45,7 +45,6 @@ public class CrewAPI {
     @GetMapping("{project_id}/crews/{member_id}")
     public ResponseEntity<MemberDTO> getCrew(@PathVariable Long project_id, @PathVariable Long member_id) throws Exception {
         MemberDTO memberDTO = crewService.getCrewDetail(project_id, member_id);
-        System.out.println(memberDTO.getAvatar());
         return new ResponseEntity<>(memberDTO, HttpStatus.OK);
     }
 

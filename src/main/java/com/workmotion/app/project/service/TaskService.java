@@ -21,7 +21,6 @@ public class TaskService {
         Map<String, Object> map = new HashMap<>();
         pager.setLastNum(pager.getPage() * 10);
         pager.setStartNum(pager.getLastNum() - 9);
-        System.out.println(pager.getStartNum() + " " + pager.getLastNum());
         map.put("project", projectDTO);
         map.put("pager", pager);
         return taskDAO.getTaskList(map);
