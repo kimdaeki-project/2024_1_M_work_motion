@@ -15,7 +15,8 @@ prefix="c" %>
         justify-content: space-between;
         align-items: center;
     }
-    #projectList {
+    #projectList,
+    #comProjectList {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -61,7 +62,7 @@ prefix="c" %>
     <div id="comProjectList">
         <c:forEach items="${includeProjects}" var="project">
             <a href="/projects/detail?id=${project.id}" class="projectCard">
-                <div class="card mb-3">
+                <div class="card shadow mb-1 bg-body-tertiary rounded">
                     <div class="card-body">
                         <h5 class="card-title">${project.name}</h5>
                         <p class="card-text">${project.info}</p>
