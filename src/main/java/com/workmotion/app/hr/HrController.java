@@ -32,6 +32,13 @@ public class HrController {
 	@Autowired
 	private PositionService positionService;
 	
+	@PostMapping("create")
+	public String createMember(MemberDTO memberDTO,HttpSession session,Pager pager,Model model) throws Exception {
+		hrService.createMember(memberDTO);
+		List<Map<String,Object>> ar = hrService.getMemberList(memberDTO,session,pager);
+		model.addAttribute("list",ar);
+		return "hr/list";
+	}
 	
 	@PostMapping("delete")
 	public String deleteMember(MemberDTO memberDTO,HttpSession session,Pager pager,Model model) throws Exception {

@@ -13,21 +13,28 @@
 			<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
+				<th>ID</th>
 				<th>Name</th>
 				<th>Position</th>
 				<th>Email</th>
 				<th>Department</th>
 				<th>PhoneNumber</th>
+				<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${list}" var="li">
 				<tr>
+				<td>${li.ID}</td>
 				<td><a href="/hr/detail?email=${li.EMAIL}">${li.NAME}</a></td>
 				<td>${li.PNAME}</td>
 				<td>${li.EMAIL}</td>
 				<td>${li.DNAME}</td>
 				<td>${li.PHONE}</td>
+				
+				<c:if test="${li.ROLE_ID eq 10}">
+				<td><button class="btn btn-primary createBtn" data-id="${li.ID}" data-company="${li.COMPANY_ID}" type="button">사원 추가</button></td>
+				</c:if>
 				</tr> 
 				</c:forEach>
 			</tbody>
@@ -67,5 +74,5 @@
 		</nav>
 	</div>
 </div>
-
+<script src="/resources/js/hr/list.js"></script>
 

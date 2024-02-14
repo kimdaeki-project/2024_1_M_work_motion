@@ -11,7 +11,6 @@ deleteBtn.addEventListener("click",()=>{
     
     }).then(r=>r.text())
     .then(r=>{
-            console.log(r);
             div.innerHTML = r;
 
    

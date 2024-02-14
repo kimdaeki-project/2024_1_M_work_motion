@@ -39,4 +39,7 @@ public class HrDAO {
 	public int deleteMember (MemberDTO memberDTO) throws Exception {
 		return sqlSession.delete(NAMESPACE+"deleteMember",memberDTO);
 	}
+	public int createMember(MemberDTO memberDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"createMember",memberDTO);
+	}
 }

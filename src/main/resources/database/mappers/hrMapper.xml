@@ -101,8 +101,10 @@
 		</delete>
 
 	
-	
-	
+		<!-- 사원 인사페이지에서 권한수정 사원으로 추가 -->
+		<update id="createMember" parameterType="MemberDTO">
+		UPDATE member SET role_id = 20 WHERE id = #{id}
+		</update>
 		
 
 
