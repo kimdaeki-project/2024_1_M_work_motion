@@ -39,7 +39,7 @@ public class TaskController {
         }
         customResponse.setResult(result);
         customResponse.setMessage("업무 생성");
-        customResponse.setRedirectUrl("/projects/detail?id=" + taskDTO.getProject_id());
+        customResponse.setRedirectUrl("/projects/detail?id=" + taskDTO.getProject_id() + "#taskTab");
         model.addAttribute("response", customResponse);
         model.addAttribute("page", "project/result");
         return "index";
@@ -67,7 +67,7 @@ public class TaskController {
 
         customResponse.setResult(result);
         customResponse.setMessage("업무 수정");
-        customResponse.setRedirectUrl("/projects/detail?id=" + taskDTO.getProject_id());
+        customResponse.setRedirectUrl("/projects/detail?id=" + taskDTO.getProject_id() + "#taskTab");
         model.addAttribute("response", customResponse);
         model.addAttribute("page", "project/result");
         return "index";
@@ -78,7 +78,7 @@ public class TaskController {
         int result = taskService.deleteTask(taskDTO);
         customResponse.setResult(result);
         customResponse.setMessage("업무 삭제");
-        customResponse.setRedirectUrl("/projects/detail?id=" + taskDTO.getProject_id());
+        customResponse.setRedirectUrl("/projects/detail?id=" + taskDTO.getProject_id() + "#taskTab");
         model.addAttribute("page", "project/result");
         model.addAttribute("response", customResponse);
         return "index";

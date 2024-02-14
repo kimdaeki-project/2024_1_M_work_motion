@@ -1,8 +1,90 @@
+//전역 변수
+let calendar; //캘린더
 const projectInfo = document.getElementsByClassName("projectInfo")[0];
 const project_id = projectInfo.getAttribute("data-bs-projectId");
 const crewList = document.getElementById("crewList");
-const owner_id = projectInfo.getAttribute("data-bs-ownerId");
+const owner_id = projectInfo.getAttribute("data-bs-ownerId"); //그룹장 아이디
 
+//탭 네이게이션 이벤트
+const homeButton = document.getElementById("homeButton");
+homeButton.addEventListener("click", function () {
+    window.location.hash = "homeTab";
+});
+const taskButton = document.getElementById("taskButton");
+taskButton.addEventListener("click", function () {
+    window.location.hash = "taskTab";
+});
+const scheduleButton = document.getElementById("scheduleButton");
+
+scheduleButton.addEventListener("click", function () {
+    window.location.hash = "scheduleTab";
+    const prev = document.querySelector("button[aria-label='prev']");
+    const next = document.querySelector("button[aria-label='next']");
+    prev.click();
+    next.click();
+});
+
+//DOM 로드 후 한 번만 실행
+document.addEventListener("DOMContentLoaded", async () => {
+    //컨텐츠 로드(ajax)
+    loadArticle();
+    loadTask();
+    loadCalendar();
+
+    //해시에 맞는 탭 선택
+    const url = window.location.hash;
+    if (url == "#homeTab") {
+        homeButton.click();
+    }
+    if (url == "#taskTab") {
+        taskButton.click();
+    }
+    if (url == "#scheduleTab") {
+        scheduleButton.click();
+    }
+});
+
+//멤버 추가 버튼 클릭시 프로젝트에 포함돼있지 않은 멤버 리스트 불러오기
+const addCrewButton = document.getElementById("addCrewButton");
+addCrewButton.addEventListener("click", async function () {
+    const modalBody = document.getElementById("modalBody");
+    modalBody.innerHTML = "";
+    const response = await fetch(`/v1/projects/${project_id}/members`);
+    const data = await response.json();
+
+    let html = "<form id='frm'>";
+    html += createMemberList(data);
+    html += "</form>";
+    modalBody.innerHTML = html;
+});
+//멤버 리스트 마크업 생성후 리턴
+function createMemberList(memberList) {
+    let html = "";
+    for (member of memberList) {
+        html += `
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="member_id" value="${member.id}">
+                    <div class="memberCard">
+                        <div class="avatar">
+                        </div>
+                        <div class="info">
+                            <div class="name">${member.name}</div>
+                            <div class="role">${member.position.name}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+    }
+    return html;
+}
+
+//멤버 추가 후 멤버 리스트 재로딩
+async function loadCrewList() {
+    const response = await fetch(`/v1/projects/${project_id}/crews`);
+    const data = await response.json();
+    crewList.innerHTML = createCrewList(data);
+}
+//멤버 리스트 마크업 생성 후 리턴
 function createCrewList(crewList) {
     let html = "";
     for (crew of crewList) {
@@ -49,48 +131,9 @@ function createCrewList(crewList) {
     }
     return html;
 }
-function createMemberList(memberList) {
-    let html = "";
-    for (member of memberList) {
-        html += `
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="member_id" value="${member.id}">
-                    <div class="memberCard">
-                        <div class="avatar">
-                        </div>
-                        <div class="info">
-                            <div class="name">${member.name}</div>
-                            <div class="role">${member.position.name}</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-    }
-    return html;
-}
-async function loadCrewList() {
-    const response = await fetch(`/v1/projects/${project_id}/crews`);
-    const data = await response.json();
-    crewList.innerHTML = createCrewList(data);
-}
-//loadCrewList();
 
-//멤버 추가
-const addCrewButton = document.getElementById("addCrewButton");
+//추가 할 멤버 제출
 const submitButton = document.getElementById("submitButton");
-const settingProjectButton = document.getElementById("settingProjectButton");
-addCrewButton.addEventListener("click", async function () {
-    const modalBody = document.getElementById("modalBody");
-    modalBody.innerHTML = "";
-    const response = await fetch(`/v1/projects/${project_id}/members`);
-    const data = await response.json();
-
-    let html = "<form id='frm'>";
-    html += createMemberList(data);
-    html += "</form>";
-    modalBody.innerHTML = html;
-});
-
 submitButton.addEventListener("click", function () {
     const checked = document.querySelectorAll(
         "#modalBody input[type=checkbox]:checked"
@@ -108,26 +151,27 @@ submitButton.addEventListener("click", function () {
     })
         .then((response) => response.json())
         .then((datas) => {
-            console.log(datas);
+            alert(datas + "명의 멤버가 추가되었습니다.");
             loadCrewList();
         });
 });
 
+//멤버 정보 로딩
 async function loadProfile(member_id) {
     const response = await fetch(
         `/v1/projects/${project_id}/crews/` + member_id
     );
-
     const data = await response.json();
     return data;
 }
+//오너 정보 로딩
 async function loadOwnerProfile() {
     const response = await fetch(`/v1/projects/${project_id}/owner`);
-
     const data = await response.json();
     return data;
 }
 
+//멤버 프로필 클릭시 프로필 모달창 데이터 로딩 및 마크업 생성
 async function createProfile(member_id, is_owner) {
     const profileBody = document.getElementById("profileBody");
     profileBody.innerHTML = "";
@@ -176,10 +220,10 @@ async function createProfile(member_id, is_owner) {
     `;
 }
 
+//아티클 작성
 const submitArticleButton = document.getElementById("submitArticleButton");
-const articleForm = document.getElementById("articleForm");
-
 submitArticleButton.addEventListener("click", async function () {
+    const articleForm = document.getElementById("articleForm");
     const formData = new FormData(articleForm);
     const response = await fetch(`/v1/projects/${project_id}/articles`, {
         method: "POST",
@@ -189,105 +233,23 @@ submitArticleButton.addEventListener("click", async function () {
     articleForm.reset();
     loadArticle();
     $("#summernote").summernote("code", "");
+    if (data == 1) {
+        alert("작성되었습니다.");
+    }
 });
 
+//아티클 로딩
 async function loadArticle() {
     const response = await fetch(`/v1/projects/${project_id}/articles`);
     const data = await response.json();
     const article = document.getElementById("article");
-    article.innerHTML = createArticle(data).join("");
+    article.innerHTML = createArticle(data);
 }
-
-async function deleteArticle(id) {
-    if (confirm("삭제하시겠습니까?")) {
-        const article = document.querySelector(
-            `.taskArticle[data-bs-id='${id}']`
-        );
-        const response = await fetch(
-            `/v1/projects/${project_id}/articles/` + id,
-            { method: "delete" }
-        );
-        const data = await response.json();
-        console.log(data);
-        if (data == 1) {
-            article.remove();
-            alert("삭제 되었습니다.");
-        } else {
-            alert("삭제 실패했습니다.");
-        }
-    }
-}
-let creating = false;
-function updateArticle(article_id) {
-    const article = document.querySelector(
-        `.taskArticle[data-bs-id='${article_id}']`
-    );
-    const wyswyg = document.querySelector(
-        `.article_content[data-bs-id='${article_id}']`
-    );
-    const bottom_menu = document.querySelector(
-        `.bottom-menu[data-bs-id='${article_id}']`
-    );
-    console.log(wyswyg);
-    if (creating == false) {
-        creating = true;
-        bottom_menu.innerHTML += `
-        <button class='btn btn-sm btn-primary float-end' id="updateArticleContent" >
-            저장하기
-        </button>
-    `;
-        $(wyswyg).summernote({
-            placeholder: "내용을 입력해주세요.",
-            tabsize: 4,
-            height: 150,
-            toolbar: [
-                ["style", ["style"]],
-                ["font", ["bold", "underline", "clear"]],
-                ["color", ["color"]],
-                ["para", ["ul", "ol", "paragraph"]],
-                ["table", ["table"]],
-                ["insert", ["link", "picture", "video"]],
-            ],
-        });
-        const updateArticleContent = document.getElementById(
-            "updateArticleContent"
-        );
-        updateArticleContent.addEventListener("click", async function () {
-            console.log($(wyswyg).summernote("code"));
-            const response = await fetch(
-                `/v1/projects/${project_id}/articles/${article_id}`,
-                {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        content: $(wyswyg).summernote("code"),
-                    }),
-                }
-            );
-            const data = await response.json();
-            if (data == 1) {
-                this.remove();
-                $(wyswyg).summernote("destroy");
-
-                alert("수정 성공했습니다.");
-                creating = false;
-            }
-        });
-    } else {
-        alert("수정중인 글이 있습니다.");
-    }
-}
-
-// function updateArticleContent(article_id) {
-//     console.log(this);
-// }
-
-function createArticle(datas) {
-    return datas.map((article) => {
-        console.log(article);
-        return `
+//아티클 마크업 생성
+function createArticle(articles) {
+    let html = "";
+    for (let article of articles) {
+        html += `
         <div class='border border-light shadow p-2 mb-3 taskArticle' data-bs-id=${
             article.id
         }>
@@ -365,12 +327,95 @@ function createArticle(datas) {
             </div>
         </div>
         `;
-    });
+    }
+    return html;
 }
 
-const homeButton = document.getElementById("homeButton");
-const taskButton = document.getElementById("taskButton");
+//수정중인 글있는지 전역변수
+let creating = false;
+//아티클 수정 함수
+function updateArticle(article_id) {
+    if (creating) {
+        alert("수정중인 글이 있습니다.");
+        return;
+    }
+    creating = true;
+    const article = document.querySelector(
+        `.taskArticle[data-bs-id='${article_id}']`
+    );
+    const wyswyg = document.querySelector(
+        `.article_content[data-bs-id='${article_id}']`
+    );
+    const bottom_menu = document.querySelector(
+        `.bottom-menu[data-bs-id='${article_id}']`
+    );
+    bottom_menu.innerHTML += `
+        <button class='btn btn-sm btn-primary float-end' id="updateArticleContent" >
+            저장하기
+        </button>
+    `;
+    $(wyswyg).summernote({
+        placeholder: "내용을 입력해주세요.",
+        tabsize: 4,
+        height: 150,
+        toolbar: [
+            ["style", ["style"]],
+            ["font", ["bold", "underline", "clear"]],
+            ["color", ["color"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["table", ["table"]],
+            ["insert", ["link", "picture", "video"]],
+        ],
+    });
+    const updateArticleContent = document.getElementById(
+        "updateArticleContent"
+    );
+    updateArticleContent.addEventListener("click", async function () {
+        console.log($(wyswyg).summernote("code"));
+        const response = await fetch(
+            `/v1/projects/${project_id}/articles/${article_id}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    content: $(wyswyg).summernote("code"),
+                }),
+            }
+        );
+        const data = await response.json();
+        if (data == 1) {
+            this.remove();
+            $(wyswyg).summernote("destroy");
 
+            alert("수정 성공했습니다.");
+            creating = false;
+        }
+    });
+}
+//아티클 삭제 함수
+async function deleteArticle(id) {
+    if (confirm("삭제하시겠습니까?")) {
+        const article = document.querySelector(
+            `.taskArticle[data-bs-id='${id}']`
+        );
+        const response = await fetch(
+            `/v1/projects/${project_id}/articles/` + id,
+            { method: "delete" }
+        );
+        const data = await response.json();
+        console.log(data);
+        if (data == 1) {
+            article.remove();
+            alert("삭제 되었습니다.");
+        } else {
+            alert("삭제 실패했습니다.");
+        }
+    }
+}
+
+//테스크 무한로딩
 const $result = document.querySelector("#task");
 let $end;
 let temp;
@@ -389,14 +434,12 @@ let options = {
 let page = 1;
 const observer = new IntersectionObserver(callback, options);
 async function loadTask() {
-    console.log("Loading ");
     const response = await fetch(
         `/v1/projects/${project_id}/tasks?page=${page}`
     );
     const data = await response.json();
-    console.log(data);
     const task = document.getElementById("task");
-    task.innerHTML += createTask(data).join("");
+    task.innerHTML += createTask(data);
 
     const changeStatus = document.getElementsByClassName("changeStatus");
     for (let i = 0; i < changeStatus.length; i++) {
@@ -421,6 +464,7 @@ async function loadTask() {
                     }
                 );
                 const data = await response.json();
+                //상태 변경 성공 시 스케줄도 변경
                 if (data == 1) {
                     statusButton.innerText = selectedValue;
                     statusButton.classList.toggle("text-bg-primary");
@@ -448,11 +492,13 @@ async function loadTask() {
     if (data.length < 10) return;
     observer.observe($end);
 }
-const status = { 0: "진행", 1: "완료" };
+
+//테스크 마크업 생성
 function createTask(tasks) {
-    return tasks.map((task) => {
-        console.log(task);
-        return `
+    const status = { 0: "진행", 1: "완료" };
+    let html = "";
+    for (let task of tasks) {
+        html += `
         <div class='border border-light shadow p-2 mb-3 taskArticle' data-bs-id=${
             task.id
         }>
@@ -592,13 +638,11 @@ function createTask(tasks) {
             </div>
         </div>
         `;
-    });
+    }
+    return html;
 }
 
-taskButton.addEventListener("click", function () {
-    console.log("Task clicked");
-});
-
+//테스크 삭제 함수
 async function deleteTask(id) {
     if (confirm("삭제하시겠습니까?")) {
         const task = document.querySelector(`.taskArticle[data-bs-id='${id}']`);
@@ -615,19 +659,23 @@ async function deleteTask(id) {
     }
 }
 
-const scaduleButton = document.getElementById("scaduleButton");
-
-//이거 없으면 초기 화면 렌더링 이상함
-scaduleButton.addEventListener("click", () => {
-    const prev = document.querySelector("button[aria-label='prev']");
-    const next = document.querySelector("button[aria-label='next']");
-    prev.click();
-    next.click();
+//summernote init
+$("#summernote").summernote({
+    placeholder: "내용을 입력해주세요.",
+    tabsize: 4,
+    height: 150,
+    toolbar: [
+        ["style", ["style"]],
+        ["font", ["bold", "underline", "clear"]],
+        ["color", ["color"]],
+        ["para", ["ul", "ol", "paragraph"]],
+        ["table", ["table"]],
+        ["insert", ["link", "picture", "video"]],
+    ],
 });
-let calendar;
-document.addEventListener("DOMContentLoaded", async () => {
-    loadArticle();
-    loadTask();
+
+//켈린더 로딩 함수
+async function loadCalendar() {
     // calendar element 취득
     var calendarEl = $("#calendar")[0];
     const response = await fetch(`/v1/projects/${project_id}/schedules`);
@@ -637,7 +685,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             data[i].backgroundColor = "green";
         }
     }
-    console.log(data);
     // full-calendar 생성하기
     calendar = new FullCalendar.Calendar(calendarEl, {
         height: "700px", // calendar 높이 설정
@@ -683,21 +730,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             // calendar.unselect();
         },
         eventClick: function (info) {
-            // const popoverClose = document.querySelector(".fc-popover-close");
-            // if (popoverClose != null) {
-            //     popoverClose.click();
-            // }
             const calandarModalEl = document.getElementById("calandarModal");
             const myModal = new bootstrap.Modal(calandarModalEl);
             myModal.show();
-            // or
+
+            //콜백함수
             function deleteEvent() {
                 if (
                     confirm(
                         "'" + info.event.title + " 일정을 삭제하시겠습니까 ?"
                     )
                 ) {
-                    // 확인 클릭 시
                     fetch(`/v1/schedules/${info.event.id}`, {
                         method: "delete",
                     }).then(() => {
@@ -714,7 +757,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById("deleteEventButton");
 
             removeAllEventListeners(deleteEventButton);
-            // console.log(info.event);
             var events = new Array(); // Json 데이터를 받기 위한 배열 선언
             var obj = new Object();
             obj.title = info.event._def.title;
@@ -723,7 +765,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             events.push(obj);
             const calandarModalBody =
                 document.getElementById("calandarModalBody");
-            console.log(events[0].title);
             calandarModalBody.innerHTML = `
                     <div>
                         <h5>${events[0].title}</h5>
@@ -735,36 +776,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                         )}</p>
                     </div>
                 `;
-
-            // console.log(events);
-            // $(function deleteData() {
-            //     $.ajax({
-            //         url: "/full-calendar/calendar-admin-update",
-            //         method: "DELETE",
-            //         dataType: "json",
-            //         data: JSON.stringify(events),
-            //         contentType: "application/json",
-            //     });
-            // });
         },
         // 이벤트
         events: data,
     });
     // 캘린더 랜더링
     calendar.render();
-});
-
-//summernote init
-$("#summernote").summernote({
-    placeholder: "내용을 입력해주세요.",
-    tabsize: 4,
-    height: 150,
-    toolbar: [
-        ["style", ["style"]],
-        ["font", ["bold", "underline", "clear"]],
-        ["color", ["color"]],
-        ["para", ["ul", "ol", "paragraph"]],
-        ["table", ["table"]],
-        ["insert", ["link", "picture", "video"]],
-    ],
-});
+}

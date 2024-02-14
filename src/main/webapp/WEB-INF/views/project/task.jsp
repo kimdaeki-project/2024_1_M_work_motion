@@ -164,11 +164,11 @@ prefix="c" %>
                             class="nav-link"
                             href="#"
                             role="tab"
-                            aria-controls="pills-scadule"
+                            aria-controls="pills-schedule"
                             aria-selected="true"
                             data-bs-toggle="pill"
-                            data-bs-target="#pills-scadule"
-                            id="scaduleButton"
+                            data-bs-target="#pills-schedule"
+                            id="scheduleButton"
                             >스케줄</a
                         >
                     </li>
@@ -250,13 +250,13 @@ prefix="c" %>
 
                     <div
                         class="tab-pane fade"
-                        id="pills-scadule"
+                        id="pills-schedule"
                         role="tabpanel"
-                        aria-labelledby="pills-scadule-tab"
+                        aria-labelledby="pills-schedule-tab"
                     >
                         <div class="card">
                             <div class="card-body">
-                                <div id="scadule">
+                                <div id="schedule">
                                     <div id="calendar-container">
                                         <div id="calendar"></div>
                                     </div>
