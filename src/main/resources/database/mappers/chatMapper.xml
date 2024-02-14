@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.workmotion.app.chat.ChatDAO">
+    <insert id="createRoom" parameterType="RoomDTO">
+        <selectKey resultType="Long" order="BEFORE" keyProperty="id">
+            SELECT ROOM_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO ROOM (id, name) VALUES (#{id}, #{name})
+    </insert>
+    <insert id="addMember" parameterType="Map">
+        INSERT INTO ROOM_MEMBER (MEMBER_ID,ROOM_ID)
+        <foreach collection="members" item="member_id" separator="UNION ALL">
+            SELECT #{member_id}, #{room_id} FROM DUAL
+        </foreach>
+    </insert>
+    <insert id="sendMessage" parameterType="MessageDTO">
+        INSERT INTO MESSAGE (ID, MESSAGE, TIME, SENDER_ID, ROOM_ID)
+        VALUES (MESSAGE_SEQ.NEXTVAL, #{message}, #{time}, #{sender_id}, #{room_id})
+    </insert>
+</mapper>

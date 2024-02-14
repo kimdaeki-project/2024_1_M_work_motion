@@ -19,6 +19,9 @@
         <typeAlias type="com.workmotion.app.project.model.TaskDTO" alias="TaskDTO"/>
         <typeAlias type="com.workmotion.app.project.model.ArticleDTO" alias="ArticleDTO"/>
         <typeAlias type="com.workmotion.app.schedule.ScheduleDTO" alias="ScheduleDTO"/>
+        <typeAlias type="com.workmotion.app.chat.model.RoomDTO" alias="RoomDTO"/>
+        <typeAlias type="com.workmotion.app.chat.model.MessageDTO" alias="MessageDTO"/>
+
 
         <typeAlias type="com.workmotion.app.member.Avatar" alias="Avatar"/>
         <typeAlias type="com.workmotion.app.util.Pager" alias="Pager"/>

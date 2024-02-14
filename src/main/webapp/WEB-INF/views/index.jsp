@@ -36,6 +36,40 @@ pageEncoding="UTF-8"%>
     rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+
+    <style>
+        #chatButton {
+            right: 5%;
+            width: 30vh;
+        }
+        #chat{
+            width:30vh;
+            height: 50vh;
+            right: 5%;
+            background-color: aliceblue;
+            z-index: 1;
+        }
+        #chat3 .form-control {
+        border-color: transparent;
+        }
+
+        #chat3 .form-control:focus {
+            border-color: transparent;
+            box-shadow: inset 0px 0px 0px 1px transparent;
+        }
+        
+        .badge-dot {
+            border-radius: 50%;
+            height: 10px;
+            width: 10px;
+            margin-left: 2.9rem;
+            margin-top: -0.75rem;
+        }
+    </style>
     </head>
   <body>
         <body class="sb-nav-fixed">
@@ -160,8 +194,68 @@ pageEncoding="UTF-8"%>
                 <div id="layoutSidenav_content">
                     <main class="h-100">
                         <c:import url="/WEB-INF/views/${page}.jsp"/>
+                        <button type="button" class="btn btn-primary position-fixed bottom-0" id="chatButton">
+                            메신저 <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span class="visually-hidden">unread messages</span></span>
+                          </button>
+                          <div class=" position-fixed bottom-0 animate__animated d-none" id="chat">
+
+                                <section class="h-100" >
+                                    <div class="container h-100">
+                                        <div class="row h-100">
+                                            <div class="col-md-12 h-100">
+                                                        <div class="row h-100">
+                                                            <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column  h-100">
+                                                                <div
+                                                                    class="d-flex justify-content-between align-items-center"
+                                                                    style="height: 5vh;"
+                                                                >
+                                                                    <div>
+                                                                        
+                                                                    </div>
+                                                                    <button type="button" class="btn-close" aria-label="Close" id="closeChatButton"></button>
+                                                                </div>
+                                                                <!-- 대화 들어가는 곳 -->
+                                                                <div
+                                                                    class="pt-3 overflow-auto"
+                                                                    data-mdb-perfect-scrollbar="true"
+                                                                    style="position: relative;background-color: #e7e3ff; height: 100%;"
+                                                                    id="messageBox"
+                                                                ></div>
+
+                                                                <div
+                                                                    class=" text-muted d-flex justify-content-start align-items-center pe-3  mt-2 mb-2"
+                                                                >
+                                                                    <!-- 메시지 타이핑 -->
+                                                                    <input
+                                                                        type="text"
+                                                                        class="form-control form-control-lg"
+                                                                        id="messageInput"
+                                                                        placeholder="Type message"
+                                                                    />
+                                                                    <a class="ms-1 text-muted" href="#!"
+                                                                        ><i class="fas fa-paperclip"></i
+                                                                    ></a>
+                                                                    <a class="ms-3 text-muted" href="#!"
+                                                                        ><i class="fas fa-smile"></i
+                                                                    ></a>
+                                                                    <!-- 전송버튼 -->
+                                                                    <a
+                                                                        class="ms-3"
+                                                                        href="javascript:void(0);"
+                                                                        id="sendMessageButton"
+                                                                        ><i class="fas fa-paper-plane"></i
+                                                                    ></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                          </div>
                     </main>
-                    <footer class="py-4 bg-light mt-auto">
+                    <!-- <footer class="py-4 bg-light mt-auto">
                         <div class="container-fluid px-4">
                             <div class="d-flex align-items-center justify-content-between small">
                                 <div class="text-muted">Copyright &copy; Your Website 2023</div>
@@ -172,9 +266,11 @@ pageEncoding="UTF-8"%>
                                 </div>
                             </div>
                         </div>
-                    </footer>
+                    </footer> -->
                 </div>
             </div>
+              
+           
 
 
 
@@ -182,5 +278,6 @@ pageEncoding="UTF-8"%>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
      <script src="/resources/js/scripts.js"></script>
+     
   </body>
 </html>
