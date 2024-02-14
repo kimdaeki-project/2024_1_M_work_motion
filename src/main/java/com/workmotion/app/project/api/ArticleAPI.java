@@ -4,6 +4,7 @@ import com.workmotion.app.member.MemberDTO;
 import com.workmotion.app.project.model.ArticleDTO;
 import com.workmotion.app.project.model.ProjectDTO;
 import com.workmotion.app.project.service.ArticleService;
+import com.workmotion.app.util.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,15 +31,14 @@ public class ArticleAPI {
     }
 
     @GetMapping("{project_id}/articles")
-    public ResponseEntity<List<ArticleDTO>> getArticleList(@PathVariable Long project_id) throws Exception {
-        return new ResponseEntity<>(articleService.getArticleList(new ProjectDTO(project_id)), HttpStatus.OK);
+    public ResponseEntity<List<ArticleDTO>> getArticleList(@PathVariable Long project_id, Pager pager) throws Exception {
+        return new ResponseEntity<>(articleService.getArticleList(new ProjectDTO(project_id), pager), HttpStatus.OK);
     }
 
     @PutMapping("{project_id}/articles/{article_id}")
     public ResponseEntity<?> updateArticle(@PathVariable Long project_id, @PathVariable Long article_id, @RequestBody ArticleDTO articleDTO) throws Exception {
         articleDTO.setProject_id(project_id);
         articleDTO.setId(article_id);
-        System.out.println(articleDTO.getContent());
         int result = articleService.updateArticle(articleDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

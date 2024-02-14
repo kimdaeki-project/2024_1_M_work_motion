@@ -4,20 +4,14 @@ const projectInfo = document.getElementsByClassName("projectInfo")[0];
 const project_id = projectInfo.getAttribute("data-bs-projectId");
 const crewList = document.getElementById("crewList");
 const owner_id = projectInfo.getAttribute("data-bs-ownerId"); //그룹장 아이디
-
 //탭 네이게이션 이벤트
 const homeButton = document.getElementById("homeButton");
-homeButton.addEventListener("click", function () {
-    window.location.hash = "homeTab";
-});
+homeButton.addEventListener("click", function () {});
 const taskButton = document.getElementById("taskButton");
-taskButton.addEventListener("click", function () {
-    window.location.hash = "taskTab";
-});
+taskButton.addEventListener("click", function () {});
 const scheduleButton = document.getElementById("scheduleButton");
 
 scheduleButton.addEventListener("click", function () {
-    window.location.hash = "scheduleTab";
     const prev = document.querySelector("button[aria-label='prev']");
     const next = document.querySelector("button[aria-label='next']");
     prev.click();
@@ -238,12 +232,39 @@ submitArticleButton.addEventListener("click", async function () {
     }
 });
 
+//아티클 무한로딩
+let options = {
+    threshold: 0,
+};
+let articlePage = 1;
+const $articleResult = document.querySelector("#article");
+let $articleEnd;
+const articleCallback = (entries, observer) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            console.log("Intersecting");
+            console.log(articlePage);
+            articlePage++;
+            observer.unobserve($articleEnd);
+            loadArticle();
+        }
+    });
+};
+const articleObserver = new IntersectionObserver(articleCallback, options);
+
 //아티클 로딩
 async function loadArticle() {
-    const response = await fetch(`/v1/projects/${project_id}/articles`);
+    console.log("Loading article");
+    const response = await fetch(
+        `/v1/projects/${project_id}/articles?page=` + articlePage
+    );
     const data = await response.json();
     const article = document.getElementById("article");
-    article.innerHTML = createArticle(data);
+    article.innerHTML += createArticle(data);
+
+    $articleEnd = $articleResult.children[$articleResult.children.length - 2];
+    if (data.length < 10) return;
+    articleObserver.observe($articleEnd);
 }
 //아티클 마크업 생성
 function createArticle(articles) {
@@ -416,26 +437,24 @@ async function deleteArticle(id) {
 }
 
 //테스크 무한로딩
-const $result = document.querySelector("#task");
-let $end;
-let temp;
-const callback = (entries, observer) => {
+const $taskResult = document.querySelector("#task");
+let taskPage = 1;
+let $taskEnd;
+
+const taskCallback = (entries, observer) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
-            page++;
-            observer.unobserve($end);
+            taskPage++;
+            observer.unobserve($taskEnd);
             loadTask();
         }
     });
 };
-let options = {
-    threshold: 0,
-};
-let page = 1;
-const observer = new IntersectionObserver(callback, options);
+const taskObserver = new IntersectionObserver(taskCallback, options);
+
 async function loadTask() {
     const response = await fetch(
-        `/v1/projects/${project_id}/tasks?page=${page}`
+        `/v1/projects/${project_id}/tasks?page=${taskPage}`
     );
     const data = await response.json();
     const task = document.getElementById("task");
@@ -502,9 +521,9 @@ async function loadTask() {
             }
         });
     }
-    $end = $result.children[$result.children.length - 5];
+    $taskEnd = $taskResult.children[$taskResult.children.length - 5];
     if (data.length < 10) return;
-    observer.observe($end);
+    taskObserver.observe($taskEnd);
 }
 
 //테스크 마크업 생성

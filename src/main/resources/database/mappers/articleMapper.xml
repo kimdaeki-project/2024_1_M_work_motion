@@ -8,16 +8,25 @@
         INSERT INTO ARTICLE (ID,PROJECT_ID,TITLE,CONTENT,CREATE_DT,WRITER_ID)
         VALUES (ARTICLE_SEQ.NEXTVAL, #{project_id}, #{title,jdbcType=VARCHAR}, #{content}, SYSDATE, #{writer_id})
     </insert>
-    <select id="getArticleList" parameterType="ProjectDTO" resultMap="getArticleResult">
+    <select id="getArticleList" parameterType="Map" resultMap="getArticleResult">
+        SELECT * FROM
+        (
+        SELECT ROWNUM rn, B.* FROM
+        (
         <include refid="com.workmotion.app.project.dao.CrewDAO.getMember">
-            <property name="alias" value=",at.* ,at.id at_id "/>
+            <property name="alias" value=",at.*"/>
         </include>
         LEFT JOIN ARTICLE at ON at.writer_id = m.id
-        WHERE at.project_id = #{id}
+        WHERE at.project_id = #{project.id}
         ORDER BY at.CREATE_DT DESC
+        ) B
+        )
+        <if test="pager != null">
+            WHERE rn BETWEEN #{pager.startNum} AND #{pager.lastNum}
+        </if>
     </select>
     <resultMap id="getArticleResult" type="ArticleDTO" autoMapping="true">
-        <id column="at_id" property="id"/>
+        <id column="id" property="id"/>
         <association property="writer" javaType="MemberDTO"
                      resultMap="com.workmotion.app.project.dao.CrewDAO.getMember" autoMapping="true"/>
     </resultMap>

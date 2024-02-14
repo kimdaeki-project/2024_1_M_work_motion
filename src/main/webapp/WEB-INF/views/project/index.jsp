@@ -78,7 +78,7 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
                                     />
                                 </svg>
                                 <p class="card-mlength">
-                                    ${fn:length(project.crews)}
+                                    ${fn:length(project.crews) + 1}
                                 </p>
                             </div>
                         </h5>
@@ -115,7 +115,7 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
                                     />
                                 </svg>
                                 <p class="card-mlength">
-                                    ${fn:length(project.crews)}
+                                    ${fn:length(project.crews) + 1}
                                 </p>
                             </div>
                         </h5>
