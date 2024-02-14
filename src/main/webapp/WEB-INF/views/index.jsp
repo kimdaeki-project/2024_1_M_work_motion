@@ -125,6 +125,11 @@ pageEncoding="UTF-8"%>
                                     익명게시판
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
+                                <a class="nav-link collapsed" href="/api/toss" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                    구독서비스
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
                                 <div class="sb-sidenav-menu-heading">Addons</div>
                                 <a class="nav-link" href="charts.html">
                                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>

@@ -118,5 +118,6 @@ public class BoardController {
 		
 		return "commons/result";
 	}
+	
 
 }

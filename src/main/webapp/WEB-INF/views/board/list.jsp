@@ -47,20 +47,21 @@
 			<c:if test="${!pager.last}">
 				<li class="page-item"><a class="page-link"
 					href="./list?page=${pager.lastNum+1}&search=${pager.search}&id=${category_id}">Next</a></li>
-			</c:if>
+			</c:if> &nbsp;
+			<!-- 검색부분@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+			<form action="./list" >
+				<div class="input-group mb-3">
+					<input type="text" width="200px" name="search"> <input
+						type="hidden" width="200px" value="${category_id}" name="id">
+					<button class="btn btn-outline-secondary" type="submit">찾기</button>
+				</div>
+			</form>
 		</ul>
 	</nav>
 </c:if>
 
-<!-- 검색부분@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-<form action="./list">
-	<div class="input-group mb-3">
-		<input type="text" class="form-control" name="search"
-			aria-label="Text input with dropdown button"> <input
-			type="hidden" value="${category_id}" name="id">
-		<button class="btn btn-outline-secondary" type="submit">찾기</button>
-	</div>
-</form>
+
+
 
 <a href="./create?id=${category_id}"><button class="btn btn-success">글쓰기</button></a>
 <script src="https://kit.fontawesome.com/3a9643202c.js"
