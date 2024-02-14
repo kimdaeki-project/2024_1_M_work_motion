@@ -604,36 +604,8 @@ prefix="c" %>
                         </div>
                     </div>
                 </div>
-                <!-- end col -->
             </div>
-            <!-- end row-->
         </div>
-        <!-- <div class="article">
-            <div class="content mt-3" id="taskContentSection">
-                <c:forEach items="${tasks}" var="task">
-                    <div class="taskCard">
-                        <div class="cardHead">
-                            <span class="title">${task.name}</span>
-                            <span class="date">${task.create_dt}</span>
-                        </div>
-                        <hr>
-                        <div class="cardBody">${task.content}</div>
-                    </div>
-                </c:forEach>
-            </div>
-            <div class="side d-none d-xl-block overflow-auto" id="projectMemberList">
-                <c:forEach items="${crews}" var="crew">
-                    <div class="memberCard">
-                        <div class="avatar">
-                        </div>
-                        <div class="info">
-                            <div class="name">${crew.name}</div>
-                            <div class="role">${crew.position.name}</div>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-        </div> -->
     </div>
 </div>
 
@@ -761,21 +733,4 @@ prefix="c" %>
     </div>
 </div>
 
-<script type="text/javascript" src="/resources/js/task.js"></script>
-<script type="text/javascript">
-    //높이 리사이즈
-    const taskContentSeciton = document.getElementById("container");
-    const firstHeight = window.innerHeight;
-    container.style.height = firstHeight - 125 + "px";
-
-    let currentProject = null;
-
-    window.addEventListener("resize", () => {
-        const afterHeight = window.innerHeight;
-        const diff = afterHeight - firstHeight;
-        const parent = document.getElementById("container").parentElement;
-        container.style.height = firstHeight + diff - 125 + "px";
-    });
-</script>
-
-<script></script>
+<script type="text/javascript" src="/resources/js/project/task.js"></script>

@@ -75,4 +75,4 @@ prefix="c" %>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
 
 <!-- 윈도우 사이즈 변경할 때 프로젝트 리스트 높이 조절 -->
-<script src="/resources/js/project.js"></script>
+<script src="/resources/js/project/project.js"></script>

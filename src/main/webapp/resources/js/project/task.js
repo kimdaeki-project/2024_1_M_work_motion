@@ -441,6 +441,20 @@ async function loadTask() {
     const task = document.getElementById("task");
     task.innerHTML += createTask(data);
 
+    //높이 리사이즈
+    const taskContentSeciton = document.getElementById("container");
+    const firstHeight = window.innerHeight;
+    container.style.height = firstHeight - 125 + "px";
+
+    let currentProject = null;
+
+    window.addEventListener("resize", () => {
+        const afterHeight = window.innerHeight;
+        const diff = afterHeight - firstHeight;
+        const parent = document.getElementById("container").parentElement;
+        container.style.height = firstHeight + diff - 125 + "px";
+    });
+
     const changeStatus = document.getElementsByClassName("changeStatus");
     for (let i = 0; i < changeStatus.length; i++) {
         changeStatus[i].addEventListener("click", async function (e) {
