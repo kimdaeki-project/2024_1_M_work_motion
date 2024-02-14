@@ -21,9 +21,11 @@ pass.addEventListener("click",()=>{
 pass.addEventListener("blur",()=>{
     val = pass.value;
     if(reg.test(val)){
+        passResult.className = "green";
         result.innerHTML = '비밀번호 사용 가능';
         p1 = true;
     }else{
+        passResult.className = "red";
         result.innerHTML = '8이상 숫자,소대문자,특수문자 포함해야함';
         p1 = false;
     }
@@ -33,9 +35,11 @@ pass.addEventListener("blur",()=>{
 
 passCheck.addEventListener('keyup',()=>{
     if(passCheck.value==pass.value){
+        passCheckResult.className = "green";
         checkResult.innerHTML="비밀번호 일치 사용 가능";
         p2=true;
     }else{
+        passCheckResult.className = "red";
         checkResult.innerHTML="비밀번호가 맞지 않습니다.";
         p2=false;
     }
@@ -50,10 +54,11 @@ email.addEventListener("blur",()=>{
     .then(r=>{
         let result = r.trim();
         if(result>0){
+            emailResult.className = "green";
             emailResult.innerHTML = "이메일 사용 가능";
             p3=true;
         }else{
-         
+            emailResult.className = "red";
             emailResult.innerHTML = "이메일 중복 사용 불가 ";
             p3=false;
         }

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,6 +64,10 @@ public class HrController {
 	}
 	@PostMapping("update")
 	public String updateMember (Model model,MemberDTO memberDTO) throws Exception {
+			if(memberDTO.getPassword() != null) {
+				String hashpassword = BCrypt.hashpw(memberDTO.getPassword(),BCrypt.gensalt());
+				memberDTO.setPassword(hashpassword);
+			}
 			int result = hrService.updateMember(memberDTO);
 			String msg = "수정 실패";
 			if(result>0) {
