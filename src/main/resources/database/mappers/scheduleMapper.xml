@@ -34,9 +34,6 @@
             <if test="task_id != null">
                 OR TASK_ID = #{task_id}
             </if>
-            <if test="project_id != null">
-                OR PROJECT_ID = #{project_id}
-            </if>
             <if test="id != null">
                 OR ID = #{id}
             </if>
@@ -62,6 +59,7 @@
                 STATUS=#{status}
             </if>
         </set>
+        WHERE s.TASK_ID = #{task_id}
         WHEN NOT MATCHED THEN
         INSERT (ID, "START", END, TITLE, TASK_ID, MEMBER_ID, PROJECT_ID, STATUS)
         VALUES (SCHEDULE_SEQ.NEXTVAL, #{start}, #{end}, #{title}, #{task_id}, #{member_id}, #{project_id}, #{status})

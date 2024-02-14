@@ -197,7 +197,6 @@ async function loadArticle() {
     const article = document.getElementById("article");
     article.innerHTML = createArticle(data).join("");
 }
-loadArticle();
 
 async function deleteArticle(id) {
     if (confirm("삭제하시겠습니까?")) {
@@ -218,7 +217,7 @@ async function deleteArticle(id) {
         }
     }
 }
-
+let creating = false;
 function updateArticle(article_id) {
     const article = document.querySelector(
         `.taskArticle[data-bs-id='${article_id}']`
@@ -230,48 +229,55 @@ function updateArticle(article_id) {
         `.bottom-menu[data-bs-id='${article_id}']`
     );
     console.log(wyswyg);
-
-    bottom_menu.innerHTML += `
+    if (creating == false) {
+        creating = true;
+        bottom_menu.innerHTML += `
         <button class='btn btn-sm btn-primary float-end' id="updateArticleContent" >
             저장하기
         </button>
     `;
-    $(wyswyg).summernote({
-        placeholder: "내용을 입력해주세요.",
-        tabsize: 4,
-        height: 150,
-        toolbar: [
-            ["style", ["style"]],
-            ["font", ["bold", "underline", "clear"]],
-            ["color", ["color"]],
-            ["para", ["ul", "ol", "paragraph"]],
-            ["table", ["table"]],
-            ["insert", ["link", "picture", "video"]],
-        ],
-    });
-    const updateArticleContent = document.getElementById(
-        "updateArticleContent"
-    );
-    updateArticleContent.addEventListener("click", async function () {
-        console.log($(wyswyg).summernote("code"));
-        const response = await fetch(
-            `/v1/projects/${project_id}/articles/${article_id}`,
-            {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ content: $(wyswyg).summernote("code") }),
-            }
+        $(wyswyg).summernote({
+            placeholder: "내용을 입력해주세요.",
+            tabsize: 4,
+            height: 150,
+            toolbar: [
+                ["style", ["style"]],
+                ["font", ["bold", "underline", "clear"]],
+                ["color", ["color"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["insert", ["link", "picture", "video"]],
+            ],
+        });
+        const updateArticleContent = document.getElementById(
+            "updateArticleContent"
         );
-        const data = await response.json();
-        if (data == 1) {
-            this.remove();
-            $(wyswyg).summernote("destroy");
+        updateArticleContent.addEventListener("click", async function () {
+            console.log($(wyswyg).summernote("code"));
+            const response = await fetch(
+                `/v1/projects/${project_id}/articles/${article_id}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        content: $(wyswyg).summernote("code"),
+                    }),
+                }
+            );
+            const data = await response.json();
+            if (data == 1) {
+                this.remove();
+                $(wyswyg).summernote("destroy");
 
-            alert("수정 성공했습니다.");
-        }
-    });
+                alert("수정 성공했습니다.");
+                creating = false;
+            }
+        });
+    } else {
+        alert("수정중인 글이 있습니다.");
+    }
 }
 
 // function updateArticleContent(article_id) {
@@ -591,7 +597,6 @@ function createTask(tasks) {
 
 taskButton.addEventListener("click", function () {
     console.log("Task clicked");
-    loadTask();
 });
 
 async function deleteTask(id) {
@@ -621,6 +626,8 @@ scaduleButton.addEventListener("click", () => {
 });
 let calendar;
 document.addEventListener("DOMContentLoaded", async () => {
+    loadArticle();
+    loadTask();
     // calendar element 취득
     var calendarEl = $("#calendar")[0];
     const response = await fetch(`/v1/projects/${project_id}/schedules`);
