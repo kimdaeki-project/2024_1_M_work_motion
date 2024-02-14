@@ -4,54 +4,35 @@ const pwCheckBtn = document.getElementById("pwCheckBtn");
 const mypageFrm = document.getElementById("mypageFrm");
 const updateBtn = document.getElementById("updateBtn");
 const updatePw = document.getElementById("updatePw");
-const check = false;
-const check2 = true;
+const updateFrm =document.getElementById("updateFrm");
+let check = false;
+
 pwCheckBtn.addEventListener("click",()=>{
-   
-    let formdata = new FormData(mypageFrm);
-    updatePw.disabled = true;
+    // let formdata = new FormData(mypageFrm);
     fetch("/member/pwCheck",{
         method:"POST",
-        body:formdata
-        
+        headers : {'Content-type': ' application/x-www-form-urlencoded;charset=utf-8'},
+        body:"pass="+pw.value
     }).then(r=>r.text())
     .then(r=>{
-        
         if(r>0){
-            console.log(r);
             pwResult.innerHTML= '비밀번호 확인되었습니다';
             check = true;
+ 
         }else{
-            console.log(r);
             pwResult.innerHTML= '비밀번호 확인 실패';
             check = false;
         }
     })
-    check2=false;
-    updatePw.disabled = false;
 })
    
 updateBtn.addEventListener("click",()=>{
-
-        if(check2){                     //비밀번호 확인 x 
-            if(check){                  //비밀번호 변경
-                pw.disabled = true;
-                mypageFrm.submit();
+            if(check){                 
+                updateFrm.submit();
             }else{
                 alert("비밀번호를 확인해주세요");
-
+                location.href = "/member/mypage";
             }
-                
-        }else{
-            pw.disabled = true;
-            updatePw.disabled = true;
-            mypageFrm.submit();
-
-        }
-
-
-
-
 })
 
 

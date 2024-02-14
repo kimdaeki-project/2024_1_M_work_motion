@@ -61,7 +61,7 @@
 		<!--회원가입-->
  		<insert id="createMember" parameterType="MemberDTO">
 
-		INSERT INTO member VALUES(member_SEQ.NEXTVAL,0,#{company_id},
+		INSERT INTO member VALUES(member_SEQ.NEXTVAL,10,#{company_id},
 		#{email},#{password},#{name},0,10,#{phone})
 
 		</insert>
