@@ -1,16 +1,8 @@
 package com.workmotion.app.chat.model;
 
 public class RoomDTO {
-    private Long id;
     private String name;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

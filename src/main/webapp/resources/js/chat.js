@@ -1,7 +1,13 @@
 var socket = new SockJS("/websocket-example");
 var stompClient = Stomp.over(socket);
 const sendMessageButton = document.getElementById("sendMessageButton");
-
+const room_name = document
+    .getElementsByTagName("body")[0]
+    .getAttribute("data-bs-roomName");
+const member_id = document
+    .getElementsByTagName("body")[0]
+    .getAttribute("data-bs-memberId");
+console.log(member_id);
 function chageDate(timestamp) {
     let date = new Date(timestamp);
     // 월을 약어 형식으로 변환
@@ -43,32 +49,44 @@ function chageDate(timestamp) {
     return result;
 }
 
+const messageInput = document.getElementById("messageInput");
+messageInput.addEventListener("keyup", function (e) {
+    if (e.key == "Enter") {
+        sendMessageButton.click();
+    }
+});
 sendMessageButton.addEventListener("click", function () {
-    const messageInput = document.getElementById("messageInput");
-    let message;
-
-    message = {
-        sender_id: 122,
-        message: messageInput.value,
-        time: new Date(),
-        room_name: "110-122",
-    };
-    stompClient.send("/app/sendMessage", {}, JSON.stringify(message));
+    sendMessage(messageInput.value);
     messageInput.value = "";
 });
 
+function sendMessage(value) {
+    if (value != "") {
+        message = {
+            sender_id: member_id,
+            message: value.trim(),
+            time: new Date(),
+            room_name: room_name,
+        };
+        stompClient.send("/app/sendMessage", {}, JSON.stringify(message));
+    }
+}
+const messageBox = document.getElementById("messageBox");
 stompClient.connect({}, function (frame) {
     console.log("Connected: " + frame);
-    stompClient.subscribe("/chat/messages/110-122", function (outputMessage) {
-        showMessage(JSON.parse(outputMessage.body));
-    });
+    stompClient.subscribe(
+        "/chat/messages/" + room_name,
+        function (outputMessage) {
+            showMessage(JSON.parse(outputMessage.body));
+            messageBox.scrollTop = messageBox.scrollHeight;
+        }
+    );
 });
 
 function showMessage(message) {
-    const messageBox = document.getElementById("messageBox");
     var messageElement = document.createElement("li");
     message.time = chageDate(message.time);
-    if (message.sender_id == 122) {
+    if (message.sender_id == member_id) {
         messageElement.innerHTML = createSendMessage(message);
     } else {
         messageElement.innerHTML = createReceiveMessage(message);

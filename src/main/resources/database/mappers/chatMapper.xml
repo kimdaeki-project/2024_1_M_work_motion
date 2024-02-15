@@ -6,19 +6,19 @@
 
 <mapper namespace="com.workmotion.app.chat.ChatDAO">
     <insert id="createRoom" parameterType="RoomDTO">
-        <selectKey resultType="Long" order="BEFORE" keyProperty="id">
-            SELECT ROOM_SEQ.NEXTVAL FROM DUAL
-        </selectKey>
-        INSERT INTO ROOM (id, name) VALUES (#{id}, #{name})
+        INSERT INTO ROOM (name) VALUES (#{name})
     </insert>
     <insert id="addMember" parameterType="Map">
-        INSERT INTO ROOM_MEMBER (MEMBER_ID,ROOM_ID)
+        INSERT INTO ROOM_MEMBER (MEMBER_ID,ROOM_NAME,JOIN_DT,RECENTLY_DT)
         <foreach collection="members" item="member_id" separator="UNION ALL">
-            SELECT #{member_id}, #{room_id} FROM DUAL
+            SELECT #{member_id}, #{room_name}, SYSDATE, SYSDATE FROM DUAL
         </foreach>
     </insert>
+    <select id="getRoom" parameterType="RoomDTO" resultType="RoomDTO">
+        SELECT * FROM ROOM WHERE NAME = #{name}
+    </select>
     <insert id="sendMessage" parameterType="MessageDTO">
-        INSERT INTO MESSAGE (ID, MESSAGE, TIME, SENDER_ID, ROOM_ID)
-        VALUES (MESSAGE_SEQ.NEXTVAL, #{message}, #{time}, #{sender_id}, #{room_id})
+        INSERT INTO MESSAGE (ID, MESSAGE, TIME, SENDER_ID, ROOM_NAME)
+        VALUES (MESSAGE_SEQ.NEXTVAL, #{message}, #{time}, #{sender_id}, #{room_name})
     </insert>
 </mapper>

@@ -51,7 +51,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             crossorigin="anonymous"
         ></script>
     </head>
-    <body>
+    <body data-bs-roomName="${room.name}" data-bs-memberId="${member.id}">
         <section class="h-100">
             <div class="container h-100">
                 <div class="row h-100">

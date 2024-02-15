@@ -15,14 +15,24 @@ public class ChatService {
 
     public int createRoom(RoomDTO room) throws Exception {
         int result = chatDAO.createRoom(room);
-        Long id = room.getId();
         String[] members = room.getName().split("-");
-        System.out.println(id);
         Map<String, Object> map = new HashMap<>();
-        map.put("room_id", id);
+        System.out.println("addMember");
+        map.put("room_name", room.getName());
         map.put("members", members);
+
         result = chatDAO.addMember(map);
+
         return result;
+    }
+
+    public RoomDTO getRoom(RoomDTO room) throws Exception {
+        RoomDTO resultRoom = chatDAO.getRoom(room);
+        if (resultRoom == null) {
+            createRoom(room);
+            return room;
+        }
+        return resultRoom;
     }
 
     public int addMember(Map<String, Object> map) throws Exception {

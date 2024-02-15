@@ -7,7 +7,6 @@ public class MessageDTO {
     private Long sender_id;
     private String message;
     private Date time;
-    private Long room_id;
     private String room_name;
 
     public MessageDTO() {
@@ -63,11 +62,4 @@ public class MessageDTO {
         this.message = message;
     }
 
-    public Long getRoom_id() {
-        return room_id;
-    }
-
-    public void setRoom_id(Long room_id) {
-        this.room_id = room_id;
-    }
 }

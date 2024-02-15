@@ -18,6 +18,10 @@ public class ChatDAO {
         return sqlSession.insert(NAMESPACE + "createRoom", room);
     }
 
+    public RoomDTO getRoom(RoomDTO room) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + "getRoom", room);
+    }
+
     public int addMember(Map<String, Object> map) throws Exception {
         return sqlSession.insert(NAMESPACE + "addMember", map);
     }

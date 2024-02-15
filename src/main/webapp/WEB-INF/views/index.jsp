@@ -1,261 +1,428 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+prefix="c" %>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="kr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Work Motion</title>
-    <!-- Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <!-- Template -->
-    <link href="/resources/css/styles.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Work Motion</title>
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR&display=swap"
+            rel="stylesheet"
+        />
+        <!-- Template -->
+        <link href="/resources/css/styles.css" rel="stylesheet" />
+        <script
+            src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
+            crossorigin="anonymous"
+        ></script>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <!-- Bootstrap CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
 
-     <!-- Jquery -->
-     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <!-- Tagify 다운 -->
-    <script src="https://unpkg.com/@yaireo/tagify"></script>
-    <!-- 폴리필 (구버젼 브라우저 지원) -->
-    <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-    <link
-        href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
-        rel="stylesheet"
-        type="text/css"
-    />
-    <!-- summernote -->
-    <link
-    href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
-    rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
+        <!-- Jquery -->
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"
+        ></script>
+        <!-- Tagify 다운 -->
+        <script src="https://unpkg.com/@yaireo/tagify"></script>
+        <!-- 폴리필 (구버젼 브라우저 지원) -->
+        <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+        <link
+            href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
+            rel="stylesheet"
+            type="text/css"
+        />
+        <!-- summernote -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+        />
 
-    <style>
-        #chatButton {
-            right: 5%;
-            width: 30vh;
-        }
-        #chat{
-            width:30vh;
-            height: 50vh;
-            right: 5%;
-            background-color: aliceblue;
-            z-index: 1;
-        }
-        #chat3 .form-control {
-        border-color: transparent;
-        }
+        <style>
+            #messengerButton {
+                right: 5%;
+                width: 30vh;
+            }
+            #messenger {
+                width: 30vh;
+                height: 50vh;
+                right: 5%;
+                background-color: aliceblue;
+                z-index: 1;
+            }
+            #chat3 .form-control {
+                border-color: transparent;
+            }
 
-        #chat3 .form-control:focus {
-            border-color: transparent;
-            box-shadow: inset 0px 0px 0px 1px transparent;
-        }
-        
-        .badge-dot {
-            border-radius: 50%;
-            height: 10px;
-            width: 10px;
-            margin-left: 2.9rem;
-            margin-top: -0.75rem;
-        }
-    </style>
+            #chat3 .form-control:focus {
+                border-color: transparent;
+                box-shadow: inset 0px 0px 0px 1px transparent;
+            }
+
+            .badge-dot {
+                border-radius: 50%;
+                height: 10px;
+                width: 10px;
+                margin-left: 2.9rem;
+                margin-top: -0.75rem;
+            }
+            a {
+                text-decoration: none;
+            }
+            .memberList:hover {
+                cursor: pointer;
+            }
+        </style>
     </head>
-  <body>
-        <body class="sb-nav-fixed">
-            <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-                <!-- Navbar Brand-->
-                <a class="navbar-brand ps-3" href="/">WorkMotion</a>
-                <!-- Sidebar Toggle-->
-                <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-                <!-- Navbar Search-->
-                <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                    <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                        <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                    </div>
-                </form>
-                <!-- Navbar-->
-                <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/member/mypage">마이페이지</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="/member/logout">로그아웃</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-            <div id="layoutSidenav">
-                <div id="layoutSidenav_nav">
-                    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                        <div class="sb-sidenav-menu">
-                            <div class="nav">
-                                <div class="sb-sidenav-menu-heading">Core</div>
-                                <a class="nav-link" href="/">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                    Dashboard
-                                </a>
-                                <div class="sb-sidenav-menu-heading">메뉴</div>
-                                <a class="nav-link collapsed" href="/projects/list" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                    프로젝트
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                         
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                    전자결제
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                            문서작성
-                                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                        </a>
-                                        <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                            <nav class="sb-sidenav-menu-nested nav">
-                                                <a class="nav-link" href="/docTemplete/list">서류 종류</a>
-                                                <a class="nav-link" href="/tempDoc/list">임시저장</a>
-                                            </nav>
-                                        </div>
-                                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                            보관함
-                                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                        </a>
-                                        <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                            <nav class="sb-sidenav-menu-nested nav">
-                                                <a class="nav-link" href="/approval/list">결재함</a>
-                                                <a class="nav-link" href="/document/list">발신함</a>
-                                                <a class="nav-link" href="/receiver/list">참조함</a>
-                                            </nav>
-                                        </div>
-                                    </nav>
+    <body class="sb-nav-fixed" data-bs-memberId="${member.id}">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="/">WorkMotion</a>
+            <!-- Sidebar Toggle-->
+            <button
+                class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+                id="sidebarToggle"
+                href="#!"
+            >
+                <i class="fas fa-bars"></i>
+            </button>
+            <!-- Navbar Search-->
+            <form
+                class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
+            >
+                <div class="input-group">
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder="Search for..."
+                        aria-label="Search for..."
+                        aria-describedby="btnNavbarSearch"
+                    />
+                    <button
+                        class="btn btn-primary"
+                        id="btnNavbarSearch"
+                        type="button"
+                    >
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle"
+                        id="navbarDropdown"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        ><i class="fas fa-user fa-fw"></i
+                    ></a>
+                    <ul
+                        class="dropdown-menu dropdown-menu-end"
+                        aria-labelledby="navbarDropdown"
+                    >
+                        <li>
+                            <a class="dropdown-item" href="/member/mypage"
+                                >마이페이지</a
+                            >
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                            <a class="dropdown-item" href="/member/logout"
+                                >로그아웃</a
+                            >
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav
+                    class="sb-sidenav accordion sb-sidenav-dark"
+                    id="sidenavAccordion"
+                >
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="/">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-tachometer-alt"></i>
                                 </div>
-                                <a class="nav-link collapsed" href="/hr/list" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                    인사 관리
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <a class="nav-link collapsed" href="/department/departmentList"  data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                    부서 관리
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <a class="nav-link collapsed" href="/company/list" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                    회사 관리
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <a class="nav-link collapsed" href="/board/list?id=1" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                    QnA
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <a class="nav-link collapsed" href="/board/list?id=3" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                    공지사항
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <a class="nav-link collapsed" href="/board/list?id=2" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                    익명게시판
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="sb-sidenav-menu-heading">Addons</div>
-                                <a class="nav-link" href="charts.html">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                    Charts
-                                </a>
-                                <a class="nav-link" href="tables.html">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                    Tables
-                                </a>
+                                Dashboard
+                            </a>
+                            <div class="sb-sidenav-menu-heading">메뉴</div>
+                            <a
+                                class="nav-link collapsed"
+                                href="/projects/list"
+                                data-bs-target="#collapseLayouts"
+                                aria-expanded="false"
+                                aria-controls="collapseLayouts"
+                            >
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-columns"></i>
+                                </div>
+                                프로젝트
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+
+                            <a
+                                class="nav-link collapsed"
+                                href="#"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapsePages"
+                                aria-expanded="false"
+                                aria-controls="collapsePages"
+                            >
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                전자결제
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div
+                                class="collapse"
+                                id="collapsePages"
+                                aria-labelledby="headingTwo"
+                                data-bs-parent="#sidenavAccordion"
+                            >
+                                <nav
+                                    class="sb-sidenav-menu-nested nav accordion"
+                                    id="sidenavAccordionPages"
+                                >
+                                    <a
+                                        class="nav-link collapsed"
+                                        href="#"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#pagesCollapseAuth"
+                                        aria-expanded="false"
+                                        aria-controls="pagesCollapseAuth"
+                                    >
+                                        문서작성
+                                        <div class="sb-sidenav-collapse-arrow">
+                                            <i class="fas fa-angle-down"></i>
+                                        </div>
+                                    </a>
+                                    <div
+                                        class="collapse"
+                                        id="pagesCollapseAuth"
+                                        aria-labelledby="headingOne"
+                                        data-bs-parent="#sidenavAccordionPages"
+                                    >
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a
+                                                class="nav-link"
+                                                href="/docTemplete/list"
+                                                >서류 종류</a
+                                            >
+                                            <a
+                                                class="nav-link"
+                                                href="/tempDoc/list"
+                                                >임시저장</a
+                                            >
+                                        </nav>
+                                    </div>
+                                    <a
+                                        class="nav-link collapsed"
+                                        href="#"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#pagesCollapseError"
+                                        aria-expanded="false"
+                                        aria-controls="pagesCollapseError"
+                                    >
+                                        보관함
+                                        <div class="sb-sidenav-collapse-arrow">
+                                            <i class="fas fa-angle-down"></i>
+                                        </div>
+                                    </a>
+                                    <div
+                                        class="collapse"
+                                        id="pagesCollapseError"
+                                        aria-labelledby="headingOne"
+                                        data-bs-parent="#sidenavAccordionPages"
+                                    >
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a
+                                                class="nav-link"
+                                                href="/approval/list"
+                                                >결재함</a
+                                            >
+                                            <a
+                                                class="nav-link"
+                                                href="/document/list"
+                                                >발신함</a
+                                            >
+                                            <a
+                                                class="nav-link"
+                                                href="/receiver/list"
+                                                >참조함</a
+                                            >
+                                        </nav>
+                                    </div>
+                                </nav>
                             </div>
+                            <a
+                                class="nav-link collapsed"
+                                href="/hr/list"
+                                data-bs-target="#collapseHR"
+                                aria-expanded="false"
+                                aria-controls="collapseHR"
+                            >
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                인사 관리
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <a
+                                class="nav-link collapsed"
+                                href="/department/departmentList"
+                                data-bs-target="#collapseHR"
+                                aria-expanded="false"
+                                aria-controls="collapseHR"
+                            >
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                부서 관리
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <a
+                                class="nav-link collapsed"
+                                href="/company/list"
+                                data-bs-target="#collapseHR"
+                                aria-expanded="false"
+                                aria-controls="collapseHR"
+                            >
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                회사 관리
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <a
+                                class="nav-link collapsed"
+                                href="/board/list?id=1"
+                                data-bs-target="#collapseHR"
+                                aria-expanded="false"
+                                aria-controls="collapseHR"
+                            >
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                QnA
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <a
+                                class="nav-link collapsed"
+                                href="/board/list?id=3"
+                                data-bs-target="#collapseHR"
+                                aria-expanded="false"
+                                aria-controls="collapseHR"
+                            >
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                공지사항
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <a
+                                class="nav-link collapsed"
+                                href="/board/list?id=2"
+                                data-bs-target="#collapseHR"
+                                aria-expanded="false"
+                                aria-controls="collapseHR"
+                            >
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                익명게시판
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="sb-sidenav-menu-heading">Addons</div>
+                            <a class="nav-link" href="charts.html">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-chart-area"></i>
+                                </div>
+                                Charts
+                            </a>
+                            <a class="nav-link" href="tables.html">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-table"></i>
+                                </div>
+                                Tables
+                            </a>
                         </div>
-                        <!-- <div class="sb-sidenav-footer">
+                    </div>
+                    <!-- <div class="sb-sidenav-footer">
                             <div class="small">Logged in as:</div>
                             Start Bootstrap
                         </div> -->
-                    </nav>
-                </div>
-                <div id="layoutSidenav_content">
-                    <main class="h-100">
-                        <c:import url="/WEB-INF/views/${page}.jsp"/>
-                        <button type="button" class="btn btn-primary position-fixed bottom-0" id="chatButton">
-                            메신저 <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span class="visually-hidden">unread messages</span></span>
-                          </button>
-                          <div class=" position-fixed bottom-0 animate__animated d-none" id="chat">
-
-                                <section class="h-100" >
-                                    <div class="container h-100">
-                                        <div class="row h-100">
-                                            <div class="col-md-12 h-100">
-                                                        <div class="row h-100">
-                                                            <div class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column  h-100">
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center"
-                                                                    style="height: 5vh;"
-                                                                >
-                                                                    <div>
-                                                                        
-                                                                    </div>
-                                                                    <button type="button" class="btn-close" aria-label="Close" id="closeChatButton"></button>
-                                                                </div>
-                                                                <!-- 대화 들어가는 곳 -->
-                                                                <div
-                                                                    class="pt-3 overflow-auto"
-                                                                    data-mdb-perfect-scrollbar="true"
-                                                                    style="position: relative;background-color: #e7e3ff; height: 100%;"
-                                                                    id="messageBox"
-                                                                ></div>
-
-                                                                <div
-                                                                    class=" text-muted d-flex justify-content-start align-items-center pe-3  mt-2 mb-2"
-                                                                >
-                                                                    <!-- 메시지 타이핑 -->
-                                                                    <input
-                                                                        type="text"
-                                                                        class="form-control form-control-lg"
-                                                                        id="messageInput"
-                                                                        placeholder="Type message"
-                                                                    />
-                                                                    <a class="ms-1 text-muted" href="#!"
-                                                                        ><i class="fas fa-paperclip"></i
-                                                                    ></a>
-                                                                    <a class="ms-3 text-muted" href="#!"
-                                                                        ><i class="fas fa-smile"></i
-                                                                    ></a>
-                                                                    <!-- 전송버튼 -->
-                                                                    <a
-                                                                        class="ms-3"
-                                                                        href="javascript:void(0);"
-                                                                        id="sendMessageButton"
-                                                                        ><i class="fas fa-paper-plane"></i
-                                                                    ></a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                          </div>
-                    </main>
-                    <!-- <footer class="py-4 bg-light mt-auto">
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main class="h-100">
+                    <c:import url="/WEB-INF/views/${page}.jsp" />
+                    <button
+                        type="button"
+                        class="btn btn-primary position-fixed bottom-0"
+                        id="messengerButton"
+                    >
+                        메신저
+                        <span
+                            class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"
+                            ><span class="visually-hidden"
+                                >unread messages</span
+                            ></span
+                        >
+                    </button>
+                    <div
+                        class="position-fixed bottom-0 animate__animated d-none"
+                        id="messenger"
+                    >
+                        <ul
+                            class="list-unstyled mb-0 overflow-auto h-100"
+                            id="messengerMemberList"
+                        ></ul>
+                    </div>
+                </main>
+                <!-- <footer class="py-4 bg-light mt-auto">
                         <div class="container-fluid px-4">
                             <div class="d-flex align-items-center justify-content-between small">
                                 <div class="text-muted">Copyright &copy; Your Website 2023</div>
@@ -267,17 +434,19 @@ pageEncoding="UTF-8"%>
                             </div>
                         </div>
                     </footer> -->
-                </div>
             </div>
-              
-           
+        </div>
 
-
-
-     <!-- Bootstrap JS -->
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-     <script src="/resources/js/scripts.js"></script>
-     
-  </body>
+        <!-- Bootstrap JS -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+        <script src="/resources/js/scripts.js"></script>
+    </body>
 </html>

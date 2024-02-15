@@ -4,6 +4,7 @@ const projectInfo = document.getElementsByClassName("projectInfo")[0];
 const project_id = projectInfo.getAttribute("data-bs-projectId");
 const crewList = document.getElementById("crewList");
 const owner_id = projectInfo.getAttribute("data-bs-ownerId"); //그룹장 아이디
+
 //탭 네이게이션 이벤트
 const homeButton = document.getElementById("homeButton");
 homeButton.addEventListener("click", function () {});
@@ -194,6 +195,7 @@ async function createProfile(member_id, is_owner) {
                         <button
                             type="button"
                             class="btn btn-soft-success btn-xs waves-effect mb-2 waves-light"
+                            onclick="sendMessage(${member.id})"
                         >
                             메시지
                         </button>
@@ -212,6 +214,37 @@ async function createProfile(member_id, is_owner) {
             </div>
         </div>
     `;
+}
+
+//채팅창 오픈
+async function sendMessage(sendMemberId) {
+    const member_id = projectInfo.getAttribute("data-bs-memberId");
+    let room_name = "";
+    if (Number(member_id) > Number(sendMemberId)) {
+        room_name = sendMemberId + "-" + member_id;
+    } else {
+        room_name = member_id + "-" + sendMemberId;
+    }
+    const response = await fetch("/chat/getRoom?name=" + room_name);
+    const data = await response.text();
+    if (data == "success") {
+        var popupWidth = 400;
+        var popupHeight = 700;
+
+        var popupX = window.screen.width / 2 - popupWidth / 2;
+        // 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
+
+        var popupY = window.screen.height / 2 - popupHeight / 2;
+        const popupWindow = window.open(
+            "/chat?name=" + room_name,
+            "",
+            `toolbar=no, menubar=no,scrollbars=no,resizable=no, width=${popupWidth}, height=${popupHeight}, left=${popupX},top=${popupY}`
+        );
+        popupWindow.resizeTo(popupWidth, popupHeight);
+        popupWindow.onresize = (_) => {
+            popupWindow.resizeTo(popupWidth, popupHeight);
+        };
+    }
 }
 
 //아티클 작성

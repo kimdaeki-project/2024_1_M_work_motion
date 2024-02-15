@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -66,7 +67,8 @@ public class ProjectController {
     }
 
     @GetMapping("detail")
-    public String getProjectDetail(Model model, ProjectDTO projectDTO) throws Exception {
+    public String getProjectDetail(Model model, ProjectDTO projectDTO, HttpSession session) throws Exception {
+        model.addAttribute("member", (MemberDTO) session.getAttribute("member"));
         model.addAttribute("project", projectService.getProjectDetail(projectDTO));
         //model.addAttribute("tasks", taskService.getTaskList(projectDTO));
         model.addAttribute("crews", crewService.getCrewList(projectDTO));
