@@ -2,6 +2,7 @@ package com.workmotion.app.chat;
 
 import com.workmotion.app.chat.model.MessageDTO;
 import com.workmotion.app.chat.model.RoomDTO;
+import com.workmotion.app.chat.model.RoomInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +42,9 @@ public class ChatService {
 
     public int sendMessage(MessageDTO message) throws Exception {
         return chatDAO.sendMessage(message);
+    }
+
+    public int updateRoomInfo(RoomInfoDTO roomInfoDTO) {
+        return chatDAO.updateRoomInfo(roomInfoDTO);
     }
 }

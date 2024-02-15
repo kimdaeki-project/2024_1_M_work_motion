@@ -2,6 +2,7 @@ package com.workmotion.app.chat;
 
 import com.workmotion.app.chat.model.MessageDTO;
 import com.workmotion.app.chat.model.RoomDTO;
+import com.workmotion.app.chat.model.RoomInfoDTO;
 import com.workmotion.app.member.MemberDTO;
 import com.workmotion.app.project.service.CrewService;
 import org.slf4j.Logger;
@@ -45,11 +46,18 @@ public class ChatController {
 
     @GetMapping("/chat/getRoom")
     @ResponseBody
-    public String getRoom(RoomDTO room) throws Exception {
+    public String getRoom(RoomDTO room, HttpSession session) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
         System.out.println(room.getName());
         room = chatService.getRoom(room);
+
         if (room.getName() == null) {
             chatService.createRoom(room);
+        } else {
+            RoomInfoDTO roomInfoDTO = new RoomInfoDTO();
+            roomInfoDTO.setRoom_name(room.getName());
+            roomInfoDTO.setMember_id(memberDTO.getId());
+            chatService.updateRoomInfo(roomInfoDTO);
         }
         ;
         return "success";
