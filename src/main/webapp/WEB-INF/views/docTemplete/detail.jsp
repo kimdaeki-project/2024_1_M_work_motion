@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	
 	<form class="form-control" id="form" method="POST"
 		action="../document/add" enctype="multipart/form-data">
 		<input type="hidden" name="templete_id" value="${dto.id}">
@@ -16,19 +16,16 @@
 		<c:import url="/resources/upload/templete/${dto.name}"></c:import>
 
 		<div class="button-container">
-
-
-
 			<button name="temporary_save" value="0">보내기</button>
 			<button name="temporary_save" value="1">임시저장</button>
-		</form>
+		</div>
+	</form>
 		<!-- Modal -->
 		<div class="modal fade" id="referrerModal" tabindex="-1"
-			aria-labelledby="referrerModalLabel" aria-hidden="true">
+			aria-labelledby="referrerModalLabel" aria-hidden="true"  >
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<div class="modal-body" id="referrer_modal">
-					
+					<div class="modal-body" id="referrer_modal">					
 						직원리스트
 						<table class="table table-bordered table-hover">
 							<thead>
@@ -77,19 +74,19 @@
 						</nav>
 
 						<div>
-							<form class="row g-3">
+							<form class="row g-3" id="referrer_search">
 								<div class="col-auto">
-									<select name=kind class="form-select"
+									<select name=kind id="ref_kind" class="form-select"
 										aria-label="Default select example">
 										<option value="kind2">이름</option>
 										<option value="kind1">부서</option>
 									</select>
 								</div>
-								<div class="col-auto">
+								<div class="col-auto" >
 									<label for="search" class="visually-hidden">검색</label> <input
 										type="text" name="search" class="form-control"
 										id="search" placeholder="search">
-									<button id="referrer_add" type="submit" class="btn btn-primary mb-3">Search</button>
+									<button type="button" class="btn btn-primary mb-3 ref-btn">Search</button>
 								</div>
 							</form>
 						</div>
@@ -104,8 +101,7 @@
 				</div>
 			</div>
 		</div>
-
-	</div>
+	
 		<script src="/resources/js/referrer/referrer.js"></script>
 		
 </body>

@@ -53,7 +53,8 @@ public class TempleteController {
 	
 	@GetMapping("referrer")
 	public String getReferrerList(Pager pager,Model model)throws Exception{
-		System.out.println("dddd");
+		
+		
 		List<MemberDTO> ar = templeteService.getReferrerList(pager);
 		model.addAttribute("list", ar);
 		model.addAttribute("pager", pager);

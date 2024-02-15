@@ -51,10 +51,10 @@
 	<sql id="referrerSearch">
 		<where>		
 			<if test="kind=='kind2'">
-				M.name LIKE '%'||#{pager.search}||'%'
+				M.name LIKE '%'||#{search}||'%'
 			</if>
 			<if test="kind=='kind1'">
-				OR D.NAME LIKE '%'||#{pager.search}||'%'
+				OR D.NAME LIKE '%'||#{search}||'%'
 			</if>
 		</where>		
 	</sql>
@@ -65,8 +65,7 @@
 			(SELECT ROWNUM R,MD.* FROM
 			(SELECT M.NAME AS name, D.NAME AS department_name FROM MEMBER M 
 			FULL JOIN DEPARTMENT D
-			ON (M.DEPARTMENT_ID = D.ID)
-				
+			ON (M.DEPARTMENT_ID = D.ID)				
 			<include refid="referrerSearch"></include>		
 		 	ORDER BY D.ID DESC)MD)
 		 	WHERE R BETWEEN #{startRow} AND #{lastRow}							 

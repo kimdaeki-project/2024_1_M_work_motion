@@ -48,19 +48,20 @@
 	</ul>
 </nav>
 
-<div>
-	<form class="row g-3">
+<div >
+	<form class="row g-3" id="referrer_search">
 		<div class="col-auto">
-			<select name=kind class="form-select"
+			<select name=kind id="ref_kind" class="form-select"
 				aria-label="Default select example">
 				<option value="kind2">이름</option>
 				<option value="kind1">부서</option>
 			</select>
 		</div>
-		<div class="col-auto">
+		<div class="col-auto" >
 			<label for="search" class="visually-hidden">검색</label> <input
-				type="text" name="referrerSearch" class="form-control"
-				id="referrerSearch" placeholder="search">
+				type="text" name="search" class="form-control"
+				id="search" placeholder="search">
+			<button  id="referrer_add" type="button" class="btn btn-primary mb-3 ref-btn">Search</button>
 		</div>
 	</form>
 </div>
