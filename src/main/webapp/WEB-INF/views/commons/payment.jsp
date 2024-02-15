@@ -1,59 +1,71 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<script src="./tossjsp.js"></script>
-<meta charset="utf-8" />
-<link rel="icon"
-	href="https://static.toss.im/icons/png/4x/icon-toss-logo.png" />
-<link rel="stylesheet" type="text/css" href="/style.css" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>토스페이먼츠 샘플 프로젝트</title>
-<!-- 결제위젯 SDK 추가 -->
-<script src="https://js.tosspayments.com/v1/payment-widget"></script>
-</head>
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="icon"
+      href="https://static.toss.im/icons/png/4x/icon-toss-logo.png"
+    />
+    <link rel="stylesheet" type="text/css" href="/resources/js/public/style.css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>토스페이먼츠 샘플 프로젝트</title>
+    <!-- 결제위젯 SDK 추가 -->
+    <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+  </head>
 
-<body>
-	<!-- 주문서 영역 -->
-	<div class="wrapper">
-		<div class="box_section"
-			style="padding: 40px 30px 50px 30px; margin-top: 30px; margin-bottom: 50px;">
-			<!-- 결제 UI -->
-			<div id="payment-method"></div>
-			<!-- 이용약관 UI -->
-			<div id="agreement"></div>
-			<!-- 쿠폰 체크박스 -->
-			<div style="padding-left: 25px">
-				<div class="checkable typography--p">
-					<label for="coupon-box"
-						class="checkable__label typography--regular"><input
-						id="coupon-box" class="checkable__input" type="checkbox"
-						aria-checked="true" /><span
-						class="checkable__label-text">5,000원 쿠폰
-							적용</span></label>
-				</div>
-			</div>
-			<!-- 결제하기 버튼 -->
-			<div class="result wrapper">
-				<button class="button" id="payment-button" style="margin-top: 30px">
-					결제하기</button>
-			</div>
-		</div>
-	</div>
-	<script>
+  <body>
+    <!-- 주문서 영역 -->
+    <div class="wrapper">
+      <div
+        class="box_section"
+        style="
+          padding: 40px 30px 50px 30px;
+          margin-top: 30px;
+          margin-bottom: 50px;
+        "
+      >
+        <!-- 결제 UI -->
+        <div id="payment-method"></div>
+        <!-- 이용약관 UI -->
+        <div id="agreement"></div>
+        <!-- 쿠폰 체크박스 -->
+        <div style="padding-left: 25px">
+          <div class="checkable typography--p">
+            <label for="coupon-box" class="checkable__label typography--regular"
+              ><input
+                id="coupon-box"
+                class="checkable__input"
+                type="checkbox"
+                aria-checked="true"
+              /><span class="checkable__label-text"
+                >5,000원 쿠폰 적용</span
+              ></label
+            >
+          </div>
+        </div>
+        <!-- 결제하기 버튼 -->
+        <div class="result wrapper">
+          <button class="button" id="payment-button" style="margin-top: 30px">
+            결제하기
+          </button>
+        </div>
+      </div>
+    </div>
+    <script>
       const button = document.getElementById("payment-button");
       const coupon = document.getElementById("coupon-box");
       const generateRandomString = () =>
         window.btoa(Math.random()).slice(0, 20);
-      const amount = localStorage.getItem("키");
+      const amount = ${product.price};
       // ------  결제위젯 초기화 ------
       // TODO: clientKey는 개발자센터의 결제위젯 연동 키 > 클라이언트 키로 바꾸세요.
       // TODO: 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요. 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
       // @docs https://docs.tosspayments.com/reference/widget-sdk#sdk-설치-및-초기화
       const widgetClientKey = "test_ck_ex6BJGQOVDv2MzDbJybR8W4w2zNb";
-      const customerKey = generateRandomString();
+      const customerKey = "${company.customerkey}";
       const paymentWidget = PaymentWidget(widgetClientKey, customerKey); // 회원 결제
       // const paymentWidget = PaymentWidget(widgetClientKey, PaymentWidget.ANONYMOUS); // 비회원 결제
 
@@ -89,14 +101,15 @@
         paymentWidget.requestPayment({
           orderId: generateRandomString(),
           orderName: "토스 티셔츠 외 2건",
-          successUrl: window.location.origin + "/success",
-          failUrl: window.location.origin + "/fail",
+          successUrl: window.location.origin + "/resources/js/public/success.html",
+          failUrl: window.location.origin + "/resources/js/public/fail.html",
           customerEmail: "customer123@gmail.com",
           customerName: "김토스",
           customerMobilePhone: "01012341234",
         });
       });
     </script>
-
+    
 </body>
 </html>
+    

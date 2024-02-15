@@ -11,7 +11,7 @@
 		<typeAlias type="com.workmotion.app.member.Avatar" alias="Avatar"/>
 		<typeAlias type="com.workmotion.app.util.Pager" alias="Pager"/>
 		<typeAlias type="com.workmotion.app.department.DepartmentDTO" alias="DepartmentDTO"/>
-
+		<typeAlias type="com.workmotion.app.product.ProductDTO" alias="ProductDTO"/>
     	<typeAlias type="com.workmotion.app.position.PositionDTO" alias="PositionDTO"/>
 
 		<typeAlias type="com.workmotion.app.company.CompanyDTO" alias="CompanyDTO"/>

@@ -5,9 +5,10 @@
 
 <mapper namespace="com.workmotion.app.company.CompanyDAO">
 
-	<select id="companyTotalCount" resultType="Long" parameterType="Pager">
-	SELECT COUNT(*) FROM COMPANY
-	 WHERE name LIKE '%'||#{search}||'%'
+	<select id="companyTotalCount" resultType="Long"
+		parameterType="Pager">
+		SELECT COUNT(*) FROM COMPANY
+		WHERE name LIKE '%'||#{search}||'%'
 	</select>
 
 
@@ -23,7 +24,8 @@
 		ORDER BY ID ASC
 		) R
 		)
-		WHERE RN BETWEEN #{startRow} AND #{lastRow}
+		WHERE RN
+		BETWEEN #{startRow} AND #{lastRow}
 	</select>
 
 	<select id="getCompanyDetail" resultType="CompanyDTO"
@@ -40,27 +42,29 @@
 		#{owner},
 		#{phone_num},
 		#{info},
-		SYSDATE
+		SYSDATE,
+		#{customerkey}
 		)
 	</insert>
 
 	<update id="companyUpdate" parameterType="CompanyDTO">
-		UPDATE COMPANY <set>
-		<if test="name != null or name != ''">
-		NAME= #{name},
-		</if>
-		<if test="owner != null or owner != ''">
-		OWNER = #{owner},
-		</if>
-		<if test="phone_num != null or phone_num != ''">
-		PHONE_NUM = #{phone_num},
-		</if>
-		<if test="info != null or info != ''">
-		INFO = #{info},
-		</if>
-		<if test="create_dt != null or create_dt != ''">
-		CREATE_DT = SYSDATE
-		</if>
+		UPDATE COMPANY
+		<set>
+			<if test="name != null or name != ''">
+				NAME= #{name},
+			</if>
+			<if test="owner != null or owner != ''">
+				OWNER = #{owner},
+			</if>
+			<if test="phone_num != null or phone_num != ''">
+				PHONE_NUM = #{phone_num},
+			</if>
+			<if test="info != null or info != ''">
+				INFO = #{info},
+			</if>
+			<if test="create_dt != null or create_dt != ''">
+				CREATE_DT = SYSDATE
+			</if>
 		</set>
 		WHERE ID=#{id}
 	</update>
@@ -73,6 +77,7 @@
 	<select id="memberTotalCount" resultType="Long"
 		parameterType="Long">
 		SELECT COUNT(COMPANY_ID) FROM MEMBER
-		WHERE COMPANY_ID = #{totalCount}
+		WHERE COMPANY_ID =
+		#{totalCount}
 	</select>
 </mapper>
