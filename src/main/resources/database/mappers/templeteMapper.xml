@@ -63,7 +63,7 @@
 	<select id="getReferrerList" parameterType="Pager" resultMap="referrerListResult">
 		SELECT * FROM
 			(SELECT ROWNUM R,MD.* FROM
-			(SELECT M.NAME AS name, D.NAME AS department_name FROM MEMBER M 
+			(SELECT M.NAME AS name,M.ID, D.NAME AS department_name FROM MEMBER M 
 			FULL JOIN DEPARTMENT D
 			ON (M.DEPARTMENT_ID = D.ID)				
 			<include refid="referrerSearch"></include>		

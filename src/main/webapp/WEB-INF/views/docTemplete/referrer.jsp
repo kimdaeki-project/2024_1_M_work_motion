@@ -14,7 +14,7 @@
 	<tbody>
 		<c:forEach items="${list}" var="item">
 			<tr>
-				<td><input type="checkbox"></td>
+				<td><input type="checkbox" class="member_id" data-member-name="${item.name}" data-referrer-id="${item.id}"></td>
 				<td>${item.name}</td>
 				<td>${item.department.name}</td>
 			</tr>
