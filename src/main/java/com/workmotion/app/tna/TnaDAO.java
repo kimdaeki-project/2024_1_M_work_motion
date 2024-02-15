@@ -12,7 +12,10 @@ public class TnaDAO {
 	private SqlSession sqlSession;
 	private final String NAMESPACE="com.workmotion.app.tna.TnaDAO.";
 	
-	public int getinTna (MemberDTO memberDTO) {
+	public int getinTna (MemberDTO memberDTO) throws Exception {
 		return sqlSession.insert(NAMESPACE+"getinTna",memberDTO);
+	}
+	public int getoutTna (MemberDTO memberDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"getoutTna",memberDTO);
 	}
 }

@@ -13,4 +13,8 @@ public class TnaService {
 	public int getinTna (MemberDTO memberDTO) throws Exception {
 		return tnaDAO.getinTna(memberDTO);
 	}
+	
+	public int getoutTna(MemberDTO memberDTO) throws Exception {
+		return tnaDAO.getoutTna(memberDTO);
+	}
 }
