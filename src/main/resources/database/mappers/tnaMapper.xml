@@ -18,8 +18,12 @@
 	AND id = (SELECT MAX(id) FROM tna WHERE MEMBER_ID = #{id}) <!--서브쿼리 실행 -->
 	</update>
 	
-
-	
+	<!--디테일 한사람의 출퇴근리스트 -->
+	<select id="getTnaDetail" parameterType="MemberDTO" resultType="Map">
+	SELECT * FROM TNA
+	WHERE MEMBER_ID = #{id} AND START_TIME &gt;= #{phone}
+	AND START_TIME &lt;= #{password}
+	</select>
 	
 
 

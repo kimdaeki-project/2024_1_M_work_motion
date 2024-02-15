@@ -23,6 +23,28 @@ public class TnaController {
 	@Autowired
 	private HrService hrService;
 	
+	@GetMapping("detail")
+	public String getTnaDetail (MemberDTO memberDTO,Model model,Pager pager) throws Exception {
+		memberDTO = hrService.getMemberDetail(memberDTO);
+			String sum = "";
+		if(pager.getKind() != null) {
+			sum = pager.getKind();
+		}else {
+			sum = "2024-02-01,2024-02-29";
+		}
+		String [] br = sum.split(",");
+		memberDTO.setPhone(br[0]);
+		System.out.println(br[0]);
+		memberDTO.setPassword(br[1]);
+		System.out.println(br[1]);
+		List<Map<String,Object>> ar = tnaService.getTnaDetail(memberDTO);
+		memberDTO.setPassword(null);
+		model.addAttribute("dto",memberDTO);
+		model.addAttribute("page","tna/detail");
+		model.addAttribute("list",ar);
+		return "index";
+	}
+	
 	@GetMapping("list")
 	public String getTnaList (HttpSession session,MemberDTO memberDTO,Model model,Pager pager) throws Exception {
 		List<Map<String,Object>> ar = hrService.getMemberList(memberDTO,session,pager);

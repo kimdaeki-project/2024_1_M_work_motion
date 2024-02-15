@@ -1,5 +1,8 @@
 package com.workmotion.app.tna;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +19,8 @@ public class TnaService {
 	
 	public int getoutTna(MemberDTO memberDTO) throws Exception {
 		return tnaDAO.getoutTna(memberDTO);
+	}
+	public List<Map<String,Object>> getTnaDetail(MemberDTO memberDTO) throws Exception {
+		return tnaDAO.getTnaDetail(memberDTO);
 	}
 }

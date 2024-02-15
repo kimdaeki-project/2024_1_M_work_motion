@@ -1,5 +1,8 @@
 package com.workmotion.app.tna;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,5 +20,8 @@ public class TnaDAO {
 	}
 	public int getoutTna (MemberDTO memberDTO) throws Exception {
 		return sqlSession.update(NAMESPACE+"getoutTna",memberDTO);
+	}
+	public List<Map<String,Object>> getTnaDetail (MemberDTO memberDTO)throws Exception{
+		return sqlSession.selectList(NAMESPACE+"getTnaDetail",memberDTO);
 	}
 }

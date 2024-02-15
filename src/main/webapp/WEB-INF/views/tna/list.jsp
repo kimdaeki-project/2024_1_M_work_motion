@@ -25,7 +25,7 @@
 				<c:forEach items="${list}" var="li">
 				<tr>
 				<td>${li.ID}</td>
-				<td><a href="/tna/detail?id=${li.ID}">${li.NAME}</a></td>
+				<td><a href="/tna/detail?email=${li.EMAIL}">${li.NAME}</a></td>
 				<td>${li.PNAME}</td>
 				<td>${li.EMAIL}</td>
 				<td>${li.DNAME}</td>
