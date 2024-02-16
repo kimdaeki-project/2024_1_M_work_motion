@@ -42,7 +42,7 @@
         UNION ALL
         SELECT a.ID, a.MESSAGE, a.SENDER_ID, a.ROOM_NAME, a.TIME FROM
         (
-        SELECT ROWNUM, a.* FROM
+        SELECT ROWNUM rn, b.* FROM
         (
         SELECT
         m.*
@@ -50,9 +50,9 @@
         LEFT JOIN ROOM_MEMBER rm ON m.ROOM_NAME = rm.ROOM_NAME AND rm.ROOM_NAME LIKE #{roomInfo.room_name}
         WHERE rm.MEMBER_ID = #{roomInfo.member_id} AND rm.RECENTLY_DT &gt; m."TIME"
         ORDER BY m.TIME DESC
-        )a
-        WHERE ROWNUM BETWEEN 1 AND 20
+        ) b
         ) a
+        WHERE a.rn BETWEEN #{pager.startNum} AND #{pager.lastNum}
         )
         ORDER BY "TIME" ASC
     </select>

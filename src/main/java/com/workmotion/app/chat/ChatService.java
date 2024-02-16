@@ -20,7 +20,6 @@ public class ChatService {
         int result = chatDAO.createRoom(room);
         String[] members = room.getName().split("-");
         Map<String, Object> map = new HashMap<>();
-        System.out.println("addMember");
         map.put("room_name", room.getName());
         map.put("members", members);
 
@@ -52,8 +51,9 @@ public class ChatService {
 
     public List<MessageDTO> getMessage(RoomInfoDTO roomInfoDTO, Pager pager) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
-        pager.setLastNum(pager.getPage() * 10);
-        pager.setStartNum(pager.getLastNum() - 9);
+        pager.setLastNum(pager.getPage() * 20);
+        pager.setStartNum(pager.getLastNum() - 19);
+        System.out.println(pager.getPage() + ":" + pager.getStartNum() + ":" + pager.getLastNum());
         map.put("roomInfo", roomInfoDTO);
         map.put("pager", pager);
         return chatDAO.getMessage(map);

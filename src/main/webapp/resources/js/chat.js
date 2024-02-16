@@ -7,7 +7,54 @@ const room_name = document
 const member_id = document
     .getElementsByTagName("body")[0]
     .getAttribute("data-bs-memberId");
-console.log(member_id);
+//무한로딩
+let options = {
+    threshold: 0,
+};
+let Page = 1;
+let $end;
+//무한스크롤
+const callback = (entries, observer) => {
+    entries.forEach(async (entry) => {
+        if (entry.isIntersecting) {
+            const $result = document.querySelector("#messageBox");
+            console.log("Intersecting");
+            Page++;
+            observer.unobserve($end);
+            const loadingElement = document.createElement("div");
+            loadingElement.classList.add(
+                "d-flex",
+                "flex-row",
+                "justify-content-center"
+            );
+            const loadingHtml = `
+            <div class="spinner-border mb-3 mt-1" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            `;
+
+            loadingElement.innerHTML = loadingHtml;
+            $result.insertAdjacentElement("afterbegin", loadingElement);
+            loadingElementHeight = loadingElement.offsetHeight;
+            const data = await getMessage();
+            loadingElement.remove();
+            let messageElements = "";
+            for (let message of data.messages) {
+                $result.prepend();
+                messageElements += showMessage(message).innerHTML;
+            }
+            const tempHeight = messageBox.scrollHeight;
+            $result.insertAdjacentHTML("afterbegin", messageElements);
+            $end = $result.firstElementChild;
+            messageBox.scrollTop =
+                messageBox.scrollHeight - tempHeight - loadingElementHeight;
+            if (data.messages.length < 20) return;
+            observer.observe($end);
+        }
+    });
+};
+
+const observer = new IntersectionObserver(callback, options);
 function chageDate(timestamp) {
     let date = new Date(timestamp);
     // 월을 약어 형식으로 변환
@@ -87,35 +134,53 @@ stompClient.connect({}, function (frame) {
     stompClient.subscribe(
         "/chat/messages/" + room_name,
         function (outputMessage) {
-            showMessage(JSON.parse(outputMessage.body));
             readMessage();
+            messageBox.append(showMessage(JSON.parse(outputMessage.body)));
             messageBox.scrollTop = messageBox.scrollHeight;
         }
     );
 });
 
-document.addEventListener("DOMContentLoaded", async function () {
+async function getMessage() {
     const response = await fetch(
-        "/chat/getMessage?room_name=" + room_name + "&member_id=" + member_id
+        "/chat/getMessage?room_name=" +
+            room_name +
+            "&member_id=" +
+            member_id +
+            "&page=" +
+            Page
     );
     const data = await response.json();
     if (response.status == 200) {
-        let temp = true;
-        let tempHeight;
-        for (let message of data.messages) {
-            console.log(data.room.recently_dt, message.time);
-            if (data.room.recently_dt < message.time && temp) {
-                temp = false;
-                tempHeight = messageBox.scrollHeight;
-                showPrevLine();
-            }
-            showMessage(message);
+        return data;
+    }
+    return null;
+}
+
+document.addEventListener("DOMContentLoaded", async function () {
+    const data = await getMessage();
+    console.log(data);
+    let temp = true;
+    let tempHeight;
+    for (let message of data.messages) {
+        console.log(data.room.recently_dt, message.time);
+        if (data.room.recently_dt < message.time && temp) {
+            temp = false;
+            tempHeight = messageBox.scrollHeight;
+            showPrevLine();
         }
-        if (tempHeight != null) {
-            messageBox.scrollTop = tempHeight;
-        } else {
-            messageBox.scrollTop = messageBox.scrollHeight;
-        }
+        messageBox.appendChild(showMessage(message));
+    }
+
+    const $result = document.querySelector("#messageBox");
+    $end = $result.firstElementChild;
+    console.log($end);
+    observer.observe($end);
+
+    if (tempHeight != null) {
+        messageBox.scrollTop = tempHeight;
+    } else {
+        messageBox.scrollTop = messageBox.scrollHeight;
     }
 });
 
@@ -127,7 +192,7 @@ function showMessage(message) {
     } else {
         messageElement.innerHTML = createReceiveMessage(message);
     }
-    messageBox.appendChild(messageElement);
+    return messageElement;
 }
 
 function showPrevLine() {
