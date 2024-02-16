@@ -33,14 +33,16 @@ public class HrController {
 	@Autowired
 	private PositionService positionService;
 	
+	
+	//사원 권한 수정으로 신규회원추가
+	@ResponseBody
 	@PostMapping("create")
-	public String createMember(MemberDTO memberDTO,HttpSession session,Pager pager,Model model) throws Exception {
-		hrService.createMember(memberDTO);
-		List<Map<String,Object>> ar = hrService.getMemberList(memberDTO,session,pager);
-		model.addAttribute("list",ar);
-		return "hr/list";
+	public int createMember(MemberDTO memberDTO,HttpSession session,Pager pager,Model model) throws Exception {
+		int result = hrService.createMember(memberDTO);
+		return result;
 	}
 	
+	//사원 삭제
 	@PostMapping("delete")
 	public String deleteMember(MemberDTO memberDTO,HttpSession session,Pager pager,Model model) throws Exception {
 		System.out.println(memberDTO.getId());
@@ -50,6 +52,7 @@ public class HrController {
 		return "hr/list";
 	}
 	
+	//사원 정보 수정 폼 이동
 	@GetMapping("update")
 	public String updateMember(MemberDTO memberDTO,Model model,Pager pager) throws Exception {	
 		pager.setPerPage(10L);
@@ -62,6 +65,7 @@ public class HrController {
 		model.addAttribute("page","hr/update");
 		return "index";
 	}
+	//사원 정보 수정
 	@PostMapping("update")
 	public String updateMember (Model model,MemberDTO memberDTO) throws Exception {
 			if(memberDTO.getPassword() != null) {
@@ -78,7 +82,7 @@ public class HrController {
 			model.addAttribute("path","/hr/list");
 			return "index";		
 	}
-	
+	//사원 상세 페이지
 	@GetMapping("detail")
 	public String getMemberDetail (MemberDTO memberDTO,Model model) throws Exception {
 		memberDTO = hrService.getMemberDetail(memberDTO);
@@ -86,7 +90,7 @@ public class HrController {
 		model.addAttribute("page","hr/detail");
 		return "index";
 	}
-	
+	// 사원들의 리스트
 	@GetMapping("list")
 	public String getMemberList(HttpSession session,MemberDTO memberDTO,Model model,Pager pager) throws Exception { 
 		List<Map<String,Object>> ar = hrService.getMemberList(memberDTO,session,pager);

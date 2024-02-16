@@ -12,7 +12,15 @@ crea.addEventListener("click",(e)=>{
             body:"id="+mid
         }).then(r=>r.text())
         .then(r=>{
-            div.innerHTML = r;
+            r= r.trim();
+            if(r>0){
+                alert("사원 추가 성공");
+                location.href = "/hr/list";
+            }else{
+                alert("사원 등록 실패");
+                location.href = "/hr/list";
+            }
+        
         })
 
     })
