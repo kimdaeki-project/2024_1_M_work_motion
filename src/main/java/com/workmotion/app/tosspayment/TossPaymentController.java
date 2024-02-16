@@ -7,6 +7,8 @@ import java.net.URI;
 import java.net.URL;
 import java.util.Base64;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.jasper.tagplugins.jstl.core.Url;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,14 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.workmotion.app.member.MemberDTO;
 
 @Controller
 @RequestMapping("/tosspayment/*")
-public class TossPayMentController {
+public class TossPaymentController {
 
 	@ResponseBody
 	@PostMapping("server")
-	public void server(@RequestBody TossPayMentDTO tossPayMentDTO) throws Exception {
+	public void server(@RequestBody TossPaymentDTO tossPayMentDTO, HttpSession session) throws Exception {
+		MemberDTO memberDTO =  (MemberDTO)session.getAttribute("member");
+		tossPayMentDTO.setMember_id(memberDTO.getId());
+		
 	    String widgetSecretKey = "test_sk_jExPeJWYVQj9n09L47Lgr49R5gvN";
 	    Base64.Encoder encoder = Base64.getEncoder();
 	    byte[] encodedBytes = encoder.encode((widgetSecretKey + ":").getBytes("UTF-8"));
