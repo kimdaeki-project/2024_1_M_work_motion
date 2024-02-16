@@ -63,7 +63,7 @@
         </selectKey>
         INSERT INTO TASK (ID, NAME, CREATE_DT, PROJECT_ID, CONTENT, WRITER_ID, START_DT, END_DT, HAS_LIMIT, STATUS,
         HAS_SCHEDULE)
-        VALUES (#{id}, #{name}, SYSDATE, #{project_id}, #{content}, #{writer_id},
+        VALUES (#{id}, #{name}, CURRENT_DATE, #{project_id}, #{content}, #{writer_id},
         #{start},
         #{end},
         #{has_limit}, 0, #{has_schedule})

@@ -11,7 +11,7 @@
     <insert id="addMember" parameterType="Map">
         INSERT INTO ROOM_MEMBER (MEMBER_ID,ROOM_NAME,JOIN_DT,RECENTLY_DT)
         <foreach collection="members" item="member_id" separator="UNION ALL">
-            SELECT #{member_id}, #{room_name}, SYSDATE, SYSDATE FROM DUAL
+            SELECT #{member_id}, #{room_name}, CURRENT_TIMESTAMP, CURRENT_DATE FROM DUAL
         </foreach>
     </insert>
     <select id="getRoom" parameterType="RoomDTO" resultType="RoomDTO">
@@ -27,10 +27,36 @@
             <if test="join_dt != null">
                 JOIN_DT = #{join_dt}
             </if>
-
-            RECENTLY_DT = SYSDATE
-
+            RECENTLY_DT = CURRENT_TIMESTAMP
         </set>
         WHERE MEMBER_ID = #{member_id} AND ROOM_NAME = #{room_name}
     </update>
+    <select id="getMessage" parameterType="Map" resultType="MessageDTO">
+        SELECT * FROM
+        (
+        SELECT
+        m.*
+        FROM MESSAGE m
+        LEFT JOIN ROOM_MEMBER rm ON m.ROOM_NAME = rm.ROOM_NAME AND rm.ROOM_NAME LIKE #{roomInfo.room_name}
+        WHERE rm.MEMBER_ID = #{roomInfo.member_id} AND rm.RECENTLY_DT &lt;= m."TIME"
+        UNION ALL
+        SELECT a.ID, a.MESSAGE, a.SENDER_ID, a.ROOM_NAME, a.TIME FROM
+        (
+        SELECT ROWNUM, a.* FROM
+        (
+        SELECT
+        m.*
+        FROM MESSAGE m
+        LEFT JOIN ROOM_MEMBER rm ON m.ROOM_NAME = rm.ROOM_NAME AND rm.ROOM_NAME LIKE #{roomInfo.room_name}
+        WHERE rm.MEMBER_ID = #{roomInfo.member_id} AND rm.RECENTLY_DT &gt; m."TIME"
+        ORDER BY m.TIME DESC
+        )a
+        WHERE ROWNUM BETWEEN 1 AND 20
+        ) a
+        )
+        ORDER BY "TIME" ASC
+    </select>
+    <select id="getRoomInfo" parameterType="RoomInfoDTO" resultType="RoomInfoDTO">
+        SELECT * FROM ROOM_MEMBER WHERE ROOM_NAME = #{room_name} AND MEMBER_ID = #{member_id}
+    </select>
 </mapper>

@@ -6,7 +6,7 @@
 <mapper namespace="com.workmotion.app.project.dao.ArticleDAO">
     <insert id="createArticle" parameterType="ArticleDTO">
         INSERT INTO ARTICLE (ID,PROJECT_ID,TITLE,CONTENT,CREATE_DT,WRITER_ID)
-        VALUES (ARTICLE_SEQ.NEXTVAL, #{project_id}, #{title,jdbcType=VARCHAR}, #{content}, SYSDATE, #{writer_id})
+        VALUES (ARTICLE_SEQ.NEXTVAL, #{project_id}, #{title,jdbcType=VARCHAR}, #{content}, CURRENT_DATE, #{writer_id})
     </insert>
     <select id="getArticleList" parameterType="Map" resultMap="getArticleResult">
         SELECT * FROM

@@ -3,10 +3,12 @@ package com.workmotion.app.chat;
 import com.workmotion.app.chat.model.MessageDTO;
 import com.workmotion.app.chat.model.RoomDTO;
 import com.workmotion.app.chat.model.RoomInfoDTO;
+import com.workmotion.app.util.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -46,5 +48,18 @@ public class ChatService {
 
     public int updateRoomInfo(RoomInfoDTO roomInfoDTO) {
         return chatDAO.updateRoomInfo(roomInfoDTO);
+    }
+
+    public List<MessageDTO> getMessage(RoomInfoDTO roomInfoDTO, Pager pager) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        pager.setLastNum(pager.getPage() * 10);
+        pager.setStartNum(pager.getLastNum() - 9);
+        map.put("roomInfo", roomInfoDTO);
+        map.put("pager", pager);
+        return chatDAO.getMessage(map);
+    }
+
+    public RoomInfoDTO getRoomInfo(RoomInfoDTO roomInfoDTO) throws Exception {
+        return chatDAO.getRoomInfo(roomInfoDTO);
     }
 }

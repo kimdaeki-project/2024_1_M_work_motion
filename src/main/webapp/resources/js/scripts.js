@@ -58,9 +58,8 @@ async function loadMembers() {
             }
             console.log(room_name);
             const response = await fetch("/chat/getRoom?name=" + room_name);
-            const data = await response.text();
-
-            if (data == "success") {
+            const data = await response.json();
+            if (response.status == 200) {
                 var popupWidth = 400;
                 var popupHeight = 700;
 

@@ -52,7 +52,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         ></script>
     </head>
     <body data-bs-roomName="${room.name}" data-bs-memberId="${member.id}">
+
         <section class="h-100">
+
             <div class="container h-100">
                 <div class="row h-100">
                     <div class="col-md-12 h-100">
@@ -70,7 +72,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                         height: 100%;
                                     "
                                     id="messageBox"
-                                ></div>
+                                >
+
+                                </div>
 
                                 <div
                                     class="text-muted d-flex justify-content-start align-items-center pe-3 mt-2 mb-2"

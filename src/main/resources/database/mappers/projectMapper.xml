@@ -16,7 +16,7 @@
         <selectKey keyProperty="id" order="BEFORE" resultType="Long">
             SELECT PROJECT_SEQ.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO PROJECT (ID, NAME, CREATE_DT, INFO, OWNER_ID) VALUES (#{id}, #{name}, SYSDATE,
+        INSERT INTO PROJECT (ID, NAME, CREATE_DT, INFO, OWNER_ID) VALUES (#{id}, #{name}, CURRENT_DATE,
         #{info}, #{owner_id})
     </insert>
     <select id="getProjectList" parameterType="MemberDTO" resultMap="getProject">

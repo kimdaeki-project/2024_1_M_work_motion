@@ -70,6 +70,16 @@ function sendMessage(value) {
         };
         stompClient.send("/app/sendMessage", {}, JSON.stringify(message));
     }
+    readMessage();
+}
+function readMessage() {
+    message = {
+        sender_id: member_id,
+        message: "",
+        time: new Date(),
+        room_name: room_name,
+    };
+    stompClient.send("/app/readMessage", {}, JSON.stringify(message));
 }
 const messageBox = document.getElementById("messageBox");
 stompClient.connect({}, function (frame) {
@@ -78,9 +88,35 @@ stompClient.connect({}, function (frame) {
         "/chat/messages/" + room_name,
         function (outputMessage) {
             showMessage(JSON.parse(outputMessage.body));
+            readMessage();
             messageBox.scrollTop = messageBox.scrollHeight;
         }
     );
+});
+
+document.addEventListener("DOMContentLoaded", async function () {
+    const response = await fetch(
+        "/chat/getMessage?room_name=" + room_name + "&member_id=" + member_id
+    );
+    const data = await response.json();
+    if (response.status == 200) {
+        let temp = true;
+        let tempHeight;
+        for (let message of data.messages) {
+            console.log(data.room.recently_dt, message.time);
+            if (data.room.recently_dt < message.time && temp) {
+                temp = false;
+                tempHeight = messageBox.scrollHeight;
+                showPrevLine();
+            }
+            showMessage(message);
+        }
+        if (tempHeight != null) {
+            messageBox.scrollTop = tempHeight;
+        } else {
+            messageBox.scrollTop = messageBox.scrollHeight;
+        }
+    }
 });
 
 function showMessage(message) {
@@ -92,6 +128,20 @@ function showMessage(message) {
         messageElement.innerHTML = createReceiveMessage(message);
     }
     messageBox.appendChild(messageElement);
+}
+
+function showPrevLine() {
+    messageBox.innerHTML += `
+    <div
+        class="d-flex flex-row justify-content-center"
+    >
+        <p
+        class="small p-1 me-3 mb-2 text-white rounded-3 bg-warning"
+        >
+            여기까지 읽었습니다.
+        </p>
+    </div<
+    `;
 }
 
 function createSendMessage(message) {
