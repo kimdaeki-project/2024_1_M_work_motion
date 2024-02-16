@@ -8,7 +8,7 @@
       rel="icon"
       href="https://static.toss.im/icons/png/4x/icon-toss-logo.png"
     />
-    <link rel="stylesheet" type="text/css" href="/resources/js/public/style.css" />
+    <link rel="stylesheet" type="text/css" href="/resources/js/tosspayment/public/style.css" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>토스페이먼츠 샘플 프로젝트</title>
@@ -101,8 +101,8 @@
         paymentWidget.requestPayment({
           orderId: generateRandomString(),
           orderName: "토스 티셔츠 외 2건",
-          successUrl: window.location.origin + "/resources/js/public/success.html",
-          failUrl: window.location.origin + "/resources/js/public/fail.html",
+          successUrl: window.location.origin + "/resources/js/tosspayment/public/success.html",
+          failUrl: window.location.origin + "/resources/js/tosspayment/public/fail.html",
           customerEmail: "customer123@gmail.com",
           customerName: "김토스",
           customerMobilePhone: "01012341234",
