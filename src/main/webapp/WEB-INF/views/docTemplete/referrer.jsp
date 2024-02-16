@@ -14,7 +14,7 @@
 	<tbody>
 		<c:forEach items="${list}" var="item">
 			<tr>
-				<td><input type="checkbox" class="member_id" data-member-name="${item.name}" data-referrer-id="${item.id}"></td>
+				<td><input type="checkbox" class="member_id checkbox_save" data-member-name="${item.name}" data-referrer-id="${item.id}"></td>
 				<td>${item.name}</td>
 				<td>${item.department.name}</td>
 			</tr>
@@ -26,9 +26,9 @@
 	<ul class="pagination">
 		<c:if test="${!pager.start}">
 			<li class="page-item"><a class="page-link referrer"
-				data-start="${pager.startNum-1}" data-search="${pager.search}"
-				data-kind="${pager.kind}" aria-label="Previous"> <span
-					aria-hidden="true">&laquo;</span>
+				data-page="${pager.startNum-1}" data-search="${pager.search}"
+				data-kind="${pager.kind}" aria-label="Previous">
+				 <span class="start_referrer" data-start="${pager.startNum-1}" aria-hidden="true">&laquo;</span>
 			</a></li>
 		</c:if>
 
@@ -40,9 +40,9 @@
 
 		<c:if test="${!pager.last}">
 			<li class="page-item"><a class="page-link referrer"
-				data-last="${pager.lastNum+1}" data-search="${pager.search}"
-				data-kind="${pager.kind}" aria-label="Next"> <span
-					aria-hidden="true">&raquo;</span>
+				data-page="${pager.lastNum+1}" data-search="${pager.search}"
+				data-kind="${pager.kind}" aria-label="Next">
+				<span class="last_referrer" data-last="${pager.lastNum+1}" aria-hidden="true">&raquo;</span>
 			</a></li>
 		</c:if>
 	</ul>

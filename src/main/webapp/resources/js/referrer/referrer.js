@@ -11,7 +11,11 @@ let max = 5;
 
 let save = [];//new Array();
 let save_name = [];
+const check = document.getElementsByClassName("checkbox_save");
 let update = document.getElementById("update");
+
+
+
 
 filelist.addEventListener("click",(e)=>{ 
 
@@ -94,15 +98,17 @@ modal.addEventListener("click",function(e){
 
 
 //페이번호 누르면 리스트 
-rm.addEventListener("click", (e) => {
+rm.addEventListener("click", (e) => { 
+
+
 //페이번호 누르면 리스트 
     if (e.target.classList.contains("referrer")) {
-        e.target
+        
         let page = e.target.getAttribute("data-page");
         let search = e.target.getAttribute("data-search");
         let kind = e.target.getAttribute("data-kind");
-        let start = e.target.getAttribute("data-start");
-        let last = e.target.getAttribute("data-last");
+        
+       
 
         fetch("./referrer?page=" + page + "&search=" + search + "&kind=" + kind, {
             method: "GET"
@@ -110,7 +116,21 @@ rm.addEventListener("click", (e) => {
             .then((r) => {         
 
                 rm.innerHTML = r;
+
+                //체크박스 유지하기 
+                for(let i=0; i<save.length; i++){                   
+            
+                    for(let j=0; j<check.length; j++){
+                  
+                    if(save[i] === check[j].getAttribute('data-referrer-id')){
+                        check[j].checked = true;                                       
+                    }              
+                          
+                        
+                    }
+                }
             })
+            //체크유무 확인 후 체크 
     }
    
     //검색버튼 누르면 검색 리스트 
@@ -129,12 +149,16 @@ rm.addEventListener("click", (e) => {
      });    
     }
 
+        
+
     //체크박스 체크하면 멤버ID 저장
     if(e.target.classList.contains("member_id")){
         if(e.target.checked){                        
-            //member id 값 배열에 저장 
+            //member id 값 배열에 저장             
             save.push(e.target.getAttribute("data-referrer-id"));
-            save_name.push(e.target.getAttribute("data-member-name"));                      
+            save_name.push(e.target.getAttribute("data-member-name"));    
+            //체크하면 값 1로변경
+                                                  
         }else{
             alert("해제");  
             for(let i =0; i<save.length; i++){
@@ -146,9 +170,9 @@ rm.addEventListener("click", (e) => {
             }            
         }
 
-    }
-
-
+    }  
+    
+    
 
 })
 
@@ -157,10 +181,13 @@ update.addEventListener("click",function(){
     console.log(save);
     console.log(save_name);
 
+    let stringName = save_name.join(",");
+    let inputName = document.getElementById("referrer");
+    inputName.value = stringName;
 
-    // let string = save.join(", ");
-    // let input = document.getElementById("member_id_add");
-    // input.value = string;
+     let string = save.join(",");
+     let input = document.getElementById("member_id_add");
+     input.value = string;
 
 });
 

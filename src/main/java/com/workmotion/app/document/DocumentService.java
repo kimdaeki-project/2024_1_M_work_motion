@@ -40,7 +40,7 @@ public class DocumentService {
 			fileDTO.setOri_name(f.getOriginalFilename());
 			fileDTO.setDocument_id(documentDTO.getId());
 			result = documentDAO.createFiles(fileDTO);
-		}
+		}		
 		
 		String[] referrers = referrer.split(",");
 		if(referrers.length > 0 ) {
