@@ -45,7 +45,7 @@ public class ChatService {
         return chatDAO.sendMessage(message);
     }
 
-    public int updateRoomInfo(RoomInfoDTO roomInfoDTO) {
+    public int updateRoomInfo(RoomInfoDTO roomInfoDTO) throws Exception {
         return chatDAO.updateRoomInfo(roomInfoDTO);
     }
 

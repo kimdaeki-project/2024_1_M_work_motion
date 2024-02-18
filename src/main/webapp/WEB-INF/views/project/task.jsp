@@ -7,11 +7,7 @@ prefix="c" %>
     integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc="
     crossorigin="anonymous"
 />
-<link
-    rel="stylesheet"
-    href="/resources/css/project/createTask.css"
-    type="text/css"
-/>
+
 
 <!-- fullcalendar CDN -->
 <link

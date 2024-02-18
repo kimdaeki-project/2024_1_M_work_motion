@@ -8,6 +8,11 @@ prefix="c" %>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Work Motion</title>
+        <link
+            rel="stylesheet"
+            href="/resources/css/project/createTask.css"
+            type="text/css"
+        />
         <!-- Font -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -62,11 +67,41 @@ prefix="c" %>
                 width: 30vh;
             }
             #messenger {
-                width: 30vh;
-                height: 50vh;
+                width: 40vh;
+                height: 60vh;
                 right: 5%;
-                background-color: aliceblue;
-                z-index: 1;
+                border: 1px solid lightgray;
+                border-top-left-radius: 1vh;
+                border-top-right-radius: 1vh;
+                z-index: 2;
+            }
+            #messenger .sidebar {
+                width: 6vh;
+                border-top-left-radius: 1vh;
+                background-color: #e6e6e6;
+            }
+            #messenger .sidebar button {
+                padding: 0px;
+                width: 1.4vh;
+                height: 1.4vh;
+                border-radius: 100%;
+                font-size: 1.4vh;
+                line-height: 1vh;
+                font-weight: 100;
+                color: black;
+            }
+            #messenger .nav-item .fa-user {
+                font-size: 2.4vh;
+            }
+            #messenger .nav-item .fa-comment {
+                font-size: 2.2vh;
+            }
+            #messengerBody {
+                background-color: white;
+            }
+
+            .fa-search {
+                color: lightgray;
             }
             #chat3 .form-control {
                 border-color: transparent;
@@ -87,8 +122,10 @@ prefix="c" %>
             a {
                 text-decoration: none;
             }
+            .memberList {
+            }
             .memberList:hover {
-                cursor: pointer;
+                background-color: #f2f2f2;
             }
         </style>
     </head>
@@ -390,50 +427,164 @@ prefix="c" %>
                             </a>
                         </div>
                     </div>
-                    <!-- <div class="sb-sidenav-footer">
-                            <div class="small">Logged in as:</div>
-                            Start Bootstrap
-                        </div> -->
                 </nav>
             </div>
-            <div id="layoutSidenav_content">
-                <main class="h-100">
-                    <c:import url="/WEB-INF/views/${page}.jsp" />
-                    <button
-                        type="button"
-                        class="btn btn-primary position-fixed bottom-0"
-                        id="messengerButton"
+        </div>
+        <div id="layoutSidenav_content">
+            <main class="h-100">
+                <c:import url="/WEB-INF/views/${page}.jsp" />
+                <button
+                    type="button"
+                    class="btn btn-primary position-fixed bottom-0"
+                    id="messengerButton"
+                >
+                    메신저
+                    <span
+                        class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"
+                        ><span class="visually-hidden"
+                            >unread messages</span
+                        ></span
                     >
-                        메신저
-                        <span
-                            class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"
-                            ><span class="visually-hidden"
-                                >unread messages</span
-                            ></span
-                        >
-                    </button>
-                    <div
-                        class="position-fixed bottom-0 animate__animated d-none"
-                        id="messenger"
-                    >
+                </button>
+                <div
+                    class="position-fixed bottom-0 animate__animated d-flex"
+                    id="messenger"
+                >
+                    <div class="d-flex sidebar flex-column">
+                        <div class="closeButton ms-1 mb-3">
+                            <button
+                                type="button"
+                                class="btn btn-danger"
+                                id="closeMessengerButton"
+                            >
+                                x
+                            </button>
+                        </div>
                         <ul
-                            class="list-unstyled mb-0 overflow-auto h-100"
-                            id="messengerMemberList"
-                        ></ul>
+                            class="nav flex-column align-items-center"
+                            id="pills-tab"
+                        >
+                            <li class="nav-item mb-3">
+                                <a
+                                    class="text-muted nav-link active"
+                                    aria-current="page"
+                                    href="#"
+                                    role="tab"
+                                    role="tablist"
+                                    aria-controls="pills-home"
+                                    aria-selected="true"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-home"
+                                    id="homeButton"
+                                    href="#!"
+                                >
+                                    <i class="fas fa-user"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a
+                                    class="text-muted nav-link active"
+                                    aria-current="page"
+                                    href="#"
+                                    role="tab"
+                                    role="tablist"
+                                    aria-controls="pills-home"
+                                    aria-selected="true"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-home"
+                                    id="homeButton"
+                                    href="#!"
+                                >
+                                    <i class="fas fa-comment"></i>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                </main>
-                <!-- <footer class="py-4 bg-light mt-auto">
-                        <div class="container-fluid px-4">
-                            <div class="d-flex align-items-center justify-content-between small">
-                                <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                                <div>
-                                    <a href="#">Privacy Policy</a>
-                                    &middot;
-                                    <a href="#">Terms &amp; Conditions</a>
-                                </div>
+                    <div class="w-100" id="messengerBody">
+                        <div class="p-3 d-flex justify-content-between">
+                            <div class="fw-bold">메신저</div>
+                            <div>
+                                <a
+                                    class="text-muted nav-link active"
+                                    aria-current="page"
+                                    href="#"
+                                    role="tab"
+                                    role="tablist"
+                                    aria-controls="pills-home"
+                                    aria-selected="true"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-home"
+                                    id="homeButton"
+                                    href="#!"
+                                >
+                                    <i class="fas fa-search fw-lighter"></i>
+                                </a>
                             </div>
                         </div>
-                    </footer> -->
+                        <div class="overflow-auto h-100">
+                            <div class="d-flex flex-row w-100 p-3">
+                                <img
+                                    src="${member.avatar.name}"
+                                    alt="avatar"
+                                    class="d-flex align-self-center me-3 rounded-4"
+                                    width="60"
+                                    height="60"
+                                />
+                                <div class="d-flex flex-column">
+                                    <p class="fw-bold mb-0">${member.name}</p>
+                                    <p class="small text-muted">
+                                        ${ member.position.name }
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="ps-3 pe-3">
+                                <hr />
+                            </div>
+                            <ul
+                                class="list-unstyled mb-0 w-100"
+                                id="messengerMemberList"
+                            ></ul>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <div
+            class="modal fade"
+            id="profileModal"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="profileModal"
+            aria-hidden="true"
+        >
+            <div
+                class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+            >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="profileModal">
+                            프로필
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body" id="profileBody"></div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            닫기
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 

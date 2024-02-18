@@ -97,4 +97,10 @@ public class ChatController {
         roomInfoDTO.setMember_id(message.getSender_id());
         chatService.updateRoomInfo(roomInfoDTO);
     }
+
+    @GetMapping("/chat/members/{member_id}")
+    @ResponseBody
+    public void getProfile() throws Exception {
+
+    }
 }

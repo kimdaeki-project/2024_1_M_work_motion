@@ -20,36 +20,46 @@ window.addEventListener("DOMContentLoaded", (event) => {
 });
 const chat = document.getElementById("chat");
 const messengerButton = document.getElementById("messengerButton");
-messenger.classList.toggle("animate__slideOutDown");
+// messenger.classList.toggle("animate__slideOutDown");
 messengerButton.addEventListener("click", (event) => {
     messenger.classList.remove("d-none");
     messenger.classList.toggle("animate__slideOutDown");
     messenger.classList.toggle("animate__slideInUp");
 });
 
-// const closeMessengerButton = document.getElementById("closeMessengerButton");
-// closeMessengerButton.addEventListener("click", (event) => {
-//     messenger.classList.remove("d-none");
+const closeMessengerButton = document.getElementById("closeMessengerButton");
+closeMessengerButton.addEventListener("click", (event) => {
+    messenger.classList.remove("d-none");
 
-//     messenger.classList.toggle("animate__slideInUp");
+    messenger.classList.toggle("animate__slideInUp");
 
-//     messenger.classList.toggle("animate__slideOutDown");
-// });
+    messenger.classList.toggle("animate__slideOutDown");
+});
 loadMembers();
+let clickedMember;
 async function loadMembers() {
     console.log("Loading members...");
     const messengerMemberList = document.getElementById("messengerMemberList");
     const response = await fetch("/v1/projects/members");
     const data = await response.json();
-    console.log(data);
     messengerMemberList.innerHTML = createChatMemberList(data);
-
+    console.log(data);
     const memberList = document.getElementsByClassName("memberList");
-    for (let i in memberList) {
+    for (let i = 0; i < memberList.length; i++) {
+        const member = data[i];
         memberList[i].addEventListener("click", async function (event) {
             event.preventDefault();
+            console.log(event.target.nodeName);
+            if (event.target.nodeName == "IMG") {
+                createProfile(member);
+                return;
+            }
             const memberId = this.getAttribute("data-bs-memberId");
-            console.log(memberId, member_id);
+            if (clickedMember != memberId) {
+                clickedMember = memberId;
+                return;
+            }
+
             let room_name = "";
             if (Number(member_id) > Number(memberId)) {
                 room_name = memberId + "-" + member_id;
@@ -85,7 +95,7 @@ function createChatMemberList(members) {
     let html = "";
     for (let member of members) {
         html += `
-            <li class="p-2 border-bottom d-flex flex-row justify-content-between memberList" data-bs-memberId="${
+            <li class="ps-4 pe-4  d-flex flex-row justify-content-between memberList" data-bs-memberId="${
                 member.id
             }">
                 <a href="#!" class="d-flex flex-row  align-items-center">
@@ -96,7 +106,11 @@ function createChatMemberList(members) {
                                         ? member.avatar.name
                                         : "https://bootdey.com/img/Content/avatar/avatar5.png"
                                 }"
-                                alt="avatar" class="d-flex align-self-center me-3" width="60"
+                                alt="avatar" class="d-flex align-self-center me-3 rounded-4"
+                                width="40"
+                                height="40"
+                                data-bs-toggle="modal"
+                                data-bs-target="#profileModal"
                             >
                             <span class="badge bg-success badge-dot"></span>
                             <div class="pt-1">
@@ -106,15 +120,76 @@ function createChatMemberList(members) {
                                 }</p>
                             </div>
                         </div>
-                        <div class="p-4 flex-shrink-1">
-                            <a class="ms-3 text-muted" href="#!">
-                                <i class="fas fa-paper-plane"></i>
-                            </a>
-                        </div>
                     </div>
                 </a>
             </li>
         `;
     }
     return html;
+}
+
+//멤버 정보 로딩
+async function loadProfile(member_id) {
+    const response = await fetch(
+        `/v1/projects/${project_id}/crews/` + member_id
+    );
+    const data = await response.json();
+    return data;
+}
+//오너 정보 로딩
+async function loadOwnerProfile() {
+    const response = await fetch(`/v1/projects/${project_id}/owner`);
+    const data = await response.json();
+    return data;
+}
+
+//멤버 프로필 클릭시 프로필 모달창 데이터 로딩 및 마크업 생성
+async function createProfile(member) {
+    const profileBody = document.getElementById("profileBody");
+    profileBody.innerHTML = "";
+    console.log(member);
+    // let member = null;
+    // if (is_owner) {
+    //     member = await loadOwnerProfile();
+    // } else {
+    //     member = await loadProfile(member_id);
+    // }
+    profileBody.innerHTML = `
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-start">
+                    <img
+                        src="${
+                            member.avatar != null
+                                ? member.avatar.name
+                                : "https://bootdey.com/img/Content/avatar/avatar5.png"
+                        }"
+                        class="rounded-circle avatar-lg img-thumbnail"
+                        alt="profile-image"
+                    />
+                    <div class="w-100 ms-3">
+                        <h4 class="my-0">${member.name}</h4>
+                        <p class="text-muted">${member.position.name}</p>
+                        <button
+                            type="button"
+                            class="btn btn-soft-success btn-xs waves-effect mb-2 waves-light"
+                            onclick="sendMessage(${member.id})"
+                        >
+                            메시지
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <p class="text-muted mb-2 font-13">
+                        <strong>전화번호 :</strong
+                        ><span class="ms-2">${member.phone}</span>
+                    </p>
+                    <p class="text-muted mb-2 font-13">
+                        <strong>이메일 :</strong>
+                        <span class="ms-2">${member.email}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    `;
 }
