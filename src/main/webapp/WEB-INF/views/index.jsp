@@ -122,10 +122,17 @@ prefix="c" %>
             a {
                 text-decoration: none;
             }
-            .memberList {
+            .memberList.selected {
+                background-color: #f2f2f2;
             }
             .memberList:hover {
                 background-color: #f2f2f2;
+            }
+            .accordionCustom {
+                height: 2vh;
+            }
+            .accordion-collapse.collapse.show + .accordion-button .arrow-icon {
+                transform: rotate(180deg);
             }
         </style>
     </head>
@@ -429,127 +436,126 @@ prefix="c" %>
                     </div>
                 </nav>
             </div>
-        </div>
-        <div id="layoutSidenav_content">
-            <main class="h-100">
-                <c:import url="/WEB-INF/views/${page}.jsp" />
-                <button
-                    type="button"
-                    class="btn btn-primary position-fixed bottom-0"
-                    id="messengerButton"
-                >
-                    메신저
-                    <span
-                        class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"
-                        ><span class="visually-hidden"
-                            >unread messages</span
-                        ></span
+            <div id="layoutSidenav_content">
+                <main class="h-100">
+                    <c:import url="/WEB-INF/views/${page}.jsp" />
+                    <button
+                        type="button"
+                        class="btn btn-primary position-fixed bottom-0"
+                        id="messengerButton"
                     >
-                </button>
-                <div
-                    class="position-fixed bottom-0 animate__animated d-flex"
-                    id="messenger"
-                >
-                    <div class="d-flex sidebar flex-column">
-                        <div class="closeButton ms-1 mb-3">
-                            <button
-                                type="button"
-                                class="btn btn-danger"
-                                id="closeMessengerButton"
-                            >
-                                x
-                            </button>
-                        </div>
-                        <ul
-                            class="nav flex-column align-items-center"
-                            id="pills-tab"
+                        메신저
+                        <span
+                            class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"
+                            ><span class="visually-hidden"
+                                >unread messages</span
+                            ></span
                         >
-                            <li class="nav-item mb-3">
-                                <a
-                                    class="text-muted nav-link active"
-                                    aria-current="page"
-                                    href="#"
-                                    role="tab"
-                                    role="tablist"
-                                    aria-controls="pills-home"
-                                    aria-selected="true"
-                                    data-bs-toggle="pill"
-                                    data-bs-target="#pills-home"
-                                    id="homeButton"
-                                    href="#!"
+                    </button>
+                    <div
+                        class="position-fixed bottom-0 animate__animated d-flex"
+                        id="messenger"
+                    >
+                        <div class="d-flex sidebar flex-column">
+                            <div class="closeButton ms-1 mb-3">
+                                <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    id="closeMessengerButton"
                                 >
-                                    <i class="fas fa-user"></i>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a
-                                    class="text-muted nav-link active"
-                                    aria-current="page"
-                                    href="#"
-                                    role="tab"
-                                    role="tablist"
-                                    aria-controls="pills-home"
-                                    aria-selected="true"
-                                    data-bs-toggle="pill"
-                                    data-bs-target="#pills-home"
-                                    id="homeButton"
-                                    href="#!"
-                                >
-                                    <i class="fas fa-comment"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="w-100" id="messengerBody">
-                        <div class="p-3 d-flex justify-content-between">
-                            <div class="fw-bold">메신저</div>
-                            <div>
-                                <a
-                                    class="text-muted nav-link active"
-                                    aria-current="page"
-                                    href="#"
-                                    role="tab"
-                                    role="tablist"
-                                    aria-controls="pills-home"
-                                    aria-selected="true"
-                                    data-bs-toggle="pill"
-                                    data-bs-target="#pills-home"
-                                    id="homeButton"
-                                    href="#!"
-                                >
-                                    <i class="fas fa-search fw-lighter"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="overflow-auto h-100">
-                            <div class="d-flex flex-row w-100 p-3">
-                                <img
-                                    src="${member.avatar.name}"
-                                    alt="avatar"
-                                    class="d-flex align-self-center me-3 rounded-4"
-                                    width="60"
-                                    height="60"
-                                />
-                                <div class="d-flex flex-column">
-                                    <p class="fw-bold mb-0">${member.name}</p>
-                                    <p class="small text-muted">
-                                        ${ member.position.name }
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="ps-3 pe-3">
-                                <hr />
+                                    x
+                                </button>
                             </div>
                             <ul
-                                class="list-unstyled mb-0 w-100"
-                                id="messengerMemberList"
-                            ></ul>
+                                class="nav flex-column align-items-center"
+                                id="pills-tab"
+                            >
+                                <li class="nav-item mb-3">
+                                    <a
+                                        class="text-muted nav-link active"
+                                        aria-current="page"
+                                        href="#"
+                                        role="tab"
+                                        role="tablist"
+                                        aria-controls="pills-home"
+                                        aria-selected="true"
+                                        data-bs-toggle="pill"
+                                        data-bs-target="#pills-home"
+                                        id="homeButton"
+                                        href="#!"
+                                    >
+                                        <i class="fas fa-user"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a
+                                        class="text-muted nav-link active"
+                                        aria-current="page"
+                                        href="#"
+                                        role="tab"
+                                        role="tablist"
+                                        aria-controls="pills-home"
+                                        aria-selected="true"
+                                        data-bs-toggle="pill"
+                                        data-bs-target="#pills-home"
+                                        id="homeButton"
+                                        href="#!"
+                                    >
+                                        <i class="fas fa-comment"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="w-100" id="messengerBody">
+                            <div class="p-3 d-flex justify-content-between">
+                                <div class="fw-bold">메신저</div>
+                                <div>
+                                    <a
+                                        class="text-muted nav-link active"
+                                        aria-current="page"
+                                        href="#"
+                                        role="tab"
+                                        role="tablist"
+                                        aria-controls="pills-home"
+                                        aria-selected="true"
+                                        data-bs-toggle="pill"
+                                        data-bs-target="#pills-home"
+                                        id="homeButton"
+                                        href="#!"
+                                    >
+                                        <i class="fas fa-search fw-lighter"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="overflow-auto h-100">
+                                <div class="d-flex flex-row w-100 p-3">
+                                    <img
+                                        src="${member.avatar.name}"
+                                        alt="avatar"
+                                        class="d-flex align-self-center me-3 rounded-4"
+                                        width="60"
+                                        height="60"
+                                    />
+                                    <div class="d-flex flex-column">
+                                        <p class="fw-bold mb-0">
+                                            ${member.name}
+                                        </p>
+                                        <p class="small text-muted">
+                                            ${ member.position.name }
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <ul
+                                    class="list-unstyled mb-0 w-100"
+                                    id="messengerMemberList"
+                                ></ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </main>
+                </main>
+            </div>
         </div>
-
         <div
             class="modal fade"
             id="profileModal"

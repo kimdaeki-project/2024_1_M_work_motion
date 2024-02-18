@@ -42,14 +42,47 @@ async function loadMembers() {
     const messengerMemberList = document.getElementById("messengerMemberList");
     const response = await fetch("/v1/projects/members");
     const data = await response.json();
-    messengerMemberList.innerHTML = createChatMemberList(data);
-    console.log(data);
+
+    const groupedByDepartment = data.reduce((acc, cur) => {
+        const deptName = cur.department.name;
+        if (!acc[deptName]) {
+            acc[deptName] = [];
+        }
+        acc[deptName].push(cur);
+        return acc;
+    }, {});
+    messengerMemberList.innerHTML = createChatMemberList(groupedByDepartment);
+
+    //아코디언 이벤트
+    var accordionExamples = document.querySelectorAll(
+        `div[data-bs-parent="#accordionExample"]`
+    );
+    console.log(accordionExamples);
+    for (let i = 0; i < accordionExamples.length; i++) {
+        accordionExamples[i].addEventListener("show.bs.collapse", function () {
+            this.previousElementSibling
+                .querySelector(".arrow-icon")
+                .classList.add("fa-chevron-up");
+            this.previousElementSibling
+                .querySelector(".arrow-icon")
+                .classList.remove("fa-chevron-down");
+        });
+
+        accordionExamples[i].addEventListener("hide.bs.collapse", function () {
+            this.previousElementSibling
+                .querySelector(".arrow-icon")
+                .classList.remove("fa-chevron-up");
+            this.previousElementSibling
+                .querySelector(".arrow-icon")
+                .classList.add("fa-chevron-down");
+        });
+    }
+
     const memberList = document.getElementsByClassName("memberList");
     for (let i = 0; i < memberList.length; i++) {
         const member = data[i];
         memberList[i].addEventListener("click", async function (event) {
             event.preventDefault();
-            console.log(event.target.nodeName);
             if (event.target.nodeName == "IMG") {
                 createProfile(member);
                 return;
@@ -58,9 +91,9 @@ async function loadMembers() {
             if (clickedMember != memberId) {
                 clickedMember = memberId;
                 for (let i = 0; i < memberList.length; i++) {
-                    memberList[i].classList.remove("clicked");
+                    memberList[i].classList.remove("selected");
                 }
-                memberList[i].classList.add("clicked");
+                memberList[i].classList.add("selected");
                 return;
             }
 
@@ -70,7 +103,6 @@ async function loadMembers() {
             } else {
                 room_name = member_id + "-" + memberId;
             }
-            console.log(room_name);
             const response = await fetch("/chat/getRoom?name=" + room_name);
             const data = await response.json();
             if (response.status == 200) {
@@ -95,39 +127,65 @@ async function loadMembers() {
     }
 }
 
-function createChatMemberList(members) {
+function createChatMemberList(groupedByDepartment) {
     let html = "";
-    for (let member of members) {
+    // groupedByDepartment 객체의 키와 값을 순회하여 출력하기
+    for (const [department, members] of Object.entries(groupedByDepartment)) {
         html += `
-            <li class="ps-4 pe-4  d-flex flex-row justify-content-between memberList" data-bs-memberId="${
-                member.id
-            }">
-                <a href="#!" class="d-flex flex-row  align-items-center">
-                        <div class="d-flex flex-row w-100">
-                            <img
-                                src="${
-                                    member.avatar != null
-                                        ? member.avatar.name
-                                        : "https://bootdey.com/img/Content/avatar/avatar5.png"
-                                }"
-                                alt="avatar" class="d-flex align-self-center me-3 rounded-4"
-                                width="40"
-                                height="40"
-                                data-bs-toggle="modal"
-                                data-bs-target="#profileModal"
-                            >
-                            <span class="badge bg-success badge-dot"></span>
-                            <div class="pt-1">
-                                <p class="fw-bold mb-0">${member.name}</p>
-                                <p class="small text-muted">${
-                                    member.position.name
-                                }</p>
-                            </div>
-                        </div>
+        <div class="" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <div class=" ps-3 pe-3">
+                        <hr class="m-0"/>
                     </div>
-                </a>
-            </li>
+                    <button class="accordion-button ps-3 pe-3 p-2 text-muted" type="button" data-bs-toggle="collapse" data-bs-target="#${department}" aria-expanded="true" aria-controls="${department}">
+                        <div class="d-flex justify-content-between w-100">
+                            <div>
+                            ${department} ${groupedByDepartment[department].length}
+                            </div>
+                            <i class="arrow-icon fa-solid fa-chevron-down"></i>
+                        </div>
+                    </button>
+                </h2>
+                <div id="${department}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
         `;
+        members.forEach((member) => {
+            html += `
+                        <li class="ps-4 pe-4  d-flex flex-row justify-content-between memberList" data-bs-memberId="${
+                            member.id
+                        }">
+                            <a href="#!" class="d-flex flex-row  align-items-center">
+                                <div class="d-flex flex-row w-100">
+                                    <img
+                                        src="${
+                                            member.avatar != null
+                                                ? member.avatar.name
+                                                : "https://bootdey.com/img/Content/avatar/avatar5.png"
+                                        }"
+                                        alt="avatar" class="d-flex align-self-center me-3 rounded-4"
+                                        width="40"
+                                        height="40"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#profileModal"
+                                    >
+                                    <span class="badge bg-success badge-dot"></span>
+                                    <div class="pt-1">
+                                        <p class="fw-bold mb-0">${
+                                            member.name
+                                        }</p>
+                                        <p class="small text-muted">${
+                                            member.position.name
+                                        }</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    `;
+        });
+        html += `
+        </div>
+        </div>
+        </div>`;
     }
     return html;
 }
@@ -168,7 +226,9 @@ async function createProfile(member) {
                                 ? member.avatar.name
                                 : "https://bootdey.com/img/Content/avatar/avatar5.png"
                         }"
-                        class="rounded-circle avatar-lg img-thumbnail"
+                        class="rounded-circle "
+                        width="60"
+                        height="60"
                         alt="profile-image"
                     />
                     <div class="w-100 ms-3">
