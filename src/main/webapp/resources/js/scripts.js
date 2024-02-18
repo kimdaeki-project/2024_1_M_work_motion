@@ -57,6 +57,10 @@ async function loadMembers() {
             const memberId = this.getAttribute("data-bs-memberId");
             if (clickedMember != memberId) {
                 clickedMember = memberId;
+                for (let i = 0; i < memberList.length; i++) {
+                    memberList[i].classList.remove("clicked");
+                }
+                memberList[i].classList.add("clicked");
                 return;
             }
 
