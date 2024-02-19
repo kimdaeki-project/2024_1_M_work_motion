@@ -17,6 +17,7 @@
                     
                         <div class="card-body">
 
+
                            
                                 <div class="form-floating mb-3">
                                     <input class="form-control" id="pw" type="password" name="pass" placeholder="현재비밀번호" />
@@ -35,6 +36,7 @@
                         
                         
                         <div class="card-body">
+
 
                         <form action="/member/update" method="post"  id="updateFrm" enctype="multipart/form-data">
 							 <div class="form-floating mb-3">

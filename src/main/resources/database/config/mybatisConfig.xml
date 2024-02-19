@@ -6,16 +6,28 @@
 
 
 <configuration>
+    <settings>
+        <setting name="jdbcTypeForNull" value="NULL"/>
+    </settings>
     <typeAliases>
-		<typeAlias type="com.workmotion.app.member.MemberDTO" alias="MemberDTO"/>
-		<typeAlias type="com.workmotion.app.member.Avatar" alias="Avatar"/>
-		<typeAlias type="com.workmotion.app.util.Pager" alias="Pager"/>
-		<typeAlias type="com.workmotion.app.department.DepartmentDTO" alias="DepartmentDTO"/>
+        <typeAlias type="com.workmotion.app.project.model.ProjectDTO" alias="ProjectDTO"/>
+        <typeAlias type="com.workmotion.app.company.CompanyDTO" alias="CompanyDTO"/>
+        <typeAlias type="com.workmotion.app.member.MemberDTO" alias="MemberDTO"/>
+        <typeAlias type="com.workmotion.app.position.PositionDTO" alias="PositionDTO"/>
+        <typeAlias type="com.workmotion.app.project.model.ProjectDTO" alias="ProjectDTO"/>
+        <typeAlias type="com.workmotion.app.project.model.RoleDTO" alias="RoleDTO"/>
+        <typeAlias type="com.workmotion.app.project.model.TaskDTO" alias="TaskDTO"/>
+        <typeAlias type="com.workmotion.app.project.model.ArticleDTO" alias="ArticleDTO"/>
+        <typeAlias type="com.workmotion.app.schedule.ScheduleDTO" alias="ScheduleDTO"/>
+        <typeAlias type="com.workmotion.app.chat.model.RoomDTO" alias="RoomDTO"/>
+        <typeAlias type="com.workmotion.app.chat.model.MessageDTO" alias="MessageDTO"/>
+        <typeAlias type="com.workmotion.app.chat.model.RoomInfoDTO" alias="RoomInfoDTO"/>
 
-    	<typeAlias type="com.workmotion.app.position.PositionDTO" alias="PositionDTO"/>
+        <typeAlias type="com.workmotion.app.member.Avatar" alias="Avatar"/>
+        <typeAlias type="com.workmotion.app.util.Pager" alias="Pager"/>
+        <typeAlias type="com.workmotion.app.department.DepartmentDTO" alias="DepartmentDTO"/>
+        <typeAlias type="com.workmotion.app.company.CompanyDTO" alias="CompanyDTO"/>
 
-		<typeAlias type="com.workmotion.app.company.CompanyDTO" alias="CompanyDTO"/>
-		<typeAlias type="com.workmotion.app.board.BoardDAO" alias="BoardDAO"/>
-		<typeAlias type="com.workmotion.app.board.BoardDTO" alias="BoardDTO"/>
+        <typeAlias type="com.workmotion.app.board.BoardDTO" alias="BoardDTO"/>
     </typeAliases>
 </configuration>
