@@ -37,8 +37,16 @@ public class ProductController {
 		 
 		 
 		 LocalDateTime startDate = LocalDateTime.of(2024, 02, 19, 06, 8);
-		 LocalDateTime lastDate = LocalDateTime.of(2024, 02, 19, 06, 8);
+		 LocalDateTime lastDate = LocalDateTime.of(2024, 02+10, 19, 06, 8);
 		 
+//		 if 0 (X)
+//		 session "no" "no"
+//		 else 
+//			
+//			 
+//			 ${no is not empty}
+//			 	alert (ehsso)
+//			 	location( rufwpckd)
 		 LocalDateTime plusDate = startDate.plusHours(06);
 		 startDate.isAfter(plusDate);
 		System.out.println(plusDate);
