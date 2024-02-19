@@ -1,6 +1,7 @@
 package com.workmotion.app.company;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class CompanyService {
 		pager.makeRow();
 		Long totalCount = companyDAO.companyTotalCount(pager);
 		pager.makePage(totalCount);
+		UUID uuid = UUID.randomUUID();
+		System.out.println(uuid);
 		
 		return companyDAO.getCompanyList(pager);
 	}
@@ -29,6 +32,9 @@ public class CompanyService {
 	
 	//컴퍼니 추가@@@@@@@@@@@@@@
 	public int createCompany(CompanyDTO companyDTO)throws Exception {
+		UUID uuid = UUID.randomUUID();
+		String uuidval = uuid.toString();
+		companyDTO.setCustomerkey(uuidval);
 		return companyDAO.createCompany(companyDTO);
 	}
 	
