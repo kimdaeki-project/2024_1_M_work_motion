@@ -1,6 +1,7 @@
 package com.workmotion.app.member;
 
 
+import java.time.LocalDateTime;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.workmotion.app.tosspayment.TossPaymentDTO;
+import com.workmotion.app.tosspayment.TossPaymentService;
+
 
 @Controller
 @RequestMapping(value = "/member/*")
@@ -22,6 +26,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private TossPaymentService tossPaymentService;
 	
 	
 	
@@ -73,6 +79,19 @@ public class MemberController {
 				if(BCrypt.checkpw(memberDTO.getPassword(),m.getPassword())) {
 					m.setPassword(null);
 					session.setAttribute("member",m);
+					System.out.println(m.getId());
+					TossPaymentDTO tossPaymentDTO = new TossPaymentDTO();
+					tossPaymentDTO.setMember_id(m.getId());
+					System.out.println(tossPaymentDTO);
+					System.out.println(tossPaymentDTO.getMember_id());
+				
+					tossPaymentDTO = tossPaymentService.getTossPaymentDetail(tossPaymentDTO);
+					System.out.println(tossPaymentDTO.getCreate_dt());
+					if(tossPaymentDTO == null) {
+						session.setAttribute("no", "no");
+					}else {
+						
+					}
 					model.addAttribute("page","home");
 					return "index";	
 				}else {

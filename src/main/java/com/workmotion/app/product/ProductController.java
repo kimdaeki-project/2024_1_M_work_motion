@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.workmotion.app.company.CompanyDTO;
 import com.workmotion.app.member.MemberDTO;
+import com.workmotion.app.tosspayment.TossPaymentDTO;
+import com.workmotion.app.tosspayment.TossPaymentService;
 import com.workmotion.app.util.Pager;
 
 @Controller
@@ -32,13 +34,8 @@ public class ProductController {
 	
 	
 	@GetMapping("list")
-	public String getList(Pager pager, Model model)throws Exception {
+	public String getList(HttpSession session,Pager pager, Model model)throws Exception {
 		 List<ProductDTO> ar = productService.getList(pager);
-		 
-		 
-		 LocalDateTime startDate = LocalDateTime.of(2024, 02, 19, 06, 8);
-		 LocalDateTime lastDate = LocalDateTime.of(2024, 02+10, 19, 06, 8);
-		 
 //		 if 0 (X)
 //		 session "no" "no"
 //		 else 
@@ -47,9 +44,12 @@ public class ProductController {
 //			 ${no is not empty}
 //			 	alert (ehsso)
 //			 	location( rufwpckd)
-		 LocalDateTime plusDate = startDate.plusHours(06);
-		 startDate.isAfter(plusDate);
-		System.out.println(plusDate);
+//		 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+//		TossPaymentDTO tossPaymentDTO = new TossPaymentDTO();
+//		tossPaymentDTO.setMember_id(memberDTO.getId());
+//		TossPaymentService tossPaymentService = new TossPaymentService();
+//		tossPaymentDTO = tossPaymentService.getTossPaymentDetail(tossPaymentDTO);
+//		 System.out.println(tossPaymentDTO.getCreate_dt());
 		 model.addAttribute("list", ar);
 		 model.addAttribute("page", "product/list");
 		 model.addAttribute("pager", pager);
