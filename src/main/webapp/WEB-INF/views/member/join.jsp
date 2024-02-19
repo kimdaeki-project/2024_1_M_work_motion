@@ -63,7 +63,7 @@ pageEncoding="UTF-8"%>
                                                     <div class="form-floating mb-6">
                                                         <input class="form-control" id="password" type="password" name="password"  placeholder="Create a password" />
                                                         <label for="password">비밀번호</label>
-                                                        <div id="passResult" style="color: red;"></div>
+                                                        <div id="passResult" class="red"></div>
                                                     </div>
                                                     
                                                 </div>
@@ -74,7 +74,7 @@ pageEncoding="UTF-8"%>
                                                 <div class="form-floating mb-6 mb-md-0">
                                                     <input class="form-control" id="passwordCheck" type="password" name="passwordCheck" placeholder="Confirm password" />
                                                     <label for="passwordCheck">비밀번호 확인</label>
-                                                    <div id="passCheckResult" style="color: red;"></div>
+                                                    <div id="passCheckResult" class="red"></div>
                                                 </div>
                                              
                                             </div>

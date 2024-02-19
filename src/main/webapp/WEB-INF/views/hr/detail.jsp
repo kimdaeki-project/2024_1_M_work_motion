@@ -8,57 +8,56 @@
                     <div class="card-header"><h3 class="text-center font-weight-light my-4">${dto.name}</h3></div>
                     <div class="card-body">
 
-            			<c:if test="${not empty dto.ANAME}">
+            			<c:if test="${not empty dto.avatar.name}">
             				<div>
-            					<img  src="/resources/upload/member/${dto.ANAME}">
+            					<img  src="/resources/upload/member/${dto.avatar.name}">
             				</div>
-            				
             			</c:if>
-					
 
-                        <form action="/member/update" method="post" id="mypageFrm">
+
+                        <form action="/hr/update" method="get">
           
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="id" type="text" name="id" value="${dto.ID}" placeholder="name@example.com" />
+                                <input class="form-control" id="id" readonly="readonly" type="text" name="id" value="${dto.id}" placeholder="id" />
                                 <label for="id">사원 번호</label>
                             </div>
      
+          						<div class="form-floating mb-3">
+                                <input class="form-control" id="name" readonly="readonly" type="text" name="name" value="${dto.name}" placeholder="name" />
+                                <label for="name">Name</label>
+                            </div>
+     
      						<div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="text" name="email" value="${dto.EMAIL}" placeholder="name@example.com" />
+                                <input class="form-control" id="email" readonly="readonly" type="text" name="email" value="${dto.email}" placeholder="name@example.com" />
                                 <label for="email">Email</label>
                             </div>
 
 						<div class="form-floating mb-3">
-							<input class="form-control" id="email" type="text" name="department"
-								value="${dto.DNAME}" placeholder="name@example.com" /> <label
+							<input class="form-control" id="departmentName" readonly="readonly" type="text" name="departmentName"
+								value="${dto.department.name}" placeholder="name@example.com" /> <label
 								for="email">부서</label>
 						</div>
 
 						<div class="form-floating mb-3">
-							<input class="form-control" id="email" type="text" name="email"
-								value="${dto.PNAME}" placeholder="name@example.com" /> <label
+							<input class="form-control" id="positionName" readonly="readonly" type="text" name="positionName"
+								value="${dto.position.name}" placeholder="name@example.com" /> <label
 								for="email">직급</label>
 						</div>
 
 						<div class="form-floating mb-3">
-							<input class="form-control" id="phone" type="text" name="phone"
-								value="${dto.PHONE}" placeholder="name@example.com" /> <label
+							<input class="form-control" id="phone" readonly="readonly" type="text" name="phone"
+								value="${dto.phone}" placeholder="name@example.com" /> <label
 								for="phone">전화번호</label>
 						</div>
-
-
-
-
 						<div>
                             <input type="hidden" name="id" value="${dto.id}">
-                            </div>
+                        </div>
+                        
                             <div class="d-flex align-items-center justify-content-between ml-5 mt-2 mb-3">
-                               
-                                <button class="btn btn-primary" id="updateBtn" type="button">사원 정보 수정</button>
+                   		     <button class="btn btn-primary">사원 정보 수정</button>
                             </div>
                         </form>
-                        
-                        		<button class="btn btn-danger">사원 정보 삭제</button>
+                        		
                     </div>
                   
                 </div>

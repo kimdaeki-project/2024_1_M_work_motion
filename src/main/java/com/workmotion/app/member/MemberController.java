@@ -27,10 +27,10 @@ public class MemberController {
 	
 	@ResponseBody
 	@PostMapping("pwCheck")
-	public int pwCheck(HttpSession session,MemberDTO memberDTO) throws Exception {
+	public int pwCheck(HttpSession session,String pass,MemberDTO memberDTO) throws Exception {
 		MemberDTO m = (MemberDTO)session.getAttribute("member");
 		 	m = memberService.getlogin(m);
-		 	StringTokenizer tokenizer = new StringTokenizer(memberDTO.getPassword(),",");
+		 	StringTokenizer tokenizer = new StringTokenizer(pass,",");
 		 		memberDTO.setPassword(tokenizer.nextToken());	
 		 	int result=0;
 			if(BCrypt.checkpw(memberDTO.getPassword(),m.getPassword())) {
@@ -73,10 +73,6 @@ public class MemberController {
 				if(BCrypt.checkpw(memberDTO.getPassword(),m.getPassword())) {
 					m.setPassword(null);
 					session.setAttribute("member",m);
-					System.out.println(m.getDepartment().getName());
-					System.out.println(m.getPosition().getName());
-					
-					
 					model.addAttribute("page","home");
 					return "index";	
 				}else {
@@ -94,7 +90,6 @@ public class MemberController {
 	
 	@PostMapping("join")
 	public String getjoin(MemberDTO memberDTO,Model model)throws Exception{
-		System.out.println(memberDTO.getPhone());
 		String hashpassword = BCrypt.hashpw(memberDTO.getPassword(),BCrypt.gensalt());
 		memberDTO.setPassword(hashpassword);
 		int result =  memberService.getjoin(memberDTO);
