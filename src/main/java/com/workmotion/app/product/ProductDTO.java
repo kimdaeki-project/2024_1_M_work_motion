@@ -6,6 +6,15 @@ public class ProductDTO {
 	private String name;
 	private String info;
 	private Long price;
+	private Long period;
+	
+	
+	public Long getPeriod() {
+		return period;
+	}
+	public void setPeriod(Long period) {
+		this.period = period;
+	}
 	public Long getId() {
 		return id;
 	}

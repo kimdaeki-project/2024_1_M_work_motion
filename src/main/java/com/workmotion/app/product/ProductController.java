@@ -1,5 +1,12 @@
 package com.workmotion.app.product;
 
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +35,13 @@ public class ProductController {
 	public String getList(Pager pager, Model model)throws Exception {
 		 List<ProductDTO> ar = productService.getList(pager);
 		 
+		 
+		 LocalDateTime startDate = LocalDateTime.of(2024, 02, 19, 06, 8);
+		 LocalDateTime lastDate = LocalDateTime.of(2024, 02, 19, 06, 8);
+		 
+		 LocalDateTime plusDate = startDate.plusHours(06);
+		 startDate.isAfter(plusDate);
+		System.out.println(plusDate);
 		 model.addAttribute("list", ar);
 		 model.addAttribute("page", "product/list");
 		 model.addAttribute("pager", pager);
@@ -35,6 +49,7 @@ public class ProductController {
 		 return "index";
 	}
 	
+
 	@GetMapping("detail")
 	public String getDetail(ProductDTO productDTO, Model model) throws Exception{
 		
@@ -42,7 +57,7 @@ public class ProductController {
 	
 	model.addAttribute("detail", productDTO);
 	model.addAttribute("page", "/product/detail");
-	
+	System.out.println(productDTO.getPeriod());
 	return "index";
 		
 	}
@@ -52,7 +67,7 @@ public class ProductController {
 		 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		 CompanyDTO companyDTO = new CompanyDTO();
 		 companyDTO = productService.getPaymentDetail(memberDTO);
-		
+		System.out.println(productDTO.getPeriod());
 		 model.addAttribute("product", productDTO);
 		model.addAttribute("company", companyDTO);
 		model.addAttribute("page", "/commons/payment");

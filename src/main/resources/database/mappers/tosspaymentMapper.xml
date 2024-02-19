@@ -5,8 +5,25 @@
 
 <mapper namespace="com.workmotion.app.tosspayment.TossPaymentDAO">
 
-	<insert id="getTossPaymentDetail"  parameterType="TossPaymentDTO">
-		INSERT INTO tosspayment
-		VALUES(tosspayment_seq.nextval,#{orderId},#{amount},#{paymentKey},#{member_id})
+	<insert id="createTossPayment" parameterType="TossPaymentDTO">
+		INSERT INTO
+		tosspayment
+		VALUES(tosspayment_seq.nextval,#{orderId},#{amount},#{paymentKey},#{member_id},SYSDATE,#{period})
 	</insert>
+
+	<select id="getTossPaymentDetail" resultType="TossPaymentDTO"
+		parameterType="TossPaymentDTO">
+		SELECT * FROM tosspayment
+		WHERE member_id = #{member_id}
+	</select>
+
+	<update id="updateTossPayment" parameterType="TossPaymentDTO">
+		UPDATE TOSSPAYMENT
+		SET
+		ORDERID = #{orderId},
+		AMOUNT = #{amount}, 
+		PAYMENTKEY =#{paymentKey},
+		period = #{period}
+		WHERE member_id = #{member_id}
+	</update>
 </mapper>

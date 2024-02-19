@@ -60,6 +60,7 @@
       const generateRandomString = () =>
         window.btoa(Math.random()).slice(0, 20);
       const amount = ${product.price};
+      console.log("period : "+ ${product.period});
       // ------  결제위젯 초기화 ------
       // TODO: clientKey는 개발자센터의 결제위젯 연동 키 > 클라이언트 키로 바꾸세요.
       // TODO: 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요. 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
@@ -101,7 +102,8 @@
         paymentWidget.requestPayment({
           orderId: generateRandomString(),
           orderName: "토스 티셔츠 외 2건",
-          successUrl: window.location.origin + "/resources/js/tosspayment/public/success.html",
+          period: ${product.period},
+          successUrl: window.location.origin + "/resources/js/tosspayment/public/success.html?period=" + ${product.period},
           failUrl: window.location.origin + "/resources/js/tosspayment/public/fail.html",
           customerEmail: "customer123@gmail.com",
           customerName: "김토스",

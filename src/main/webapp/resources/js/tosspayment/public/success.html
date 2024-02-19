@@ -25,6 +25,7 @@
         <p id="paymentKey"></p>
         <p id="orderId"></p>
         <p id="amount"></p>
+        <p id="period"></p>
       </div>
     </div>
     <script>
@@ -38,6 +39,7 @@
           paymentKey: urlParams.get("paymentKey"),
           orderId: urlParams.get("orderId"),
           amount: urlParams.get("amount"),
+          period: urlParams.get("period"),
         };
 
         const response = await fetch("/tosspayment/server", {

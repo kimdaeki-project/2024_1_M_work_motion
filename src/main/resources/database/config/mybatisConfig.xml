@@ -17,5 +17,6 @@
 		<typeAlias type="com.workmotion.app.company.CompanyDTO" alias="CompanyDTO"/>
 		<typeAlias type="com.workmotion.app.board.BoardDAO" alias="BoardDAO"/>
 		<typeAlias type="com.workmotion.app.board.BoardDTO" alias="BoardDTO"/>
+		<typeAlias type="com.workmotion.app.tosspayment.TossPaymentDTO" alias="TossPaymentDTO"/>
     </typeAliases>
 </configuration>
