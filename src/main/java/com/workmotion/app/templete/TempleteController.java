@@ -56,12 +56,10 @@ public class TempleteController {
 		
 		
 		List<MemberDTO> ar = templeteService.getReferrerList(pager);
-		int c = 0;
-		model.addAttribute("check",c);
-		model.addAttribute("list", ar);
-		model.addAttribute("pager", pager);
 		
-		System.out.println(ar.size());
+		model.addAttribute("list", ar);
+		model.addAttribute("pager", pager);	
+		
 				
 		return "docTemplete/referrer";
 	}	

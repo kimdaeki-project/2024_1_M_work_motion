@@ -1,5 +1,7 @@
 package com.workmotion.app.document.util;
 
+import com.workmotion.app.member.MemberDTO;
+
 public class Pager {
 	
 	private Long startRow;
@@ -16,7 +18,9 @@ public class Pager {
 	private boolean last;
 	
 	private String search;
-	private String kind;	
+	private String kind;
+	
+	private Long member_id; 
 
 	
 	
@@ -92,6 +96,17 @@ public class Pager {
 
 		
 		
+
+
+	
+
+	public Long getMember_id() {
+			return member_id;
+		}
+
+		public void setMember_id(Long member_id) {
+			this.member_id = member_id;
+		}
 
 	public Long getStartRow() {
 		return startRow;

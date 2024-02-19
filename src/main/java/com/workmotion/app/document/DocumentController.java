@@ -51,5 +51,12 @@ public class DocumentController {
 		return "commons/result";		
 		
 	}
+	
+	@GetMapping("list")
+	public String getDocumentList()throws Exception{
+		
+		return "";
+	}
+	
 
 }
