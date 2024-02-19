@@ -1,8 +1,8 @@
 package com.workmotion.app.chat;
 
 import com.workmotion.app.chat.model.MessageDTO;
-import com.workmotion.app.chat.model.RoomDTO;
 import com.workmotion.app.chat.model.RoomInfoDTO;
+import com.workmotion.app.member.MemberDTO;
 import com.workmotion.app.util.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,24 +16,47 @@ public class ChatService {
     @Autowired
     private ChatDAO chatDAO;
 
-    public int createRoom(RoomDTO room) throws Exception {
+    public int createRoom(RoomInfoDTO room, String memberId) throws Exception {
         int result = chatDAO.createRoom(room);
-        String[] members = room.getName().split("-");
-        Map<String, Object> map = new HashMap<>();
-        map.put("room_name", room.getName());
-        map.put("members", members);
 
-        result = chatDAO.addMember(map);
 
         return result;
     }
 
-    public RoomDTO getRoom(RoomDTO room) throws Exception {
-        RoomDTO resultRoom = chatDAO.getRoom(room);
-        if (resultRoom == null) {
-            createRoom(room);
+    public int addMember(RoomInfoDTO room, String memberId) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("members", memberId);
+        map.put("room_name", room.getRoom_name());
+        map.put("name", room.getName());
+        System.out.println(room.getName());
+        int result = chatDAO.addMember(map);
+        return result;
+    }
+
+    public RoomInfoDTO getRoom(RoomInfoDTO room, String memberName, String memberId, MemberDTO memberDTO) throws Exception {
+        RoomInfoDTO resultRoom = new RoomInfoDTO();
+        if (chatDAO.getRoom(room) == null) {
+            room.setName(memberName);
+            createRoom(room, memberId);
+            addMember(room, Long.toString(memberDTO.getId()));
+            room.setName(memberDTO.getName());
+            addMember(room, memberId);
+
             return room;
+        } else {
+            resultRoom.setRoom_name(room.getRoom_name());
         }
+
+
+        return resultRoom;
+    }
+
+    public RoomInfoDTO getRoom(RoomInfoDTO room) throws Exception {
+        RoomInfoDTO resultRoom = new RoomInfoDTO();
+
+        resultRoom.setRoom_name(chatDAO.getRoom(room).getName());
+
+
         return resultRoom;
     }
 
@@ -61,5 +84,9 @@ public class ChatService {
 
     public RoomInfoDTO getRoomInfo(RoomInfoDTO roomInfoDTO) throws Exception {
         return chatDAO.getRoomInfo(roomInfoDTO);
+    }
+
+    public List<MessageDTO> getUserRoom(MemberDTO memberDTO) throws Exception {
+        return chatDAO.getUserRoom(memberDTO);
     }
 }

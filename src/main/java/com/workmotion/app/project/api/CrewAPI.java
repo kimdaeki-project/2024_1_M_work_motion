@@ -1,6 +1,7 @@
 package com.workmotion.app.project.api;
 
 import com.workmotion.app.member.MemberDTO;
+import com.workmotion.app.member.MemberService;
 import com.workmotion.app.project.model.ProjectDTO;
 import com.workmotion.app.project.service.CrewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,8 @@ import java.util.List;
 public class CrewAPI {
     @Autowired
     private CrewService crewService;
-
+    @Autowired
+    private MemberService memberService;
     private MemberDTO memberDTO = new MemberDTO();
 
     {
@@ -48,6 +50,7 @@ public class CrewAPI {
         return new ResponseEntity<>(memberDTO, HttpStatus.OK);
     }
 
+
     @DeleteMapping("{project_id}/crews/{member_ids}")
     public ResponseEntity<?> removeCrew(@PathVariable Long project_id, @PathVariable String member_ids) throws Exception {
         int result = crewService.removeCrew(project_id, member_ids);
@@ -65,5 +68,14 @@ public class CrewAPI {
     public ResponseEntity<List<MemberDTO>> getALLMemberList(HttpSession session) throws Exception {
         List<MemberDTO> memberDTOs = crewService.getAllMemberList((MemberDTO) session.getAttribute("member"));
         return new ResponseEntity<>(memberDTOs, HttpStatus.OK);
+    }
+
+    @GetMapping("members/{member_id}")
+    public ResponseEntity<MemberDTO> getALLMemberList(HttpSession session, @PathVariable Long member_id) throws Exception {
+        List<MemberDTO> memberDTOs = crewService.getAllMemberList((MemberDTO) session.getAttribute("member"));
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setId(member_id);
+        memberDTO = memberService.detailMember(memberDTO);
+        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
     }
 }

@@ -1,5 +1,7 @@
 package com.workmotion.app.chat.model;
 
+import com.workmotion.app.member.MemberDTO;
+
 import java.util.Date;
 
 public class MessageDTO {
@@ -8,6 +10,25 @@ public class MessageDTO {
     private String message;
     private Date time;
     private String room_name;
+
+    private MemberDTO sender;
+    private RoomInfoDTO roomInfo;
+
+    public RoomInfoDTO getRoomInfo() {
+        return roomInfo;
+    }
+
+    public void setRoomInfo(RoomInfoDTO roomInfo) {
+        this.roomInfo = roomInfo;
+    }
+
+    public MemberDTO getSender() {
+        return sender;
+    }
+
+    public void setSender(MemberDTO sender) {
+        this.sender = sender;
+    }
 
     public MessageDTO() {
     }

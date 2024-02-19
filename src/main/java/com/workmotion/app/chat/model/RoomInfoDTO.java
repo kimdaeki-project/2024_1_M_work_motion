@@ -8,6 +8,16 @@ public class RoomInfoDTO {
     private Date join_dt;
     private Date recently_dt;
 
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Long getMember_id() {
         return member_id;
     }

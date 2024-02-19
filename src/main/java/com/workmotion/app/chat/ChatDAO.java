@@ -3,6 +3,7 @@ package com.workmotion.app.chat;
 import com.workmotion.app.chat.model.MessageDTO;
 import com.workmotion.app.chat.model.RoomDTO;
 import com.workmotion.app.chat.model.RoomInfoDTO;
+import com.workmotion.app.member.MemberDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,11 +17,11 @@ public class ChatDAO {
     private SqlSession sqlSession;
     private final String NAMESPACE = "com.workmotion.app.chat.ChatDAO.";
 
-    public int createRoom(RoomDTO room) throws Exception {
+    public int createRoom(RoomInfoDTO room) throws Exception {
         return sqlSession.insert(NAMESPACE + "createRoom", room);
     }
 
-    public RoomDTO getRoom(RoomDTO room) throws Exception {
+    public RoomDTO getRoom(RoomInfoDTO room) throws Exception {
         return sqlSession.selectOne(NAMESPACE + "getRoom", room);
     }
 
@@ -42,5 +43,9 @@ public class ChatDAO {
 
     public RoomInfoDTO getRoomInfo(RoomInfoDTO roomInfoDTO) throws Exception {
         return sqlSession.selectOne(NAMESPACE + "getRoomInfo", roomInfoDTO);
+    }
+
+    public List<MessageDTO> getUserRoom(MemberDTO memberDTO) throws Exception {
+        return sqlSession.selectList(NAMESPACE + "getUserRoom", memberDTO);
     }
 }

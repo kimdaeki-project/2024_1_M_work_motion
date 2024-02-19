@@ -59,27 +59,31 @@ public class ChatController {
     }
 
 
-    @GetMapping("/chat/createRoom")
-    @ResponseBody
-    public RoomDTO createRoom(RoomDTO room) throws Exception {
-        int result = chatService.createRoom(room);
-        return room;
-    }
-
     @GetMapping("/chat/getRoom")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> getRoom(RoomDTO room, HttpSession session) throws Exception {
+    public ResponseEntity<Map<String, Object>> getRoom(RoomInfoDTO room, HttpSession session, String memberName, String memberId) throws Exception {
         Map<String, Object> response = new HashMap<>();
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-        room = chatService.getRoom(room);
-        List<MessageDTO> messageList = null;
-        if (room.getName() == null) {
-            chatService.createRoom(room);
+        if (memberName == null) {
+            room = chatService.getRoom(room);
+        } else {
+            room = chatService.getRoom(room, memberName, memberId, memberDTO);
+
         }
-        ;
+
         response.put("room", room);
         return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/chat/getRooms")
+    @ResponseBody
+    public ResponseEntity<List<MessageDTO>> getUserRoom(RoomDTO room, HttpSession session) throws Exception {
+
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+        List<MessageDTO> messageDTOS = chatService.getUserRoom(memberDTO);
+
+        return ResponseEntity.ok().body(messageDTOS);
     }
 
 

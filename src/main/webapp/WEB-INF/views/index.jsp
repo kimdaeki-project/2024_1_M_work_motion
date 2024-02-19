@@ -64,7 +64,7 @@ prefix="c" %>
         <style>
             #messengerButton {
                 right: 5%;
-                width: 30vh;
+                width: 40vh;
             }
             #messenger {
                 width: 40vh;
@@ -76,7 +76,7 @@ prefix="c" %>
                 z-index: 2;
             }
             #messenger .sidebar {
-                width: 6vh;
+                width: 5vh;
                 border-top-left-radius: 1vh;
                 background-color: #e6e6e6;
             }
@@ -133,6 +133,9 @@ prefix="c" %>
             }
             .accordion-collapse.collapse.show + .accordion-button .arrow-icon {
                 transform: rotate(180deg);
+            }
+            #memberContainer {
+                height: 54vh;
             }
         </style>
     </head>
@@ -453,10 +456,10 @@ prefix="c" %>
                         >
                     </button>
                     <div
-                        class="position-fixed bottom-0 animate__animated d-flex"
+                        class="position-fixed bottom-0 animate__animated d-flex d-none"
                         id="messenger"
                     >
-                        <div class="d-flex sidebar flex-column">
+                        <div class="d-flex sidebar flex-column pe-1">
                             <div class="closeButton ms-1 mb-3">
                                 <button
                                     type="button"
@@ -466,90 +469,105 @@ prefix="c" %>
                                     x
                                 </button>
                             </div>
+
                             <ul
                                 class="nav flex-column align-items-center"
-                                id="pills-tab"
+                                id="myTab"
+                                role="tablist"
                             >
-                                <li class="nav-item mb-3">
-                                    <a
-                                        class="text-muted nav-link active"
-                                        aria-current="page"
-                                        href="#"
+                                <li
+                                    class="nav-item mt-2 mb-4"
+                                    role="presentation"
+                                >
+                                    <button
+                                        class="nav-link text-muted active"
+                                        id="home-tab"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#home"
+                                        type="button"
                                         role="tab"
-                                        role="tablist"
-                                        aria-controls="pills-home"
+                                        aria-controls="home"
                                         aria-selected="true"
-                                        data-bs-toggle="pill"
-                                        data-bs-target="#pills-home"
-                                        id="homeButton"
-                                        href="#!"
                                     >
                                         <i class="fas fa-user"></i>
-                                    </a>
+                                    </button>
                                 </li>
-                                <li class="nav-item">
-                                    <a
-                                        class="text-muted nav-link active"
-                                        aria-current="page"
-                                        href="#"
+                                <li
+                                    class="nav-item mt-3 mb-3"
+                                    role="presentation"
+                                >
+                                    <button
+                                        class="nav-link text-muted"
+                                        id="messages-tab"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#messages"
+                                        type="button"
                                         role="tab"
-                                        role="tablist"
-                                        aria-controls="pills-home"
-                                        aria-selected="true"
-                                        data-bs-toggle="pill"
-                                        data-bs-target="#pills-home"
-                                        id="homeButton"
-                                        href="#!"
+                                        aria-controls="messages"
+                                        aria-selected="false"
                                     >
                                         <i class="fas fa-comment"></i>
-                                    </a>
+                                    </button>
                                 </li>
                             </ul>
                         </div>
+
                         <div class="w-100" id="messengerBody">
                             <div class="p-3 d-flex justify-content-between">
                                 <div class="fw-bold">메신저</div>
                                 <div>
-                                    <a
-                                        class="text-muted nav-link active"
-                                        aria-current="page"
-                                        href="#"
-                                        role="tab"
-                                        role="tablist"
-                                        aria-controls="pills-home"
-                                        aria-selected="true"
-                                        data-bs-toggle="pill"
-                                        data-bs-target="#pills-home"
-                                        id="homeButton"
-                                        href="#!"
-                                    >
+                                    <a href="#">
                                         <i class="fas fa-search fw-lighter"></i>
                                     </a>
                                 </div>
                             </div>
-                            <div class="overflow-auto h-100">
-                                <div class="d-flex flex-row w-100 p-3">
-                                    <img
-                                        src="${member.avatar.name}"
-                                        alt="avatar"
-                                        class="d-flex align-self-center me-3 rounded-4"
-                                        width="60"
-                                        height="60"
-                                    />
-                                    <div class="d-flex flex-column">
-                                        <p class="fw-bold mb-0">
-                                            ${member.name}
-                                        </p>
-                                        <p class="small text-muted">
-                                            ${ member.position.name }
-                                        </p>
+
+                            <div
+                                class="overflow-auto tab-content"
+                                id="memberContainer"
+                            >
+                                <div class="tab-content">
+                                    <div
+                                        class="tab-pane active"
+                                        id="home"
+                                        role="tabpanel"
+                                        aria-labelledby="home-tab"
+                                    >
+                                        <div class="d-flex flex-row w-100 p-3">
+                                            <img
+                                                src="${member.avatar.name}"
+                                                alt="avatar"
+                                                class="d-flex align-self-center me-3 rounded-4"
+                                                width="60"
+                                                height="60"
+                                            />
+                                            <div class="d-flex flex-column">
+                                                <p class="fw-bold mb-0">
+                                                    ${member.name}
+                                                </p>
+                                                <p class="small text-muted">
+                                                    ${ member.position.name }
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <ul
+                                            class="list-unstyled mb-0 w-100"
+                                            id="messengerMemberList"
+                                        ></ul>
+                                    </div>
+                                    <div
+                                        class="tab-pane"
+                                        id="messages"
+                                        role="tabpanel"
+                                        aria-labelledby="messages-tab"
+                                    >
+                                        <ul
+                                            class="list-unstyled mb-0 w-100"
+                                            id="messageList"
+                                        ></ul>
                                     </div>
                                 </div>
-
-                                <ul
-                                    class="list-unstyled mb-0 w-100"
-                                    id="messengerMemberList"
-                                ></ul>
                             </div>
                         </div>
                     </div>

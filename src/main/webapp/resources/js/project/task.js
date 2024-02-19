@@ -496,7 +496,7 @@ async function loadTask() {
     //높이 리사이즈
     const taskContentSeciton = document.getElementById("container");
     const firstHeight = window.innerHeight;
-    container.style.height = firstHeight - 125 + "px";
+    container.style.height = firstHeight - 56 + "px";
 
     let currentProject = null;
 
@@ -504,7 +504,7 @@ async function loadTask() {
         const afterHeight = window.innerHeight;
         const diff = afterHeight - firstHeight;
         const parent = document.getElementById("container").parentElement;
-        container.style.height = firstHeight + diff - 125 + "px";
+        container.style.height = firstHeight + diff - 56 + "px";
     });
 
     const changeStatus = document.getElementsByClassName("changeStatus");

@@ -175,7 +175,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     const $result = document.querySelector("#messageBox");
     $end = $result.firstElementChild;
     console.log($end);
-    observer.observe($end);
+    if (data.messages.length >= 20) {
+        observer.observe($end);
+    }
 
     if (tempHeight != null) {
         messageBox.scrollTop = tempHeight;
