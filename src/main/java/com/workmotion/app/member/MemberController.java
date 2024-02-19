@@ -73,10 +73,6 @@ public class MemberController {
 				if(BCrypt.checkpw(memberDTO.getPassword(),m.getPassword())) {
 					m.setPassword(null);
 					session.setAttribute("member",m);
-					System.out.println(m.getDepartment().getName());
-					System.out.println(m.getPosition().getName());
-					
-					
 					model.addAttribute("page","home");
 					return "index";	
 				}else {

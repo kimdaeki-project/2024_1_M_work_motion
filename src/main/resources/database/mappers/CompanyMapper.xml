@@ -5,7 +5,8 @@
 
 <mapper namespace="com.workmotion.app.company.CompanyDAO">
 
-    <select id="companyTotalCount" resultType="Long" parameterType="Pager">
+    <select id="companyTotalCount" resultType="Long"
+            parameterType="Pager">
         SELECT COUNT(*) FROM COMPANY
         WHERE name LIKE '%'||#{search}||'%'
     </select>
@@ -23,7 +24,8 @@
         ORDER BY ID ASC
         ) R
         )
-        WHERE RN BETWEEN #{startRow} AND #{lastRow}
+        WHERE RN
+        BETWEEN #{startRow} AND #{lastRow}
     </select>
 
     <select id="getCompanyDetail" resultType="CompanyDTO"
@@ -31,6 +33,7 @@
         SELECT * FROM COMPANY
         WHERE ID=#{id}
     </select>
+
 
     <insert id="createCompany" parameterType="CompanyDTO">
         INSERT INTO COMPANY
@@ -40,7 +43,8 @@
         #{owner},
         #{phone_num},
         #{info},
-        CURRENT_DATE
+        SYSDATE,
+        #{customerkey}
         )
     </insert>
 
@@ -60,7 +64,7 @@
                 INFO = #{info},
             </if>
             <if test="create_dt != null or create_dt != ''">
-                CREATE_DT = CURRENT_DATE
+                CREATE_DT = SYSDATE
             </if>
         </set>
         WHERE ID=#{id}
@@ -71,9 +75,11 @@
         WHERE ID = #{id}
     </delete>
 
+
     <select id="memberTotalCount" resultType="Long"
             parameterType="Long">
         SELECT COUNT(COMPANY_ID) FROM MEMBER
-        WHERE COMPANY_ID = #{totalCount}
+        WHERE COMPANY_ID =
+        #{totalCount}
     </select>
 </mapper>
