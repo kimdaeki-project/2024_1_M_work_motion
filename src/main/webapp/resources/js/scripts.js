@@ -319,6 +319,8 @@ async function createChatProfile(member_id) {
                         <button
                             type="button"
                             class="btn btn-soft-success btn-xs waves-effect mb-2 waves-light"
+                            data-bs-memberId="${member.id}"
+                            data-bs-memberName="${member.name}"
                             onclick="sendMessage(${member.id})"
                         >
                             메시지
