@@ -13,8 +13,8 @@
 			<div class="col-auto">
 				<select name=kind class="form-select"
 					aria-label="Default select example">
-					<option value="kind2">제목</option>
-					<option value="kind1">작성자</option>					
+					<option value="kind2">파일종류</option>
+					<option value="kind1">제목</option>					
 				</select>
 			</div>
 			<div class="col-auto">
@@ -28,17 +28,17 @@
   <thead>
   	<tr>
   		<td>서류번호</td>
-  		<td>작성자</td>
   		<td>제목</td>
-  		<td>작성일</td>  		
+  		<td>작성일</td>
+  		<td>서류종류</td>  		
   	</tr>
   </thead>
   <c:forEach items="${list}" var="dto">
   	<tr>
-  		<td>${dto.documentDTO.id}</td>
-  		<td>${dto.memberDTO.name}</td>
-  		<td><a href="./detail?id=${dto.documentDTO.id}">${dto.documentDTO.title}</a></td>
-  		<td>${dto.documentDTO.create_dt}</td>
+  		<td>${dto.id}</td>
+  		<td><a href="">${dto.title}</a></td>
+  		<td>${dto.create_dt}</td>
+  		<td>${dto.templeteDTO.file_nm}</td>
   	</tr>
   </c:forEach>  
 </table>

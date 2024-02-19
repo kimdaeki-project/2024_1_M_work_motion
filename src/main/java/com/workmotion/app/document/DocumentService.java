@@ -1,5 +1,7 @@
 package com.workmotion.app.document;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.workmotion.app.document.file.DocumentFileDTO;
 import com.workmotion.app.document.util.FileManager;
+import com.workmotion.app.document.util.Pager;
 import com.workmotion.app.referrer.ReferrerDTO;
 
 @Service
@@ -21,7 +24,7 @@ public class DocumentService {
 	
 	@Autowired
 	private ServletContext servletContext;
-	
+	//서류 저장 
 	public int createDocument(DocumentDTO documentDTO,MultipartFile[] file,String referrer)throws Exception{
 		
 		int result = documentDAO.createDocument(documentDTO);
@@ -54,7 +57,22 @@ public class DocumentService {
 		
 		return result;
 	} 
-	
+	//보낸 서류 리스트
+	public List<DocumentDTO> getDocumentList(Pager pager)throws Exception{
+		
+		pager.makeRow();		
+		
+		Long totalCount = documentDAO.getTotalCount(pager);
+		
+		pager.makeNum(totalCount);
+		
+		List<DocumentDTO> ar = documentDAO.getDocumentList(pager);
+		
+		
+		
+		return ar;
+		
+	}
 
 	
 

@@ -23,13 +23,19 @@ public class DocumentDTO {
 	private Date deadline;
 	private List<DocumentFileDTO> documentFileDTOs;
 	private List<ReferrerDTO> referrerDTOs;
-
+	private TempleteDTO templeteDTO;
 	
 
 	
 	
 
 	
+	public TempleteDTO getTempleteDTO() {
+		return templeteDTO;
+	}
+	public void setTempleteDTO(TempleteDTO templeteDTO) {
+		this.templeteDTO = templeteDTO;
+	}
 	public List<ReferrerDTO> getReferrerDTOs() {
 		return referrerDTOs;
 	}

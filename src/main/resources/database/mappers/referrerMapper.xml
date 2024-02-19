@@ -5,13 +5,16 @@
 
 <mapper namespace="com.workmotion.app.referrer.ReferrerDAO">
 	<!-- 작성자,제목 검색  -->
-	<sql id="search">			
+	<sql id="search">
+		<where>		
 			<if test="kind=='kind1'">
 				M.NAME LIKE '%'||#{search}||'%'
 			</if>
 			<if test="kind=='kind2'">
 				OR D.TITLE LIKE '%'||#{search}||'%'
-			</if>			
+			</if>
+			AND R.MEMBER_ID = #{member_id}
+		</where>				
 	</sql>
 
 	<!-- 참조인으로 저장된 서류 검색 -->
@@ -23,8 +26,7 @@
 						ON (R.DOCUMENT_ID = D.ID)
 						FULL JOIN MEMBER M
 						ON (M.ID = D.MEMBER_ID)
-						WHERE <include refid="search"></include>
-						AND R.MEMBER_ID = #{member_id}
+						<include refid="search"></include>						
 						ORDER BY D.CREATE_DT DESC
 						)RD
 					)
@@ -53,8 +55,7 @@
 						ON (R.DOCUMENT_ID = D.ID)
 						FULL JOIN MEMBER M
 						ON (M.ID = D.MEMBER_ID)
-		WHERE <include refid="search"></include>
-		AND R.MEMBER_ID = #{member_id}
+		<include refid="search"></include>		
 	</select>	
 	
 

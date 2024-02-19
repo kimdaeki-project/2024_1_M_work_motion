@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>templete List</title>
 </head>
 <body>
 	<div>
@@ -37,7 +36,7 @@
   	<tr>
   		<td>${dto.documentDTO.id}</td>
   		<td>${dto.memberDTO.name}</td>
-  		<td><a href="./detail?id=${dto.documentDTO.id}">${dto.documentDTO.title}</a></td>
+  		<td><a href="">${dto.documentDTO.title}</a></td>
   		<td>${dto.documentDTO.create_dt}</td>
   	</tr>
   </c:forEach>  

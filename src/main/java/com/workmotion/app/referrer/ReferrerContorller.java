@@ -30,8 +30,8 @@ public class ReferrerContorller {
 		List<ReferrerDTO> ar = referrerService.getList(pager);
 		
 		model.addAttribute("list", ar);
-		model.addAttribute("page", pager);		
-		model.addAttribute("page", "referrer/referrerList");
+		model.addAttribute("pager", pager);		
+		model.addAttribute("page", "referrer/list");
 		
 		return "index";
 		

@@ -27,57 +27,50 @@
 	</insert>	
 	
 	
-	<!-- 작성자,제목 검색  -->
-	<sql id="search">			
+	<!-- 제목,서류종류별 검색  -->
+	<sql id="search">	
+		<where>	
 			<if test="kind=='kind1'">
-				M.NAME LIKE '%'||#{search}||'%'
+				D.TITLE LIKE '%'||#{search}||'%'
 			</if>
 			<if test="kind=='kind2'">
-				OR D.TITLE LIKE '%'||#{search}||'%'
-			</if>			
+				OR T.FILE_NM LIKE '%'||#{search}||'%'
+			</if>
+			and D.MEMBER_ID = #{member_id} AND D.TEMPORARY_SAVE = 0	
+		</where>			
 	</sql>
 
-	<!-- 참조인으로 저장된 서류 검색 -->
-	<select id="getList" parameterType="Pager" resultMap="referrerResult">
-		SELECT * FROM (
-			SELECT ROWNUM T,RD.* FROM(
-				(SELECT R.MEMBER_ID,D.ID,M.NAME,D.TITLE,D.CREATE_DT FROM REFERRER R
-						FULL JOIN DOCUMENT D
-						ON (R.DOCUMENT_ID = D.ID)
-						FULL JOIN MEMBER M
-						ON (M.ID = D.MEMBER_ID)
-						WHERE <include refid="search"></include>
-						AND R.MEMBER_ID = #{member_id}
-						ORDER BY D.CREATE_DT DESC
-						)RD
-					)
+	<!-- 서류 검색 -->
+	<select id="getDocumentList" parameterType="Pager" resultMap="getDocumentResult">
+			SELECT * FROM
+				(SELECT ROWNUM T,DT.*FROM
+					(
+					SELECT D.ID,D.TITLE,D.CREATE_DT,T.FILE_NM FROM DOCUMENT D 
+					FULL JOIN TEMPLETE T
+					ON (D.TEMPLETE_ID = T.ID)
+					<include refid="search"></include>					
+					ORDER BY D.ID DESC
+					)DT
 				)
-		WHERE T BETWEEN #{startRow} AND #{lastRow}
+			WHERE T BETWEEN #{startRow} AND #{lastRow}			
 	</select>
-	<resultMap type="ReferrerDTO" id="referrerResult">
-		<id column="DOCUMENT_ID" property="document_id"/>
-		<id column="MEMBER_ID" property="member_id"/>
-		<association property="documentDTO" javaType="DocumentDTO">
+	<resultMap type="DocumentDTO" id="getDocumentResult">
+		<id column="ID" property="id" />
+		<result column="TITLE" property="title"/>
+		<result column="CREATE_DT" property="create_dt"/>
+		<association property="templeteDTO" javaType="TempleteDTO">
 			<id column="ID" property="id"/>
-			<result column="TITLE" property="title"/>
-			<result column="CREATE_DT" property="create_dt"/>			
-		</association>
-		<association property="memberDTO" javaType="MemberDTO">
-			<id column="ID" property="id"/>
-			<result column="NAME" property="name"/>
-		</association>
-		
+			<result column="FILE_NM" property="file_nm"/>
+		</association>	
 	</resultMap>
+
 	
 	<!-- 총 페이지 수  -->
 	<select id="getTotalCount" resultType="Long" parameterType="Pager">
-		SELECT COUNT(R.MEMBER_ID)  FROM REFERRER R
-						FULL JOIN DOCUMENT D
-						ON (R.DOCUMENT_ID = D.ID)
-						FULL JOIN MEMBER M
-						ON (M.ID = D.MEMBER_ID)
-		WHERE <include refid="search"></include>
-		AND R.MEMBER_ID = #{member_id}
+		SELECT COUNT(MEMBER_ID) FROM DOCUMENT D
+								FULL JOIN TEMPLETE T
+								ON (D.TEMPLETE_ID = T.ID)
+		<include refid="search"></include>  		
 	</select>
 	
 
