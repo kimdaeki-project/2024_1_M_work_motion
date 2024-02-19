@@ -48,7 +48,7 @@ passCheck.addEventListener('keyup',()=>{
 
 
 email.addEventListener("blur",()=>{
-    fetch("/member/emailcheck?email="+email.value,{
+    fetch("/member/emailcheck?email="+email.value,{                 //ajax 
         method:"GET",
     }).then((r)=>r.text())
     .then(r=>{

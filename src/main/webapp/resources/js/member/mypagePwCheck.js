@@ -7,9 +7,9 @@ const updatePw = document.getElementById("updatePw");
 const updateFrm =document.getElementById("updateFrm");
 let check = false;
 
-pwCheckBtn.addEventListener("click",()=>{
+pwCheckBtn.addEventListener("click",()=>{       
     // let formdata = new FormData(mypageFrm);
-    fetch("/member/pwCheck",{
+    fetch("/member/pwCheck",{                       //ajax post 
         method:"POST",
         headers : {'Content-type': ' application/x-www-form-urlencoded;charset=utf-8'},
         body:"pass="+pw.value
