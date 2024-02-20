@@ -20,6 +20,9 @@
 			<div class="col-auto">
 				<label for="search" class="visually-hidden">Search</label>
 				<input type="text" name="search" class="form-control" id="search" placeholder="search">
+			</div>
+			<div class="col-auto">
+				<button type="submit" class="btn btn-primary mb-3">검색</button>								
 			</div>		
 		</form>
 	</div>

@@ -59,14 +59,21 @@ public class TempleteService {
 			return 0;
 		}
 				
-		String path = servletContext.getRealPath("/resources/upload/templete");
-		
-		System.out.println(path);
+		String path = servletContext.getRealPath("/resources/upload/templete");		
 		
 		String fileName = fileManager.fileSave(path, templeteFile);
 		
 		templeteDTO.setName(fileName);
-		templeteDTO.setFile_nm(templeteFile.getOriginalFilename());
+		//templeteDTO.setFile_nm(templeteFile.getOriginalFilename());
+		
+		// templeteFile의 확장자를 제외한 파일 이름을 가져오는 방법
+		String originalFilename = templeteFile.getOriginalFilename();
+		int lastIndexOfDot = originalFilename.lastIndexOf('.');
+		//삼항 연산식 활용 index 가 -1이면 확장자가 없는 파일 그러므로 확장자가 없는 파일이면 그대로 파일저장, 있으면 substring(저장시작,저장끝)해서 제외 후 저장 
+		String fileNameWithoutExtension = (lastIndexOfDot == -1) ? originalFilename : originalFilename.substring(0, lastIndexOfDot);
+
+		// templeteDTO에 파일 이름(확장자 제외) 설정
+		templeteDTO.setFile_nm(fileNameWithoutExtension);
 		
 		int result = templeteDAO.createTempleteAdd(templeteDTO);
 		

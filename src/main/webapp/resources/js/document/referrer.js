@@ -159,8 +159,7 @@ rm.addEventListener("click", (e) => {
             save_name.push(e.target.getAttribute("data-member-name"));    
             //체크하면 값 1로변경
                                                   
-        }else{
-            alert("해제");  
+        }else{             
             for(let i =0; i<save.length; i++){
                 if(save[i] === e.target.getAttribute("data-referrer-id") ){                    
                     save.splice(i,1);

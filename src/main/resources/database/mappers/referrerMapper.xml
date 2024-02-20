@@ -43,7 +43,7 @@
 		</association>
 		<association property="memberDTO" javaType="MemberDTO">
 			<id column="ID" property="id"/>
-			<result column="NAME" property="name"/>
+			<result column="NAME" property="name"/>			
 		</association>
 		
 	</resultMap>

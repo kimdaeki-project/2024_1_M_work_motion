@@ -62,7 +62,20 @@ public class TempleteController {
 		
 				
 		return "docTemplete/referrer";
-	}	
+	}
+	
+	@GetMapping("approval")
+	public String getApprovalList(Pager pager,Model model)throws Exception{
+		
+		
+		List<MemberDTO> ar = templeteService.getReferrerList(pager);
+		
+		model.addAttribute("list", ar);
+		model.addAttribute("pager", pager);	
+		
+				
+		return "docTemplete/approval";
+	}
 	
 	
 	
@@ -101,14 +114,6 @@ public class TempleteController {
 		
 	}
 	
-	@GetMapping("test")
-	public String test(Model model)throws Exception{
-		model.addAttribute("page", "docTemplete/test");
-		
-		
-		
-		return "index";
-		
-	}
+
 	
 }
