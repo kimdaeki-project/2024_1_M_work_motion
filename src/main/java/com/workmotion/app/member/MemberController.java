@@ -1,11 +1,13 @@
 package com.workmotion.app.member;
 
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpSession;
+
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.workmotion.app.tosspayment.TossPaymentDTO;
 import com.workmotion.app.tosspayment.TossPaymentService;
+
 
 @Controller
 @RequestMapping(value = "/member/*")
@@ -121,14 +124,6 @@ public class MemberController {
 
 	}
 
-	@PostMapping("join")
-	public String getjoin(MemberDTO memberDTO, Model model) throws Exception {
-		String hashpassword = BCrypt.hashpw(memberDTO.getPassword(), BCrypt.gensalt());
-		memberDTO.setPassword(hashpassword);
-		int result = memberService.getjoin(memberDTO);
-		return "member/login";
-	}
-
 	@GetMapping("join")
 	public String getjoin(Model model) throws Exception {
 		model.addAttribute("page", "member/join");
@@ -162,5 +157,16 @@ public class MemberController {
 		model.addAttribute("page", "home");
 		return "index";
 	}
+
+    @PostMapping("join")
+    public String getjoin(MemberDTO memberDTO, Model model) throws Exception {
+        String hashpassword = BCrypt.hashpw(memberDTO.getPassword(), BCrypt.gensalt());
+        memberDTO.setPassword(hashpassword);
+        int result = memberService.getjoin(memberDTO);
+        memberService.setFileAdd(memberDTO);
+        System.out.println(memberDTO.getId());
+        return "member/login";
+    }
+
 
 }

@@ -14,7 +14,21 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
+	
+	<!-- interceptor -->
+	<beans:bean class="com.workmotion.app.interceptor.MemberInterceptor" id="MemberInterceptor"></beans:bean>
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/member/login"/>
+			<exclude-mapping path="/member/agree"/>
+			<exclude-mapping path="/member/logout"/>
+			<exclude-mapping path="/member/join"/>
+			<beans:ref bean="MemberInterceptor"/>
+		</interceptor>
+	</interceptors>
 
+	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />

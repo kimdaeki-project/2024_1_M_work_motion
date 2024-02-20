@@ -195,7 +195,9 @@ async function createProfile(member_id, is_owner) {
                         <button
                             type="button"
                             class="btn btn-soft-success btn-xs waves-effect mb-2 waves-light"
-                            onclick="sendMessage(${member.id})"
+                            data-bs-memberId="${member.id}"
+                            data-bs-memberName="${member.name}"
+                        onclick="sendMessage(${member.id},'${member.name}')"
                         >
                             메시지
                         </button>
@@ -217,7 +219,7 @@ async function createProfile(member_id, is_owner) {
 }
 
 //채팅창 오픈
-async function sendMessage(sendMemberId) {
+async function sendMessage(sendMemberId, memberName) {
     const member_id = projectInfo.getAttribute("data-bs-memberId");
     let room_name = "";
     if (Number(member_id) > Number(sendMemberId)) {
@@ -225,9 +227,16 @@ async function sendMessage(sendMemberId) {
     } else {
         room_name = member_id + "-" + sendMemberId;
     }
-    const response = await fetch("/chat/getRoom?name=" + room_name);
+    const response = await fetch(
+        "/chat/getRoom?room_name=" +
+            room_name +
+            "&memberName=" +
+            memberName +
+            "&memberId=" +
+            sendMemberId
+    );
     const data = await response.text();
-    if (data == "success") {
+    if (response.status == 200) {
         var popupWidth = 400;
         var popupHeight = 700;
 

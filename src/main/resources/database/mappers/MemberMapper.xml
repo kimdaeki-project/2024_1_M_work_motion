@@ -15,6 +15,9 @@
     <insert id="setFileAdd" parameterType="Avatar">
         INSERT INTO avatar VALUES(AVATAR_SEQ.NEXTVAL,#{member_id},#{name},#{ori_name})
     </insert>
+    <insert id="setFileAddDefault" parameterType="MemberDTO">
+        INSERT INTO avatar VALUES(AVATAR_SEQ.NEXTVAL,#{id},'/resources/images/avatar5.png','default')
+    </insert>
 
     <!--이메일 체크 -->
     <select id="emailCheck" parameterType="MemberDTO" resultType="MemberDTO">
@@ -59,8 +62,10 @@
 
     <!--회원가입-->
     <insert id="createMember" parameterType="MemberDTO">
-
-        INSERT INTO member VALUES(member_SEQ.NEXTVAL,10,#{company_id},
+        <selectKey keyProperty="id" order="BEFORE" resultType="Long">
+            SELECT MEMBER_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO member VALUES(#{id},10,#{company_id},
         #{email},#{password},#{name},0,10,#{phone})
 
     </insert>
