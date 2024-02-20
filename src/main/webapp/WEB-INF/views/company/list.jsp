@@ -1,6 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<c:if test="${empty member}">
+<script>
+alert("로그인 하셔야 이용 가능합니다")
+location.href="/member/login"
+</script>
+</c:if>
+<c:if test="${empty check}">
+<script>
+alert("구독 하셔야 이용가능합니다")
+location.href="/product/list"
+</script>
+</c:if>
 <table class="table">
 	<thead>
 		<tr>
@@ -8,9 +21,8 @@
 			<th scope="col">회사이름</th>
 			<th scope="col">회사정보</th>
 			<th scope="col">회사대표이름</th>
-			<th scope="col">회사전화번호</th>
+			<th scope="col">회사전화번호</th>s
 			<th scope="col">회사개설일</th>
-
 		</tr>
 	</thead>
 	<tbody>

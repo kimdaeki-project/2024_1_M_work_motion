@@ -8,13 +8,13 @@
 	<insert id="createTossPayment" parameterType="TossPaymentDTO">
 		INSERT INTO
 		tosspayment
-		VALUES(tosspayment_seq.nextval,#{orderId},#{amount},#{paymentKey},#{member_id},SYSDATE,#{period})
+		VALUES(tosspayment_seq.nextval,#{orderId},#{amount},#{paymentKey},#{company_id},SYSDATE,#{period})
 	</insert>
 
 	<select id="getTossPaymentDetail" resultType="TossPaymentDTO"
 		parameterType="TossPaymentDTO">
 		SELECT * FROM tosspayment
-		WHERE member_id = #{member_id}
+		WHERE company_id = #{company_id}
 	</select>
 
 	<update id="updateTossPayment" parameterType="TossPaymentDTO">
@@ -24,6 +24,6 @@
 		AMOUNT = #{amount}, 
 		PAYMENTKEY =#{paymentKey},
 		period = #{period}
-		WHERE member_id = #{member_id}
+		WHERE company_id = #{company_id}
 	</update>
 </mapper>
