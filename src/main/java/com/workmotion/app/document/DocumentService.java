@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.workmotion.app.approval.ApprovalDTO;
 import com.workmotion.app.document.file.DocumentFileDTO;
 import com.workmotion.app.document.util.FileManager;
 import com.workmotion.app.document.util.Pager;
@@ -25,7 +26,7 @@ public class DocumentService {
 	@Autowired
 	private ServletContext servletContext;
 	//서류 저장 
-	public int createDocument(DocumentDTO documentDTO,MultipartFile[] file,String referrer)throws Exception{
+	public int createDocument(DocumentDTO documentDTO,MultipartFile[] file,String referrer,String approval)throws Exception{
 		
 		int result = documentDAO.createDocument(documentDTO);
 		
@@ -54,6 +55,17 @@ public class DocumentService {
 				result = documentDAO.createReferrer(dto);
 			}
 		}
+		String[] approvals = approval.split(",");
+		if(approvals.length>0) {
+			for(String a:approvals) {
+				ApprovalDTO dto = new ApprovalDTO();
+				dto.setDocument_id(documentDTO.getId());
+				dto.setMember_id(Long.parseLong(a));
+				
+				result = documentDAO.createApproval(dto);
+			}
+		}
+		
 		
 		return result;
 	} 

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.workmotion.app.approval.ApprovalDTO;
 import com.workmotion.app.document.file.DocumentFileDTO;
 import com.workmotion.app.document.util.Pager;
 import com.workmotion.app.referrer.ReferrerDTO;
@@ -36,6 +37,10 @@ public class DocumentDAO {
 	//내가 보낸 서류 리스트 총 페이지
 	public Long getTotalCount(Pager pager)throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"getTotalCount", pager);
+	}
+	//서류안 결재자 저장
+	public int createApproval(ApprovalDTO approvalDTO)throws Exception{
+		return sqlSession.insert(NAMESPACE+"createApproval", approvalDTO);
 	}
 
 }

@@ -178,7 +178,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-bs-dismiss="modal">닫기</button>
-						<button id="approval-update" type="button" class="btn btn-primary referrer_update">결재자 추가</button>
+						<button id="approval-update" type="button" class="btn btn-primary referrer_update" data-bs-dismiss="modal">결재자 추가</button>
 					</div>
 				</div>
 			</div>

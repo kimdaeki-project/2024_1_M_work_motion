@@ -45,12 +45,12 @@ public class DocumentController {
 	}
 	//서류 추가
 	@PostMapping("add")
-	public String createDocument(DocumentDTO documentDTO,MultipartFile[] file,Model model,String referrer,HttpSession session)throws Exception{
+	public String createDocument(DocumentDTO documentDTO,MultipartFile[] file,Model model,String referrer,HttpSession session,String approval)throws Exception{
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");		
 				
 		documentDTO.setMember_id(memberDTO.getId());				
 		
-		int result = documentService.createDocument(documentDTO, file,referrer);
+		int result = documentService.createDocument(documentDTO, file,referrer,approval);
 		
 		String msg = "등록 실패";
 		

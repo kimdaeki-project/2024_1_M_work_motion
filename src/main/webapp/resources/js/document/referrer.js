@@ -153,6 +153,7 @@ rm.addEventListener("click", (e) => {
 
     //체크박스 체크하면 멤버ID 저장
     if(e.target.classList.contains("member_id")){
+        
         if(e.target.checked){                        
             //member id 값 배열에 저장             
             save.push(e.target.getAttribute("data-referrer-id"));
@@ -184,9 +185,9 @@ update.addEventListener("click",function(){
     let inputName = document.getElementById("referrer");
     inputName.value = stringName;
 
-     let string = save.join(",");
-     let input = document.getElementById("member_id_add");
-     input.value = string;
+    let string = save.join(",");
+    let input = document.getElementById("member_id_add");
+    input.value = string;
 
 });
 
