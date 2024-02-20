@@ -58,7 +58,7 @@
 <!-- 검색@@@@@@@@@@@@@@@@ -->
 <form action="./memberList">
 	<div class="input-group mb-3">
-		<input type="text" class="form-control" name="search"
+		<input type="text" width="200px" name="search"
 			aria-label="Text input with dropdown button"> <input
 			type="hidden" value="${member.department_id}" name="department_id">
 		<button class="btn btn-outline-secondary" type="submit">찾기</button>

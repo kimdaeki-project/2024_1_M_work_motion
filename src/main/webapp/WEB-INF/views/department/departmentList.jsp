@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link href="/resources/js/board/boardStyle.css" rel="stylesheet" />
 
-<table class="table">
+<table class="table table-hover">
 	<thead>
-		<tr>
+		<tr id="tr1">
 			<th>편집</th>
 			<th scope="col">부서번호</th>
 			<th scope="col">부서이름</th>
@@ -15,12 +16,12 @@
 	<tbody>
 		<c:forEach items="${list}" var="dto">
 			<tr>
-				<td><input type="hidden" value="${dto.id}" name="id" class="id">
+				<td class="tr"><input type="hidden" value="${dto.id}" name="id" class="id">
 					<input type="checkbox" class="checks"></td>
 				<th scope="row">${dto.id}</th>
-				<td><a href="./departmentDetail?id=${dto.id}">${dto.name}</a></td>
-				<td>${dto.phone_num}</td>
-				<td><a href="./departmentUpdate?id=${dto.id}"><button
+				<td class="listTitle"><a class="hihello" href="./departmentDetail?id=${dto.id}">${dto.name}</a></td>
+				<td class="tr">${dto.phone_num}</td>
+				<td class="tr"><a href="./departmentUpdate?id=${dto.id}"><button
 							type="button" class="btn btn-primary">부서수정</button></a></td>
 			</tr>
 		</c:forEach>
@@ -54,7 +55,7 @@
 <!-- 검색부분@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 <form action="./departmentList">
 	<div class="input-group mb-3">
-		<input type="text" class="form-control" name="search"
+		<input type="text" width="200px" name="search"
 			aria-label="Text input with dropdown button">
 		<button class="btn btn-outline-secondary" type="submit">찾기</button>
 	</div>
@@ -66,4 +67,5 @@
 		class="btn btn-success">부서 추가</button></a>
 <button type="button" id="deleteDepartment" class="btn btn-danger">부서
 	삭제</button>
+<script src="/resources/js/board/list.js"></script>
 <script src="/resources/departmentjs/deletedepartment.js"></script>

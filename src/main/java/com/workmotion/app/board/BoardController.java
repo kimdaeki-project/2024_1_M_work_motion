@@ -26,6 +26,8 @@ public class BoardController {
 		model.addAttribute("category_id", categoryDTO.getId());
 		List<Map<String, Object>> dtos = boardService.getBoardList(categoryDTO, pager);
 		dtos.forEach(m -> m.forEach((k, v) -> System.out.println("key = " + k + " , " + "value = " + v)));
+		String name = (String)dtos.get(0).get("NAME");
+		model.addAttribute("name", name);
 		model.addAttribute("list", dtos);
 		model.addAttribute("pager", pager);
 		model.addAttribute("page", "board/list");

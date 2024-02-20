@@ -4,7 +4,6 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th scope="col">#</th>
 			<th scope="col">사원번호</th>
 			<th scope="col">사원이름</th>
 			<th scope="col">사원이메일</th>
@@ -13,9 +12,8 @@
 	<tbody>
 		<tr>
 		</tr>
-		<c:forEach items="${detail}" var="dto" varStatus="status">
+		<c:forEach items="${detail}" var="dto" >
 			<tr>
-				<th scope="row">${status.count}</th>
 				<td>${dto.id}</td>
 				<td>${dto.name}</td>
 				<td>${dto.email}</td>
@@ -51,7 +49,7 @@
 <!-- 검색@@@@@@@@@@@@@@@@ -->
 <form action="./departmentDetail">
 	<div class="input-group mb-3">
-		<input type="text" class="form-control" name="search"
+		<input type="text" width="200px" name="search"
 			aria-label="Text input with dropdown button">
 			<input type="hidden" value="${member.department_id}" name="id">
 		<button class="btn btn-outline-secondary" type="submit">찾기</button>
