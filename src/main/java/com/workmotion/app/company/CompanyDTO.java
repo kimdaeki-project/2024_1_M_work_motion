@@ -1,6 +1,7 @@
 package com.workmotion.app.company;
 
 import java.sql.Date;
+import java.util.UUID;
 
 public class CompanyDTO {
 
@@ -10,6 +11,7 @@ public class CompanyDTO {
 	private Long phone_num;
 	private String info;
 	private Date create_dt; 
+	private String customerkey;
 	public Long getId() {
 		return id;
 	}
@@ -46,5 +48,12 @@ public class CompanyDTO {
 	public void setCreate_dt(Date create_dt) {
 		this.create_dt = create_dt;
 	}
+	public String getCustomerkey() {
+		return customerkey;
+	}
+	public void setCustomerkey(String customerkey) {
+		this.customerkey = customerkey;
+	}
+
 	
 }

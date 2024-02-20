@@ -16,7 +16,7 @@
 		SELECT COUNT(*) FROM department D 
  		JOIN member M on(D.id=M.department_id) 
 		LEFT JOIN position P ON (m.position_id=p.id) 
-		WHERE company_id = #{memberDTO.company_id} 
+		WHERE M.company_id = #{memberDTO.company_id} 
 		AND <include refid="search"></include>
 		</select>
 		
@@ -27,41 +27,84 @@
 		(SELECT M.*,P.name PNAME,D.name DNAME FROM department D 
  		JOIN member M on(D.id=M.department_id) 
 		LEFT JOIN position P ON (m.position_id=p.id) 
-		WHERE company_id = #{memberDTO.company_id} 
+		WHERE M.company_id = #{memberDTO.company_id} 
 		AND <include refid="search"></include>
-		ORDER BY position_id ASC)ML)
+		ORDER BY role_id ASC,position_id DESC)ML)
 		WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
 		</select>
 		
 		
 		<!--상세 페이지 디테일-->
-		<select id="getMemberDetail" parameterType="MemberDTO" resultType="Map">
-		SELECT M.*,D.name DNAME,P.name PNAME,A.name ANAME,A.ORI_NAME AORINAME FROM DEPARTMENT D 
-		JOIN MEMBER M on(D.id = M.DEPARTMENT_ID)
+		<select id="getMemberDetail" parameterType="MemberDTO" resultMap="getDetailMemberResult">
+		SELECT M.*, A.name avatar_name ,P.name PNAME,D.name DNAME FROM member M 
+	 	LEFT JOIN avatar A ON (M.id = A.MEMBER_ID) 
 		JOIN POSITION P ON(M.POSITION_ID=P.id)
-		JOIN AVATAR A ON (M.id=A.MEMBER_ID)
-		WHERE M.EMAIL  = ${email}
+		JOIN DEPARTMENT D on(M.DEPARTMENT_ID=D.ID)
+		WHERE email = #{email}
 		</select>
+		<resultMap type="MemberDTO" id="getDetailMemberResult">
+		<id column="id" property="id"/>
+		<result column="rold_id" property="role_id"/>
+		<result column="company_id" property="company_id"/>
+		<result column="email" property="email"/>
+		<result column="password" property="password"/>
+		<result column="name" property="name"/>
+		<result column="department_id" property="department_id"/>
+		<result column="position_id" property="position_id"/>
+		<result column="phone" property="phone"/>
+		<association property="avatar" javaType="Avatar" >
+		<id column="id" property="id"/>
+		<result column="avatar_name" property="name"/>
+		<result column="ori_name" property="ori_name"/>
+		</association>
 		
-	
+		<association property="position" javaType="PositionDTO" >
+		<id column="id" property="id"/>
+		<result column="PNAME" property="name"/>
+		</association>
+		
+		<association property="department" javaType="DepartmentDTO">
+		<id column="id" property="id"/>
+		<result column="DNAME" property="name"/>
+		</association>
+		</resultMap> 
+		
+		
+			
 		<!--리스트 조회 디테일-->
 		<select id="getListDetail" parameterType="MemberDTO" resultType="MemberDTO">
 		SELECT * FROM member M WHERE email = #{email}	
 		</select>
 
 	
+		<!-- 사원 인사페이지에서 수정 -->
+		<update id="updateMember" parameterType="MemberDTO">
+		UPDATE member <set>
+		<if test="email != null and email != '' ">
+		email = #{email},</if>
+		<if test="name != null and name != '' ">
+		name = #{name},</if>
+		<if test="department_id != null and department_id != '' ">
+		department_id = #{department_id},</if>
+		<if test="position_id != null and position_id != '' ">
+		position_id = #{position_id},</if>
+		<if test="phone != null and phone != '' ">
+		phone = #{phone}</if>
+		</set>
+		WHERE id = #{id}
+		</update>
+		
+		
+		<!-- 사원 인사페이지에서 삭제 -->
+		<delete id="deleteMember" parameterType="MemberDTO">
+		DELETE member WHERE id = #{id}
+		</delete>
+
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		<!-- 사원 인사페이지에서 권한수정 사원으로 추가 -->
+		<update id="createMember" parameterType="MemberDTO">
+		UPDATE member SET role_id = 20 WHERE id = #{id}
+		</update>
 		
 
 

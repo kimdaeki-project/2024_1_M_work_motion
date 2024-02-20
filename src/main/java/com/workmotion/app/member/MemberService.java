@@ -33,14 +33,18 @@ public class MemberService {
 		
 	}
 	
-	public int setFileAdd (MemberDTO memberDTO,MultipartFile picture) throws Exception {
+	public void setFileAdd (MemberDTO memberDTO,MultipartFile picture) throws Exception {
 		String path = servletContext.getRealPath("resources/upload/member");
 		String fileName = fileManager.fileSave(path, picture);
 		Avatar avatar = new Avatar();
-		avatar.setMember_id(memberDTO.getId());
-		avatar.setName(fileName);
-		avatar.setOri_name(picture.getOriginalFilename());
-		return memberDAO.setFileAdd(avatar);
+		if(picture.isEmpty()) {
+			return;
+		}else {
+			avatar.setMember_id(memberDTO.getId());
+			avatar.setName(fileName);
+			avatar.setOri_name(picture.getOriginalFilename());	
+			memberDAO.setFileAdd(avatar);			
+		}
 	}
 	public void setFileDelete (MemberDTO memberDTO) throws Exception {
 		MemberDTO m = memberDAO.detailMember(memberDTO);

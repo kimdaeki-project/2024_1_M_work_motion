@@ -6,17 +6,39 @@
             <div class="col">
                 <div class="card shadow-lg border-0 rounded-lg ">
                     <div class="card-header"><h3 class="text-center font-weight-light my-4">My page</h3></div>
-                    <div class="card-body">
+                    
+                    <c:if test="${not empty dto.avatar}">
+                        <div>
+                            <img  src="${dto.avatar.name}">
+                        </div>
+                        
+                    </c:if>
+                        
+                    
+                        <div class="card-body">
 
-            			<c:if test="${not empty dto.avatar}">
-            				<div>
-            					<img  src="/resources/upload/member/${dto.avatar.name}">
-            				</div>
-            				
-            			</c:if>
-					
 
-                        <form action="/member/update" method="post" id="mypageFrm" enctype="multipart/form-data">
+                           
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="pw" type="password" name="pass" placeholder="현재비밀번호" />
+                                    <label for="pw">비밀번호 확인</label>
+                                    <div id="pwResult"></div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <button  id="pwCheckBtn" type="button" class="btn btn-primary">비밀번호 확인</button>
+                                </div>
+                          
+                        </div>
+                            
+                        
+                        
+                        
+                        
+                        
+                        <div class="card-body">
+
+
+                        <form action="/member/update" method="post"  id="updateFrm" enctype="multipart/form-data">
 							 <div class="form-floating mb-3">
                                 <input class="form-control" id="picture" type="file" name="picture" placeholder="name@example.com" />
                                 <label for="picture">사진추가</label>
@@ -27,25 +49,17 @@
                                 <label for="email">Email address</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="pw" type="password" name="password" placeholder="현재비밀번호" />
-                                <label for="pw">비밀번호 확인</label>
-                                <div id="pwResult"></div>
-                            </div>
-                            <div class="form-floating mb-3">
-                            <button  id="pwCheckBtn" type="button" class="btn btn-primary">비밀번호 확인</button>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="updatePw"  type="password" name="password" placeholder="비밀번호 변경" />
+                                <input  class="form-control" id="updatePw"  type="password" name="password" placeholder="비밀번호 변경" />
                                 <label for="updatePw">비밀번호 변경</label>
                             </div>
 
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="name" name="name" type="text" value="${dto.name}" placeholder="이름" />
-                                <label for="password">이름</label>
+                                <label for="name">이름</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="phone" name="phone" type="text" value="${dto.phone}" placeholder="번호" />
-                                <label for="password">핸드폰번호</label>
+                                <label for="phone">핸드폰번호</label>
                             </div>
                             <div>
                             <input type="hidden" name="id" value="${dto.id}">
