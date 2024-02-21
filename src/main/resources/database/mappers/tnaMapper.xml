@@ -7,13 +7,13 @@
 
 	<!--출근-->
 	<insert id="getinTna" parameterType="MemberDTO">
-	INSERT INTO tna VALUES(TNA_SEQ.NEXTVAL,SYSDATE,default,1,#{id},#{company_id})
+	INSERT INTO tna VALUES(TNA_SEQ.NEXTVAL,CURRENT_DATE,default,1,#{id},#{company_id})
 	</insert>
 	
 	<!--퇴근-->
 	<update id="getoutTna" parameterType="MemberDTO">
 	UPDATE tna
-	SET FINISH_TIME = SYSDATE
+	SET FINISH_TIME = CURRENT_DATE
 	WHERE MEMBER_ID = #{id}                
 	AND id = (SELECT MAX(id) FROM tna WHERE MEMBER_ID = #{id}) <!--서브쿼리 실행 -->
 	</update>
