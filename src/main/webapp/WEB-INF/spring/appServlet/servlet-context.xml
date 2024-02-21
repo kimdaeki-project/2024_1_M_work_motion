@@ -20,6 +20,11 @@
 	<interceptors>
 	<interceptor>
 			<mapping path="/hr/*"/>
+			<mapping path="/department/*"/>
+			<mapping path="/company/*"/>
+			<mapping path="/board/*"/>
+			<mapping path="/product/*"/>
+			<exclude-mapping path="/company/join"/>
 			<beans:ref bean="MemberInterceptor"/>
 	</interceptor>
 	</interceptors>
