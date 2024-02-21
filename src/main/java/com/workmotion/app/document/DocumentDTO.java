@@ -7,6 +7,7 @@ import com.workmotion.app.approval.ApprovalDTO;
 import com.workmotion.app.department.DepartmentDTO;
 import com.workmotion.app.document.file.DocumentFileDTO;
 import com.workmotion.app.member.MemberDTO;
+import com.workmotion.app.position.PositionDTO;
 import com.workmotion.app.referrer.ReferrerDTO;
 import com.workmotion.app.templete.TempleteDTO;
 
@@ -22,16 +23,39 @@ public class DocumentDTO {
 	private String period;
 	private String phone;
 	private Date deadline;
+	
 	private List<DocumentFileDTO> documentFileDTOs;
 	private List<ReferrerDTO> referrerDTOs;
 	private TempleteDTO templeteDTO;
 	private List<ApprovalDTO> approvalDTOs;
+	private MemberDTO memberDTO;	
+	private PositionDTO positionDTO;
+	private DepartmentDTO departmentDTO;
+	
 	
 
 	
 	
 
 	
+	public MemberDTO getMemberDTO() {
+		return memberDTO;
+	}
+	public void setMemberDTO(MemberDTO memberDTO) {
+		this.memberDTO = memberDTO;
+	}
+	public PositionDTO getPositionDTO() {
+		return positionDTO;
+	}
+	public void setPositionDTO(PositionDTO positionDTO) {
+		this.positionDTO = positionDTO;
+	}
+	public DepartmentDTO getDepartmentDTO() {
+		return departmentDTO;
+	}
+	public void setDepartmentDTO(DepartmentDTO departmentDTO) {
+		this.departmentDTO = departmentDTO;
+	}
 	public List<ApprovalDTO> getApprovalDTOs() {
 		return approvalDTOs;
 	}
