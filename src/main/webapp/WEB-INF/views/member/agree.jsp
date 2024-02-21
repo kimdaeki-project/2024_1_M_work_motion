@@ -4,6 +4,7 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="kr">
 	<head>
+		<base href="/" />
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Work Motion</title>
@@ -95,11 +96,10 @@ pageEncoding="UTF-8"%>
 
         </div>
         
-
+		
      <!-- Bootstrap JS -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="/resources/js/scripts.js"></script>
-	 <script src="/resources/js/member/agreeCheck.js"></script>
+    <script src="/resources/js/member/agreeCheck.js"></script>
     </body>
 </html>

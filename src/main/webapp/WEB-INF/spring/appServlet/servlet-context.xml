@@ -18,16 +18,10 @@
 	<!-- interceptor -->
 	<beans:bean class="com.workmotion.app.interceptor.MemberInterceptor" id="MemberInterceptor"></beans:bean>
 	<interceptors>
-		<interceptor>
-			<mapping path="/**"/>
-			<exclude-mapping path="/"/>
-			<exclude-mapping path="/company/join"/>
-			<exclude-mapping path="/member/login"/>
-			<exclude-mapping path="/member/agree"/>
-			<exclude-mapping path="/member/logout"/>
-			<exclude-mapping path="/member/join"/>
+	<interceptor>
+			<mapping path="/hr/*"/>
 			<beans:ref bean="MemberInterceptor"/>
-		</interceptor>
+	</interceptor>
 	</interceptors>
 
 	
