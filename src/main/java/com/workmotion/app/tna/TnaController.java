@@ -34,9 +34,7 @@ public class TnaController {
 		}
 		String [] br = sum.split(",");
 		memberDTO.setPhone(br[0]);
-		System.out.println(br[0]);
 		memberDTO.setPassword(br[1]);
-		System.out.println(br[1]);
 		List<Map<String,Object>> ar = tnaService.getTnaDetail(memberDTO);
 		memberDTO.setPassword(null);
 		model.addAttribute("dto",memberDTO);
@@ -65,7 +63,7 @@ public class TnaController {
 		}
 		model.addAttribute("page","/commons/result");
 		model.addAttribute("msg",msg);
-		model.addAttribute("path","/tna/my");
+		model.addAttribute("path","/");
 		return "index";
 	}
 	
@@ -81,7 +79,7 @@ public class TnaController {
 		
 		model.addAttribute("page","/commons/result");
 		model.addAttribute("msg",msg);
-		model.addAttribute("path","/tna/my");
+		model.addAttribute("path","/");
 		return "index";
 		
 	}

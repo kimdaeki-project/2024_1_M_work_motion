@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.workmotion.app.company.CompanyDTO;
+
 import javax.servlet.http.HttpSession;
 import java.util.StringTokenizer;
 
@@ -88,13 +90,30 @@ public class MemberController {
     }
 
     @PostMapping("join")
-    public String getjoin(MemberDTO memberDTO, Model model) throws Exception {
-        String hashpassword = BCrypt.hashpw(memberDTO.getPassword(), BCrypt.gensalt());
-        memberDTO.setPassword(hashpassword);
-        int result = memberService.getjoin(memberDTO);
-        memberService.setFileAdd(memberDTO);
-        System.out.println(memberDTO.getId());
-        return "member/login";
+    public String getjoin(MemberDTO memberDTO,Model model) throws Exception {
+        String hashpassword = BCrypt.hashpw(memberDTO.getPassword(), BCrypt.gensalt());//비밀번호 암호화
+        memberDTO.setPassword(hashpassword);						
+        String [] ar = memberDTO.getEmail().split("@");	//이메일 파싱
+        String sum = ar[1];
+        StringTokenizer br = new StringTokenizer(sum,".");
+        CompanyDTO companyDTO = new CompanyDTO();
+        companyDTO.setInfo(br.nextToken());
+        CompanyDTO cdto = memberService.companyIdFind(companyDTO); //그룹명으로 회사 아이디 검색
+        int result = 0;
+        if(cdto.getId() != null) {
+        	memberDTO.setCompany_id(cdto.getId());	
+        	result = memberService.getjoin(memberDTO);
+        	memberService.setFileAdd(memberDTO);
+        }else {
+        	result = 0;
+        }
+        String msg = "회원 가입 실패";
+        if(result>0) {
+        	msg ="회원 가입 성공";
+        }
+        model.addAttribute("msg",msg);
+        model.addAttribute("path","/member/login");
+        return "commons/result";
     }
 
     @GetMapping("join")

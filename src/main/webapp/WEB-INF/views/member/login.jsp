@@ -50,7 +50,9 @@ pageEncoding="UTF-8"%>
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="/member/agree">Need an account? Sign up!</a></div>
+                                        <div class="small"><a href="/member/agree">Sign Up</a>&nbsp&nbsp&nbsp
+                                        <a href="/company/join">Company Sign Up</a> </div>
+                                     
                                     </div>
                                 </div>
                             </div>

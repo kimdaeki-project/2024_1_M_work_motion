@@ -21,6 +21,7 @@
 		<interceptor>
 			<mapping path="/**"/>
 			<exclude-mapping path="/"/>
+			<exclude-mapping path="/company/join"/>
 			<exclude-mapping path="/member/login"/>
 			<exclude-mapping path="/member/agree"/>
 			<exclude-mapping path="/member/logout"/>

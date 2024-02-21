@@ -5,7 +5,11 @@
 
 <mapper namespace="com.workmotion.app.member.MemberDAO">
 
-
+	
+	<!--회원가입 그룹명 검색  -->
+	<select id="companyIdFind" parameterType="CompanyDTO" resultType="CompanyDTO">
+	SELECT * FROM COMPANY  WHERE INFO = #{info}
+	</select>
     <!-- 파일 삭제 -->
     <delete id="setFileDelete" parameterType="Avatar">
         DELETE avatar WHERE name = #{name}

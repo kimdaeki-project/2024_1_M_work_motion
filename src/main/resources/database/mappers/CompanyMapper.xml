@@ -43,8 +43,8 @@
         #{owner},
         #{phone_num},
         #{info},
-        SYSDATE,
-        #{customerkey}
+        CURRENT_DATE,
+        #{customerkey},1
         )
     </insert>
 
