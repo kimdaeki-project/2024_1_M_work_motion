@@ -25,6 +25,14 @@ public class DocumentService {
 	
 	@Autowired
 	private ServletContext servletContext;
+	
+	
+	//서류 자세히보기
+	public DocumentDTO getDetail(DocumentDTO documentDTO)throws Exception{
+		return documentDAO.getDetail(documentDTO);
+		
+	}
+	
 	//서류 저장 
 	public int createDocument(DocumentDTO documentDTO,MultipartFile[] file,String referrer,String approval)throws Exception{
 		

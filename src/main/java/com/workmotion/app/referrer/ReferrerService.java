@@ -17,9 +17,7 @@ public class ReferrerService {
 	private ReferrerDAO referrerDAO;
 	
 	public List<ReferrerDTO> getList(Pager pager)throws Exception{
-		
-		//System.out.println(pager.getMember_id());
-		
+						
 		pager.makeRow();
 		
 		Long totalCount = referrerDAO.getTotalCount(pager);

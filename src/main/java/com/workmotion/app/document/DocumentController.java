@@ -23,6 +23,16 @@ public class DocumentController {
 	@Autowired
 	private DocumentService documentService;
 	
+	@GetMapping("detail")
+	public String getDetail(DocumentDTO documentDTO,Model model)throws Exception{
+		documentDTO = documentService.getDetail(documentDTO);
+		model.addAttribute("dto",documentDTO);
+		model.addAttribute("page", "document/detail");
+		
+		return "index";
+		
+	}
+	
 	@GetMapping("list")
 	public String getDocumentList(HttpSession session,Model model,Pager pager)throws Exception{
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");

@@ -3,6 +3,7 @@ package com.workmotion.app.document;
 import java.sql.Date;
 import java.util.List;
 
+import com.workmotion.app.approval.ApprovalDTO;
 import com.workmotion.app.department.DepartmentDTO;
 import com.workmotion.app.document.file.DocumentFileDTO;
 import com.workmotion.app.member.MemberDTO;
@@ -24,12 +25,19 @@ public class DocumentDTO {
 	private List<DocumentFileDTO> documentFileDTOs;
 	private List<ReferrerDTO> referrerDTOs;
 	private TempleteDTO templeteDTO;
+	private List<ApprovalDTO> approvalDTOs;
 	
 
 	
 	
 
 	
+	public List<ApprovalDTO> getApprovalDTOs() {
+		return approvalDTOs;
+	}
+	public void setApprovalDTOs(List<ApprovalDTO> approvalDTOs) {
+		this.approvalDTOs = approvalDTOs;
+	}
 	public TempleteDTO getTempleteDTO() {
 		return templeteDTO;
 	}

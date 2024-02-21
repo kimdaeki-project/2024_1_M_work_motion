@@ -4,6 +4,43 @@
 		    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 		    
 <mapper namespace="com.workmotion.app.document.DocumentDAO">
+	
+	<!-- 서류 자세히보기  -->
+	<select id="getDetail" resultMap="detailResult">
+		SELECT * FROM DOCUMENT D
+			  LEFT JOIN DOCUMENT_FILE DF 
+			  ON (D.ID = DF.DOCUMENT_ID)
+			  LEFT  JOIN REFERRER R
+			  ON (D.ID = R.DOCUMENT_ID)
+			  LEFT JOIN APPROVAL A
+			  ON (D.ID = A.DOCUMENT_ID)
+			  WHERE D.ID = id=#{id}		
+	</select>
+	<resultMap type="DocumentDTO" id="detailResult">
+		<id column="ID" property="id"/>
+		<result column="TITLE" property="title"/>
+		<result column="CONTENT" property="content"/>
+		<result column="TEMPLETE_ID" property="templete_id"/>
+		<result column="CREATE_DT" property="create_dt"/>
+		<result column="MEMBER_ID" property="member_id"/>
+		<collection property="documentFileDTOs" javaType="List">
+			<id column="ID" property="id" />
+			<result column="DOCUMENT_ID" property="document_id"/>
+			<result column="NAME" property="name"/>
+			<result column="ORI_NAME" property="ori_name"/>			
+		</collection>
+		<collection property="referrerDTOs" javaType="List">
+			<id column="DOCUMENT_ID" property="document_id"/>
+			<id column="MEMBER_ID" property="member_id"/>
+		</collection>
+		<collection property="approvalDTOs" javaType="List">
+			<id column="ID" property="id"/>
+			<result column="DOCUMENT_ID" property="document_id"/>
+			<result column="APPROVAL_DT" property="approval_dt"/>
+			<result column="MEMBER_ID" property="member_id"/>
+		</collection>	
+	</resultMap>
+
 
 	<!-- 서류저장  -->	
   	<insert id="createDocument" parameterType="DocumentDTO">
