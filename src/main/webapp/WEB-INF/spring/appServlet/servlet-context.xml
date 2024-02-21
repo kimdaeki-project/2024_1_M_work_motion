@@ -25,26 +25,13 @@
 	<beans:bean
 		class="com.workmotion.app.interceptor.PaymentInterceptor" id="Payment"></beans:bean>
 	<interceptors>
-		<interceptor>
-			<mapping path="/**" />
-			
-			<exclude-mapping path="/member/login" />
-			<exclude-mapping path="/member/agree" />
-			<exclude-mapping path="/member/logout" />
-			<exclude-mapping path="/member/join" />
-			<beans:ref bean="MemberInterceptor" />
-		</interceptor>
+
 <!-- payment -->
 		<interceptor>
-			<mapping path="/**" />
-			<exclude-mapping path="/"/>
-			
-			<exclude-mapping path="/member/login" />
-			<exclude-mapping path="/member/agree" />
-			<exclude-mapping path="/member/logout" />
-			<exclude-mapping path="/member/join" />
-			<exclude-mapping path="/product/list"/>
-			
+			<mapping path="/department/*" />
+			<mapping path="/company/*" />
+			<mapping path="/board/*" />
+			<mapping path="/hr/*" />
 			<beans:ref bean="Payment" />
 		</interceptor>
 

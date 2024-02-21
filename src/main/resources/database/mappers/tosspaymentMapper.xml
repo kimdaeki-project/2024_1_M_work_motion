@@ -8,7 +8,7 @@
 	<insert id="createTossPayment" parameterType="TossPaymentDTO">
 		INSERT INTO
 		tosspayment
-		VALUES(tosspayment_seq.nextval,#{orderId},#{amount},#{paymentKey},#{company_id},SYSDATE,#{period})
+		VALUES(tosspayment_seq.nextval,#{orderId},#{amount},#{paymentKey},#{company_id},CURRENT_DATE,#{period})
 	</insert>
 
 	<select id="getTossPaymentDetail" resultType="TossPaymentDTO"

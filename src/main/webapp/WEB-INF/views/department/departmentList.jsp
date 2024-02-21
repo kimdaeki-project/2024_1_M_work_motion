@@ -3,7 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link href="/resources/js/board/boardStyle.css" rel="stylesheet" />
 
-<table class="table table-hover">
+<div style="height: 100px; text-align: center;" >
+<h1 style="height: 50px;"></h1>
+<h2>부서관리</h2>
+</div>
+<table class="table table-hover mt-3" style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
 	<thead>
 		<tr id="tr1">
 			<th>편집</th>
@@ -18,8 +22,8 @@
 			<tr>
 				<td class="tr"><input type="hidden" value="${dto.id}" name="id" class="id">
 					<input type="checkbox" class="checks"></td>
-				<th scope="row">${dto.id}</th>
-				<td class="listTitle"><a class="hihello" href="./departmentDetail?id=${dto.id}">${dto.name}</a></td>
+				<th class="tr">${dto.id}</th>
+				<td class="listTitle"><a class="hihello" href="./departmentDetail?id=${dto.id}&name=${dto.name}">${dto.name}</a></td>
 				<td class="tr">${dto.phone_num}</td>
 				<td class="tr"><a href="./departmentUpdate?id=${dto.id}"><button
 							type="button" class="btn btn-primary">부서수정</button></a></td>
@@ -28,7 +32,7 @@
 	</tbody>
 </table>
 <c:if test="${pager.lastNum > 1}">
-<nav aria-label="...">
+<nav aria-label="..." style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
 	<ul class="pagination">
 
 		<!-- 이전@@@@@@@@@@ -->
@@ -54,7 +58,7 @@
 
 <!-- 검색부분@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 <form action="./departmentList">
-	<div class="input-group mb-3">
+	<div class="input-group mb-3" style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
 		<input type="text" width="200px" name="search"
 			aria-label="Text input with dropdown button">
 		<button class="btn btn-outline-secondary" type="submit">찾기</button>
@@ -63,9 +67,9 @@
 
 
 <!-- 검색부분@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-<a href="./departmentCreate"><button type="button"
+<a href="./departmentCreate"><button type="button"  style=" margin-left: 70px;"
 		class="btn btn-success">부서 추가</button></a>
-<button type="button" id="deleteDepartment" class="btn btn-danger">부서
+<button type="button" id="deleteDepartment" class="btn btn-danger" >부서
 	삭제</button>
 <script src="/resources/js/board/list.js"></script>
 <script src="/resources/departmentjs/deletedepartment.js"></script>

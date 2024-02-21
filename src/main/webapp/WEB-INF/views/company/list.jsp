@@ -15,9 +15,9 @@ alert("구독 하셔야 이용가능합니다")
 location.href="/product/list"
 </script>
 </c:if> --%>
-<div style="height: 100px">
-
-<h1></h1>
+<div style="height: 100px; text-align: center;" >
+<h1 style="height: 50px;"></h1>
+<h2>회사 관리</h2>
 </div>
 <table class="table table-hover mt-3" style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
 	<thead>
