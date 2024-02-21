@@ -1,7 +1,12 @@
 const all = document.getElementById("all");
 const checks = document.getElementsByClassName("checks");
-const btn = document.getElementById("btn");
+const btn = document.getElementById("btn");  
 const abc = document.getElementsByClassName("abc");
+const fil1 = document.getElementById("fil1");
+const fil2 = document.getElementById("fil2");
+const fil3 = document.getElementById("fil3");
+
+
 //전체 동의
  all.addEventListener("click",()=>{
     let v = all.getAttribute("checked");
@@ -10,22 +15,17 @@ const abc = document.getElementsByClassName("abc");
         ch.checked = v;
     }
 
- })
+ });
 
 for(let che of checks){
     che.addEventListener("click",()=>{
-        let flag = true;
-        let flag2 = true;
-        for(let ched of checks){
-            if(!ched.checked){
-                flag = !flag;
-                break;
-            }
+        
+        if(this.checked== false){
+            all.checked = false;
+        }else if(checks!=false){
+            all.checked=true; 
         }
-        all.checked=flag;
-
-
-    })
+    });
 }
 
 
@@ -47,6 +47,9 @@ btn.addEventListener("click",(e)=>{
         alert('필수 약관 동의해주세요');
     }
 
+    if(fil1.checked==true && fil2.checked==true && fil3.checked==true){
+        location.href="/member/join";
+    }
 
  });
 

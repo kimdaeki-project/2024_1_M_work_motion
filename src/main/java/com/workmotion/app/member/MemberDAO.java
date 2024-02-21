@@ -4,6 +4,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.workmotion.app.company.CompanyDTO;
+
 @Repository
 public class MemberDAO {
 
@@ -38,5 +40,7 @@ public class MemberDAO {
     public MemberDTO emailCheck(MemberDTO memberDTO) throws Exception {
         return sqlSession.selectOne(NAMESPACE + "emailCheck", memberDTO);
     }
-
+    public CompanyDTO companyIdFind(CompanyDTO companyDTO)throws Exception {
+    	return sqlSession.selectOne(NAMESPACE+"companyIdFind",companyDTO);
+    }
 }

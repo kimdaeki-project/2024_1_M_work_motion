@@ -19,7 +19,6 @@ public class MemberInterceptor extends HandlerInterceptorAdapter{
 			if(obj != null) {
 				return true; 
 			}else {
-				System.out.println("로그인 한 사람만 가능한 경로 입니다");
 				request.setAttribute("msg","로그인이 필요한 서비스 입니다");
 				request.setAttribute("page","commons/result");
 				request.setAttribute("path","/member/login");

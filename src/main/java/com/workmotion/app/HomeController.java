@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Handles requests for the application home page.
  */
@@ -22,11 +24,15 @@ public class HomeController {
      * Simply selects the home view to render by returning its name.
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String home(Locale locale, Model model) {
+    public String home(Locale locale, Model model,HttpSession session) {
         logger.info("Welcome home! The client locale is {}.", locale);
+        if(session.getAttribute("member") != null) {
+        	model.addAttribute("page", "home");        	
+        	return "index";
+        }else {
+        	return "/member/login";
+        }
 
-        model.addAttribute("page", "home");
-        return "index";
     }
 
 }

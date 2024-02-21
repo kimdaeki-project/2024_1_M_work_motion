@@ -1,6 +1,7 @@
 package com.workmotion.app.member;
 
 
+import com.workmotion.app.company.CompanyDTO;
 import com.workmotion.app.util.FileManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,10 @@ public class MemberService {
     @Autowired
     private ServletContext servletContext;
 
-
+    public CompanyDTO companyIdFind(CompanyDTO companyDTO)throws Exception {
+    	return memberDAO.companyIdFind(companyDTO);
+    }
+    
     public MemberDTO getlogin(MemberDTO memberDTO) throws Exception {
         MemberDTO m = memberDAO.detailMember(memberDTO);
         return m;
