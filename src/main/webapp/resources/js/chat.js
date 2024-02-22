@@ -151,6 +151,7 @@ async function getMessage() {
             Page
     );
     const data = await response.json();
+    console.log(data);
     if (response.status == 200) {
         return data;
     }
@@ -229,7 +230,7 @@ function createSendMessage(message) {
             </p>
         </div>
         <img
-            src="https://bootdey.com/img/Content/avatar/avatar5.png"
+            src="${message.sender.avatar.name}"
             alt="avatar 1"
             style="width: 45px; height: 100%"
         />
@@ -244,7 +245,7 @@ function createReceiveMessage(message) {
         class="d-flex flex-row justify-content-start"
     >
         <img
-            src="https://bootdey.com/img/Content/avatar/avatar5.png"
+            src="${message.sender.avatar.name}"
             alt="avatar 1"
             style="width: 45px; height: 100%"
         />

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,7 @@ public class ChatController {
     private CrewService crewService;
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
+
     private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 
     @GetMapping("/chat")
@@ -88,8 +90,12 @@ public class ChatController {
 
 
     @MessageMapping("/sendMessage")
-    public void sendMessage(MessageDTO message) throws Exception {
+    public void sendMessage(MessageDTO message, SimpMessageHeaderAccessor accessor) throws Exception {
+        MemberDTO sender = (MemberDTO) accessor.getSessionAttributes().get("member");
+
+
         int result = chatService.sendMessage(message);
+        message.setSender(sender);
         String destination = "/chat/messages/" + message.getRoom_name();
         simpMessagingTemplate.convertAndSend(destination, message);
     }

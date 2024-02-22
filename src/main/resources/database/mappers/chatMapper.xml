@@ -34,23 +34,25 @@
         </set>
         WHERE MEMBER_ID = #{member_id} AND ROOM_NAME = #{room_name}
     </update>
-    <select id="getMessage" parameterType="Map" resultType="MessageDTO">
+    <select id="getMessage" parameterType="Map" resultMap="getUserRooms">
         SELECT * FROM
         (
         SELECT
-        m.*
+        ROWNUM rn, m.*, mv.*
         FROM MESSAGE m
         LEFT JOIN ROOM_MEMBER rm ON m.ROOM_NAME = rm.ROOM_NAME AND rm.ROOM_NAME LIKE #{roomInfo.room_name}
+        LEFT JOIN MEMBER_VIEW mv ON m.SENDER_ID = mv.MEMBER_ID
         WHERE rm.MEMBER_ID = #{roomInfo.member_id} AND rm.RECENTLY_DT &lt;= m."TIME"
         UNION ALL
-        SELECT a.ID, a.MESSAGE, a.SENDER_ID, a.ROOM_NAME, a.TIME FROM
+        SELECT * FROM
         (
         SELECT ROWNUM rn, b.* FROM
         (
         SELECT
-        m.*
+        m.*, mv.*
         FROM MESSAGE m
         LEFT JOIN ROOM_MEMBER rm ON m.ROOM_NAME = rm.ROOM_NAME AND rm.ROOM_NAME LIKE #{roomInfo.room_name}
+        LEFT JOIN MEMBER_VIEW mv ON m.SENDER_ID = mv.MEMBER_ID
         WHERE rm.MEMBER_ID = #{roomInfo.member_id} AND rm.RECENTLY_DT &gt; m."TIME"
         ORDER BY m.TIME DESC
         ) b
