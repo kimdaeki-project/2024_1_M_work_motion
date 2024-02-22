@@ -20,13 +20,19 @@
     <beans:bean class="com.workmotion.app.interceptor.HrInterceptor" id="HrInterceptor"></beans:bean>
     <interceptors>
         <interceptor>
-            <mapping path="/hr/*"/>
-            <mapping path="/department/*"/>
-            <mapping path="/company/*"/>
-            <mapping path="/board/*"/>
-            <mapping path="/product/*"/>
-            <mapping path="/projects/*"/>
+            <!--            <mapping path="/hr/*"/>-->
+            <!--            <mapping path="/department/*"/>-->
+            <!--            <mapping path="/company/*"/>-->
+            <!--            <mapping path="/board/*"/>-->
+            <!--            <mapping path="/product/*"/>-->
+            <!--            <mapping path="/projects/*"/>-->
+            <mapping path="/**"/>
+            <exclude-mapping path="/member/login"/>
+            <exclude-mapping path="/member/logout"/>
+            <exclude-mapping path="/member/agree"/>
+            <exclude-mapping path="/member/join"/>
             <exclude-mapping path="/company/join"/>
+            <exclude-mapping path="/resources/**"/>
             <beans:ref bean="MemberInterceptor"/>
         </interceptor>
 
