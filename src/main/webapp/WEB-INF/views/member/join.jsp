@@ -21,9 +21,13 @@ pageEncoding="UTF-8"%>
 			.red{color: red;
 			}
             .green{color:green;}
+            .backGro{
+            background: #ebecf0;
+            }
 		</style>
+
 	  </head>
-    <body class="bg-primary">
+    <body class="backGro">
                       <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
