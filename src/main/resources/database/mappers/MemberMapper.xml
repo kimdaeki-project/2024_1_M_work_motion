@@ -5,18 +5,18 @@
 
 <mapper namespace="com.workmotion.app.member.MemberDAO">
 
-	
-	<!--회원가입시 회사에서 멤버검색 -->
-	<select id="getCompanyMember" parameterType="MemberDTO" resultType="MemberDTO">
-	SELECT * FROM MEMBER WHERE COMPANY_ID = #{company_id}
-	</select>
-	<!--회원가입 그룹명 검색  -->
-	<select id="companyIdFind" parameterType="CompanyDTO" resultType="CompanyDTO">
-	SELECT * FROM COMPANY  WHERE INFO = #{info}
-	</select>
+
+    <!--회원가입시 회사에서 멤버검색 -->
+    <select id="getCompanyMember" parameterType="MemberDTO" resultType="MemberDTO">
+        SELECT * FROM MEMBER WHERE COMPANY_ID = #{company_id}
+    </select>
+    <!--회원가입 그룹명 검색  -->
+    <select id="companyIdFind" parameterType="CompanyDTO" resultType="CompanyDTO">
+        SELECT * FROM COMPANY WHERE INFO = #{info}
+    </select>
     <!-- 파일 삭제 -->
     <delete id="setFileDelete" parameterType="Avatar">
-        DELETE avatar WHERE name = #{name}
+        DELETE avatar WHERE id = #{id}
     </delete>
 
     <!--파일추가-->
@@ -34,7 +34,7 @@
 
     <!-- 로그인 조회  -->
     <select id="detailMember" parameterType="MemberDTO" resultMap="getDetailMemberResult">
-        SELECT M.*, A.name avatar_name ,P.name PNAME,D.name DNAME FROM member M
+        SELECT M.*,A.id avatar_id, A.name avatar_name ,P.name PNAME,D.name DNAME FROM member M
         LEFT JOIN avatar A ON (M.id = A.MEMBER_ID)
         JOIN POSITION P ON(M.POSITION_ID=P.id)
         JOIN DEPARTMENT D on(M.DEPARTMENT_ID=D.ID)
@@ -51,7 +51,7 @@
         <result column="position_id" property="position_id"/>
         <result column="phone" property="phone"/>
         <association property="avatar" javaType="Avatar">
-            <id column="id" property="id"/>
+            <id column="avatar_id" property="id"/>
             <result column="avatar_name" property="name"/>
             <result column="ori_name" property="ori_name"/>
         </association>
