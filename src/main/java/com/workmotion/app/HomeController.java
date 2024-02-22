@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.workmotion.app.member.MemberDTO;
+
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
@@ -26,10 +28,17 @@ public class HomeController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Locale locale, Model model,HttpSession session) {
         logger.info("Welcome home! The client locale is {}.", locale);
-        if(session.getAttribute("member") != null) {
-        	model.addAttribute("page", "home");        	
-        	return "index";
-        }else {
+        MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+        if(memberDTO != null) {		//로그인 된사람 
+        	if(memberDTO.getRole_id() != 10L) {      //권한이 10이 아닌 사람
+        		model.addAttribute("page", "home");        	        		
+        		return "index";
+        	}else {								//권한이 10인 사람
+        		model.addAttribute("msg","아직 승인이 되지 않았습니다");
+        		model.addAttribute("path","/member/login");
+        		return "commons/result";	
+        	}
+        }else {						//로그인이 안된 사람
         	return "/member/login";
         }
 

@@ -76,8 +76,7 @@ public class MemberController {
             if (BCrypt.checkpw(memberDTO.getPassword(), m.getPassword())) {
                 m.setPassword(null);
                 session.setAttribute("member", m);
-                model.addAttribute("page", "home");
-                return "index";
+                return "redirect:/";
             } else {
                 //비번이 다른경우
                 model.addAttribute("msg", "비밀번호를 확인해주세요");

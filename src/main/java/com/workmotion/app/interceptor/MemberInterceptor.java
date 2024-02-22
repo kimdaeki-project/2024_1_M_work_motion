@@ -17,9 +17,17 @@ public class MemberInterceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 			HttpSession session = request.getSession();
-			Object obj = (MemberDTO)session.getAttribute("member");
-			if(obj != null) {
-				return true; 
+			MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+			if(memberDTO != null) {  //로그인 여부
+				if(memberDTO.getRole_id()== 20L||memberDTO.getRole_id()==30L||memberDTO.getRole_id()==40L) {
+					return true; 				
+				}else {				//권한 승인 받지 못한 회원	
+					request.setAttribute("msg","회원 승인이 안되었습니다.");
+					request.setAttribute("path","/member/login");
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/commons/result.jsp");
+					rd.forward(request, response);
+					return false;
+				}
 			}else {
 				request.setAttribute("msg","로그인이 필요한 서비스 입니다");
 				request.setAttribute("path","/member/login");
