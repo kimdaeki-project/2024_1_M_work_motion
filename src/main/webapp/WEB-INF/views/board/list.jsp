@@ -1,0 +1,70 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link href="/resources/js/board/boardStyle.css" rel="stylesheet" />
+
+<table class="table table-hover">
+	<thead>
+		<tr id="tr1">
+			<th scope="col">No</th>
+			<th scope="col">Title</th>
+			<th scope="col">Views</th>
+			<th scope="col">Date</th>
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach items="${list}" var="dto">
+
+			<tr>
+				<td class="tr">${dto.ID}</td>
+				<td class="listTitle"><a id="${dto.ID}" class="hihello"
+					href="./detail?id=${dto.ID}&category_ID=${dto.CATEGORY_ID}">${dto.TITLE}</a></td>
+				<td class="tr"><i class="fa-solid fa-eye"></i> ${dto.VIEWS}</td>
+				<td class="tr">${dto.CREATE_DT}</td>
+			</tr>
+
+		</c:forEach>
+	</tbody>
+</table>
+
+<c:if test="${pager.lastNum >= 1}">
+	<nav aria-label="...">
+		<ul class="pagination">
+
+			<!-- 이전@@@@@@@@@@ -->
+			<c:if test="${!pager.start} ">
+				<li class="page-item"><a class="page-link"
+					href="./list?page=${pager.startNum-1}&search=${pager.search}&id=${category_id}">Previous</a></li>
+			</c:if>
+
+			<!-- 번호@@@@@@@@@@@@ -->
+			<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">
+				<li class="page-item"><a class="page-link"
+					href="./list?page=${i}&search=${pager.search}&id=${category_id}">${i}</a></li>
+			</c:forEach>
+			<!-- 다음@@@@@@@@@@@@@@@ -->
+
+			<c:if test="${!pager.last}">
+				<li class="page-item"><a class="page-link"
+					href="./list?page=${pager.lastNum+1}&search=${pager.search}&id=${category_id}">Next</a></li>
+			</c:if> &nbsp;
+			<!-- 검색부분@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+			<form action="./list" >
+				<div class="input-group mb-3">
+					<input type="text" width="200px" name="search"> <input
+						type="hidden" width="200px" value="${category_id}" name="id">
+					<button class="btn btn-outline-secondary" type="submit">찾기</button>
+				</div>
+			</form>
+		</ul>
+	</nav>
+</c:if>
+
+
+
+
+<a href="./create?id=${category_id}"><button class="btn btn-success">글쓰기</button></a>
+<script src="https://kit.fontawesome.com/3a9643202c.js"
+	crossorigin="anonymous"></script>
+<script src="/resources/js/board/list.js"></script>
+
