@@ -17,9 +17,9 @@ public class MemberInterceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 			HttpSession session = request.getSession();
-			MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-			if(memberDTO != null) {  //로그인 여부
-				if(memberDTO.getRole_id()== 20L||memberDTO.getRole_id()==30L||memberDTO.getRole_id()==40L) {
+			MemberDTO m = (MemberDTO)session.getAttribute("member");
+			if(m != null) {  //로그인 여부
+				if(m.getRole_id()== 20L||m.getRole_id()==30L||m.getRole_id()==40L||m.getRole_id()==50L) {
 					return true; 				
 				}else {				//권한 승인 받지 못한 회원	
 					request.setAttribute("msg","회원 승인이 안되었습니다.");

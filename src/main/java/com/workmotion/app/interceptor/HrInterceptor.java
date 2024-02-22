@@ -17,7 +17,7 @@ public class HrInterceptor extends HandlerInterceptorAdapter{
 			throws Exception {
 			HttpSession session = request.getSession();
 			MemberDTO m = (MemberDTO)session.getAttribute("member");
-			if(m.getRole_id()==30L ||m.getRole_id()==40L) {
+			if(m.getRole_id()==30L ||m.getRole_id()==40L||m.getRole_id()==50L) {
 				return true;
 			}else {
 				request.setAttribute("msg","권한이 필요합니다.");
