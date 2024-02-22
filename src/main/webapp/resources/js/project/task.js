@@ -288,26 +288,38 @@ const articleCallback = (entries, observer) => {
             console.log(articlePage);
             articlePage++;
             observer.unobserve($articleEnd);
-            loadArticle();
+            loadArticle(articlePage);
         }
     });
 };
 const articleObserver = new IntersectionObserver(articleCallback, options);
 
 //아티클 로딩
-async function loadArticle() {
-    console.log("Loading article");
-    const response = await fetch(
-        `/v1/projects/${project_id}/articles?page=` + articlePage
-    );
+async function loadArticle(page) {
+    let response;
+    if (page != undefined) {
+        response = await fetch(
+            `/v1/projects/${project_id}/articles?page=` + page
+        );
+    } else {
+        response = await fetch(`/v1/projects/${project_id}/articles`);
+    }
+
     const data = await response.json();
     const article = document.getElementById("article");
-    article.innerHTML += createArticle(data);
+    console.log(data, articlePage);
+    if (page != undefined) {
+        article.innerHTML += createArticle(data);
+    } else {
+        article.innerHTML = createArticle(data);
+        articlePage = 1;
+    }
 
     $articleEnd = $articleResult.children[$articleResult.children.length - 2];
     if (data.length < 10) return;
     articleObserver.observe($articleEnd);
 }
+
 //아티클 마크업 생성
 function createArticle(articles) {
     let html = "";
