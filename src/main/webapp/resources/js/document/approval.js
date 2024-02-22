@@ -8,19 +8,30 @@ let a_save_name = [];
 let save_department_name = [];
 
 let a_count = 0;
-let a_max = 3;
+const a_max = 3;
+
+let nextIndex = 0;
+let usedIndices = []; //사용된 인덱스 추적하는 배열 
 
 const a_check = document.getElementsByClassName("checkbox_save");
 let approval_update = document.getElementById("approval-update");
 
 const approval_list = document.getElementById("approval-list");
 
+// //결재자 구분 칸
+// const nameId0 = document.getElementById("approval-name0").getAttribute("data-name-id");
+// const departmentId0 = document.getElementById("approvla-department-name0").getAttribute("data-department-id");
+
+// const nameId1 = document.getElementById("approval-name1").getAttribute("data-name-id");
+// const departmentId1 = document.getElementById("approvla-department-name1").getAttribute("data-department-id");
+
+// const nameId2 = document.getElementById("approval-name2").getAttribute("data-name-id");
+// const departmentId2 = document.getElementById("approvla-department-name2").getAttribute("data-department-id");
+
 
 
 //모달창 
 a_modal.addEventListener("click", function (e) {
-    console.log(a_save[0]);
-    console.log(a_save[1]);
 
     if (e.target.classList.contains("modal-btn")) {
 
@@ -29,7 +40,7 @@ a_modal.addEventListener("click", function (e) {
         }).then(r => r.text())
             .then((r) => {
 
-                am.innerHTML = r;                
+                am.innerHTML = r;
 
             })
     }
@@ -76,15 +87,55 @@ am.addEventListener("click", (e) => {
             });
     }
 
+
+
     //체크박스 체크하면 멤버ID 저장
-    if (e.target.classList.contains("member_id")) {        
+    if (e.target.classList.contains("member_id")) {
+
         if (e.target.checked) {
-            //member id 값 배열에 저장              
+            if (a_count >= a_max) {
+                alert("결재자는 최대 3명입니다.")
+                e.target.checked = false;
+                return;
+            }
+
+            function getNextIndex() {
+
+                if (usedIndices.length === 3) {
+                    // 모든 인덱스가 사용되었으면 종료
+                    return -1;
+                }
+                for (let i = 0; i < 3; i++) {
+                    if (!usedIndices.includes(i)) {
+                        usedIndices.push(i);
+                        return i;
+                    }
+                }
+            }
+            // 사용된 인덱스를 초기화
+            function resetUsedIndices() {
+                usedIndices = [];
+            }
+
+            //member id 값 배열에 저장
             a_save.push(e.target.getAttribute("data-referrer-id"));
-            a_save_name.push(e.target.getAttribute("data-member-name"));
-            save_department_name.push(e.target.getAttribute("data-department-name"));
+
+            let memberName = e.target.getAttribute("data-member-name").split(",");
+            let departmentName = e.target.getAttribute("data-department-name").split(",");
             
-            console.log(a_save);
+            for (let i = 0; i < memberName.length; i++) {
+                let currentIndex = getNextIndex(); // 0, 1, 2 중 하나를 반복
+                let dataString = memberName + "," + currentIndex;
+                a_save_name.push(dataString);
+
+                let dataString2 = departmentName + "," + currentIndex;
+                save_department_name.push(dataString2);
+
+            }
+            a_count++;
+
+            console.log(a_save_name);
+            console.log(save_department_name);
 
         } else {
             for (let i = 0; i < a_save.length; i++) {
@@ -93,78 +144,43 @@ am.addEventListener("click", (e) => {
                     a_save_name.splice(i, 1);
                     save_department_name.splice(i, 1);
                     i--;
-                    console.log(a_save);
-
-                    document.getElementById("sign_del").remove();
                     a_count--;
 
+                    console.log(a_save_name);
+                    console.log(save_department_name);
                 }
             }
         }
+
     }
+
 });
 
 
-let a_idx = 0;
-approval_update.addEventListener("click", function () {
 
-    if (a_count >= a_max) {
-        alert("결재자는 최대 3명입니다.")
-        return;
+approval_update.addEventListener("click", function (e) {
+
+
+    for (let i = 0; i < a_save_name.length; i++) {
+        // 이름 요소에 값을 설정
+        let nameElement = document.getElementById("approval-name" + (i + 1));
+        if (nameElement) {
+            nameElement.textContent = a_save_name[i];
+        }
+
+        // 부서 요소에 값을 설정
+        let departmentElement = document.getElementById("approvla-department-name" + (i + 1));
+        if (departmentElement) {
+            departmentElement.textContent = save_department_name[i];
+        }
+        console.log(a_save_name[i]);
     }
-    a_count++;
-    a_idx++;
 
-    // "a_save" 배열의 길이만큼 span 요소 생성
-    for (let i = 0; i < a_save.length; i++) {
-        
-        let signMemberWrap = document.createElement("span");
-        signMemberWrap.className = "sign_member_wrap";
-        signMemberWrap.id = "sign_del";
 
-        let signMember = document.createElement("span");
-        signMember.className = "sign_member";
-
-        let signRankWrap = document.createElement("span");
-        signRankWrap.className = "sign_rank_wrap";
-
-        let signRank = document.createElement("span");
-        signRank.className = "sign_rank";
-        signRank.id = "approvla-department-name";
-        signRank.textContent = save_department_name[i];
-
-        let signWrap = document.createElement("span");
-        signWrap.className = "sign_wrap";
-
-        let signName = document.createElement("span");
-        signName.className = "sign_name";
-        signName.id = "approval-name";
-        signName.textContent = a_save_name[i];
-
-        let signDateWrap = document.createElement("span");
-        signDateWrap.className = "sign_date_wrap";
-
-        let signDate = document.createElement("span");
-        signDate.className = "sign_date";
-        signDate.textContent = "결재";
-
-        // 생성한 요소들을 서로 연결
-        signRankWrap.appendChild(signRank);
-        signWrap.appendChild(signName);
-        signDateWrap.appendChild(signDate);
-
-        signMember.appendChild(signRankWrap);
-        signMember.appendChild(signWrap);
-        signMember.appendChild(signDateWrap);
-
-        signMemberWrap.appendChild(signMember);
-        // 생성한 span태그 자식으로 추가 
-        approval_list.appendChild(signMemberWrap);
-        
-    }
     let string = a_save.join(",");
     let input = document.getElementById("approval-member-id");
     input.value = string;
+
 
 });
 

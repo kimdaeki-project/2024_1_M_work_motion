@@ -325,7 +325,7 @@ prefix="c" %>
                                             >
                                             <a
                                                 class="nav-link"
-                                                href="/receiver/list"
+                                                href="/referrer/list"
                                                 >참조함</a
                                             >
                                         </nav>
