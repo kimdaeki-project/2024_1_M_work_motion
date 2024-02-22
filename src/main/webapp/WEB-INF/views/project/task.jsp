@@ -8,7 +8,6 @@ prefix="c" %>
     crossorigin="anonymous"
 />
 
-
 <!-- fullcalendar CDN -->
 <link
     href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css"
@@ -105,7 +104,12 @@ prefix="c" %>
 </style>
 <div id="container" class="container mt-3">
     <div class="section">
-        <div class="projectInfo mb-3" data-bs-projectId="${project.id}" data-bs-ownerId="${project.owner_id}" data-bs-memberId="${member.id}">
+        <div
+            class="projectInfo mb-3"
+            data-bs-projectId="${project.id}"
+            data-bs-ownerId="${project.owner_id}"
+            data-bs-memberId="${member.id}"
+        >
             <div class="top p-3">
                 <div class="head">
                     <span class="title"> ${project.name}</span>
@@ -237,7 +241,6 @@ prefix="c" %>
                                     value="${project.id}"
                                 /> -->
                                 <div id="task"></div>
-
                             </div>
                         </div>
                         <!-- end card-->
@@ -325,16 +328,8 @@ prefix="c" %>
                                             class="d-flex align-items-center pb-1"
                                             id="tooltips-container"
                                         >
-                                                
-                                            
                                             <img
-                                            
-                                            <c:if test="${crew.avatar.name != null}">
                                                 src="${crew.avatar.name}"
-                                            </c:if>
-                                            <c:if test="${crew.avatar.name == null}">
-                                                src="https://bootdey.com/img/Content/avatar/avatar5.png"
-                                            </c:if>
                                                 class="rounded-circle img-fluid avatar-md img-thumbnail bg-transparent"
                                                 alt=""
                                             />

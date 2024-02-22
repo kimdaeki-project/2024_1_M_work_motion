@@ -97,11 +97,7 @@ function createCrewList(crewList) {
                             id="tooltips-container"
                         >
                             <img
-                                src="${
-                                    crew.avatar != null
-                                        ? crew.avatar.name
-                                        : "https://bootdey.com/img/Content/avatar/avatar5.png"
-                                }"
+                                src="${crew.avatar.name}"
                                 class="rounded-circle img-fluid avatar-md img-thumbnail bg-transparent"
                                 alt=""
                             />
@@ -181,11 +177,7 @@ async function createProfile(member_id, is_owner) {
             <div class="card-body">
                 <div class="d-flex align-items-start">
                     <img
-                        src="${
-                            member.avatar != null
-                                ? member.avatar.name
-                                : "https://bootdey.com/img/Content/avatar/avatar5.png"
-                        }"
+                        src="${member.avatar.name}"
                         class="rounded-circle avatar-lg img-thumbnail"
                         alt="profile-image"
                     />
@@ -339,11 +331,7 @@ function createArticle(articles) {
                 >
                     <img
                         class='me-2 avatar-sm rounded-circle'
-                        src="${
-                            article.writer.avatar != null
-                                ? article.writer.avatar.name
-                                : "https://bootdey.com/img/Content/avatar/avatar5.png"
-                        }"
+                        src="${article.writer.avatar.name}"
                         alt='Generic placeholder image'
                     />
                 </a>
@@ -600,11 +588,7 @@ function createTask(tasks) {
                 >
                     <img
                         class='me-2 avatar-sm rounded-circle'
-                        src="${
-                            task.writer.avatar != null
-                                ? task.writer.avatar.name
-                                : "https://bootdey.com/img/Content/avatar/avatar5.png"
-                        }"
+                        src="${task.writer.avatar.name}"
                         alt='Generic placeholder image'
                     />
                 </a>
