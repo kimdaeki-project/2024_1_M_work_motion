@@ -8,11 +8,7 @@ prefix="c" %>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Work Motion</title>
-        <link
-            rel="stylesheet"
-            href="/resources/css/project/createTask.css"
-            type="text/css"
-        />
+
         <!-- Font -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -156,13 +152,13 @@ prefix="c" %>
                 class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
             >
                 <div class="input-group">
-                	<div>
-					<a class="btn btn-primary" href="/tna/in">출 근</a>
-                	</div>
-                	&nbsp
-                	<div>
-					<a class="btn btn-primary" href="/tna/out">퇴 근</a>
-                	</div>
+                    <div>
+                        <a class="btn btn-primary" href="/tna/in">출 근</a>
+                    </div>
+                    &nbsp
+                    <div>
+                        <a class="btn btn-primary" href="/tna/out">퇴 근</a>
+                    </div>
                 </div>
             </form>
             <!-- Navbar-->
@@ -415,10 +411,20 @@ prefix="c" %>
                                     <i class="fas fa-angle-down"></i>
                                 </div>
                             </a>
-                            <a class="nav-link collapsed" href="/product/list" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            <a
+                                class="nav-link collapsed"
+                                href="/product/list"
+                                data-bs-target="#collapseHR"
+                                aria-expanded="false"
+                                aria-controls="collapseHR"
+                            >
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
                                 구독서비스
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
                             </a>
                             <div class="sb-sidenav-menu-heading">Addons</div>
                             <a class="nav-link" href="charts.html">
