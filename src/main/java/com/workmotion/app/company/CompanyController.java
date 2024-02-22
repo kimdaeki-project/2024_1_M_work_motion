@@ -47,7 +47,10 @@ public class CompanyController {
 	}
 	@PostMapping("join")
 	public String joinCompany(CompanyDTO companyDTO,Model model) throws Exception {
-		int result = companyService.createCompany(companyDTO);
+		int result=0;
+			if(companyDTO!=null) {
+			result = companyService.createCompany(companyDTO);	
+			}
 		String msg = "회사 계정 등록 실패";
 		if(result>0) {
 			msg = "회사 계정 등록 성공";

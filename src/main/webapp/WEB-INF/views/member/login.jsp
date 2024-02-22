@@ -212,7 +212,7 @@ pageEncoding="UTF-8"%>
             .social-links div:active {
                 box-shadow: inset 1px 1px 2px #babebc, inset -1px -1px 2px #fff;
             }
-        </style>
+        </style>    
 
         </head>
     <body class="">
@@ -258,15 +258,15 @@ pageEncoding="UTF-8"%>
                   <span id="msg" style="color: red;">${msg}</span>
                   <input type="email" name="email" value="tmdrbs727@naver.com" placeholder="Email">
                   <input type="password" name="password" value="RLAtmdrbs1070@" placeholder="Password">
-                  <button class="form_btn">Login</button>
-                      <a href="/member/agree" type="button" >Sign Up</a>
-                      <a href="/company/join" type="button" >Company Sign Up</a>
+                  <button class="form_btn">Login</button><br>
+                  <span><a href="/member/agree" type="button" style="color: black" >Sign Up</a></span>
+                  <span><a href="/company/join" type="button" style="color: black">Company Sign Up</a> </span>
                 </form>
               </div>
               <div class="overlay-container">
                 <div class="overlay-left">
                   <h1>Go Login</h1>
-                  <p>To keep connected with us please login with your personal info</p>
+                  <p>thank you for coming , go login !!</p>
                   <button id="signIn" class="overlay_btn">Login</button>
                 </div>
                 <div class="overlay-right">
