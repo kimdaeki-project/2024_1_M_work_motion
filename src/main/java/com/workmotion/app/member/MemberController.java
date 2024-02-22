@@ -103,10 +103,11 @@ public class MemberController {
 				lastDt = lastDt.plusDays(tossPaymentDTO.getPeriod());
 				System.out.println("lastDt : "+lastDt);
 				Long getdate = ChronoUnit.MILLIS.between(startDt, lastDt);
-				System.out.println(getdate);
-				
-				if (tossPaymentDTO != null || getdate < 0) {
-					session.setAttribute("check", "yse");
+				System.out.println("getdate : "+getdate);
+				session.setAttribute("toss", tossPaymentDTO.getPeriod());
+				if (tossPaymentDTO != null || getdate > 0) {
+					session.setAttribute("check", "yes");
+					session.setAttribute("toss", tossPaymentDTO.getPeriod());
 				}
 				
 				}

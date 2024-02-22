@@ -3,6 +3,8 @@ package com.workmotion.app.board;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.workmotion.app.category.CategoryDTO;
+import com.workmotion.app.member.MemberDTO;
 import com.workmotion.app.util.Pager;
 
 @Controller
@@ -56,7 +59,19 @@ public class BoardController {
 	}
 	
 	@GetMapping("create")
-	public String create(CategoryDTO categoryDTO, Model model) throws Exception {
+	public String create(HttpSession session,CategoryDTO categoryDTO, Model model) throws Exception {
+		MemberDTO dto =(MemberDTO) session.getAttribute("member");
+		if(categoryDTO.getId() == 3 ) {
+			if(dto.getRole_id() == 40 || dto.getRole_id() == 30 ){
+			
+			}else {
+				model.addAttribute("msg","ㄲㅉ");
+				model.addAttribute("path", "/");
+				return "/commons/result";
+				
+			}
+		}		
+		
 		System.out.println("get create category_id  : "+categoryDTO.getId());
 		model.addAttribute("category", categoryDTO);
 		model.addAttribute("page", "board/create");
@@ -84,9 +99,20 @@ public class BoardController {
 	
 	
 	@GetMapping("update")
-	public String setUpdate(BoardDTO boardDTO, Model model) throws Exception {
+	public String setUpdate(HttpSession session,BoardDTO boardDTO, Model model) throws Exception {
 		boardDTO = boardService.getBoardDetail(boardDTO);
+		MemberDTO dto =(MemberDTO) session.getAttribute("member");
 		
+		if(boardDTO.getCategory_id() == 3 ) {
+			if(dto.getRole_id() == 40 || dto.getRole_id() == 30 ){
+			
+			}else {
+				model.addAttribute("msg","ㄲㅉ");
+				model.addAttribute("path", "/");
+				return "/commons/result";
+				
+			}		  	
+		}
 		model.addAttribute("update", boardDTO);
 		model.addAttribute("page", "board/update");
 		

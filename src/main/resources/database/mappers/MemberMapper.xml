@@ -34,7 +34,7 @@
     </select>
     <resultMap type="MemberDTO" id="getDetailMemberResult">
         <id column="id" property="id"/>
-        <result column="rold_id" property="role_id"/>
+        <result column="role_id" property="role_id"/>
         <result column="company_id" property="company_id"/>
         <result column="email" property="email"/>
         <result column="password" property="password"/>
