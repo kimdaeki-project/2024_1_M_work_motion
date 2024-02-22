@@ -30,7 +30,6 @@ prefix="c" %>
     #container {
         height: 100%;
         display: flex;
-        width: 100%;
         flex-direction: row;
         font-family: "Noto Sans KR", sans-serif;
     }
@@ -104,7 +103,7 @@ prefix="c" %>
         overflow: auto;
     }
 </style>
-<div id="container">
+<div id="container" class="container mt-3">
     <div class="section">
         <div class="projectInfo mb-3" data-bs-projectId="${project.id}" data-bs-ownerId="${project.owner_id}" data-bs-memberId="${member.id}">
             <div class="top p-3">
