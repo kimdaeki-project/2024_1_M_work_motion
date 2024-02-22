@@ -18,8 +18,13 @@ pageEncoding="UTF-8"%>
 	
 		 <!-- Jquery -->
 		 <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
-	  </head>
-    <body class="bg-primary">
+	  <style>
+      .backGro{
+      background: #ebecf0;
+      }
+    </style>
+    </head>
+    <body class="backGro">
                       <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>

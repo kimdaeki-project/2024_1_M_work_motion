@@ -28,7 +28,6 @@ public class MemberService {
     
     public MemberDTO getlogin(MemberDTO memberDTO) throws Exception {
     	memberDTO = memberDAO.detailMember(memberDTO);
-    	System.out.println(memberDTO.getRole_id());
         return memberDTO;
 
     }
