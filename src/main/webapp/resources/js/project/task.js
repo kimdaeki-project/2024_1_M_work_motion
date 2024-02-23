@@ -343,7 +343,10 @@ function createArticle(articles) {
                         )}</small>
                     </p>
                 </div>
-                <div class="dropdown float-end">
+                ${
+                    owner_id == member_id
+                        ? `
+                    <div class="dropdown float-end">
                     <a
                         href="#"
                         class="dropdown-toggle arrow-none card-drop"
@@ -355,22 +358,21 @@ function createArticle(articles) {
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
                         <a
-                            href="javascript:void(0); updateArticle(${
-                                article.id
-                            });"
+                            href="javascript:void(0); updateArticle(${article.id});"
                             class="dropdown-item"
                             >수정하기</a
                         >
                         <!-- item-->
                         <a
-                            href="javascript:void(0); deleteArticle(${
-                                article.id
-                            });"
+                            href="javascript:void(0); deleteArticle(${article.id});"
                             class="dropdown-item"
                             >삭제하기</a
                         >
                     </div>
-                </div>
+                </div>`
+                        : ""
+                }
+                
             </div>
             <div class="article_content" data-bs-id=${article.id}>
                 ${article.content}
@@ -625,11 +627,11 @@ function createTask(tasks) {
                         <li><button class="dropdown-item changeStatus" type="button">진행</button></li>
                     </ul>
                     </h3>
-                    
-                    
-                  
                     </div>
                 </div>
+                ${
+                    owner_id == member_id
+                        ? `
                 <div class="dropdown float-end">
                     <a
                         href="#"
@@ -642,9 +644,7 @@ function createTask(tasks) {
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
                         <a
-                            href="javascript:void(0); location.href='/tasks/setting?id=${
-                                task.id
-                            }'"
+                            href="javascript:void(0); location.href='/tasks/setting?id=${task.id}'"
                             class="dropdown-item"
                             >수정하기</a
                         >
@@ -656,6 +656,9 @@ function createTask(tasks) {
                         >
                     </div>
                 </div>
+                `
+                        : ""
+                }
             </div>
             <div class='mb-3'>
                     <h3 class='m-0'>${task.name}</h3>

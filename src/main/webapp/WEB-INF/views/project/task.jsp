@@ -36,11 +36,13 @@ prefix="c" %>
                 </div>
 
                 <div>
-                    <a
-                        class="btn btn-primary"
-                        href="/projects/setting?id=${project.id}"
-                        >설정</a
-                    >
+                    <c:if test="${owner.id == member.id}">
+                        <a
+                            class="btn btn-primary"
+                            href="/projects/setting?id=${project.id}"
+                            >설정</a
+                        >
+                    </c:if>
                     <a
                         class="btn btn-primary"
                         href="/tasks/create?id=${project.id}"
