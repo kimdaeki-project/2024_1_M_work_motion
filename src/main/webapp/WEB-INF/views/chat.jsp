@@ -22,6 +22,20 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     li {
         list-style-type: none;
     }
+    #messageBox {
+        padding-bottom: 1vh;
+    }
+    .small.text-muted {
+        font-size: 0.7rem !important;
+        overflow-wrap: break-word;
+    }
+    .message {
+        max-width: 40vh;
+        overflow-wrap: anywhere;
+    }
+    #messageInput {
+        overflow-wrap: break-word;
+    }
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,12 +64,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
             crossorigin="anonymous"
         ></script>
+        <script src="/resources/js/emoji-button3.0.3 min.js"></script>
     </head>
     <body data-bs-roomName="${room.name}" data-bs-memberId="${member.id}">
-
         <section class="h-100">
-
-            <div class="container h-100">
+            <div class="h-100">
                 <div class="row h-100">
                     <div class="col-md-12 h-100">
                         <div class="row h-100">
@@ -64,7 +77,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             >
                                 <!-- 대화 들어가는 곳 -->
                                 <div
-                                    class="pt-3 overflow-auto"
+                                    class="pt-3 overflow-auto ps-1 pe-1"
                                     data-mdb-perfect-scrollbar="true"
                                     style="
                                         position: relative;
@@ -72,33 +85,50 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                         height: 100%;
                                     "
                                     id="messageBox"
-                                >
-
-                                </div>
+                                ></div>
 
                                 <div
-                                    class="text-muted d-flex justify-content-start align-items-center pe-3 mt-2 mb-2"
+                                    class="text-muted d-flex justify-content-start align-items-center ps-1 pe-1 mt-2 mb-2"
                                 >
                                     <!-- 메시지 타이핑 -->
-                                    <input
+                                    <textarea
                                         type="text"
                                         class="form-control form-control-lg"
                                         id="messageInput"
                                         placeholder="Type message"
-                                    />
-                                    <a class="ms-1 text-muted" href="#!"
+                                        style="height: 0.5rem; resize: none"
+                                    ></textarea>
+                                    <!-- <a
+                                        class="ms-1 text-muted ps-1"
+                                        id="attachButton"
+                                        href="#!"
                                         ><i class="fas fa-paperclip"></i
-                                    ></a>
-                                    <a class="ms-3 text-muted" href="#!"
+                                    ></a> -->
+                                    <form
+                                        id="frm"
+                                        enctype="multipart/form-data"
+                                    >
+                                        <input
+                                            type="file"
+                                            name="attach"
+                                            hidden="true"
+                                            id="attachInput"
+                                        />
+                                    </form>
+                                    <a
+                                        class="ps-2 text-muted"
+                                        id="emojiButton"
+                                        href="#!"
                                         ><i class="fas fa-smile"></i
                                     ></a>
                                     <!-- 전송버튼 -->
                                     <a
-                                        class="ms-3"
+                                        class="ms-2 pe-2"
                                         href="javascript:void(0);"
                                         id="sendMessageButton"
                                         ><i class="fas fa-paper-plane"></i
                                     ></a>
+                                    <div id="emoji-wrapper"></div>
                                 </div>
                             </div>
                         </div>
