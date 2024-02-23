@@ -19,11 +19,7 @@ public class CrewAPI {
     private CrewService crewService;
     @Autowired
     private MemberService memberService;
-    private MemberDTO memberDTO = new MemberDTO();
 
-    {
-        memberDTO.setId(15L);
-    }
 
     @PostMapping("{project_id}/crews")
     public ResponseEntity<?> addCrew(@PathVariable Long project_id, String member_ids) throws Exception {

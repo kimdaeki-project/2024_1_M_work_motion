@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -17,14 +18,11 @@ import java.util.List;
 public class ArticleAPI {
     @Autowired
     private ArticleService articleService;
-    private final MemberDTO memberDTO = new MemberDTO();
 
-    {
-        memberDTO.setId(15L);
-    }
 
     @PostMapping("{project_id}/articles")
-    public ResponseEntity<?> createArticle(ArticleDTO articleDTO) throws Exception {
+    public ResponseEntity<?> createArticle(ArticleDTO articleDTO, HttpSession session) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
         articleDTO.setWriter_id(memberDTO.getId());
         int result = articleService.createArticle(articleDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);

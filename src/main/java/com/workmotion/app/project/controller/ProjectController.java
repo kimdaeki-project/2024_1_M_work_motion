@@ -26,14 +26,11 @@ public class ProjectController {
     @Autowired
     private CrewService crewService;
     private final CustomResponse customResponse = new CustomResponse();
-    private final MemberDTO memberDTO = new MemberDTO();
 
-    {
-        memberDTO.setId(15L);
-    }
 
     @GetMapping("create")
-    public String createProject(Model model) throws Exception {
+    public String createProject(Model model, HttpSession session) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
         List<MemberDTO> memberDTOList = crewService.getAllMemberList(memberDTO);
         model.addAttribute("members", memberDTOList);
         model.addAttribute("member", memberDTO);
@@ -42,7 +39,8 @@ public class ProjectController {
     }
 
     @PostMapping("create")
-    public String createProject(ProjectDTO projectDTO, Model model) throws Exception {
+    public String createProject(ProjectDTO projectDTO, Model model, HttpSession session) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
         projectDTO.setOwner_id(memberDTO.getId());
 
         int result = projectService.createProject(projectDTO);
@@ -59,7 +57,9 @@ public class ProjectController {
     }
 
     @GetMapping("list")
-    public String getProjectList(Model model) throws Exception {
+    public String getProjectList(Model model, HttpSession session) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+
         model.addAttribute("myProjects", projectService.getMyProjectList(memberDTO));
         model.addAttribute("includeProjects", projectService.getProjectList(memberDTO));
         model.addAttribute("page", "project/index");
