@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/projects/*")
@@ -83,7 +84,8 @@ public class ProjectController {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
         projectDTO = projectService.getProjectDetail(projectDTO);
         model.addAttribute("project", projectDTO);
-        if (projectDTO.getOwner_id() != memberDTO.getId()) {
+        System.out.println(projectDTO.getOwner_id() + ":" + memberDTO.getId());
+        if (!Objects.equals(projectDTO.getOwner_id(), memberDTO.getId())) {
             customResponse.setRedirectUrl("/projects/detail?id=" + projectDTO.getId());
             customResponse.setMessage("권한 없음");
             model.addAttribute("response", customResponse);
@@ -97,9 +99,9 @@ public class ProjectController {
 
     @PostMapping("update")
     public String updateProject(Model model, ProjectDTO projectDTO, HttpSession session) throws Exception {
-        projectDTO = projectService.getProjectDetail(projectDTO);
+        ProjectDTO projectDetail = projectService.getProjectDetail(projectDTO);
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-        if (projectDTO.getOwner_id() != memberDTO.getId()) {
+        if (!Objects.equals(projectDetail.getOwner_id(), memberDTO.getId())) {
             customResponse.setRedirectUrl("/projects/detail?id=" + projectDTO.getId());
             customResponse.setMessage("권한 없음");
             model.addAttribute("response", customResponse);
@@ -119,7 +121,7 @@ public class ProjectController {
     public String deleteProject(Model model, ProjectDTO projectDTO, HttpSession session) throws Exception {
         projectDTO = projectService.getProjectDetail(projectDTO);
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
-        if (projectDTO.getOwner_id() != memberDTO.getId()) {
+        if (!Objects.equals(projectDTO.getOwner_id(), memberDTO.getId())) {
             customResponse.setRedirectUrl("/projects/detail?id=" + projectDTO.getId());
             customResponse.setMessage("권한 없음");
             model.addAttribute("response", customResponse);
