@@ -8,7 +8,7 @@ prefix="c" %>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Work Motion</title>
-
+        <link rel="icon" href="/resources/images/favicon.ico" />
         <!-- Font -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -132,6 +132,9 @@ prefix="c" %>
             }
             #memberContainer {
                 height: 54vh;
+            }
+            .nav-link.active {
+                color: black !important;
             }
         </style>
     </head>
