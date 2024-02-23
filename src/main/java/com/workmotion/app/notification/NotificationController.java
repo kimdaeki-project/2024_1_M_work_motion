@@ -1,10 +1,10 @@
-package com.workmotion.app.alarm;
+package com.workmotion.app.notification;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AlarmController {
+public class NotificationController {
     @Autowired
-    private AlarmService alarmService;
+    private NotificationService notificationService;
 }

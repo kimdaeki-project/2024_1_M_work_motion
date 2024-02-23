@@ -1,10 +1,10 @@
-package com.workmotion.app.alarm;
+package com.workmotion.app.notification;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AlarmService {
+public class NotificationService {
     @Autowired
-    private AlarmDAO alarmDAO;
+    private NotificationDAO notificationDAO;
 }

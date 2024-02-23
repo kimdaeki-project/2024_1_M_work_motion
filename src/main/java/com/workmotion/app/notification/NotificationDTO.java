@@ -1,14 +1,15 @@
-package com.workmotion.app.alarm;
+package com.workmotion.app.notification;
 
 import java.util.Date;
 
-public class AlarmDTO {
+public class NotificationDTO {
     private Long id;
     private String type_name;
     private Long member_id;
     private String content;
     private Date time;
-    private Date view_time;
+
+    private Integer is_read;
 
     public Long getId() {
         return id;
@@ -50,11 +51,11 @@ public class AlarmDTO {
         this.time = time;
     }
 
-    public Date getView_time() {
-        return view_time;
+    public Integer getIs_read() {
+        return is_read;
     }
 
-    public void setView_time(Date view_time) {
-        this.view_time = view_time;
+    public void setIs_read(Integer is_read) {
+        this.is_read = is_read;
     }
 }
