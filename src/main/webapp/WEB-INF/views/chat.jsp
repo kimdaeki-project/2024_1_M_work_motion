@@ -98,12 +98,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                         placeholder="Type message"
                                         style="height: 0.5rem; resize: none"
                                     ></textarea>
-                                    <!-- <a
+                                    <a
                                         class="ms-1 text-muted ps-1"
                                         id="attachButton"
                                         href="#!"
                                         ><i class="fas fa-paperclip"></i
-                                    ></a> -->
+                                    ></a>
                                     <form
                                         id="frm"
                                         enctype="multipart/form-data"

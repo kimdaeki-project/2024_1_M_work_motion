@@ -97,7 +97,6 @@ async function loadCrewList() {
 function createCrewList(crewList) {
     let html = "";
     for (crew of crewList) {
-        console.log(crew);
         html += `
                     <button
                     class="list-group-item list-group-item-action"
@@ -290,8 +289,6 @@ let $articleEnd;
 const articleCallback = (entries, observer) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
-            console.log("Intersecting");
-            console.log(articlePage);
             articlePage++;
             observer.unobserve($articleEnd);
             loadArticle(articlePage);
@@ -313,7 +310,6 @@ async function loadArticle(page) {
 
     const data = await response.json();
     const article = document.getElementById("article");
-    console.log(data, articlePage);
     if (page != undefined) {
         article.innerHTML += createArticle(data);
     } else {
@@ -336,6 +332,7 @@ function createArticle(articles) {
         }>
             <div class='d-flex align-items-start'>
                 <a
+                    class="memberProfileImage"
                     href="javascript:void(0);"
                     data-bs-toggle="modal"
                     data-bs-target="#profileModal"
@@ -358,7 +355,7 @@ function createArticle(articles) {
                     </p>
                 </div>
                 ${
-                    owner_id == member_id
+                    article.writer.id == member_id
                         ? `
                     <div class="dropdown float-end">
                     <a
@@ -422,6 +419,9 @@ function updateArticle(article_id) {
     const article = document.querySelector(
         `.taskArticle[data-bs-id='${article_id}']`
     );
+    const writer_id = article.firstElementChild
+        .querySelector(".memberProfileImage")
+        .getAttribute("data-bs-memberId");
     const wyswyg = document.querySelector(
         `.article_content[data-bs-id='${article_id}']`
     );
@@ -450,7 +450,6 @@ function updateArticle(article_id) {
         "updateArticleContent"
     );
     updateArticleContent.addEventListener("click", async function () {
-        console.log($(wyswyg).summernote("code"));
         const response = await fetch(
             `/v1/projects/${project_id}/articles/${article_id}`,
             {
@@ -460,6 +459,7 @@ function updateArticle(article_id) {
                 },
                 body: JSON.stringify({
                     content: $(wyswyg).summernote("code"),
+                    writer_id: writer_id,
                 }),
             }
         );
@@ -484,7 +484,6 @@ async function deleteArticle(id) {
             { method: "delete" }
         );
         const data = await response.json();
-        console.log(data);
         if (data == 1) {
             article.remove();
             alert("삭제 되었습니다.");
@@ -535,7 +534,6 @@ async function loadTask() {
     const changeStatus = document.getElementsByClassName("changeStatus");
     for (let i = 0; i < changeStatus.length; i++) {
         changeStatus[i].addEventListener("click", async function (e) {
-            console.log("change status ");
             const selectedEl = e.target.parentElement.parentElement;
             const taskId = selectedEl.getAttribute("data-bs-taskId");
             const selectedValue = e.target.innerText;
@@ -644,7 +642,7 @@ function createTask(tasks) {
                     </div>
                 </div>
                 ${
-                    owner_id == member_id
+                    task.writer.id == member_id
                         ? `
                 <div class="dropdown float-end">
                     <a
@@ -677,40 +675,59 @@ function createTask(tasks) {
             <div class='mb-3'>
                     <h3 class='m-0'>${task.name}</h3>
             </div>
-            ${
-                task.start != null && task.end != null
-                    ? `
-                <div class="mb-3">
-                    <h6 class='m-0'>일정</h6>
-                    <small>시작일: ${new Date(task.start).toLocaleString(
-                        "ko-KR"
-                    )}</small><br>
-                    <small>종료일: ${new Date(task.end).toLocaleString(
-                        "ko-KR"
-                    )}</small><br>
-                </div>
-                `
-                    : ""
-            }
+            <div class="mb-4">
+                ${task.content}
+            </div>
+            <div class="d-flex">
+                ${
+                    task.has_limit == 1
+                        ? `
+                    <div class="mb-3 w-50">
+                        <h6 class='m-0'>일정</h6>
+                        <small>시작일: ${new Date(task.start).toLocaleString(
+                            "ko-KR"
+                        )}</small><br>
+                        <small>종료일: ${new Date(task.end).toLocaleString(
+                            "ko-KR"
+                        )}</small><br>
+                    </div>
+                    `
+                        : ""
+                }
+                
+                ${
+                    task.task_member.length > 0
+                        ? `
+                    <div class="mb-3 w-50">
+                    <h6 class='m-0 mb-1'>담당자</h6>
+                    <small>${task.task_member
+                        .map((member) => {
+                            console.log(member);
+                            return `
+                            <a
+                                data-bs-toggle="modal"
+                                data-bs-target="#profileModal"
+                                data-bs-memberId="${member.id}"
+                                href="javascript: void(0);"
+                                onclick="createProfile(${member.id},
+                                ${member.id == owner_id ? true : false})">
+                                <span class="badge text-bg-primary mb-1">
+                                    <img src="${
+                                        member.avatar.name
+                                    }" class="rounded-circle" style="width:2vh; heigth:2vh; background-color:white;">
+                                    ${member.name}
+                                </span>
+                            </a>
+                            `;
+                        })
+                        .join(" ")}</small><br>
+                
+                    </div>`
+                        : ""
+                }
+            </div>
             
-            ${
-                task.task_member.length > 0
-                    ? `
-                <div class="mb-3">
-                <h6 class='m-0'>담당자</h6>
-                <small>${task.task_member
-                    .map(
-                        (member) =>
-                            `<span class="badge text-bg-primary">${member.name}</span>`
-                    )
-                    .join(" ")}</small><br>
-              
-                </div>`
-                    : ""
-            }
             
-            
-            ${task.content}
             <div class='mt-2'>
                 <a href='javascript: void(0);' class='btn btn-sm btn-link text-muted'>
                     <i class='mdi mdi-reply'></i> Reply
@@ -794,15 +811,12 @@ async function loadCalendar() {
         locale: "ko", // 한국어 설정
         eventAdd: function (obj) {
             // 이벤트가 추가되면 발생하는 이벤트
-            console.log(obj);
         },
         eventChange: function (obj) {
             // 이벤트가 수정되면 발생하는 이벤트
-            console.log(obj);
         },
         eventRemove: function (obj) {
             // 이벤트가 삭제되면 발생하는 이벤트
-            console.log(obj);
         },
         select: function (arg) {
             // 캘린더에서 드래그로 이벤트를 생성할 수 있다.

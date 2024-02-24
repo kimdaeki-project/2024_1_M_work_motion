@@ -18,7 +18,6 @@ const callback = (entries, observer) => {
     entries.forEach(async (entry) => {
         if (entry.isIntersecting) {
             const $result = document.querySelector("#messageBox");
-            console.log("Intersecting");
             Page++;
             observer.unobserve($end);
             const loadingElement = document.createElement("div");
@@ -115,7 +114,6 @@ sendMessageButton.addEventListener("click", function () {
 
 function sendMessage(value, type) {
     if (value.trim() != "" && value.length != 0) {
-        console.log(value);
         message = {
             sender_id: member_id,
             message: value,
@@ -137,7 +135,6 @@ function readMessage() {
 }
 const messageBox = document.getElementById("messageBox");
 stompClient.connect({}, function (frame) {
-    console.log("Connected: " + frame);
     stompClient.subscribe(
         "/chat/messages/" + room_name,
         function (outputMessage) {
@@ -225,7 +222,6 @@ function createSendMessage(message, element, type) {
     let show = true;
     let html = "";
     const prevMessage = getPrevMessageInfo(element, type);
-    console.log(prevMessage);
     if (
         prevMessage != null &&
         prevMessage?.name == message.sender.name &&
@@ -306,7 +302,6 @@ function createReceiveMessage(message, element, type) {
     let show = true;
     let html = "";
     const prevMessage = getPrevMessageInfo(element, type);
-    console.log(prevMessage);
     if (
         prevMessage != null &&
         prevMessage?.name == message.sender.name &&
@@ -421,7 +416,6 @@ picker.on("emoji", (emoji) => {
 });
 
 emojiButton.addEventListener("click", () => {
-    console.log("emoji");
     picker.togglePicker(document.getElementById("emoji-wrapper"));
 });
 
@@ -437,7 +431,6 @@ attachButton.addEventListener("click", () => {
             body: formData,
         });
         const data = await response.json();
-        console.log(data);
         for (let url of data) {
             sendMessage(url, "image");
         }

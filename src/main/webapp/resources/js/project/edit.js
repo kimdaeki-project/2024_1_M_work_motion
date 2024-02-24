@@ -19,9 +19,7 @@ deleteProjectButton.addEventListener("click", () => {
         form.submit();
     }
 });
-pillsMember.addEventListener("click", () => {
-    console.log("Project");
-});
+pillsMember.addEventListener("click", () => {});
 
 function createCrewList(memberList) {
     let html = "";
@@ -74,7 +72,6 @@ deleteButton.addEventListener("click", async function () {
         const member_id = checked[i].value;
         deleteMembers.push(member_id);
     }
-    console.log(deleteMembers);
     const response = await fetch(
         `/v1/projects/${project_id}/crews/` + deleteMembers.join(","),
         {

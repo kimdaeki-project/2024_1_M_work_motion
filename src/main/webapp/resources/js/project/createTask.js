@@ -204,7 +204,6 @@ function refreshPage() {
         }
     });
     charge.value = memberIdList.join(",");
-    console.log(memberIdList);
 }
 
 //summernote init

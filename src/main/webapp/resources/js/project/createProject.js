@@ -29,9 +29,7 @@ function checkInput() {
     }
 }
 
-pillsMember.addEventListener("click", () => {
-    console.log("Project");
-});
+pillsMember.addEventListener("click", () => {});
 
 function createMemberList(memberList) {
     let html = "";
@@ -119,5 +117,4 @@ function refreshPage() {
         .filter((member) => member.selected == true)
         .map((member) => member.id)
         .join(",");
-    console.log(crewInput.value);
 }

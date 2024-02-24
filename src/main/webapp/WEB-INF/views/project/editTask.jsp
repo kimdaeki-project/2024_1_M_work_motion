@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c" %>
-
+<link
+    rel="stylesheet"
+    href="/resources/css/project/createTask.css"
+    type="text/css"
+/>
 <div class="container mt-3">
     <form
         action="/tasks/update"
@@ -39,7 +43,6 @@ prefix="c" %>
         </div>
         <div class="mb-3">
             <label for="summernote" class="form-label">본문</label>
-            <input id="content" type="hidden" value="${task.content}" />
             <textarea id="summernote" name="content"></textarea>
         </div>
         <div class="mb-3">
@@ -180,3 +183,20 @@ prefix="c" %>
 </div>
 
 <script type="text/javascript" src="/resources/js/project/editTask.js"></script>
+<script>
+    //summernote init
+    $("#summernote").summernote({
+        placeholder: "내용을 입력해주세요.",
+        tabsize: 4,
+        height: 400,
+        toolbar: [
+            ["style", ["style"]],
+            ["font", ["bold", "underline", "clear"]],
+            ["color", ["color"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["table", ["table"]],
+            ["insert", ["link", "picture", "video"]],
+        ],
+    });
+    $("#summernote").summernote("code", `${task.content}`);
+</script>
