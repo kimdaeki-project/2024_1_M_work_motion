@@ -50,7 +50,21 @@ async function loadMembers() {
         acc[deptName].push(cur);
         return acc;
     }, {});
-    messengerMemberList.innerHTML = createChatMemberList(groupedByDepartment);
+    console.log(groupedByDepartment);
+    const sortedGroupedByDepartmentName =
+        Object.keys(groupedByDepartment).sort();
+    const sortedGroupedByDepartment = sortedGroupedByDepartmentName.map(
+        (departmentName) => {
+            return {
+                department: departmentName,
+                members: groupedByDepartment[departmentName],
+            };
+        }
+    );
+    console.log(sortedGroupedByDepartment);
+    messengerMemberList.innerHTML = createChatMemberList(
+        sortedGroupedByDepartment
+    );
 
     //아코디언 이벤트
     var accordionExamples = document.querySelectorAll(
@@ -195,7 +209,12 @@ function createChatRoomList(data) {
                     </div>
                     <div class="pt-1">
                     <p class="fw-bold mb-0">${room.sender.name}</p>
-                    <p class="small text-muted">${room.message}</p>
+                    ${
+                        room.type == "message"
+                            ? `<p class="small text-muted overflow-auto" style="width:20vh; text-overflow:ellipsis;">${room.message}</p>`
+                            : "<p class='small text-muted overflow-auto' style='width:20vh; text-overflow:ellipsis;'>사진을 보냈습니다.</p>"
+                    }
+                    
                     </div>
                 </div>
                 <div class="pt-1">
@@ -213,7 +232,7 @@ function createChatRoomList(data) {
 function createChatMemberList(groupedByDepartment) {
     let html = "";
     // groupedByDepartment 객체의 키와 값을 순회하여 출력하기
-    for (const [department, members] of Object.entries(groupedByDepartment)) {
+    for (const { department, members } of groupedByDepartment) {
         html += `
         <div class="" id="accordionExample">
             <div class="accordion-item">
@@ -224,7 +243,7 @@ function createChatMemberList(groupedByDepartment) {
                     <button class="accordion-button ps-3 pe-3 p-2 text-muted" type="button" data-bs-toggle="collapse" data-bs-target="#${department}" aria-expanded="true" aria-controls="${department}">
                         <div class="d-flex justify-content-between w-100">
                             <div>
-                            ${department} ${groupedByDepartment[department].length}
+                            ${department} ${members.length}
                             </div>
                             <i class="arrow-icon fa-solid fa-chevron-down"></i>
                         </div>

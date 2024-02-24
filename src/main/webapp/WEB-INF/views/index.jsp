@@ -541,13 +541,15 @@ prefix="c" %>
                                         aria-labelledby="home-tab"
                                     >
                                         <div class="d-flex flex-row w-100 p-3">
-                                            <img
-                                                src="${member.avatar.name}"
-                                                alt="avatar"
-                                                class="d-flex align-self-center me-3 rounded-4"
-                                                width="60"
-                                                height="60"
-                                            />
+                                            <a href="/member/mypage">
+                                                <img
+                                                    src="${member.avatar.name}"
+                                                    alt="avatar"
+                                                    class="d-flex align-self-center me-3 rounded-4"
+                                                    width="60"
+                                                    height="60"
+                                                />
+                                            </a>
                                             <div class="d-flex flex-column">
                                                 <p class="fw-bold mb-0">
                                                     ${member.name}
