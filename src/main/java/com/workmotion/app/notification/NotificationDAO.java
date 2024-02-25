@@ -12,7 +12,7 @@ import java.util.Map;
 public class NotificationDAO {
     @Autowired
     private SqlSession sqlSession;
-    private final String NAMESPACE = "com.workmotion.app.notification.dao.NotificationDAO.";
+    private final String NAMESPACE = "com.workmotion.app.notification.NotificationDAO.";
 
     public List<NotificationDTO> getNotification(MemberDTO memberDTO) throws Exception {
         return sqlSession.selectList(NAMESPACE + "getNotification", memberDTO);

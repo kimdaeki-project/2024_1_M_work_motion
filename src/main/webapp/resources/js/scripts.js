@@ -360,3 +360,74 @@ async function createChatProfile(member_id) {
         </div>
     `;
 }
+// const popoverTriggerList = document.querySelectorAll(
+//     '[data-bs-toggle="popover"]'
+// );
+// const popoverList = [...popoverTriggerList].map((popoverTriggerEl) => {
+//     console.log(popoverTriggerEl);
+//     return new bootstrap.Popover(popoverTriggerEl);
+// });
+// const popover = bootstrap.Popover.getOrCreateInstance(
+//     '[data-bs-toggle="popover"]'
+// );
+// popover.setContent({
+//     ".popover-body": $("#myPopoverContent"),
+// });
+$(function () {
+    $('[data-bs-toggle="popover"]').popover({
+        html: true,
+        content: function () {
+            let contentID = `
+            <div>
+                <div class="d-flex justify-content-between m-2">
+                    <div class="title">알림</div>
+                    <div class="small text-muted">
+                        <a href="#" class="link-secondary">모두 읽음</a>
+                    </div>
+                </div>
+                <div class="">
+                    <hr class="m-0" />
+                </div>
+                <div class="list-group p-1">
+                    <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <i class="fa-solid fa-message m-2 pe-3"></i>
+                        <div class="d-flex flex-column align-items-start">
+                            <div>경모님의 메시지 "뭐하고있냐"</div>
+                            <div class="small text-muted">3일전</div>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <i class="fa-solid fa-diagram-project  m-2 pe-3"></i>
+                        <div class="d-flex flex-column align-items-start">
+                            <div>워크모션 프로젝트에 참여되었습니다.</div>
+                            <div class="small text-muted">3일전</div>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <i class="fa-solid fa-bars-progress  m-2 pe-3"></i>
+                        <div class="d-flex flex-column align-items-start">
+                            <div>기능개발 업무에 배정되었습니다.</div>
+                            <div class="small text-muted">3일전</div>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <i class="fa-regular fa-calendar m-2 pe-3"></i>
+                        <div class="d-flex flex-column align-items-start">
+                            <div>프로젝트 마감 일정이 1일 남았습니다.</div>
+                            <div class="small text-muted">3일전</div>
+                        </div>
+
+                    </a>
+                </div>
+            </div>
+            `;
+            return $(contentID).html();
+        },
+    });
+});
+
+setInterval(async function () {
+    const response = await fetch("/v1/notifications");
+    const data = await response.json();
+    console.log(data);
+}, 5000);
