@@ -91,6 +91,20 @@ modal.addEventListener("click",function(e){
             .then((r) => {         
 
                 rm.innerHTML = r;
+                
+                for(let i=0; i<save.length; i++){                   
+                    
+                    for(let j=0; j<check.length; j++){
+                        
+                        if(save[i] === check[j].getAttribute('data-referrer-id')){
+                            check[j].checked = true;
+                        }              
+                        
+                        
+                    }
+                }   
+
+
             })
     }
 
@@ -115,19 +129,19 @@ rm.addEventListener("click", (e) => {
             .then((r) => {         
 
                 rm.innerHTML = r;
-
                 //체크박스 유지하기 
                 for(let i=0; i<save.length; i++){                   
-            
+                    
                     for(let j=0; j<check.length; j++){
-                  
-                    if(save[i] === check[j].getAttribute('data-referrer-id')){
-                        check[j].checked = true;                                       
-                    }              
-                          
+                        
+                        if(save[i] === check[j].getAttribute('data-referrer-id')){
+                            check[j].checked = true;
+                        }              
+                        
                         
                     }
-                }
+                }                
+                
             })
             //체크유무 확인 후 체크 
     }
@@ -157,8 +171,7 @@ rm.addEventListener("click", (e) => {
             //member id 값 배열에 저장             
             save.push(e.target.getAttribute("data-referrer-id"));
             save_name.push(e.target.getAttribute("data-member-name"));    
-            //체크하면 값 1로변경
-                                                  
+                                                              
         }else{             
             for(let i =0; i<save.length; i++){
                 if(save[i] === e.target.getAttribute("data-referrer-id") ){                    
