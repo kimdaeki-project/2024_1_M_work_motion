@@ -36,6 +36,23 @@ public class MemberController {
 	@Autowired
 	private TossPaymentService tossPaymentService;
 
+	
+	
+	@PostMapping("findId")
+	@ResponseBody
+	public String findId(MemberDTO memberDTO) throws Exception {
+		String msg ="" ;
+		System.out.println(memberDTO.getName());
+		System.out.println(memberDTO.getPhone());
+		if(memberDTO!=null) {
+			memberDTO = memberService.findId(memberDTO);
+			if(memberDTO !=null) {
+				msg = memberDTO.getEmail();				
+			}
+		}
+		return msg; 
+	}
+	
 	@ResponseBody
 	@PostMapping("pwCheck")
 	public int pwCheck(HttpSession session, String pass, MemberDTO memberDTO) throws Exception {
