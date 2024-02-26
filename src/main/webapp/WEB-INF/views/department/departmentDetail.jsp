@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<table class="table">
-	<thead>
-		<tr>
-			<th scope="col">#</th>
+<link href="/resources/js/board/boardStyle.css" rel="stylesheet" />
+
+<div style="height: 100px; text-align: center;" >
+<h1 style="height: 50px;"></h1>
+<h2>${department.name}</h2>
+</div>
+<table class="table table-hover" style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
+	<thead class="table table-hover mt-3" >
+		<tr id="tr1">
 			<th scope="col">사원번호</th>
 			<th scope="col">사원이름</th>
 			<th scope="col">사원이메일</th>
@@ -13,12 +18,11 @@
 	<tbody>
 		<tr>
 		</tr>
-		<c:forEach items="${detail}" var="dto" varStatus="status">
+		<c:forEach items="${detail}" var="dto" >
 			<tr>
-				<th scope="row">${status.count}</th>
-				<td>${dto.id}</td>
-				<td>${dto.name}</td>
-				<td>${dto.email}</td>
+				<td class="tr">${dto.id}</td>
+				<td class="tr">${dto.name}</td>
+				<td class="tr">${dto.email}</td>
 			</tr>
 		</c:forEach>
 	</tbody>
@@ -26,7 +30,7 @@
 
 <!-- 페이징@@@@@@@@@@@@@@@ -->
 <c:if test="${pager.lastNum > 1}">
-<nav aria-label="...">
+<nav aria-label="..." style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
 	<ul class="pagination">
 	
 		<!-- 이전@@@@@@@@@@ -->
@@ -50,8 +54,8 @@
 
 <!-- 검색@@@@@@@@@@@@@@@@ -->
 <form action="./departmentDetail">
-	<div class="input-group mb-3">
-		<input type="text" class="form-control" name="search"
+	<div class="input-group mb-3" style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
+		<input type="text" width="200px" name="search"
 			aria-label="Text input with dropdown button">
 			<input type="hidden" value="${member.department_id}" name="id">
 		<button class="btn btn-outline-secondary" type="submit">찾기</button>
@@ -59,6 +63,7 @@
 </form>
 
 <div>
-	<a href="./memberupdate?department_id=${member.department_id}"><button
-			type="button" class="btn btn-success">수정하기</button></a>
+	<a href="./memberupdate?department_id=${member.department_id}&department_name=${department.name}"><button
+			type="button" class="btn btn-success"  style=" margin-left: 70px;">수정하기</button></a>
 </div>
+<script src="/resources/js/board/list.js"></script>

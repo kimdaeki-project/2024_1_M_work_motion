@@ -8,9 +8,18 @@
 	</div>
 	<div class="mb-3">
 		<label for="content" class="form-label">게시판내용</label>
-		<textarea class="form-control" id="content" name="content"
+		<textarea id="summernote" class="form-control" id="content" name="content"
 			rows="3"></textarea>
 	</div>
 	<input type="hidden" name="category_id" value="${category.id}">
 	<button type="submit" class="btn btn-primary">등록하기</button>
 </form>
+
+<script>
+$('#summernote').summernote({
+	  height: 300,                 // set editor height
+	  minHeight: null,             // set minimum height of editor
+	  maxHeight: null,             // set maximum height of editor
+	  focus: true                  // set focus to editable area after initializing summernote
+	});
+</script>
