@@ -67,9 +67,11 @@
 
 
 <!-- 검색부분@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-<a href="./departmentCreate"><button type="button"  style=" margin-left: 70px;"
+<div class="d-flex justify-content-end">
+<a href="./departmentCreate" ><button type="button"  style=" margin-left: 70px;"
 		class="btn btn-success">부서 추가</button></a>
-<button type="button" id="deleteDepartment" class="btn btn-danger" >부서
+<button  type="button" id="deleteDepartment" class="btn btn-danger" >부서
 	삭제</button>
+	</div>
 <script src="/resources/js/board/list.js"></script>
 <script src="/resources/departmentjs/deletedepartment.js"></script>

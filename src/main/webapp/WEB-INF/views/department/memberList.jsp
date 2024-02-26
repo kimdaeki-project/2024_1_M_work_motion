@@ -33,7 +33,7 @@
 	</tbody>
 </table>
 <c:if test="${pager.lastNum > 1}">
-<nav aria-label="..." style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
+<nav aria-label="..." class="d-flex justify-content-center" style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
 	<ul class="pagination">
 
 		<!-- 이전@@@@@@@@@@ -->
@@ -56,13 +56,13 @@
 					href="./memberList?department_id=${member.department_id}&page=${pager.lastNum+1}&search=${pager.search}">Next</a></li>
 			</c:if>
 	</ul>
+
 </nav>
 </c:if>
 
-
 <!-- 검색@@@@@@@@@@@@@@@@ -->
-<form action="./memberList">
-	<div class="input-group mb-3" style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
+<form action="./memberList" class="d-flex justify-content-center">
+	<div class="input-group mb-3" style=" border: 1; margin-left: 70px; width:30vh">
 		<input type="text" width="200px" name="search"
 			aria-label="Text input with dropdown button">
 			 <input
@@ -71,6 +71,7 @@
 	</div>
 </form>
 
-
+<div class="d-flex justify-content-end">
 <button type="button" id="createbtn" class="btn btn-success" style=" margin-left: 70px;">추가하기</button>
+</div>
 <script src="/resources/departmentjs/createmember.js"></script>

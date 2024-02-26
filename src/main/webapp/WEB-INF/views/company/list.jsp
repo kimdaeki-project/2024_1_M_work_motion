@@ -45,7 +45,7 @@ location.href="/product/list"
 </table>
 
 <c:if test="${pager.lastNum > 1}">
-	<nav aria-label="..." style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
+	<nav aria-label="..." class="d-flex justify-content-center" style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
 		<ul class="pagination">
 
 			<!-- 이전@@@@@@@@@@ -->
@@ -73,14 +73,14 @@ location.href="/product/list"
 
 
 <!-- 검색@@@@@@@@@@@@@@@@ -->
-<form action="./list">
-	<div class="input-group mb-3" style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
+<form action="./list" class="d-flex justify-content-center">
+	<div class="input-group mb-3" style=" border: 1; margin-left: 70px; width:30vh">
 		<input type="text" width="200px" name="search"
 			aria-label="Text input with dropdown button">
 		<button class="btn btn-outline-secondary" type="submit">찾기</button>
 	</div>
 </form>
 
-<a href="./updateList"><button type="button" class="btn btn-primary" style=" margin-left: 70px;">수정하기</button></a>
+<a href="./updateList" class="d-flex justify-content-end"><button type="button" class="btn btn-primary" style=" margin-left: 70px;">수정하기</button></a>
 <script src="/resources/js/board/list.js"></script>
 
