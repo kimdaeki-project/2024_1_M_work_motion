@@ -89,4 +89,8 @@ public class ChatService {
     public List<MessageDTO> getUserRoom(MemberDTO memberDTO) throws Exception {
         return chatDAO.getUserRoom(memberDTO);
     }
+
+    public List<MemberDTO> getRoomUsers(RoomInfoDTO roomInfoDTO) throws Exception {
+        return chatDAO.getRoomUsers(roomInfoDTO);
+    }
 }

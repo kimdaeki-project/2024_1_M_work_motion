@@ -110,43 +110,50 @@ async function loadMembers() {
                 memberList[i].classList.add("selected");
                 return;
             }
-
-            let room_name = "";
-            if (Number(member_id) > Number(memberId)) {
-                room_name = memberId + "-" + member_id;
-            } else {
-                room_name = member_id + "-" + memberId;
-            }
-            const response = await fetch(
-                "/chat/getRoom?room_name=" +
-                    room_name +
-                    "&memberName=" +
-                    memberName +
-                    "&memberId=" +
-                    memberId
-            );
-            const data = await response.json();
-            if (response.status == 200) {
-                var popupWidth = 400;
-                var popupHeight = 700;
-
-                var popupX = window.screen.width / 2 - popupWidth / 2;
-                // 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
-
-                var popupY = window.screen.height / 2 - popupHeight / 2;
-                const popupWindow = window.open(
-                    "/chat?name=" + room_name,
-                    "",
-                    `toolbar=no, menubar=no,scrollbars=no,resizable=no, width=${popupWidth}, height=${popupHeight}, left=${popupX},top=${popupY}`
-                );
-                popupWindow.resizeTo(popupWidth, popupHeight);
-                popupWindow.onresize = (_) => {
-                    popupWindow.resizeTo(popupWidth, popupHeight);
-                };
-            }
+            openChatting({ memberId: memberId, memberName: memberName });
         });
     }
 }
+async function openChatting({ memberId, memberName, roomName }) {
+    let room_name = "";
+    let response, data;
+    if (!roomName) {
+        if (Number(member_id) > Number(memberId)) {
+            room_name = memberId + "-" + member_id;
+        } else {
+            room_name = member_id + "-" + memberId;
+        }
+        response = await fetch(
+            "/chat/getRoom?room_name=" +
+                room_name +
+                "&memberName=" +
+                memberName +
+                "&memberId=" +
+                memberId
+        );
+        data = await response.json();
+    } else {
+        room_name = roomName;
+    }
+    if (response?.status == 200 || roomName) {
+        var popupWidth = 400;
+        var popupHeight = 700;
+        var popupX = window.screen.width / 2 - popupWidth / 2;
+        // 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
+
+        var popupY = window.screen.height / 2 - popupHeight / 2;
+        const popupWindow = window.open(
+            "/chat?name=" + room_name,
+            "",
+            `toolbar=no, menubar=no,scrollbars=no,resizable=no, width=${popupWidth}, height=${popupHeight}, left=${popupX},top=${popupY}`
+        );
+        popupWindow.resizeTo(popupWidth, popupHeight);
+        popupWindow.onresize = (_) => {
+            popupWindow.resizeTo(popupWidth, popupHeight);
+        };
+    }
+}
+
 loadMessages();
 async function loadMessages() {
     const response = await fetch("/chat/getRooms");
@@ -373,61 +380,115 @@ async function createChatProfile(member_id) {
 // popover.setContent({
 //     ".popover-body": $("#myPopoverContent"),
 // });
+let popoverContentStart = `
+    <div class="d-flex justify-content-between m-2">
+        <div class="title">알림</div>
+        <div class="small text-muted">
+            <a href="#" class="link-secondary">모두 읽음</a>
+        </div>
+    </div>
+    <div class="" style="width:40vh">
+        <hr class="m-0" />
+    </div>
+    <div class="list-group p-1">
+`;
+let popoverContent = "";
+let popoverContentEnd = "</div>";
+let popoverHtml = document.createElement("div");
+popoverHtml.innerHTML = popoverContentStart;
 $(function () {
     $('[data-bs-toggle="popover"]').popover({
         html: true,
         content: function () {
-            let contentID = `
-            <div>
-                <div class="d-flex justify-content-between m-2">
-                    <div class="title">알림</div>
-                    <div class="small text-muted">
-                        <a href="#" class="link-secondary">모두 읽음</a>
-                    </div>
-                </div>
-                <div class="">
-                    <hr class="m-0" />
-                </div>
-                <div class="list-group p-1">
-                    <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-                        <i class="fa-solid fa-message m-2 pe-3"></i>
-                        <div class="d-flex flex-column align-items-start">
-                            <div>경모님의 메시지 "뭐하고있냐"</div>
-                            <div class="small text-muted">3일전</div>
-                        </div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-                        <i class="fa-solid fa-diagram-project  m-2 pe-3"></i>
-                        <div class="d-flex flex-column align-items-start">
-                            <div>워크모션 프로젝트에 참여되었습니다.</div>
-                            <div class="small text-muted">3일전</div>
-                        </div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-                        <i class="fa-solid fa-bars-progress  m-2 pe-3"></i>
-                        <div class="d-flex flex-column align-items-start">
-                            <div>기능개발 업무에 배정되었습니다.</div>
-                            <div class="small text-muted">3일전</div>
-                        </div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-                        <i class="fa-regular fa-calendar m-2 pe-3"></i>
-                        <div class="d-flex flex-column align-items-start">
-                            <div>프로젝트 마감 일정이 1일 남았습니다.</div>
-                            <div class="small text-muted">3일전</div>
-                        </div>
-
-                    </a>
-                </div>
-            </div>
-            `;
-            return $(contentID).html();
+            return popoverHtml;
         },
     });
 });
 
-setInterval(async function () {
+async function getNotifications() {
     const response = await fetch("/v1/notifications");
     const data = await response.json();
     console.log(data);
-}, 5000);
+}
+getNotifications();
+var socket = new SockJS("/websocket-example");
+var stompClient = Stomp.over(socket);
+stompClient.connect({}, function (frame) {
+    stompClient.subscribe(
+        "/notification/messages/" + member_id,
+        function (outputMessage) {
+            const message = JSON.parse(outputMessage.body);
+            message.content = JSON.parse(message.content);
+            let html = "";
+            console.log(message);
+            switch (message.type_name) {
+                case "MESSAGE": {
+                    html = createMessageNotificationHtml(message);
+                    break;
+                }
+                case "SCHEDULE": {
+                    html = createScheduleNotificationHtml(message);
+                    break;
+                }
+                case "PROJECT": {
+                    html = createProjectNotificationHtml(message);
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
+            prependNotifications(html);
+        }
+    );
+});
+
+function prependNotifications(html) {
+    let inner = "";
+    popoverContent = html + popoverContent;
+    inner = popoverContentStart;
+    inner += popoverContent;
+    inner += popoverContentEnd;
+
+    popoverHtml.innerHTML = inner;
+}
+
+function createMessageNotificationHtml(message) {
+    let html = "";
+    html = `
+    <button onclick="openChatting({roomName:'${message.content.targetRoom}'})" class="list-group-item list-group-item-action d-flex align-items-center">
+        <i class="fa-solid fa-message m-2 pe-3"></i>
+        <div class="d-flex flex-column align-items-start">
+            <div>${message.content.sender}님의 메시지 "${message.content.message}"</div>
+            <div class="small text-muted">방금</div>
+        </div>
+    </button>
+    `;
+    return html;
+}
+function createProjectNotificationHtml(message) {
+    let html = "";
+    html = `
+    <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
+        <i class="fa-solid fa-diagram-project  m-2 pe-3"></i>
+        <div class="d-flex flex-column align-items-start">
+            <div>워크모션 프로젝트에 참여되었습니다.</div>
+            <div class="small text-muted">3일전</div>
+        </div>
+    </a>
+    `;
+    return html;
+}
+function createScheduleNotificationHtml(message) {
+    let html = "";
+    html = `
+    <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
+        <i class="fa-regular fa-calendar m-2 pe-3"></i>
+        <div class="d-flex flex-column align-items-start">
+            <div>프로젝트 마감 일정이 1일 남았습니다.</div>
+            <div class="small text-muted">3일전</div>
+        </div>
+    </a>
+    `;
+    return html;
+}

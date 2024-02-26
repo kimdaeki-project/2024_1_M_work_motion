@@ -1,9 +1,13 @@
 package com.workmotion.app.chat;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.workmotion.app.chat.model.MessageDTO;
 import com.workmotion.app.chat.model.RoomDTO;
 import com.workmotion.app.chat.model.RoomInfoDTO;
 import com.workmotion.app.member.MemberDTO;
+import com.workmotion.app.notification.NotificationDTO;
+import com.workmotion.app.notification.NotificationMessage;
+import com.workmotion.app.notification.NotificationService;
 import com.workmotion.app.project.service.CrewService;
 import com.workmotion.app.util.Pager;
 import org.slf4j.Logger;
@@ -32,6 +36,9 @@ public class ChatController {
     private CrewService crewService;
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
+
+    @Autowired
+    private NotificationService notificationService;
 
     private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 
@@ -92,12 +99,30 @@ public class ChatController {
     @MessageMapping("/sendMessage")
     public void sendMessage(MessageDTO message, SimpMessageHeaderAccessor accessor) throws Exception {
         MemberDTO sender = (MemberDTO) accessor.getSessionAttributes().get("member");
+        RoomInfoDTO roomInfoDTO = new RoomInfoDTO();
+        roomInfoDTO.setMember_id(sender.getId());
+        roomInfoDTO.setRoom_name(message.getRoom_name());
+        List<MemberDTO> memberList = chatService.getRoomUsers(roomInfoDTO);
+        NotificationMessage notificationMessage = new NotificationMessage();
+        NotificationDTO notificationDTO = new NotificationDTO();
 
-
+        notificationMessage.setSender(sender.getName());
+        if (message.getType().equals("image")) notificationMessage.setMessage("이미지");
+        else notificationMessage.setMessage(message.getMessage());
+        notificationMessage.setTargetRoom(message.getRoom_name());
+        notificationDTO.setType_name("MESSAGE");
         int result = chatService.sendMessage(message);
         message.setSender(sender);
         String destination = "/chat/messages/" + message.getRoom_name();
         simpMessagingTemplate.convertAndSend(destination, message);
+        for (MemberDTO memberDTO : memberList) {
+            notificationDTO.setMember_id(memberDTO.getId());
+            destination = "/notification/messages/" + memberDTO.getId();
+            ObjectMapper mapper = new ObjectMapper();
+            notificationDTO.setContent(mapper.writeValueAsString(notificationMessage));
+            notificationService.addNotification(notificationDTO);
+            simpMessagingTemplate.convertAndSend(destination, notificationDTO);
+        }
     }
 
     @MessageMapping("/readMessage")

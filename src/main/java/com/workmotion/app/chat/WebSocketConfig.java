@@ -13,7 +13,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/chat");
+        registry.enableSimpleBroker("/chat", "/notification");
         registry.setApplicationDestinationPrefixes("/app");
         //해당 주소를 구독하고 있는 클라이언트들에게 메세지 전달
     }

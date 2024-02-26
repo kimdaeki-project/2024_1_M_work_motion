@@ -8,8 +8,8 @@
         SELECT * FROM NOTIFICATION WHERE MEMBER_ID = #{id} AND IS_READ = 0
     </select>
     <insert id="addNotification" parameterType="NotificationDTO">
-        INSERT INTO NOTIFICATION (ID, MEMBER_ID, TYPE_NAME, CONTENT, TIME, IS_READ)
-        VALUES (NOTIFICATION_SEQ.NEXTVAL, #{MEMBER_ID}, #{TYPE_NAME}, #{CONTENT}, CURRENT_TIME, 0}
+        INSERT INTO NOTIFICATION (ID, MEMBER_ID, TYPE_NAME, CONTENT, "TIME", IS_READ)
+        VALUES (NOTIFICATION_SEQ.NEXTVAL, #{member_id}, #{type_name}, #{content}, CURRENT_DATE, #{is_read})
     </insert>
     <update id="updateNotification" parameterType="Map">
         UPDATE NOTIFICATION SET IS_READ = 1 WHERE MEMBER_ID = #{notification.member_id} AND ID IN

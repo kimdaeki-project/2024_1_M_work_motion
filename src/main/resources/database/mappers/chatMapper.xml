@@ -83,4 +83,7 @@
         WHERE rm.MEMBER_ID != #{id} AND ms.ROOM_NAME LIKE '%'||#{id}||'%'
         ORDER BY ms."TIME" DESC
     </select>
+    <select id="getRoomUsers" resultType="MemberDTO" parameterType="RoomInfoDTO">
+        SELECT MEMBER_ID as ID FROM ROOM_MEMBER WHERE ROOM_NAME = #{room_name} AND MEMBER_ID != #{member_id}
+    </select>
 </mapper>

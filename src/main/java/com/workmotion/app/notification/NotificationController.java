@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.workmotion.app.member.MemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,18 +35,5 @@ public class NotificationController {
         return ResponseEntity.ok().body(notificationService.updateNotification(notificationDTO, id));
     }
 
-    @MessageMapping("/sendNotification")
-    public void sendNotification(SimpMessageHeaderAccessor accessor) throws Exception {
-        MemberDTO member = (MemberDTO) accessor.getSessionAttributes().get("member");
-        List<NotificationDTO> notificationDTOs = notificationService.getNotification(member);
 
-        String destination = "/notification/" + member.getId();
-        simpMessagingTemplate.convertAndSend(destination, notificationDTOs);
-    }
-
-    @MessageMapping("/readNotification")
-    public void readNotification(SimpMessageHeaderAccessor accessor) throws Exception {
-        MemberDTO member = (MemberDTO) accessor.getSessionAttributes().get("member");
-
-    }
 }
