@@ -32,7 +32,7 @@
 	</tbody>
 </table>
 <c:if test="${pager.lastNum > 1}">
-<nav aria-label="..." style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
+<nav aria-label="..." class="d-flex justify-content-center" style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
 	<ul class="pagination">
 
 		<!-- 이전@@@@@@@@@@ -->
@@ -57,8 +57,8 @@
 </c:if>
 
 <!-- 검색부분@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-<form action="./departmentList">
-	<div class="input-group mb-3" style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
+<form action="./departmentList" class="d-flex justify-content-center">
+	<div class="input-group mb-3" style=" border: 1; margin-left: 70px; width:30vh">
 		<input type="text" width="200px" name="search"
 			aria-label="Text input with dropdown button">
 		<button class="btn btn-outline-secondary" type="submit">찾기</button>
