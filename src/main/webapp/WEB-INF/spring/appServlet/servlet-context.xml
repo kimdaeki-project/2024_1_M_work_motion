@@ -29,18 +29,28 @@
 		
 		<beans:bean
 		class="com.workmotion.app.interceptor.CompanyInterceptor" id="Company"></beans:bean>
+	<beans:bean class="com.workmotion.app.interceptor.HrInterceptor" id="HrInterceptor"></beans:bean>
 		
 		<beans:bean
 		class="com.workmotion.app.interceptor.NoticeInterceptor" id="Notice"></beans:bean>
 	
-
+<interceptors>
 <!-- payment -->
 		<interceptor>
 			<mapping path="/department/*" />
 			<mapping path="/company/*" />
 			<mapping path="/board/*" />
 			<mapping path="/hr/*" />
+			<exclude-mapping path="/company/join"/>
 			<beans:ref bean="Payment" />
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/**/*"/>
+			<exclude-mapping path="/member/*"/>
+			<exclude-mapping path="/company/join"/>
+			<exclude-mapping path="/resources/js/**/*"/>
+			<beans:ref bean="MemberInterceptor"/>
 		</interceptor>
 		
 		<interceptor>
@@ -59,7 +69,6 @@
 		<beans:ref bean="Notice"/>
 		</interceptor>
 
-	<beans:bean class="com.workmotion.app.interceptor.HrInterceptor" id="HrInterceptor"></beans:bean>
 
 	
 	<interceptor>

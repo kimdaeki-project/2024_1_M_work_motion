@@ -31,7 +31,7 @@
 </table>
 
 <c:if test="${pager.lastNum >= 1}">
-	<nav aria-label="..."  style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
+	<nav aria-label="..." class="d-flex justify-content-center" style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
 		<ul class="pagination">
 
 			<!-- 이전@@@@@@@@@@ -->
@@ -56,8 +56,8 @@
 </c:if>
 
 			<!-- 검색부분@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-			<form action="./list" >
-				<div class="input-group mb-3"  style="width: 100%; border: 1; margin-left: 70px; width: 90%;">
+			<form action="./list" class="d-flex justify-content-center">
+				<div class="input-group mb-3"  style=" border: 1; margin-left: 70px; width:30vh">
 					<input type="text" width="200px" name="search"> <input
 						type="hidden" width="200px" value="${category_id}" name="id">
 					<button class="btn btn-outline-secondary" type="submit">찾기</button>
@@ -66,7 +66,7 @@
 
 
 
-<a href="./create?id=${category_id}"><button class="btn btn-success"  style=" margin-left: 70px;" >글쓰기</button></a>
+<a href="./create?id=${category_id}" class="d-flex justify-content-end"><button class="btn btn-success"  style=" margin-left: 70px;" >글쓰기</button></a>
 <script src="https://kit.fontawesome.com/3a9643202c.js"
 	crossorigin="anonymous"></script>
 <script src="/resources/js/board/list.js"></script>

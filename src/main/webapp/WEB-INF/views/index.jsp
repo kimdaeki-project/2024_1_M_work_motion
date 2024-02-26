@@ -81,7 +81,6 @@
 	color: black;
 }
 
-
 #messenger .nav-item .fa-user {
 	font-size: 2.4vh;
 }
@@ -151,18 +150,28 @@ a {
 			<i class="fas fa-bars"></i>
 		</button>
 		<!-- Navbar Search-->
+
 		<form
 			class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
 			<div class="input-group">
-			<c:if test="${!empty member}">
-				<c:if test="${!empty check}">
-					<a href="/product/list"><button type="button"  class="btn btn-primary">현재 구독서비스
-						이용중입니다(${toss}주남음)</button></a>
-				</c:if>
-				<c:if test="${empty check}">
-					<a href="/product/list"><button type="button" class="btn btn-danger">구독서비스를 이용해주세요</button></a>
-				</c:if>
-				</c:if>
+				<div class=" me-2">
+					<c:if test="${!empty member}">
+						<c:if test="${!empty check}">
+							<a href="/product/list"><button type="button"
+									class="btn btn-primary">현재 구독서비스 이용중입니다(${toss}주남음)</button></a>
+						</c:if>
+						<c:if test="${empty check}">
+							<a href="/product/list"><button type="button"
+									class="btn btn-danger">구독서비스를 이용해주세요</button></a>
+						</c:if>
+					</c:if>
+				</div>
+				<div class="me-2">
+					<a class="btn btn-primary" href="/tna/in">출 근</a>
+				</div>
+				<div class="me-2">
+					<a class="btn btn-primary" href="/tna/out">퇴 근</a>
+				</div>
 			</div>
 		</form>
 		<!-- Navbar-->
