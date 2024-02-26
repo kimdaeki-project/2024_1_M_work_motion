@@ -18,17 +18,6 @@ let approval_update = document.getElementById("approval-update");
 
 const approval_list = document.getElementById("approval-list");
 
-// //결재자 구분 칸
-// const nameId0 = document.getElementById("approval-name0").getAttribute("data-name-id");
-// const departmentId0 = document.getElementById("approvla-department-name0").getAttribute("data-department-id");
-
-// const nameId1 = document.getElementById("approval-name1").getAttribute("data-name-id");
-// const departmentId1 = document.getElementById("approvla-department-name1").getAttribute("data-department-id");
-
-// const nameId2 = document.getElementById("approval-name2").getAttribute("data-name-id");
-// const departmentId2 = document.getElementById("approvla-department-name2").getAttribute("data-department-id");
-
-
 
 //모달창 
 a_modal.addEventListener("click", function (e) {
@@ -51,9 +40,8 @@ a_modal.addEventListener("click", function (e) {
 //페이번호 누르면 리스트 
 am.addEventListener("click", (e) => {
 
-
     //페이번호 누르면 리스트 
-    if (e.target.classList.contains("referrer")) {
+    if (e.target.classList.contains("approval")) {
 
         let page = e.target.getAttribute("data-page");
         let search = e.target.getAttribute("data-search");
@@ -74,8 +62,8 @@ am.addEventListener("click", (e) => {
     //검색버튼 누르면 검색 리스트 
     if (e.target.classList.contains("ref-btn")) {
         // 선택한 값과 검색한 값을 가져오기
-        const kind = document.getElementById("ref_kind").value;
-        const search = document.getElementById("search").value;
+        const kind = document.getElementById("approvla_kind").value;
+        const search = document.getElementById("approval_search").value;
 
         // AJAX 요청 보내기
         fetch("./approval?search=" + search + "&kind=" + kind, {

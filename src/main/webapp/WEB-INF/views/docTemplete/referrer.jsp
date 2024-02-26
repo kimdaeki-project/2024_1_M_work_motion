@@ -28,7 +28,7 @@
 			<li class="page-item"><a class="page-link referrer"
 				data-page="${pager.startNum-1}" data-search="${pager.search}"
 				data-kind="${pager.kind}" aria-label="Previous">
-				 <span class="start_referrer" data-start="${pager.startNum-1}" aria-hidden="true">&laquo;</span>
+				 <span class="start_referrer referrer" data-start="${pager.startNum-1}" aria-hidden="true">&laquo;</span>
 			</a></li>
 		</c:if>
 
@@ -42,7 +42,7 @@
 			<li class="page-item"><a class="page-link referrer"
 				data-page="${pager.lastNum+1}" data-search="${pager.search}"
 				data-kind="${pager.kind}" aria-label="Next">
-				<span class="last_referrer" data-last="${pager.lastNum+1}" aria-hidden="true">&raquo;</span>
+				<span class="last_referrer referrer" data-last="${pager.lastNum+1}" aria-hidden="true">&raquo;</span>
 			</a></li>
 		</c:if>
 	</ul>
