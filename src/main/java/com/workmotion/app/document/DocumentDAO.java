@@ -46,5 +46,13 @@ public class DocumentDAO {
 	public DocumentDTO getDetail(DocumentDTO documentDTO)throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"getDetail", documentDTO);
 	}
+	//서류 자세히보기 참조자 list 
+	public List<ReferrerDTO> referrerDetail(DocumentDTO documentDTO)throws Exception{
+		return sqlSession.selectList(NAMESPACE+"referrerDetail", documentDTO);		
+	}
+	//서류 자세히보기 결재자 list
+	public List<ApprovalDTO> approvalDetail(DocumentDTO documentDTO)throws Exception{
+		return sqlSession.selectList(NAMESPACE+"approvalDetail", documentDTO);
+	}
 
 }

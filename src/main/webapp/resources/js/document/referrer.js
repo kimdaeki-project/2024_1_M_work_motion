@@ -100,7 +100,6 @@ modal.addEventListener("click",function(e){
 //페이번호 누르면 리스트 
 rm.addEventListener("click", (e) => { 
 
-
 //페이번호 누르면 리스트 
     if (e.target.classList.contains("referrer")) {
         

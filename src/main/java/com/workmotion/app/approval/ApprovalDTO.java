@@ -2,6 +2,11 @@ package com.workmotion.app.approval;
 
 import java.sql.Date;
 
+import com.workmotion.app.department.DepartmentDTO;
+import com.workmotion.app.document.DocumentDTO;
+import com.workmotion.app.member.MemberDTO;
+import com.workmotion.app.position.PositionDTO;
+
 public class ApprovalDTO {
 	
 	private Long id;
@@ -9,7 +14,27 @@ public class ApprovalDTO {
 	private Date approval_dt;
 	private Long member_id;
 	
+	private MemberDTO memberDTO;
+	private DocumentDTO documentDTO;
 	
+	
+	
+	
+	
+
+	
+	public DocumentDTO getDocumentDTO() {
+		return documentDTO;
+	}
+	public void setDocumentDTO(DocumentDTO documentDTO) {
+		this.documentDTO = documentDTO;
+	}
+	public MemberDTO getMemberDTO() {
+		return memberDTO;
+	}
+	public void setMemberDTO(MemberDTO memberDTO) {
+		this.memberDTO = memberDTO;
+	}
 	public Long getId() {
 		return id;
 	}
