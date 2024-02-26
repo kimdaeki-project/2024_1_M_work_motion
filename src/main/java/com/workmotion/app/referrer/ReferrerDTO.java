@@ -11,6 +11,7 @@ public class ReferrerDTO {
 	private DocumentDTO documentDTO;
 	
 	
+	
 	public MemberDTO getMemberDTO() {
 		return memberDTO;
 	}

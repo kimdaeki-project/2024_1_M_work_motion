@@ -25,36 +25,26 @@ public class DocumentDTO {
 	private Date deadline;
 	
 	private List<DocumentFileDTO> documentFileDTOs;
-	private List<ReferrerDTO> referrerDTOs;
 	private TempleteDTO templeteDTO;
+	
+	private List<ReferrerDTO> referrerDTOs;
 	private List<ApprovalDTO> approvalDTOs;
-	private MemberDTO memberDTO;	
-	private PositionDTO positionDTO;
-	private DepartmentDTO departmentDTO;
+	
+	private MemberDTO memberDTO;
+	
+	
+	
+
 	
 	
 
 	
-	
-
 	
 	public MemberDTO getMemberDTO() {
 		return memberDTO;
 	}
 	public void setMemberDTO(MemberDTO memberDTO) {
 		this.memberDTO = memberDTO;
-	}
-	public PositionDTO getPositionDTO() {
-		return positionDTO;
-	}
-	public void setPositionDTO(PositionDTO positionDTO) {
-		this.positionDTO = positionDTO;
-	}
-	public DepartmentDTO getDepartmentDTO() {
-		return departmentDTO;
-	}
-	public void setDepartmentDTO(DepartmentDTO departmentDTO) {
-		this.departmentDTO = departmentDTO;
 	}
 	public List<ApprovalDTO> getApprovalDTOs() {
 		return approvalDTOs;

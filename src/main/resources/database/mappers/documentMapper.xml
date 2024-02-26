@@ -6,23 +6,17 @@
 <mapper namespace="com.workmotion.app.document.DocumentDAO">
 
 	<!-- 서류 자세히보기 -->
-	<select id="getDetail" resultMap="detailResult">
-		SELECT M.NAME,DT.NAME,P.NAME,D.*,R.*,A.*,DF.* FROM DOCUMENT D
-			LEFT JOIN DOCUMENT_FILE DF
-			ON (D.ID = DF.DOCUMENT_ID)
-			LEFT JOIN REFERRER R
-			ON (D.ID = R.DOCUMENT_ID)
-			LEFT JOIN APPROVAL A
-			ON (D.ID = A.DOCUMENT_ID)
+	<select id="getDetail" resultMap="getDetailResult" parameterType="DocumentDTO">
+		SELECT D.*,M.NAME MEMBER_NAME,P.NAME POSITION_NAME,DF.ORI_NAME,DF.NAME  FROM DOCUMENT D
 			RIGHT JOIN MEMBER M
-			ON (M.ID = D.MEMBER_ID)
+			ON (D.MEMBER_ID = M.ID)
 			RIGHT JOIN POSITION P
-			ON (M.POSITION_ID = P.ID)
-			RIGHT JOIN DEPARTMENT DT
-			ON (M.DEPARTMENT_ID = DT.ID)
+			ON (P.ID = M.POSITION_ID)
+			RIGHT JOIN DOCUMENT_FILE DF
+			ON (DF.DOCUMENT_ID = D.ID)
 		WHERE D.ID = #{id}
 	</select>
-	<resultMap type="DocumentDTO" id="detailResult">
+	<resultMap type="DocumentDTO" id="getDetailResult">
 		<id column="ID" property="id" />
 		<result column="TITLE" property="title" />
 		<result column="CONTENT" property="content" />
@@ -31,33 +25,60 @@
 		<result column="MEMBER_ID" property="member_id" />
 			<association property="memberDTO" javaType="MemberDTO">
 				<id column="ID" property="id"/>
-				<result column="NAME" property="name"/>
+				<result column="MEMBER_NAME" property="name"/>
+				<association property="position" javaType="PositionDTO">
+					<id column="ID" property="id"/>
+					<result column="POSITION_NAME" property="name"/>
+				</association>
 			</association>
-			<association property="positionDTO" javaType="PositionDTO">
-				<id column="ID" property="id"/>
+			<collection property="documentFileDTOs" javaType="List" ofType="DocumentFileDTO">
+				<id column="ID" property="id" />
+				<result column="ORI_NAME" property="ori_name"/>
 				<result column="NAME" property="name"/>
-			</association>
-			<association property="departmentDTO" javaType="DepartmentDTO">
-				<id column="ID" property="id"/>
-				<result column="NAME" property="name"/>
-			</association>
-				<collection property="documentFileDTOs" javaType="List">
-					<id column="ID" property="id" />
-					<result column="DOCUMENT_ID" property="document_id" />
-					<result column="NAME" property="name" />
-					<result column="ORI_NAME" property="ori_name" />
-				</collection>
-				<collection property="referrerDTOs" javaType="List">
-					<id column="DOCUMENT_ID" property="document_id" />
-					<id column="MEMBER_ID" property="member_id" />
-				</collection>
-				<collection property="approvalDTOs" javaType="List">
-					<id column="ID" property="id" />
-					<result column="DOCUMENT_ID" property="document_id" />
-					<result column="APPROVAL_DT" property="approval_dt" />
-					<result column="MEMBER_ID" property="member_id" />
-				</collection>
+			</collection>		
 	</resultMap>
+	
+	<!-- 참조자 정보  -->
+	<select id="referrerDetail" resultMap="referrerResult" parameterType="DocumentDTO">
+		SELECT R.DOCUMENT_ID  , M.NAME  FROM REFERRER R 
+			  RIGHT JOIN MEMBER M
+		      ON(R.MEMBER_ID = M.ID)
+		WHERE DOCUMENT_ID = #{id}
+	</select>
+	<resultMap type="referrerDTO" id="referrerResult">
+		<id column="DOCUMENT_ID" property="document_id" />
+		<id column="MEMBER_ID" property="member_id" />
+		<association property="memberDTO" javaType="MemberDTO">
+			<id column="ID" property="id"/>
+			<result column="NAME" property="name"/>
+		</association>			
+	</resultMap>
+	
+	<!-- 결재자 정보  -->
+	<select id="approvalDetail" parameterType="DocumentDTO" resultMap="approvalResult">
+		SELECT A.DOCUMENT_ID ,A.MEMBER_ID ,M.NAME MEMBER_NAME, D.NAME DEPARTMENT_NAME FROM APPROVAL A
+				RIGHT JOIN MEMBER M 
+				ON (A.MEMBER_ID = M.ID)
+				RIGHT  JOIN DEPARTMENT D
+				ON(D.ID = M.DEPARTMENT_ID)
+		WHERE DOCUMENT_ID  = #{id}
+	</select>	
+	<resultMap type="ApprovalDTO" id="approvalResult">
+		<id column="ID" property="id" />
+		<result column="DOCUMENT_ID" property="document_id" />
+		<result column="APPROVAL_DT" property="approval_dt" />
+		<result column="MEMBER_ID" property="member_id" />
+		<association property="memberDTO" javaType="MemberDTO">
+			<id column="ID" property="id"/>
+			<result column="MEMBER_NAME" property="name"/>
+			<association property="department" javaType="DepartmentDTO">
+				<id column="ID" property="id"/>
+				<result column="DEPARTMENT_NAME" property="name"/>	
+			</association>			
+		</association>
+	</resultMap>
+	
+	
 
 
 	<!-- 서류저장 -->

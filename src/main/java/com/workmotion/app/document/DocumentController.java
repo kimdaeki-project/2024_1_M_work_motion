@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.workmotion.app.approval.ApprovalDTO;
 import com.workmotion.app.document.util.Pager;
 import com.workmotion.app.member.MemberDTO;
 import com.workmotion.app.referrer.ReferrerDTO;
@@ -25,9 +26,14 @@ public class DocumentController {
 	
 	@GetMapping("detail")
 	public String getDetail(DocumentDTO documentDTO,Model model)throws Exception{
-		documentDTO = documentService.getDetail(documentDTO);
+		documentDTO = documentService.getDetail(documentDTO);		
 		model.addAttribute("dto",documentDTO);
-		model.addAttribute("page", "document/detail");
+		
+		System.out.println(documentDTO.getMemberDTO().getName());
+		model.addAttribute("page", "document/detail");	
+		
+		System.out.println(documentDTO.getReferrerDTOs());
+		
 		
 		return "index";
 		
