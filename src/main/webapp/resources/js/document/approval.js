@@ -6,12 +6,16 @@ const a_modal = document.getElementById("modal-approval");
 let a_save = [];
 let a_save_name = [];
 let save_department_name = [];
+let previousSaveName = []; // 이전에 저장된 이름 배열
+let previousSaveDepartment = []; // 이전에 저장된 부서 배열  
+
 
 let a_count = 0;
 const a_max = 3;
 
 let nextIndex = 0;
 let usedIndices = []; //사용된 인덱스 추적하는 배열 
+let deletedIndices = []; // 삭제된 인덱스를 추적하는 배열
 
 const a_check = document.getElementsByClassName("checkbox_save");
 let approval_update = document.getElementById("approval-update");
@@ -101,20 +105,17 @@ am.addEventListener("click", (e) => {
 
             function getNextIndex() {
 
-                if (usedIndices.length === 3) {
-                    // 모든 인덱스가 사용되었으면 종료
-                    return -1;
-                }
                 for (let i = 0; i < 3; i++) {
-                    if (!usedIndices.includes(i)) {
-                        usedIndices.push(i);
+                    if (!usedIndices.includes(i) || deletedIndices.includes(i)) {
+                        if (deletedIndices.includes(i)) {
+                            // 삭제된 인덱스를 다시 사용할 때는 해당 인덱스를 제거하고 사용
+                            deletedIndices.splice(deletedIndices.indexOf(i), 1);
+                        }
+                        usedIndices.push(i); // 사용된 인덱스를 추적
                         return i;
                     }
                 }
-            }
-            // 사용된 인덱스를 초기화
-            function resetUsedIndices() {
-                usedIndices = [];
+                return -1; // 모든 인덱스가 사용되었음을 나타내는 값
             }
 
             //member id 값 배열에 저장
@@ -122,9 +123,16 @@ am.addEventListener("click", (e) => {
 
             let memberName = e.target.getAttribute("data-member-name").split(",");
             let departmentName = e.target.getAttribute("data-department-name").split(",");
-            
+
             for (let i = 0; i < memberName.length; i++) {
+
                 let currentIndex = getNextIndex(); // 0, 1, 2 중 하나를 반복
+                // 모든 인덱스가 사용되었을 경우 처리
+                if (currentIndex === -1) {
+                    alert("결재자는 3명까지 가능합니다.");
+                    break;
+                }
+
                 let dataString = memberName + "," + currentIndex;
                 a_save_name.push(dataString);
 
@@ -140,6 +148,9 @@ am.addEventListener("click", (e) => {
         } else {
             for (let i = 0; i < a_save.length; i++) {
                 if (a_save[i] === e.target.getAttribute("data-referrer-id")) {
+
+                    let index = a_save_name[i].split(",")[1]; // 삭제된 인덱스 추적
+                    deletedIndices.push(parseInt(index)); // 삭제된 인덱스를 추적 배열에 추가
                     a_save.splice(i, 1);
                     a_save_name.splice(i, 1);
                     save_department_name.splice(i, 1);
@@ -156,23 +167,49 @@ am.addEventListener("click", (e) => {
 
 });
 
-
+// 삭제된 요소를 배열에서 제거하는 함수
+function removeDeletedElements() {
+    for (let i = previousSaveName.length - 1; i >= 0; i--) {
+        if (!a_save_name.includes(previousSaveName[i])) {
+            previousSaveName.splice(i, 1);
+            previousSaveDepartment.splice(i, 1);
+        }
+    }
+}
 
 approval_update.addEventListener("click", function (e) {
+
+    // 삭제된 요소를 배열에서 제거
+    removeDeletedElements();
+
+    // 변경된 부분 비우기
+    for (let i = 0; i < previousSaveName.length; i++) {
+        // 이전에는 저장되어 있었지만 현재는 비어 있는 경우에만 내용을 비움
+        if (!a_save_name.includes(previousSaveName[i])) {
+            let nameElement = document.getElementById("approval-name" + (i));
+            let departmentElement = document.getElementById("approvla-department-name" + (i));
+            if (nameElement && departmentElement) {
+                nameElement.textContent = "";
+                departmentElement.textContent = "";
+            }
+        }
+    }
+
+    // 변경된 배열을 이전 배열로 업데이트
+    previousSaveName = a_save_name.slice();
+    previousSaveDepartment = save_department_name.slice();
 
 
     for (let i = 0; i < a_save_name.length; i++) {
         // 이름 요소에 값을 설정
-        let nameElement = document.getElementById("approval-name" + (i + 1));
-        if (nameElement) {
-            nameElement.textContent = a_save_name[i];
-        }
+        let nameElement = document.getElementById("approval-name" + (i));
+        nameElement.textContent = a_save_name[i].replace(/[0-9,]/g, '');// , 숫자 제거
 
         // 부서 요소에 값을 설정
-        let departmentElement = document.getElementById("approvla-department-name" + (i + 1));
-        if (departmentElement) {
-            departmentElement.textContent = save_department_name[i];
-        }
+        let departmentElement = document.getElementById("approvla-department-name" + (i));
+        departmentElement.textContent = save_department_name[i].replace(/[0-9,]/g, '');
+
+
         console.log(a_save_name[i]);
     }
 
@@ -183,6 +220,8 @@ approval_update.addEventListener("click", function (e) {
 
 
 });
+
+
 
 
 
