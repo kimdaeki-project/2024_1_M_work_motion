@@ -1,5 +1,6 @@
 package com.workmotion.app.notification;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.workmotion.app.member.MemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,12 @@ public class NotificationService {
     }
 
     public int addNotification(NotificationDTO notificationDTO) throws Exception {
+        return notificationDAO.addNotification(notificationDTO);
+    }
+
+    public int addNotification(NotificationDTO notificationDTO, NotificationMessage notificationMessage) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        notificationDTO.setContent(mapper.writeValueAsString(notificationMessage));
         return notificationDAO.addNotification(notificationDTO);
     }
 
