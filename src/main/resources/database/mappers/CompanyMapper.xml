@@ -45,7 +45,6 @@
         #{info},
         CURRENT_DATE,
         #{customerkey}
-        
         )
     </insert>
 

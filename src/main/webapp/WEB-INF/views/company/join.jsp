@@ -22,10 +22,9 @@ pageEncoding="UTF-8"%>
 			}
             .green{color:green;}
             .backGro{
-            background: #ebecf0;
-            }
+             background: #ebecf0;
+             }
 		</style>
-
 	  </head>
     <body class="backGro">
                       <div id="layoutAuthentication">
@@ -35,14 +34,14 @@ pageEncoding="UTF-8"%>
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">회원가입</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">회사 계정 가입</h3></div>
                                     <div class="card-body">
-                                        <form action="/member/join" method="post" id="frm">
+                                        <form action="/company/join" method="post" id="frm">
 											<div class="row mb-3">
 												<div class="col-md-6">
 													<div class="form-floating mb-3 mb-md-0">
 														<input class="form-control" id="name" type="text" name="name" placeholder="Enter your name" />
-                                                        <label for="name">이름</label>
+                                                        <label for="name">회사 이름</label>
                                                     </div>
                                                 </div>
                                                 
@@ -50,49 +49,46 @@ pageEncoding="UTF-8"%>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating">
-                                                        <input class="form-control" id="phone" type="text" name="phone" placeholder="phone" />
-                                                        <label for="phone">전화 번호</label>
+                                                        <input class="form-control" id="owner" type="text" name="owner" placeholder="가입자 이름" />
+                                                        <label for="owner">가입자 이름</label>
                                                 </div>
                                             </div>
                                            </div>
-                                            
-											<div class="form-floating mb-3">
-												<input class="form-control" id="email" type="email" name="email" placeholder="name@example.com" />
-												<label for="email">이메일</label>					
-												<div id="emailResult" class="red" > </div>                                           
+                                            <div class="row mb-3">
+											<div class="col-md-6">
+												<div class="form-floating mb-3">
+													<input class="form-control" id="phone_num" type="text"
+														name="phone_num" placeholder="회사번호" /> <label
+														for="phone_num">회사 전화 번호</label>
+													<div id="emailResult" class="red"></div>
+												</div>
 											</div>
-
+										</div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-6">
-                                                        <input class="form-control" id="password" type="password" name="password"  placeholder="Create a password" />
-                                                        <label for="password">비밀번호</label>
-                                                        <div id="passResult" class="red"></div>
+                                                        <input class="form-control" id="info" type="text" name="info"  placeholder="@그룹명.com" />
+                                                        <label for="info">그룹 명</label>
+                                                        <br>
                                                     </div>
                                                     
                                                 </div>
+                                                        <p>회사에서 사용하는 이메일 주소가 abc@workscorp.com이라면 'workscorp'을 그룹명으로 입력합니다</p>
                                                 
                                             </div>
                                             <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <div class="form-floating mb-6 mb-md-0">
-                                                    <input class="form-control" id="passwordCheck" type="password" name="passwordCheck" placeholder="Confirm password" />
-                                                    <label for="passwordCheck">비밀번호 확인</label>
-                                                    <div id="passCheckResult" class="red"></div>
-                                                </div>
-                                             
+                                      
                                             </div>
-                                            </div>
-                                            
+                                           
                                                 
                                             <div class="mt-4 mb-0">
                                                 
-												<button class="d-grid btn btn-primary" id="joinBtn" type="button">회원 가입</button>
+												<button class="d-grid btn btn-primary" id="joinBtn" >회사 계정 가입</button>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="/member/login">Need an account? Sign up!</a></div>
+                                        <div class="small"><a href="/member/agree">Need an account? Sign up!</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +97,7 @@ pageEncoding="UTF-8"%>
                 </main>
             </div>
             <div id="layoutAuthentication_footer">
-    
+
             </div>
         </div>
         
@@ -109,6 +105,6 @@ pageEncoding="UTF-8"%>
      <!-- Bootstrap JS -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-     <script  src="/resources/js/member/joinCheck.js"></script>
+     <script src="/resources/js/scripts.js"></script>
     </body>
 </html>

@@ -5,7 +5,15 @@
 
 <mapper namespace="com.workmotion.app.member.MemberDAO">
 
-
+	
+	<!--회원가입시 회사에서 멤버검색 -->
+	<select id="getCompanyMember" parameterType="MemberDTO" resultType="MemberDTO">
+	SELECT * FROM MEMBER WHERE COMPANY_ID = #{company_id}
+	</select>
+	<!--회원가입 그룹명 검색  -->
+	<select id="companyIdFind" parameterType="CompanyDTO" resultType="CompanyDTO">
+	SELECT * FROM COMPANY  WHERE INFO = #{info}
+	</select>
     <!-- 파일 삭제 -->
     <delete id="setFileDelete" parameterType="Avatar">
         DELETE avatar WHERE name = #{name}
@@ -65,7 +73,7 @@
         <selectKey keyProperty="id" order="BEFORE" resultType="Long">
             SELECT MEMBER_SEQ.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO member VALUES(#{id},10,#{company_id},
+        INSERT INTO member VALUES(#{id},#{role_id},#{company_id},
         #{email},#{password},#{name},0,10,#{phone})
 
     </insert>

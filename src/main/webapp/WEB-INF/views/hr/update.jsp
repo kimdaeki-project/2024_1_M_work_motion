@@ -8,11 +8,12 @@
                     <div class="card-header"><h3 class="text-center font-weight-light my-4">${dto.name}</h3></div>
                     <div class="card-body">
 
-            			<c:if test="${not empty dto.avatar.name}">
-            				<div>
-            					<img  src="/resources/upload/member/${dto.avatar.name}">
-            				</div>
-            			</c:if>
+            			<c:if test="${not empty dto.avatar}">
+                        <div>
+                            <img  src="${dto.avatar.name}">
+                        </div>
+                        
+                    </c:if>
 
 
                         <form action="/hr/update" method="post" id="hrFrm">

@@ -40,6 +40,25 @@ public class CompanyController {
 		return "manager";
 
 	}
+	
+	//회사 계정 추가 
+	@GetMapping("join")
+	public void joinCompany() throws Exception {
+	}
+	@PostMapping("join")
+	public String joinCompany(CompanyDTO companyDTO,Model model) throws Exception {
+		int result=0;
+			if(companyDTO!=null) {
+			result = companyService.createCompany(companyDTO);	
+			}
+		String msg = "회사 계정 등록 실패";
+		if(result>0) {
+			msg = "회사 계정 등록 성공";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("path","/member/login");
+		return "commons/result";
+	}
 
 	// 컴퍼니(Post) 추가@@@@@@@@@@@@@@@@
 	@PostMapping("create")

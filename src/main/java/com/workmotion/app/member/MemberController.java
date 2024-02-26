@@ -20,13 +20,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import com.workmotion.app.tosspayment.TossPaymentDTO;
 import com.workmotion.app.tosspayment.TossPaymentService;
+
 
 
 @Controller
 @RequestMapping(value = "/member/*")
 public class MemberController {
+
 
 	@Autowired
 	private MemberService memberService;
@@ -160,14 +163,43 @@ public class MemberController {
 		return "index";
 	}
 
+
     @PostMapping("join")
-    public String getjoin(MemberDTO memberDTO, Model model) throws Exception {
-        String hashpassword = BCrypt.hashpw(memberDTO.getPassword(), BCrypt.gensalt());
-        memberDTO.setPassword(hashpassword);
-        int result = memberService.getjoin(memberDTO);
-        memberService.setFileAdd(memberDTO);
-        System.out.println(memberDTO.getId());
-        return "member/login";
+    public String getjoin(MemberDTO memberDTO,Model model) throws Exception {
+        String hashpassword = BCrypt.hashpw(memberDTO.getPassword(), BCrypt.gensalt());//비밀번호 암호화
+        memberDTO.setPassword(hashpassword);						
+        String [] ar = memberDTO.getEmail().split("@");	//이메일 파싱
+        String sum = ar[1];
+        StringTokenizer br = new StringTokenizer(sum,".");
+        CompanyDTO companyDTO = new CompanyDTO();
+        companyDTO.setInfo(br.nextToken());
+        CompanyDTO cdto = memberService.companyIdFind(companyDTO); //그룹명으로 회사 아이디 검색
+        int result = 0;
+        if(cdto != null) {  			//회사가 있는지 없는지
+        	memberDTO.setCompany_id(cdto.getId());	        	
+        	MemberDTO cr = memberService.getCompanyMember(memberDTO);
+        	if(cr != null) {    	// 첫가입자 OWNER
+        		memberDTO.setRole_id(10L);
+        		result = memberService.getjoin(memberDTO);
+        		memberService.setFileAdd(memberDTO);        
+        		result = 1;
+        	}else{ 				//그다음 가입자 사원계급			
+        		memberDTO.setRole_id(40L);
+        		memberDTO.setCompany_id(cdto.getId());	
+        		result = memberService.getjoin(memberDTO);
+        		memberService.setFileAdd(memberDTO);  
+        		result =1;
+        	}
+        }
+        	
+       
+        String msg = "회원 가입 실패";
+        if(result>0) {
+        	msg ="회원 가입 성공";
+        }
+        model.addAttribute("msg",msg);
+        model.addAttribute("path","/member/login");
+        return "commons/result";
     }
 
 

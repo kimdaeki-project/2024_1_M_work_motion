@@ -19,6 +19,7 @@
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- interceptor -->
+
 	<beans:bean
 		class="com.workmotion.app.interceptor.MemberInterceptor"
 		id="MemberInterceptor"></beans:bean>
@@ -31,9 +32,7 @@
 		
 		<beans:bean
 		class="com.workmotion.app.interceptor.NoticeInterceptor" id="Notice"></beans:bean>
-		
 	
-	<interceptors>
 
 <!-- payment -->
 		<interceptor>
@@ -60,7 +59,19 @@
 		<beans:ref bean="Notice"/>
 		</interceptor>
 
+	<beans:bean class="com.workmotion.app.interceptor.HrInterceptor" id="HrInterceptor"></beans:bean>
+
+	
+	<interceptor>
+			<mapping path="/hr/*"/>
+			<beans:ref bean="HrInterceptor"/>
+	</interceptor>
+
 	</interceptors>
+	
+
+
+
 
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 

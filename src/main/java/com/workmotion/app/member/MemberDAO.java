@@ -1,8 +1,12 @@
 package com.workmotion.app.member;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.workmotion.app.company.CompanyDTO;
 
 @Repository
 public class MemberDAO {
@@ -24,7 +28,7 @@ public class MemberDAO {
     }
 
     public MemberDTO detailMember(MemberDTO memberDTO) throws Exception {
-        return sqlSession.selectOne(NAMESPACE + "detailMember", memberDTO);
+    	return sqlSession.selectOne(NAMESPACE + "detailMember", memberDTO);
     }
 
     public int updateMember(MemberDTO memberDTO) throws Exception {
@@ -38,5 +42,10 @@ public class MemberDAO {
     public MemberDTO emailCheck(MemberDTO memberDTO) throws Exception {
         return sqlSession.selectOne(NAMESPACE + "emailCheck", memberDTO);
     }
-
+    public CompanyDTO companyIdFind(CompanyDTO companyDTO)throws Exception {
+    	return sqlSession.selectOne(NAMESPACE+"companyIdFind",companyDTO);
+    }
+    public MemberDTO getCompanyMember(MemberDTO memberDTO)throws Exception{
+    	return sqlSession.selectOne(NAMESPACE+"getCompanyMember",memberDTO);
+    }
 }

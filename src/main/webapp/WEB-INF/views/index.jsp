@@ -81,6 +81,7 @@
 	color: black;
 }
 
+
 #messenger .nav-item .fa-user {
 	font-size: 2.4vh;
 }
