@@ -20,6 +20,12 @@ pageEncoding="UTF-8"%>
 	  
         <style>
             @import url("/resources/css/member/login.css");
+            .none{
+              display: none;
+            }
+            .block{
+              display: block;
+            }
         </style>    
         </head>
     <body class="">
@@ -29,7 +35,7 @@ pageEncoding="UTF-8"%>
             <div class="container">
               <div class="sign-up-container">
                 <form>
-                  <h1>Find ID ,Password</h1>
+                  <h1>Find Password</h1>
                   <div class="social-links">
                     <div>
                       <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
@@ -41,11 +47,13 @@ pageEncoding="UTF-8"%>
                       <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                     </div>
                   </div>
-                  <span>or use your email for registration</span>
-                  <input type="text" placeholder="Name">
-                  <input type="email" placeholder="Email">
-                  <input type="password" placeholder="Password">
-                  <button class="form_btn">Find Password</button><br>
+                  <span id="msg3" style="color: black;"></span>
+                  <input type="text" placeholder="Name" name="name" id="findPWname">
+                  <input type="email" placeholder="Email" name="email" id="findPWemail">
+                  <input type="text" placeholder="Phone Number" name="phone" id="findPWphone">
+                  <input type="text" placeholder="인증 번호확인" class="none" name="emailNum" id="emailNum">
+                  <button type="button" class="btn btn-light none" id="emailNumBtn" >인증번호 인증</button>
+                  <button class="form_btn" type="button" id="findPwBtn">Find Password</button><br>
                   <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Find id</button>
                 </form>
               </div>
