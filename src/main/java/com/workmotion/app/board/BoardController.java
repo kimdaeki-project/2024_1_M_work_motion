@@ -24,20 +24,22 @@ public class BoardController {
 
 	@GetMapping("list")
 	public String getBoardList(CategoryDTO categoryDTO, Pager pager, Model model) throws Exception {
-		System.out.println(categoryDTO.getName());
-		System.out.println(categoryDTO.getId());
-		model.addAttribute("category_id", categoryDTO.getId());
-		List<Map<String, Object>> dtos = boardService.getBoardList(categoryDTO, pager);
-		dtos.forEach(m -> m.forEach((k, v) -> System.out.println("key = " + k + " , " + "value = " + v)));
-		String name = (String)dtos.get(0).get("NAME");
-		model.addAttribute("name", name);
-		model.addAttribute("list", dtos);
-		model.addAttribute("pager", pager);
-		model.addAttribute("page", "board/list");
+		throw new Exception("adssad");
+		
+//		System.out.println(categoryDTO.getName());
+//		System.out.println(categoryDTO.getId());
+//		model.addAttribute("category_id", categoryDTO.getId());
+//		List<Map<String, Object>> dtos = boardService.getBoardList(categoryDTO, pager);
+//		dtos.forEach(m -> m.forEach((k, v) -> System.out.println("key = " + k + " , " + "value = " + v)));
+//		String name = (String)dtos.get(0).get("NAME");
+//		model.addAttribute("name", name);
+//		model.addAttribute("list", dtos);
+//		model.addAttribute("pager", pager);
+//		model.addAttribute("page", "board/list");
 //		if(dtos.size() != 0) {
 //		model.addAttribute("category_id", dtos.get(0).get("CATEGORY_ID"));
 //		}
-		return "index";
+//		return "index";
 	}
 
 	@GetMapping("detail")

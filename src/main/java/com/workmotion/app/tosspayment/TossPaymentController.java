@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.workmotion.app.member.MemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,8 @@ public class TossPaymentController {
 
     @ResponseBody
     @PostMapping("server")
-    public void server(@RequestBody TossPaymentDTO tossPayMentDTO, HttpSession session) throws Exception {
+    public void server(@RequestBody TossPaymentDTO tossPayMentDTO, HttpSession session,
+    		Model model) throws Exception {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
         tossPayMentDTO.setCompany_id(memberDTO.getCompany_id());
         TossPaymentDTO buycheck = new TossPaymentDTO();
@@ -91,9 +93,14 @@ public class TossPaymentController {
             datasane.close();
             int result = connection.getResponseCode();
             System.out.println(result);
-
+            
+            	TossPaymentDTO tossPaymentDTO2 = new TossPaymentDTO();
+            	tossPaymentDTO2.setCompany_id(memberDTO.getCompany_id());
+            	tossPaymentDTO2 = tossPaymentService.getTossPaymentDetail(tossPaymentDTO2);
             String date1 = tossPayMentDTO.getCreate_dt();
             System.out.println("date1 : " + date1);
+            System.out.println("tosspay2 : " +tossPaymentDTO2.getPeriod());
+           session.setAttribute("toss", tossPaymentDTO2.getPeriod());
         }
 
     }
