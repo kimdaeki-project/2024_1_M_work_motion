@@ -44,7 +44,7 @@ public class MemberController {
 	private JavaMailSender mailSenderNaver;
 	
 	
-	
+	@ResponseBody
 	@PostMapping("findPassWord")
 	public int findPassWord(MemberDTO memberDTO,Model model) throws Exception {
 		int result = 0;
@@ -60,7 +60,7 @@ public class MemberController {
 				String tomail = memberDTO.getEmail();
 				String title = "WorkMotion 비밀번호 변경 인증 이메일입니다";
 				sb.append(String.format("안녕하세요 %s님\n",memberDTO.getName()));
-				sb.append(String.format("WorkMotion 비밀번호: 임시 비밀 번호는  %d입니다.", num));
+				sb.append(String.format("WorkMotion 비밀번호: 임시 비밀 번호는 abcd%d입니다.", num));
 				String content = sb.toString();
 				MimeMessage msg = mailSenderNaver.createMimeMessage();
 				MimeMessageHelper msgHelper = new MimeMessageHelper(msg, true, "utf-8");
@@ -71,7 +71,7 @@ public class MemberController {
 				// 메일 전송
 				mailSenderNaver.send(msg);
 				result = 2;
-				String sum = ""+num;
+				String sum = "abcd"+num;
 				String hashpassword = BCrypt.hashpw(sum, BCrypt.gensalt());
 				m.setPassword(hashpassword);
 				memberService.updateMember(m);

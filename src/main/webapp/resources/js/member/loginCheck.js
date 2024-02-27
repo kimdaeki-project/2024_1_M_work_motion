@@ -39,12 +39,14 @@ findPwBtn.addEventListener("click",()=>{
         .then(r=>{
           r.trim();
           if(r==2){
-            msg3.innerHTML = "회원님의 이메일로 임시 비밀번호를 발송해 드렸습니다";
-          }else if(r==1){
+            alert("회원님의 메일로 임시 비밀번호를 발송해 드렸습니다");
+            msg3.innerHTML = "회원님의 메일로 임시 비밀번호를 발송해 드렸습니다";
+          }else if(r==1){ 
             msg3.innerHTML ="가입 되지 않는 회원입니다"; 
+            alert("가입 되지 않는 회원입니다")
           }else if(r==0){
             msg3.innerHTML ="잘못된 요청입니다 재시도 해주세요"; 
-
+            alert("잘못된 요청입니다 재시도 해주세요")
           }
         })
       }
