@@ -26,7 +26,7 @@ a_modal.addEventListener("click", function (e) {
 
     if (e.target.classList.contains("approval-btn")) {
 
-        fetch("./approval", {
+        fetch("/docTemplete/approval", {
             method: "GET"
         }).then(r => r.text())
             .then((r) => {
@@ -62,7 +62,7 @@ am.addEventListener("click", (e) => {
         let kind = e.target.getAttribute("data-kind");
 
 
-        fetch("./approval?page=" + page + "&search=" + search + "&kind=" + kind, {
+        fetch("/docTemplete/approval?page=" + page + "&search=" + search + "&kind=" + kind, {
             method: "GET"
         }).then(r => r.text())
             .then((r) => {
@@ -92,7 +92,7 @@ am.addEventListener("click", (e) => {
         const search = document.getElementById("approval_search").value;
 
         // AJAX 요청 보내기
-        fetch("./approval?search=" + search + "&kind=" + kind, {
+        fetch("/docTemplete/approval?search=" + search + "&kind=" + kind, {
             method: "GET"
         }).then(r => r.text())
             .then((r) => {

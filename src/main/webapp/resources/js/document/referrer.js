@@ -85,7 +85,7 @@ modal.addEventListener("click",function(e){
 
     if(e.target.classList.contains("modal-btn")){
        
-        fetch("./referrer", {
+        fetch("/docTemplete/referrer", {
             method: "GET"
         }).then(r => r.text())
             .then((r) => {         
@@ -123,7 +123,7 @@ rm.addEventListener("click", (e) => {
         
        
 
-        fetch("./referrer?page=" + page + "&search=" + search + "&kind=" + kind, {
+        fetch("/docTemplete/referrer?page=" + page + "&search=" + search + "&kind=" + kind, {
             method: "GET"
         }).then(r => r.text())
             .then((r) => {         
@@ -153,7 +153,7 @@ rm.addEventListener("click", (e) => {
     const search = document.getElementById("search").value;   
 
     // AJAX 요청 보내기
-    fetch("./referrer?search=" + search + "&kind=" + kind, {
+    fetch("/docTemplete/referrer?search=" + search + "&kind=" + kind, {
         method: "GET"
     }).then(r => r.text())
     .then((r) => {

@@ -23,6 +23,7 @@ public class DocumentDTO {
 	private String period;
 	private String phone;
 	private Date deadline;
+	private String file_randomname;
 	
 	private List<DocumentFileDTO> documentFileDTOs;
 	private TempleteDTO templeteDTO;
@@ -40,6 +41,12 @@ public class DocumentDTO {
 
 	
 	
+	public String getFile_randomname() {
+		return file_randomname;
+	}
+	public void setFile_randomname(String file_randomname) {
+		this.file_randomname = file_randomname;
+	}
 	public MemberDTO getMemberDTO() {
 		return memberDTO;
 	}

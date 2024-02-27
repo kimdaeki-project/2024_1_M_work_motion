@@ -24,20 +24,28 @@ public class DocumentController {
 	@Autowired
 	private DocumentService documentService;
 	
+	//문서 자세히 보기 
 	@GetMapping("detail")
 	public String getDetail(DocumentDTO documentDTO,Model model)throws Exception{
-		System.out.println(documentDTO.getId());
+		
 		documentDTO = documentService.getDetail(documentDTO);		
 		model.addAttribute("dto",documentDTO);	
-		model.addAttribute("page", "document/detail");	
+		model.addAttribute("page", "document/detail");		
 		
-		
-		
+		return "index";		
+	}	
+	
+	@GetMapping("temporarySaveDetail")
+	public String getTempDocDetail(DocumentDTO documentDTO,Model model)throws Exception{		
+		documentDTO = documentService.getDetail(documentDTO);		
+		model.addAttribute("dto",documentDTO);	
+		model.addAttribute("page", "tempDoc/detail");
 		
 		return "index";
-		
 	}
 	
+	
+	//문서 종류 리스트 
 	@GetMapping("list")
 	public String getDocumentList(HttpSession session,Model model,Pager pager)throws Exception{
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");

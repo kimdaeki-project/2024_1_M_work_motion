@@ -5,6 +5,18 @@
 		    
 <mapper namespace="com.workmotion.app.tempDoc.TempDocDAO">
 
+	 <!-- 임시저장 -->	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	
+	
+	
 	
 	<!-- 제목,서류종류별 검색  -->
 	<sql id="search">	

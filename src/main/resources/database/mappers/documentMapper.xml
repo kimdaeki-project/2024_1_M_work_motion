@@ -23,6 +23,7 @@
 		<result column="TEMPLETE_ID" property="templete_id" />
 		<result column="CREATE_DT" property="create_dt" />
 		<result column="MEMBER_ID" property="member_id" />
+		<result column="FILE_RANDOMNAME" property="file_randomname"/>
 			<association property="memberDTO" javaType="MemberDTO">
 				<id column="ID" property="id"/>
 				<result column="MEMBER_NAME" property="name"/>
@@ -87,9 +88,9 @@
 			SELECT DOCUMENT_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
 		INSERT INTO DOCUMENT
-		(ID,TITLE,CONTENT,TEMPLETE_ID,CREATE_DT,MEMBER_ID,TEMPORARY_SAVE,PERIOD,PHONE,DEADLINE)
+		(ID,TITLE,CONTENT,TEMPLETE_ID,CREATE_DT,MEMBER_ID,TEMPORARY_SAVE,PERIOD,PHONE,DEADLINE,FILE_RANDOMNAME)
 		VALUES
-		(#{id},#{title},#{content},#{templete_id},CURRENT_DATE,#{member_id},#{temporary_save},#{period,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{deadline,jdbcType=DATE})
+		(#{id},#{title},#{content},#{templete_id},CURRENT_DATE,#{member_id},#{temporary_save},#{period,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{deadline,jdbcType=DATE},#{file_randomname})
 	</insert>
 	<!-- 서류에 추가된 첨부파일 저장 -->
 	<insert id="createFiles" parameterType="DocumentFileDTO">

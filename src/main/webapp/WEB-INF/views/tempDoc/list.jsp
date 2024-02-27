@@ -39,7 +39,7 @@
   <c:forEach items="${list}" var="dto">
   	<tr>
   		<td>${dto.id}</td>
-  		<td><a href="">${dto.title}</a></td>
+  		<td><a href="../document/temporarySaveDetail?id=${dto.id}">${dto.title}</a></td>
   		<td>${dto.create_dt}</td>
   		<td>${dto.templeteDTO.file_nm}</td>
   	</tr>

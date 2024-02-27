@@ -80,6 +80,8 @@ public class DocumentService {
 		}
 		
 		
+		
+		
 		return result;
 	} 
 	//보낸 서류 리스트

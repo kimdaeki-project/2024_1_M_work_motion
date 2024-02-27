@@ -34,6 +34,7 @@ public class TempDocController {
 		model.addAttribute("page", "tempDoc/list");
 		
 		return "index";
-	}	
+	}		
+
 
 }

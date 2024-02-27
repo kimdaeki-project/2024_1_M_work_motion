@@ -82,7 +82,7 @@ public class TempleteService {
 		
 	} 
 	//서류 디테일 
-	public TempleteDTO getTempleteDetail(TempleteDTO templeteDTO)throws Exception{
+	public TempleteDTO getTempleteDetail(TempleteDTO templeteDTO)throws Exception{		
 		
 		templeteDTO = templeteDAO.getTempleteDetail(templeteDTO);
 		

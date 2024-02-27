@@ -22,6 +22,7 @@ public class ReferrerContorller {
 	
 	@GetMapping("list")
 	public String getList(HttpSession session,Model model,Pager pager)throws Exception{
+		
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		
 		pager.setMember_id(memberDTO.getId());		
