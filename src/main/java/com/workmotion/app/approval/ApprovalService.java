@@ -14,7 +14,7 @@ public class ApprovalService {
 	@Autowired
 	private ApprovalDAO approvalDAO;
 	
-	public List<ApprovalDTO> getList(Pager pager)throws Exception{
+	public List<ApprovalDTO> approvalGetList(Pager pager)throws Exception{
 		
 		pager.makeRow();
 		
@@ -22,7 +22,7 @@ public class ApprovalService {
 		
 		pager.makeNum(totalCount);
 		
-		List<ApprovalDTO> ar = approvalDAO.getList(pager);
+		List<ApprovalDTO> ar = approvalDAO.approvalGetList(pager);
 		
 		return ar;
 		

@@ -26,9 +26,12 @@ public class DocumentController {
 	
 	@GetMapping("detail")
 	public String getDetail(DocumentDTO documentDTO,Model model)throws Exception{
+		System.out.println(documentDTO.getId());
 		documentDTO = documentService.getDetail(documentDTO);		
 		model.addAttribute("dto",documentDTO);	
 		model.addAttribute("page", "document/detail");	
+		
+		
 		
 		
 		return "index";

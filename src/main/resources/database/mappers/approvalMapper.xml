@@ -20,7 +20,7 @@
 	</sql>
 
 	<!-- 참조인으로 저장된 서류 검색 -->
-	<select id="getList" parameterType="Pager" resultMap="approvalResult">
+	<select id="approvalGetList" parameterType="Pager" resultMap="approvalResult">
 		SELECT * FROM (
 			SELECT ROWNUM T,RD.* FROM(
 				(SELECT A.MEMBER_ID,D.ID,M.NAME,D.TITLE,D.CREATE_DT FROM APPROVAL A

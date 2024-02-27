@@ -22,12 +22,12 @@ public class ApprovalController {
 	private ApprovalService approvalService;
 	
 	@GetMapping("list")
-	public String getList(HttpSession session,Model model,Pager pager)throws Exception{
+	public String approvalGetList(HttpSession session,Model model,Pager pager)throws Exception{
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		
 		pager.setMember_id(memberDTO.getId());		
 		
-		List<ApprovalDTO> ar = approvalService.getList(pager);
+		List<ApprovalDTO> ar = approvalService.approvalGetList(pager);
 		
 		model.addAttribute("list", ar);
 		model.addAttribute("pager", pager);		

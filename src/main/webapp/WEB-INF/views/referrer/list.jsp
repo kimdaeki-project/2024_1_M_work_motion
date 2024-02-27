@@ -37,14 +37,14 @@
   </thead>
   <c:forEach items="${list}" var="dto">
   	<tr>
-  		<td>${dto.documentDTO.id}</td>
+  		<td>${dto.document_id}</td>
   		<td>${dto.memberDTO.name}</td>
-  		<td><a href="">${dto.documentDTO.title}</a></td>
+  		<td><a href="../document/detail?id=${dto.document_id}">${dto.documentDTO.title}</a></td>
   		<td>${dto.documentDTO.create_dt}</td>
   	</tr>
   </c:forEach>  
+    
 </table>
-
 	<nav aria-label="Page navigation example">
 	  <ul class="pagination">
 	  	<c:if test="${!pager.start}">

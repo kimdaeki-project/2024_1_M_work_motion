@@ -17,14 +17,15 @@ public class ReferrerService {
 	private ReferrerDAO referrerDAO;
 	
 	public List<ReferrerDTO> getList(Pager pager)throws Exception{
-						
+		
+		
 		pager.makeRow();
 		
 		Long totalCount = referrerDAO.getTotalCount(pager);
 		
 		pager.makeNum(totalCount);
 		
-		List<ReferrerDTO> ar = referrerDAO.getList(pager);
+		List<ReferrerDTO> ar = referrerDAO.getList(pager);		
 		
 		return ar;
 		

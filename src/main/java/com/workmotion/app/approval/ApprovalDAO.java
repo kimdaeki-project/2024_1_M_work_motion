@@ -18,8 +18,8 @@ public class ApprovalDAO {
 	private final String NAMESPACE = "com.workmotion.app.approval.ApprovalDAO.";
 	
 	//참조함 리스트	
-	public List<ApprovalDTO> getList(Pager pager)throws Exception{
-		return sqlSession.selectList(NAMESPACE+"getList", pager);
+	public List<ApprovalDTO> approvalGetList(Pager pager)throws Exception{
+		return sqlSession.selectList(NAMESPACE+"approvalGetList", pager);
 	}
 	
 	//총 페이지 수

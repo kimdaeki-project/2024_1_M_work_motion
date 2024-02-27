@@ -24,8 +24,7 @@ public class ReferrerContorller {
 	public String getList(HttpSession session,Model model,Pager pager)throws Exception{
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		
-		pager.setMember_id(memberDTO.getId());
-		System.out.println(pager.getMember_id());
+		pager.setMember_id(memberDTO.getId());		
 		
 		List<ReferrerDTO> ar = referrerService.getList(pager);
 		

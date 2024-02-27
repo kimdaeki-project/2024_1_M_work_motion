@@ -7,6 +7,7 @@ public class ReferrerDTO {
 	
 	private Long document_id;
 	private Long member_id;
+	
 	private MemberDTO memberDTO;
 	private DocumentDTO documentDTO;
 	

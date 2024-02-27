@@ -17,8 +17,10 @@ public class ReferrerDAO {
 	private final String NAMESPACE = "com.workmotion.app.referrer.ReferrerDAO.";
 	
 	//참조함 리스트	
-	public List<ReferrerDTO> getList(Pager pager)throws Exception{
-		return sqlSession.selectList(NAMESPACE+"getList", pager);
+	public List<ReferrerDTO> getList(Pager pager)throws Exception{		
+		
+		List<ReferrerDTO> ar = sqlSession.selectList(NAMESPACE+"getList", pager);		
+		return ar;
 	}
 	
 	//총 페이지 수

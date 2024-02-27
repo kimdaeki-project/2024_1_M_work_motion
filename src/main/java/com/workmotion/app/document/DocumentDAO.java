@@ -43,7 +43,7 @@ public class DocumentDAO {
 		return sqlSession.insert(NAMESPACE+"createApproval", approvalDTO);
 	}
 	//서류 자세히보기
-	public DocumentDTO getDetail(DocumentDTO documentDTO)throws Exception{
+	public DocumentDTO getDetail(DocumentDTO documentDTO)throws Exception{		
 		return sqlSession.selectOne(NAMESPACE+"getDetail", documentDTO);
 	}
 	//서류 자세히보기 참조자 list 

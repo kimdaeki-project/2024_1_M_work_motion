@@ -19,15 +19,15 @@
 	</sql>
 
 	<!-- 참조인으로 저장된 서류 검색 -->
-	<select id="getList" parameterType="Pager" resultMap="referrerResult">
+	<select id="getList" parameterType="Pager" resultMap="referrerResult">	
 		SELECT * FROM (
 			SELECT ROWNUM T,RD.* FROM(
-				(SELECT R.MEMBER_ID,D.ID,M.NAME,D.TITLE,D.CREATE_DT FROM REFERRER R
+				(SELECT R.DOCUMENT_ID,M.NAME,D.TITLE,D.CREATE_DT FROM REFERRER R
 						FULL JOIN DOCUMENT D
 						ON (R.DOCUMENT_ID = D.ID)
 						FULL JOIN MEMBER M
 						ON (M.ID = D.MEMBER_ID)
-						<include refid="search"></include>						
+						<include refid="search"></include>					
 						ORDER BY D.CREATE_DT DESC
 						)RD
 					)
@@ -35,15 +35,13 @@
 		WHERE T BETWEEN #{startRow} AND #{lastRow}
 	</select>
 	<resultMap type="ReferrerDTO" id="referrerResult">
-		<id column="DOCUMENT_ID" property="document_id"/>
-		<id column="MEMBER_ID" property="member_id"/>
-		<association property="documentDTO" javaType="DocumentDTO">
-			<id column="ID" property="id"/>
+		<result column="DOCUMENT_ID" property="document_id"/>
+		<result column="MEMBER_ID" property="member_id"/>
+		<association property="documentDTO" javaType="DocumentDTO">			
 			<result column="TITLE" property="title"/>
 			<result column="CREATE_DT" property="create_dt"/>			
 		</association>
-		<association property="memberDTO" javaType="MemberDTO">
-			<id column="ID" property="id"/>
+		<association property="memberDTO" javaType="MemberDTO">			
 			<result column="NAME" property="name"/>			
 		</association>
 		
