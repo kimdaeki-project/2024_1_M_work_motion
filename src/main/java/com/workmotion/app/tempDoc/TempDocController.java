@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.workmotion.app.document.DocumentDTO;
 import com.workmotion.app.document.util.Pager;
@@ -34,7 +36,16 @@ public class TempDocController {
 		model.addAttribute("page", "tempDoc/list");
 		
 		return "index";
-	}		
+	}
+	
+	@PostMapping("add")
+	public String getTemporarySaveAdd(DocumentDTO documentDTO,MultipartFile[] file,Model model,String referrer,HttpSession session,String approval)throws Exception{
+		
+		
+		
+		
+		return "index";
+	}
 
 
 }

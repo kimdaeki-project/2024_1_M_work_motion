@@ -31,8 +31,7 @@ a_modal.addEventListener("click", function (e) {
         }).then(r => r.text())
             .then((r) => {
 
-                am.innerHTML = r;
-
+                
                 for(let i=0; i<a_save.length; i++){                   
                     
                     for(let j=0; j<check.length; j++){
@@ -41,6 +40,7 @@ a_modal.addEventListener("click", function (e) {
                             a_check[j].checked = true;
                         }              
                         
+                        am.innerHTML = r;
                         
                     }
                 }  
