@@ -147,7 +147,6 @@ public class MemberController {
 			if (BCrypt.checkpw(memberDTO.getPassword(), m.getPassword())) {
 				m.setPassword(null);
 				session.setAttribute("member", m);
-				System.out.println(m.getId());
 				TossPaymentDTO tossPaymentDTO = new TossPaymentDTO();
 				tossPaymentDTO.setCompany_id(m.getCompany_id());
 				tossPaymentDTO = tossPaymentService.getTossPaymentDetail(tossPaymentDTO);

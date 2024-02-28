@@ -32,13 +32,9 @@ public class TossPaymentController {
         TossPaymentDTO buycheck = new TossPaymentDTO();
         buycheck.setCompany_id(memberDTO.getCompany_id());
         buycheck = tossPaymentService.getTossPaymentDetail(buycheck);
-        System.out.println(buycheck);
+
         if (buycheck == null) {
-            System.out.println(tossPayMentDTO.getAmount());
-            System.out.println(tossPayMentDTO.getOrderId());
-            System.out.println(tossPayMentDTO.getPaymentKey());
-            System.out.println(tossPayMentDTO.getCompany_id());
-            System.out.println(tossPayMentDTO.getPeriod());
+
             int result1 = tossPaymentService.createTossPayment(tossPayMentDTO);
 
             String widgetSecretKey = "test_sk_jExPeJWYVQj9n09L47Lgr49R5gvN";
@@ -55,19 +51,12 @@ public class TossPaymentController {
 
             ObjectMapper mapper = new ObjectMapper();
             String tossPay = mapper.writeValueAsString(tossPayMentDTO);
-            System.out.println(tossPay);
             OutputStream send = connection.getOutputStream();
             DataOutputStream datasane = new DataOutputStream(send);
             datasane.writeBytes(tossPay);
             datasane.close();
             int result = connection.getResponseCode();
-            System.out.println(result);
         } else {
-            System.out.println(tossPayMentDTO.getAmount());
-            System.out.println(tossPayMentDTO.getOrderId());
-            System.out.println(tossPayMentDTO.getPaymentKey());
-            System.out.println(tossPayMentDTO.getCompany_id());
-            System.out.println(tossPayMentDTO.getPeriod());
             tossPayMentDTO.setCreate_dt(buycheck.getCreate_dt());
             tossPayMentDTO.setPeriod(buycheck.getPeriod() + tossPayMentDTO.getPeriod());
             int result1 = tossPaymentService.updateTossPayment(tossPayMentDTO);
@@ -85,21 +74,17 @@ public class TossPaymentController {
             connection.setDoOutput(true);
 
             ObjectMapper mapper = new ObjectMapper();
-            String tossPay = mapper.writeValueAsString(tossPayMentDTO);
-            System.out.println(tossPay);
+            String tossPay = mapper.writeValueAsString(tossPayMentDTO);    
             OutputStream send = connection.getOutputStream();
             DataOutputStream datasane = new DataOutputStream(send);
             datasane.writeBytes(tossPay);
             datasane.close();
             int result = connection.getResponseCode();
-            System.out.println(result);
             
             	TossPaymentDTO tossPaymentDTO2 = new TossPaymentDTO();
             	tossPaymentDTO2.setCompany_id(memberDTO.getCompany_id());
             	tossPaymentDTO2 = tossPaymentService.getTossPaymentDetail(tossPaymentDTO2);
             String date1 = tossPayMentDTO.getCreate_dt();
-            System.out.println("date1 : " + date1);
-            System.out.println("tosspay2 : " +tossPaymentDTO2.getPeriod());
            session.setAttribute("toss", tossPaymentDTO2.getPeriod());
         }
 

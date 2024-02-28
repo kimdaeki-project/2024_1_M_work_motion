@@ -1,4 +1,4 @@
-console.log("여기는 컴퍼니 js")
+
 
 
 const checks = document.getElementsByClassName("companycheck");
@@ -10,10 +10,8 @@ companybtn.addEventListener("click", function(){
 
     for(let  i = 0; i<checks.length;i++){
         if(checks[i].checked){
-            console.log(cid[i].value)
-            num.push(cid[i].value)
 
-            console.log(num[i])
+            num.push(cid[i].value)
         }
     }
 

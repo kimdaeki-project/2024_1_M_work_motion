@@ -31,7 +31,6 @@ public class Pager {
 	}
 	
 	public void makePage(Long totalCount)throws Exception {
-		System.out.println("totalCount: "+totalCount);
 		totalPage=totalCount/this.getPerPage();
 		if(totalCount%this.getPerPage()!=0) {
 			totalPage++;
@@ -64,8 +63,6 @@ public class Pager {
 		if(curBlock==1) {
 			this.setStart(true);
 		}
-		System.out.println("total Page: "+totalPage);
-		System.out.println(totalBlock);
 		if(curBlock==totalBlock) {
 			this.setLastNum(totalPage);
 			this.setLast(true);
