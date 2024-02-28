@@ -82,31 +82,18 @@ public class MemberController {
 			if (BCrypt.checkpw(memberDTO.getPassword(), m.getPassword())) {
 				m.setPassword(null);
 				session.setAttribute("member", m);
-				System.out.println(m.getId());
 				TossPaymentDTO tossPaymentDTO = new TossPaymentDTO();
 				tossPaymentDTO.setCompany_id(m.getCompany_id());
 				tossPaymentDTO = tossPaymentService.getTossPaymentDetail(tossPaymentDTO);
-				System.out.println(tossPaymentDTO);
 				if(tossPaymentDTO != null) { 
 				String tossdate = tossPaymentDTO.getCreate_dt();		
-				System.out.println(tossPaymentDTO);
 				String [] ar = tossdate.split(" ");
 				String [] setDate = ar[0].split("-");
 				String [] setDate1 = ar[1].split(":");
-				System.out.println(setDate[0]);
-				System.out.println(setDate[1]);
-				System.out.println(setDate[2]);
-				System.out.println(setDate1[0]);
-				System.out.println(setDate1[1]);
-				System.out.println(setDate1[2]);
 				LocalDateTime startDt = LocalDateTime.now();
 				LocalDateTime lastDt = LocalDateTime.of(Integer.parseInt(setDate[0]), Integer.parseInt(setDate[1]), Integer.parseInt(setDate[2]), Integer.parseInt(setDate1[0]), Integer.parseInt(setDate1[1]));
-				System.out.println("startDt : "+startDt);
-				System.out.println(tossPaymentDTO.getPeriod());
 				lastDt = lastDt.plusDays(tossPaymentDTO.getPeriod());
-				System.out.println("lastDt : "+lastDt);
 				Long getdate = ChronoUnit.MILLIS.between(startDt, lastDt);
-				System.out.println("getdate : "+getdate);
 				session.setAttribute("toss", tossPaymentDTO.getPeriod());
 				if (tossPaymentDTO != null || getdate > 0) {
 					session.setAttribute("check", "yes");

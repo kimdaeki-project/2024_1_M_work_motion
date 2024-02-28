@@ -279,16 +279,8 @@ a {
 							</div>
 						</a> 
 						</c:if>
-						<a class="nav-link collapsed" href="/company/list"
-							data-bs-target="#collapseHR" aria-expanded="false"
-							aria-controls="collapseHR">
-							<div class="sb-nav-link-icon">
-								<i class="fas fa-book-open"></i>
-							</div> 회사 관리
-							<div class="sb-sidenav-collapse-arrow">
-								<i class="fas fa-angle-down"></i>
-							</div>
-						</a> <a class="nav-link collapsed" href="/board/list?id=1"
+
+						 <a class="nav-link collapsed" href="/board/list?id=1"
 							data-bs-target="#collapseHR" aria-expanded="false"
 							aria-controls="collapseHR">
 							<div class="sb-nav-link-icon">

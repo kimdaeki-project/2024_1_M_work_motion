@@ -103,7 +103,6 @@ public class CompanyController {
 	@PostMapping("update")
 	public String updatePost(CompanyDTO companyDTO, Model model) throws Exception {
 		
-		System.out.println(companyDTO.getId());
 		int result = companyService.CompanyUpdate(companyDTO);
 		
 		String msg = "실패";
@@ -124,7 +123,6 @@ public class CompanyController {
 		CompanyDTO companyDTO = new CompanyDTO();
 		int result=0;
 		for(Long a : id) {
-			System.out.println(a);
 			companyDTO.setId(a);
 			result = companyService.companyDelete(companyDTO);
 		}

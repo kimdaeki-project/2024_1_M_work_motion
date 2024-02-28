@@ -1,4 +1,4 @@
-console.log("ddddd")
+
 let checks = document.getElementsByClassName("check");
 let createbtn = document.getElementById("createbtn");
 let department_id = document.getElementById("department_id");
@@ -11,14 +11,12 @@ createbtn.addEventListener("click", function(){
     if(checks[i].checked){
         num.push(member_id[i].value)
     }}
-    console.log()
     let json={
         id : num,
         department_id : department_id.value
     }
 
     aa = JSON.stringify(json)
-    console.log(aa)
         fetch("/department/updateMember",{
 
             method:"POST",
