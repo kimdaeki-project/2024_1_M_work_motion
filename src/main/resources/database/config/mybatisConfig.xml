@@ -10,6 +10,13 @@
         <setting name="jdbcTypeForNull" value="NULL"/>
     </settings>
     <typeAliases>
+
+		<typeAlias type="com.workmotion.app.templete.TempleteDTO" alias="TempleteDTO"/>
+		<typeAlias type="com.workmotion.app.document.DocumentDTO" alias="DocumentDTO"/>	
+		<typeAlias type="com.workmotion.app.document.file.DocumentFileDTO" alias="DocumentFileDTO"/>
+		<typeAlias type="com.workmotion.app.referrer.ReferrerDTO" alias="ReferrerDTO"/> 
+		<typeAlias type="com.workmotion.app.approval.ApprovalDTO" alias="ApprovalDTO"/>   
+
         <typeAlias type="com.workmotion.app.project.model.ProjectDTO" alias="ProjectDTO"/>
         <typeAlias type="com.workmotion.app.company.CompanyDTO" alias="CompanyDTO"/>
         <typeAlias type="com.workmotion.app.member.MemberDTO" alias="MemberDTO"/>
@@ -31,6 +38,7 @@
         <typeAlias type="com.workmotion.app.board.BoardDTO" alias="BoardDTO"/>
         <typeAlias type="com.workmotion.app.product.ProductDTO" alias="ProductDTO"/>
         <typeAlias type="com.workmotion.app.tosspayment.TossPaymentDTO" alias="TossPaymentDTO"/>
+
 
     </typeAliases>
 </configuration>
