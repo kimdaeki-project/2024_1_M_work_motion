@@ -155,7 +155,7 @@ a {
 			class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
 			<div class="input-group">
 				<div class=" me-2">
-					<c:if test="${!empty member}">
+					<c:if test="${member.role_id == 50}">
 						<c:if test="${!empty check}">
 							<a href="/product/list"><button type="button"
 									class="btn btn-primary">현재 구독서비스 이용중입니다(${toss}주남음)</button></a>
@@ -258,6 +258,7 @@ a {
 								</div>
 							</nav>
 						</div>
+					 	<c:if test="${member.role_id > 29 and member.role_id < 41}">
 						<a class="nav-link collapsed" href="/hr/list"
 							data-bs-target="#collapseHR" aria-expanded="false"
 							aria-controls="collapseHR">
@@ -276,7 +277,9 @@ a {
 							<div class="sb-sidenav-collapse-arrow">
 								<i class="fas fa-angle-down"></i>
 							</div>
-						</a> <a class="nav-link collapsed" href="/company/list"
+						</a> 
+						</c:if>
+						<a class="nav-link collapsed" href="/company/list"
 							data-bs-target="#collapseHR" aria-expanded="false"
 							aria-controls="collapseHR">
 							<div class="sb-nav-link-icon">
