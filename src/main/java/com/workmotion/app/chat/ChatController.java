@@ -13,16 +13,21 @@ import com.workmotion.app.util.Pager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.socket.messaging.SessionConnectEvent;
+import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +45,38 @@ public class ChatController {
     @Autowired
     private NotificationService notificationService;
 
+    private static List<String> connectionMembers = new ArrayList<>();
+    private static List<String> connectionChats = new ArrayList<>();
+
     private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
+
+
+    // 새로운 사용자가 웹 소켓을 연결할 때 실행됨
+    // @EventListener은 한개의 매개변수만 가질 수 있다.
+    @EventListener
+    public void handleWebSocketConnectListener(SessionConnectEvent event) {
+        StompHeaderAccessor headerAccesor = StompHeaderAccessor.wrap(event.getMessage());
+        MemberDTO memberDTO = (MemberDTO) headerAccesor.getSessionAttributes().get("member");
+//        String sessionId = headerAccesor.getSessionId();
+        String sessionId = memberDTO.getId().toString();
+
+        if (connectionMembers.contains(sessionId)) connectionChats.add(sessionId);
+        else connectionMembers.add(sessionId);
+        logger.info("sessionId Connected : " + sessionId);
+        logger.info("Received a new web socket connection");
+    }
+
+    // 사용자가 웹 소켓 연결을 끊으면 실행됨
+    @EventListener
+    public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
+        StompHeaderAccessor headerAccesor = StompHeaderAccessor.wrap(event.getMessage());
+        MemberDTO memberDTO = (MemberDTO) headerAccesor.getSessionAttributes().get("member");
+//        String sessionId = headerAccesor.getSessionId();
+        String sessionId = memberDTO.getId().toString();
+        if (connectionChats.contains(sessionId)) connectionChats.remove(sessionId);
+        else connectionMembers.remove(sessionId);
+        logger.info("sessionId Disconnected : " + sessionId);
+    }
 
     @GetMapping("/chat")
     public String getChat(Model model, RoomDTO roomDTO, HttpSession session) throws Exception {
@@ -121,7 +157,8 @@ public class ChatController {
             ObjectMapper mapper = new ObjectMapper();
             notificationDTO.setContent(mapper.writeValueAsString(notificationMessage));
             notificationService.addNotification(notificationDTO);
-            simpMessagingTemplate.convertAndSend(destination, notificationDTO);
+            if (!connectionChats.contains((memberDTO.getId().toString())))
+                simpMessagingTemplate.convertAndSend(destination, notificationDTO);
             destination = "/notification/update/" + sender.getId();
             simpMessagingTemplate.convertAndSend(destination, notificationDTO);
         }
