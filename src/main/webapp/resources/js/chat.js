@@ -210,7 +210,7 @@ function showPrevLine() {
         class="d-flex flex-row justify-content-center"
     >
         <p
-        class="small p-1 me-3 mb-2 text-white rounded-3 bg-warning"
+        class="small p-1 me-3 mb-2 mt-2 text-white rounded-3 bg-warning"
         >
             여기까지 읽었습니다.
         </p>

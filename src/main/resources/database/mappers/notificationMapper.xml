@@ -8,11 +8,14 @@
         SELECT * FROM NOTIFICATION WHERE MEMBER_ID = #{id} AND IS_READ = 0
     </select>
     <insert id="addNotification" parameterType="NotificationDTO">
+        <selectKey keyProperty="id" order="BEFORE" resultType="Long">
+            SELECT NOTIFICATION_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
         INSERT INTO NOTIFICATION (ID, MEMBER_ID, TYPE_NAME, CONTENT, "TIME", IS_READ)
-        VALUES (NOTIFICATION_SEQ.NEXTVAL, #{member_id}, #{type_name}, #{content}, CURRENT_DATE, #{is_read})
+        VALUES (#{id}, #{member_id}, #{type_name}, #{content}, CURRENT_DATE, 0)
     </insert>
     <update id="updateNotification" parameterType="Map">
-        UPDATE NOTIFICATION SET IS_READ = 1 WHERE MEMBER_ID = #{notification.member_id} AND ID IN
+        UPDATE NOTIFICATION SET IS_READ = 1 WHERE ID IN
         <foreach collection="id.split(',')" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>

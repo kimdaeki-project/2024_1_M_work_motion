@@ -490,6 +490,9 @@ prefix="c" %>
             <div id="layoutSidenav_content">
                 <main class="h-100">
                     <c:import url="/WEB-INF/views/${page}.jsp" />
+                    <div
+                        class="toast-container position-absolute top-0 end-0 p-3"
+                    ></div>
                     <button
                         type="button"
                         class="btn btn-primary position-fixed bottom-0"

@@ -7,8 +7,16 @@ public class RoomInfoDTO {
     private String room_name;
     private Date join_dt;
     private Date recently_dt;
-
+    private Long new_message_count;
     private String name;
+
+    public Long getNew_message_count() {
+        return new_message_count;
+    }
+
+    public void setNew_message_count(Long new_message_count) {
+        this.new_message_count = new_message_count;
+    }
 
     public String getName() {
         return name;

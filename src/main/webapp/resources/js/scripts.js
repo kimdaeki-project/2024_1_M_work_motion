@@ -151,6 +151,7 @@ async function openChatting({ memberId, memberName, roomName }) {
         popupWindow.onresize = (_) => {
             popupWindow.resizeTo(popupWidth, popupHeight);
         };
+        loadMessages();
     }
 }
 
@@ -159,6 +160,7 @@ async function loadMessages() {
     const response = await fetch("/chat/getRooms");
     const data = await response.json();
     const messageList = document.getElementById("messageList");
+    console.log(data);
     messageList.innerHTML = createChatRoomList(data);
     const roomItems = document.getElementsByClassName("roomItem");
     for (let i = 0; i < roomItems.length; i++) {
@@ -197,6 +199,7 @@ messageTabButton.addEventListener("click", function () {
 
 function createChatRoomList(data) {
     let html = "";
+    console.log(data);
     for (let room of data) {
         html += `
             <li class="p-2 border-bottom roomItem" data-bs-roomName=${
@@ -218,16 +221,22 @@ function createChatRoomList(data) {
                     <p class="fw-bold mb-0">${room.sender.name}</p>
                     ${
                         room.type == "message"
-                            ? `<p class="small text-muted overflow-auto" style="width:20vh; text-overflow:ellipsis;">${room.message}</p>`
-                            : "<p class='small text-muted overflow-auto' style='width:20vh; text-overflow:ellipsis;'>사진을 보냈습니다.</p>"
+                            ? `<p class="small text-muted overflow-auto" text-overflow:ellipsis;">${room.message}</p>`
+                            : "<p class='small text-muted overflow-auto' text-overflow:ellipsis;'>사진을 보냈습니다.</p>"
                     }
                     
                     </div>
                 </div>
-                <div class="pt-1">
+                <div class="pt-1 d-flex flex-column align-items-end">
                     <p class="small text-muted mb-1">${new Date(
                         room.time
                     ).toLocaleDateString("ko-KR")}</p>
+                    ${
+                        room.roomInfo?.new_message_count
+                            ? `<span class="badge rounded-pill" style="background-color:#ff5c48!important; font-weight:500">${room.roomInfo.new_message_count}</span>`
+                            : ""
+                    }
+                    
                 </div>
                 </a>
             </li>
@@ -384,7 +393,7 @@ let popoverContentStart = `
     <div class="d-flex justify-content-between m-2">
         <div class="title">알림</div>
         <div class="small text-muted">
-            <a href="#" class="link-secondary">모두 읽음</a>
+            <button onclick="readNotification()" href="#" class="list-group-item list-group-item-action">모두 지우기</button>
         </div>
     </div>
     <div class="" style="width:40vh">
@@ -395,6 +404,7 @@ let popoverContentStart = `
 let popoverContent = "";
 let popoverContentEnd = "</div>";
 let popoverHtml = document.createElement("div");
+popoverHtml.setAttribute("id", "notificationPopover");
 popoverHtml.innerHTML = popoverContentStart;
 $(function () {
     $('[data-bs-toggle="popover"]').popover({
@@ -405,10 +415,38 @@ $(function () {
     });
 });
 
+async function readNotification(id) {
+    if (!id) {
+        const notificationPopover = document.getElementById(
+            "notificationPopover"
+        );
+        const notificationItems = notificationPopover.querySelectorAll(
+            "button.notificationItem"
+        );
+        let ids = [];
+        if (notificationItems.length <= 0) return;
+        for (let i = 0; i < notificationItems.length; i++) {
+            ids.push(notificationItems[i].getAttribute("data-notificationId"));
+            notificationItems[i].remove();
+        }
+        id = ids.join(",");
+    }
+    const result = await fetch("/v1/notifications/" + id, { method: "PUT" });
+    const resultData = await result.json();
+    console.log(resultData);
+}
+
 async function getNotifications() {
     const response = await fetch("/v1/notifications");
     const data = await response.json();
     console.log(data);
+    let notificationIds = [];
+    for (let i = 0; i < data.length; i++) {
+        data[i].content = JSON.parse(data[i].content);
+        renderNotification(data[i]);
+        notificationIds.push(data[i].id);
+    }
+    // if (notificationIds.length > 0) readNotification(notificationIds.join(","));
 }
 getNotifications();
 var socket = new SockJS("/websocket-example");
@@ -419,29 +457,35 @@ stompClient.connect({}, function (frame) {
         function (outputMessage) {
             const message = JSON.parse(outputMessage.body);
             message.content = JSON.parse(message.content);
-            let html = "";
-            console.log(message);
-            switch (message.type_name) {
-                case "MESSAGE": {
-                    html = createMessageNotificationHtml(message);
-                    break;
-                }
-                case "SCHEDULE": {
-                    html = createScheduleNotificationHtml(message);
-                    break;
-                }
-                case "PROJECT": {
-                    html = createProjectNotificationHtml(message);
-                    break;
-                }
-                default: {
-                    break;
-                }
-            }
-            prependNotifications(html);
+            renderNotification(message);
+            createNotificationToast(message);
+            loadMessages();
+            stompClient.send("/app/readNotification", {}, outputMessage.body);
         }
     );
 });
+function renderNotification(message) {
+    let html = "";
+    console.log(message);
+    switch (message.type_name) {
+        case "MESSAGE": {
+            html = createMessageNotificationHtml(message);
+            break;
+        }
+        case "SCHEDULE": {
+            html = createScheduleNotificationHtml(message);
+            break;
+        }
+        case "PROJECT": {
+            html = createProjectNotificationHtml(message);
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+    prependNotifications(html);
+}
 
 function prependNotifications(html) {
     let inner = "";
@@ -456,7 +500,7 @@ function prependNotifications(html) {
 function createMessageNotificationHtml(message) {
     let html = "";
     html = `
-    <button onclick="openChatting({roomName:'${message.content.targetRoom}'})" class="list-group-item list-group-item-action d-flex align-items-center">
+    <button data-notificationId="${message.id}" onclick="openChatting({roomName:'${message.content.targetRoom}'})" class="list-group-item list-group-item-action d-flex align-items-center notificationItem">
         <i class="fa-solid fa-message m-2 pe-3"></i>
         <div class="d-flex flex-column align-items-start">
             <div>${message.content.sender}님의 메시지 "${message.content.message}"</div>
@@ -491,4 +535,42 @@ function createScheduleNotificationHtml(message) {
     </a>
     `;
     return html;
+}
+
+function createNotificationToast(message) {
+    const toastContainer =
+        document.getElementsByClassName("toast-container")[0];
+    let html = `
+    <div
+        class="toast mb-1 list-group"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+    >
+        <div class="toast-header">
+            <img
+                src="/resources/images/favicon16.png"
+                class="rounded me-2"
+                alt="..."
+            />
+            <strong class="me-auto">${message.content.sender}님의 메시지</strong>
+            <small class="text-muted">방금</small>
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="toast"
+                aria-label="Close"
+            ></button>
+        </div>
+        <button onclick="openChatting({roomName:'${message.content.targetRoom}'})" class="list-group-item list-group-item-action">
+            <div class="toast-body p-0">${message.content.message}</div>
+        </button>
+    </div>
+    `;
+    toastContainer.insertAdjacentHTML("afterbegin", html);
+    let toastEl = toastContainer.firstElementChild;
+    let toast = bootstrap.Toast.getOrCreateInstance(toastEl);
+    // var toastElList = [].slice.call(document.querySelectorAll(".toast"));
+    console.log(toast);
+    toast.show();
 }
