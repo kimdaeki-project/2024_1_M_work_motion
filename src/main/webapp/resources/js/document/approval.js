@@ -20,6 +20,15 @@ let approval_update = document.getElementById("approval-update");
 
 const approval_list = document.getElementById("approval-list");
 
+//임시저장 이미 저장되어있는 결재자 id 배열에 넣기 
+let spanElements = document.querySelectorAll('.sign_rank');
+spanElements.forEach((span, index) => {
+    const approvlaId = span.getAttribute('data-approval-id');    
+
+    a_save.push(approvlaId);
+   
+});
+console.log(a_save); 
 
 //모달창 
 a_modal.addEventListener("click", function (e) {
@@ -30,9 +39,8 @@ a_modal.addEventListener("click", function (e) {
             method: "GET"
         }).then(r => r.text())
             .then((r) => {
-
-                am.innerHTML = r;
-
+                
+                am.innerHTML = r
                 for(let i=0; i<a_save.length; i++){                   
                     
                     for(let j=0; j<check.length; j++){
@@ -44,6 +52,7 @@ a_modal.addEventListener("click", function (e) {
                         
                     }
                 }  
+                ;
 
             })
     }

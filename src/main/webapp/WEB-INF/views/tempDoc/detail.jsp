@@ -1164,7 +1164,7 @@ div.notice_type3 div.content div.wrap_notice {
                                 </span>
                                 					<span class="sign_member_wrap" id=""> <span
 									class="sign_member"> <span class="sign_rank_wrap">
-											<span class="sign_rank" data-department-id="0"
+											<span class="sign_rank" data-department-id="0" data-approval-id="${dto.approvalDTOs[0].member_id}"
 											id="approvla-department-name0">${dto.approvalDTOs[0].memberDTO.department.name}</span>
 									</span> <span class="sign_wrap"> <span class="sign_name"
 											data-name-id="0" id="approval-name0">${dto.approvalDTOs[0].memberDTO.name}</span>
@@ -1173,7 +1173,7 @@ div.notice_type3 div.content div.wrap_notice {
 								</span>
 							</span> <span class="sign_member_wrap" id=""> <span
 									class="sign_member"> <span class="sign_rank_wrap">
-											<span class="sign_rank" data-department-id="1"
+											<span class="sign_rank" data-department-id="1" data-approval-id="${dto.approvalDTOs[1].member_id}"
 											id="approvla-department-name1">${dto.approvalDTOs[1].memberDTO.department.name}</span>
 									</span> <span class="sign_wrap"> <span class="sign_name"
 											data-name-id="1" id="approval-name1">${dto.approvalDTOs[1].memberDTO.name}</span>
@@ -1182,7 +1182,7 @@ div.notice_type3 div.content div.wrap_notice {
 								</span>
 							</span> <span class="sign_member_wrap" id=""> <span
 									class="sign_member"> <span class="sign_rank_wrap">
-											<span class="sign_rank" data-department-id="2"
+											<span class="sign_rank" data-department-id="2" data-approval-id="${dto.approvalDTOs[2].member_id}"
 											id="approvla-department-name2">${dto.approvalDTOs[2].memberDTO.department.name}</span>
 									</span> <span class="sign_wrap"> <span class="sign_name"
 											data-name-id="2" id="approval-name2">${dto.approvalDTOs[2].memberDTO.name}</span>

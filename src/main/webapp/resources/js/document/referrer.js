@@ -91,7 +91,6 @@ modal.addEventListener("click",function(e){
             .then((r) => {         
 
                 rm.innerHTML = r;
-                
                 for(let i=0; i<save.length; i++){                   
                     
                     for(let j=0; j<check.length; j++){
@@ -103,6 +102,7 @@ modal.addEventListener("click",function(e){
                         
                     }
                 }   
+                
 
 
             })
