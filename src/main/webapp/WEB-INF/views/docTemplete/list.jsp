@@ -8,6 +8,7 @@
 <title>templete List</title>
 </head>
 <body>
+  <c:if test="${member.role.id eq 30 or member.role.id eq 40}">
 	<div>
 		<form class="row g-3">
 			<div class="col-auto">
@@ -28,6 +29,7 @@
 			</div>			
 		</form>
 	</div>
+	</c:if>
 
 <table class="table table-dark table-hover">
   <thead>
