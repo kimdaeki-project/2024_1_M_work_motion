@@ -41,16 +41,15 @@
 	
 	<!-- 참조자 정보  -->
 	<select id="referrerDetail" resultMap="referrerResult" parameterType="DocumentDTO">
-		SELECT R.DOCUMENT_ID  , M.NAME  FROM REFERRER R 
+		SELECT R.DOCUMENT_ID DOCUMENT_ID, M.NAME name, R.MEMBER_ID MEMBER_ID FROM REFERRER R 
 			  RIGHT JOIN MEMBER M
 		      ON(R.MEMBER_ID = M.ID)
 		WHERE DOCUMENT_ID = #{id}
 	</select>
 	<resultMap type="referrerDTO" id="referrerResult">
-		<id column="DOCUMENT_ID" property="document_id" />
-		<id column="MEMBER_ID" property="member_id" />
-		<association property="memberDTO" javaType="MemberDTO">
-			<id column="ID" property="id"/>
+		<result column="DOCUMENT_ID" property="document_id" />
+		<result column="MEMBER_ID" property="member_id" />
+		<association property="memberDTO" javaType="MemberDTO">					
 			<result column="NAME" property="name"/>
 		</association>			
 	</resultMap>

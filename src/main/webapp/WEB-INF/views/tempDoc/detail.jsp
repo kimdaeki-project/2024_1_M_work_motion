@@ -1310,8 +1310,11 @@ div.notice_type3 div.content div.wrap_notice {
 						참조자</td>
 					<td id="budgetTeamInfo"
 						style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; border-image: none; height: 10px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;">
-						<input type="text" class="form-control" id="referrer" value="">
-						<input type="hidden" id="member_id_add" name="referrer"> <!-- Button trigger modal -->
+						
+						<input type="text" class="form-control" data-referrer-name="" id="referrer" value="">	
+												
+						<input type="hidden" id="member_id_add" name="referrer">
+						 
 						<button type="button" class="btn btn-primary modal-btn"
 							data-bs-toggle="modal" data-bs-target="#referrerModal">
 							직원리스트</button> <!-- 참조자 Modal -->
@@ -1496,7 +1499,7 @@ div.notice_type3 div.content div.wrap_notice {
 			let referrerString = referrerValues.join(', ');
 
 			// 결합된 문자열을 <input> 요소의 값으로 설정
-			document.getElementById("referrer").value = referrerString;
+			document.getElementById("referrer").value = referrerString;			
 		};
 	</script>
 	<script src="/resources/js/document/referrer.js"></script>

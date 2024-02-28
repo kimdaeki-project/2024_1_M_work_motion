@@ -36,7 +36,8 @@ public class DocumentController {
 	}	
 	
 	@GetMapping("temporarySaveDetail")
-	public String getTempDocDetail(DocumentDTO documentDTO,Model model)throws Exception{		
+	public String getTempDocDetail(DocumentDTO documentDTO,Model model)throws Exception{
+		System.out.println("dddd");
 		documentDTO = documentService.getDetail(documentDTO);		
 		model.addAttribute("dto",documentDTO);	
 		model.addAttribute("page", "tempDoc/detail");

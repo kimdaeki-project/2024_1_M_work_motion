@@ -29,10 +29,16 @@ public class DocumentService {
 	
 	//서류 자세히보기
 	public DocumentDTO getDetail(DocumentDTO documentDTO)throws Exception{		
-		
+		try {
 		documentDTO = documentDAO.getDetail(documentDTO);				
 		documentDTO.setApprovalDTOs(documentDAO.approvalDetail(documentDTO));		
 		documentDTO.setReferrerDTOs(documentDAO.referrerDetail(documentDTO));		
+		
+		System.out.println(documentDTO.getReferrerDTOs().size());
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 		
 		return documentDTO;
 		
