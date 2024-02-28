@@ -155,7 +155,7 @@ a {
 			class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
 			<div class="input-group">
 				<div class=" me-2">
-					<c:if test="${member.role_id == 50}">
+					<c:if test="${member.role_id == 40}">
 						<c:if test="${!empty check}">
 							<a href="/product/list"><button type="button"
 									class="btn btn-primary">현재 구독서비스 이용중입니다(${toss}주남음)</button></a>
@@ -253,7 +253,7 @@ a {
 									<nav class="sb-sidenav-menu-nested nav">
 										<a class="nav-link" href="/approval/list">결재함</a> <a
 											class="nav-link" href="/document/list">발신함</a> <a
-											class="nav-link" href="/receiver/list">참조함</a>
+											class="nav-link" href="/referrer/list">참조함</a>
 									</nav>
 								</div>
 							</nav>
