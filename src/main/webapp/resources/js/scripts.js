@@ -151,7 +151,6 @@ async function openChatting({ memberId, memberName, roomName }) {
         popupWindow.onresize = (_) => {
             popupWindow.resizeTo(popupWidth, popupHeight);
         };
-        loadMessages();
     }
 }
 
@@ -170,24 +169,25 @@ async function loadMessages() {
                 "/chat/getRoom?room_name=" + room_name
             );
             const data = await response.json();
-            if (response.status == 200) {
-                var popupWidth = 400;
-                var popupHeight = 700;
+            openChatting({ roomName: room_name });
+            // if (response.status == 200) {
+            //     var popupWidth = 400;
+            //     var popupHeight = 700;
 
-                var popupX = window.screen.width / 2 - popupWidth / 2;
-                // 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
+            //     var popupX = window.screen.width / 2 - popupWidth / 2;
+            //     // 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
 
-                var popupY = window.screen.height / 2 - popupHeight / 2;
-                const popupWindow = window.open(
-                    "/chat?name=" + room_name,
-                    "",
-                    `toolbar=no, menubar=no,scrollbars=no,resizable=no, width=${popupWidth}, height=${popupHeight}, left=${popupX},top=${popupY}`
-                );
-                popupWindow.resizeTo(popupWidth, popupHeight);
-                popupWindow.onresize = (_) => {
-                    popupWindow.resizeTo(popupWidth, popupHeight);
-                };
-            }
+            //     var popupY = window.screen.height / 2 - popupHeight / 2;
+            //     const popupWindow = window.open(
+            //         "/chat?name=" + room_name,
+            //         "",
+            //         `toolbar=no, menubar=no,scrollbars=no,resizable=no, width=${popupWidth}, height=${popupHeight}, left=${popupX},top=${popupY}`
+            //     );
+            //     popupWindow.resizeTo(popupWidth, popupHeight);
+            //     popupWindow.onresize = (_) => {
+            //         popupWindow.resizeTo(popupWidth, popupHeight);
+            //     };
+            // }
         });
     }
 }
@@ -461,6 +461,12 @@ stompClient.connect({}, function (frame) {
             createNotificationToast(message);
             loadMessages();
             stompClient.send("/app/readNotification", {}, outputMessage.body);
+        }
+    );
+    stompClient.subscribe(
+        "/notification/update/" + member_id,
+        function (outputMessage) {
+            loadMessages();
         }
     );
 });

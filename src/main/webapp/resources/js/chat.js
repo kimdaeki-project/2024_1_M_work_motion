@@ -158,6 +158,7 @@ async function getMessage() {
     );
     const data = await response.json();
     if (response.status == 200) {
+        readMessage();
         return data;
     }
     return null;

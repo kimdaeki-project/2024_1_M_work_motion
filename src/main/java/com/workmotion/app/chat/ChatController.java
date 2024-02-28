@@ -122,15 +122,20 @@ public class ChatController {
             notificationDTO.setContent(mapper.writeValueAsString(notificationMessage));
             notificationService.addNotification(notificationDTO);
             simpMessagingTemplate.convertAndSend(destination, notificationDTO);
+            destination = "/notification/update/" + sender.getId();
+            simpMessagingTemplate.convertAndSend(destination, notificationDTO);
         }
     }
 
     @MessageMapping("/readMessage")
-    public void readMessage(MessageDTO message) throws Exception {
+    public void readMessage(MessageDTO message, SimpMessageHeaderAccessor accessor) throws Exception {
+        MemberDTO sender = (MemberDTO) accessor.getSessionAttributes().get("member");
         RoomInfoDTO roomInfoDTO = new RoomInfoDTO();
         roomInfoDTO.setRoom_name(message.getRoom_name());
         roomInfoDTO.setMember_id(message.getSender_id());
         chatService.updateRoomInfo(roomInfoDTO);
+        String destination = "/notification/update/" + sender.getId();
+        simpMessagingTemplate.convertAndSend(destination, message);
     }
 
     @GetMapping("/chat/members/{member_id}")

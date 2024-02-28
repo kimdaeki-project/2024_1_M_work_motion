@@ -82,7 +82,7 @@
         SELECT rm.ROOM_NAME, COUNT(msg.MESSAGE) AS NEW_MESSAGE_COUNT
         FROM MESSAGE msg
         JOIN ROOM_MEMBER rm ON msg.ROOM_NAME = rm.ROOM_NAME
-        WHERE msg."TIME" > rm.RECENTLY_DT
+        WHERE msg."TIME" > rm.RECENTLY_DT AND SENDER_ID != #{id}
         GROUP BY rm.ROOM_NAME
         ),
         RoomsWithMember AS (
