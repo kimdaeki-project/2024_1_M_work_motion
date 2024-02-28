@@ -11,7 +11,7 @@ let save_department_name = [];
 let a_count = 0;
 const a_max = 3;
 
-let nextIndex = 0;
+
 let usedIndices = []; //사용된 인덱스 추적하는 배열 
 let deletedIndices = []; // 삭제된 인덱스를 추적하는 배열
 
@@ -22,13 +22,22 @@ const approval_list = document.getElementById("approval-list");
 
 //임시저장 이미 저장되어있는 결재자 id 배열에 넣기 
 let spanElements = document.querySelectorAll('.sign_rank');
-spanElements.forEach((span, index) => {
-    const approvlaId = span.getAttribute('data-approval-id');    
 
-    a_save.push(approvlaId);
+spanElements.forEach((span) => {
+    const approvlaId = span.getAttribute('data-approval-id');
+    const departmentName = span.getAttribute('data-department-name');
+    const memberName = span.getAttribute('data-member-name');
+    const indexId = span.getAttribute('data-department-id');    
+
+    if (approvlaId.trim() !== '') {
+        a_save.push(approvlaId);
+        a_save_name.push(memberName + ',' + indexId);
+        save_department_name.push(departmentName + ',' + indexId);
+        usedIndices.push(parseInt(indexId));
+        
+    }
    
 });
-console.log(a_save); 
 
 //모달창 
 a_modal.addEventListener("click", function (e) {
@@ -122,8 +131,8 @@ am.addEventListener("click", (e) => {
                 return;
             }
 
-            function getNextIndex() {
-
+            function getNextIndex() {                   
+                
                 for (let i = 0; i < 3; i++) {
                     if (!usedIndices.includes(i) || deletedIndices.includes(i)) {
                         if (deletedIndices.includes(i)) {
@@ -134,7 +143,8 @@ am.addEventListener("click", (e) => {
                         return i;
                     }
                 }
-                return -1; // 모든 인덱스가 사용되었음을 나타내는 값
+	            return -1; // 모든 인덱스가 사용되었음을 나타내는 값
+
             }
 
             //member id 값 배열에 저장
