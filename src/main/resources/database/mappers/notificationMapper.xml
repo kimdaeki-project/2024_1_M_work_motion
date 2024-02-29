@@ -19,5 +19,8 @@
         <foreach collection="id.split(',')" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
+        <if test="notification != null and 'MESSAGE'.equals(notification.type_name)">
+            OR MEMBER_ID = #{notification.member_id} AND CONTENT LIKE '%' || #{notification.content} || '%'
+        </if>
     </update>
 </mapper>

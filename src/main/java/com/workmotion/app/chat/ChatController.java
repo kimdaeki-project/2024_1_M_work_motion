@@ -60,10 +60,15 @@ public class ChatController {
 //        String sessionId = headerAccesor.getSessionId();
         String sessionId = memberDTO.getId().toString();
 
-        if (connectionMembers.contains(sessionId)) connectionChats.add(sessionId);
-        else connectionMembers.add(sessionId);
-        logger.info("sessionId Connected : " + sessionId);
-        logger.info("Received a new web socket connection");
+        if (connectionMembers.contains(sessionId)) {
+            connectionChats.add(sessionId);
+            logger.info("체팅 세션 연결됨 : " + sessionId);
+        } else {
+            connectionMembers.add(sessionId);
+            logger.info("멤버 세션 연결됨 : " + sessionId);
+        }
+        ;
+
     }
 
     // 사용자가 웹 소켓 연결을 끊으면 실행됨
@@ -73,9 +78,15 @@ public class ChatController {
         MemberDTO memberDTO = (MemberDTO) headerAccesor.getSessionAttributes().get("member");
 //        String sessionId = headerAccesor.getSessionId();
         String sessionId = memberDTO.getId().toString();
-        if (connectionChats.contains(sessionId)) connectionChats.remove(sessionId);
-        else connectionMembers.remove(sessionId);
-        logger.info("sessionId Disconnected : " + sessionId);
+        if (connectionChats.contains(sessionId)) {
+            connectionChats.remove(sessionId);
+            logger.info("체팅 세션 연결 종료 : " + sessionId);
+        } else {
+            connectionMembers.remove(sessionId);
+            logger.info("멤버 세션 연결 종료 : " + sessionId);
+            logger.info("멤버 세션 연결 종료 : " + sessionId);
+        }
+
     }
 
     @GetMapping("/chat")
@@ -156,11 +167,13 @@ public class ChatController {
             destination = "/notification/messages/" + memberDTO.getId();
             ObjectMapper mapper = new ObjectMapper();
             notificationDTO.setContent(mapper.writeValueAsString(notificationMessage));
-            notificationService.addNotification(notificationDTO);
-            if (!connectionChats.contains((memberDTO.getId().toString())))
+
+            if (!connectionChats.contains((memberDTO.getId().toString()))) {
+                notificationService.addNotification(notificationDTO);
                 simpMessagingTemplate.convertAndSend(destination, notificationDTO);
-            destination = "/notification/update/" + sender.getId();
-            simpMessagingTemplate.convertAndSend(destination, notificationDTO);
+                destination = "/notification/update/" + sender.getId();
+                simpMessagingTemplate.convertAndSend(destination, notificationDTO);
+            }
         }
     }
 
@@ -170,9 +183,18 @@ public class ChatController {
         RoomInfoDTO roomInfoDTO = new RoomInfoDTO();
         roomInfoDTO.setRoom_name(message.getRoom_name());
         roomInfoDTO.setMember_id(message.getSender_id());
-        chatService.updateRoomInfo(roomInfoDTO);
-        String destination = "/notification/update/" + sender.getId();
-        simpMessagingTemplate.convertAndSend(destination, message);
+        NotificationDTO notificationDTO = new NotificationDTO();
+        notificationDTO.setMember_id(roomInfoDTO.getMember_id());
+        notificationDTO.setType_name("MESSAGE");
+        notificationDTO.setContent(roomInfoDTO.getRoom_name());
+        if (connectionChats.contains(sender.getId().toString())) {
+            notificationService.updateNotification(notificationDTO, "1");
+            chatService.updateRoomInfo(roomInfoDTO);
+            String destination = "/notification/update/" + sender.getId();
+            simpMessagingTemplate.convertAndSend(destination, message);
+        }
+
+
     }
 
     @GetMapping("/chat/members/{member_id}")

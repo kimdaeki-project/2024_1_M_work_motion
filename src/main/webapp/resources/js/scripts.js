@@ -446,6 +446,10 @@ async function getNotifications() {
         renderNotification(data[i]);
         notificationIds.push(data[i].id);
     }
+    if (data.length == 0) {
+        popoverContent = "";
+        prependNotifications("");
+    }
     // if (notificationIds.length > 0) readNotification(notificationIds.join(","));
 }
 getNotifications();
@@ -460,13 +464,14 @@ stompClient.connect({}, function (frame) {
             renderNotification(message);
             createNotificationToast(message);
             loadMessages();
-            stompClient.send("/app/readNotification", {}, outputMessage.body);
+            //stompClient.send("/app/readNotification", {}, outputMessage.body);
         }
     );
     stompClient.subscribe(
         "/notification/update/" + member_id,
         function (outputMessage) {
             loadMessages();
+            getNotifications();
         }
     );
 });
@@ -499,7 +504,7 @@ function prependNotifications(html) {
     inner = popoverContentStart;
     inner += popoverContent;
     inner += popoverContentEnd;
-
+    console.log(inner);
     popoverHtml.innerHTML = inner;
 }
 
