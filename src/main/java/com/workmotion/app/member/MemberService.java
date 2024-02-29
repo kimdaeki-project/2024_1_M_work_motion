@@ -80,7 +80,10 @@ public class MemberService {
     public int getjoin(MemberDTO memberDTO) throws Exception {
         return memberDAO.createMember(memberDTO);
     }
-    public MemberDTO getCompanyMember(MemberDTO memberDTO) throws Exception {
+    public List<MemberDTO> getCompanyMember(MemberDTO memberDTO) throws Exception {
     	return memberDAO.getCompanyMember(memberDTO);
+    }
+    public MemberDTO findPassWord(MemberDTO memberDTO) throws Exception {
+    	return memberDAO.findPassWord(memberDTO);
     }
 }

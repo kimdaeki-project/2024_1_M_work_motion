@@ -4,6 +4,7 @@ package com.workmotion.app.member;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Random;
 import java.util.StringTokenizer;
 
@@ -49,7 +50,7 @@ public class MemberController {
 	public int findPassWord(MemberDTO memberDTO,Model model) throws Exception {
 		int result = 0;
 		if(memberDTO != null) {
-			MemberDTO m = memberService.detailMember(memberDTO);			
+			MemberDTO m = memberService.findPassWord(memberDTO);			
 			if(m !=null) {   // 존재하는 아이디면
 				Random r = new Random();
 				int num = r.nextInt(999999);  //랜덤 난수 6자리
@@ -72,11 +73,11 @@ public class MemberController {
 				mailSenderNaver.send(msg);
 				result = 2;
 				String sum = "abcd"+num;
-				String hashpassword = BCrypt.hashpw(sum, BCrypt.gensalt());
+				String hashpassword = BCrypt.hashpw(sum, BCrypt.gensalt());  //임시 비밀번호 저장
 				m.setPassword(hashpassword);
 				memberService.updateMember(m);
 				return result;
-			}else {//존재하지 않는 이메일인 경우 -> 가입되지 않은 사용자 -> 회원가입 할래?
+			}else {//존재하지 않는 이메일인 경우 -> 가입되지 않은 사용자
 				return result = 1;
 				}		
 		}else {		// 파라미터가 들어오지 않을 경우
@@ -227,20 +228,18 @@ public class MemberController {
         companyDTO.setInfo(br.nextToken());
         CompanyDTO cdto = memberService.companyIdFind(companyDTO); //그룹명으로 회사 아이디 검색
         int result = 0;
-        if(cdto != null) {  			//회사가 있는지 없는지
+        if(cdto != null) {  										//회사가 있는지 없는지
         	memberDTO.setCompany_id(cdto.getId());	        	
-        	MemberDTO cr = memberService.getCompanyMember(memberDTO);
-        	if(cr != null) {    	// 첫가입자 OWNER
+        	List<MemberDTO> cr = memberService.getCompanyMember(memberDTO);
+        	if(cr != null) {    										// 사원계급
         		memberDTO.setRole_id(10L);
         		result = memberService.getjoin(memberDTO);
         		memberService.setFileAdd(memberDTO);        
-        		result = 1;
-        	}else{ 				//그다음 가입자 사원계급			
+        	}else{ 														//OWNER 계급		
         		memberDTO.setRole_id(40L);
         		memberDTO.setCompany_id(cdto.getId());	
         		result = memberService.getjoin(memberDTO);
         		memberService.setFileAdd(memberDTO);  
-        		result =1;
         	}
         }
         	
