@@ -12,7 +12,9 @@
 		<tr id="tr1">
 			<th scope="col">No</th>
 			<th scope="col">Title</th>
+			<c:if test="${category_id ne 2}">
 			<th scope="col">writer</th>
+			</c:if>
 			<th scope="col">Views</th>			
 			<th scope="col">Date</th>
 		</tr>
@@ -24,7 +26,9 @@
 				<td class="tr">${dto.ID}</td>
 				<td class="listTitle"><a id="${dto.ID}" class="hihello"
 					href="./detail?id=${dto.ID}&category_ID=${dto.CATEGORY_ID}">${dto.TITLE}</a></td>
+				<c:if test="${category_id ne 2}">
 				<td class="tr">${dto.WRITER}</td>
+					</c:if>
 				<td class="tr"><i class="fa-solid fa-eye"></i> ${dto.VIEWS}</td>
 				<td class="tr">${dto.CREATE_DT}</td>
 			</tr>
