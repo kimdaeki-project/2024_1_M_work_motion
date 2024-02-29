@@ -10,8 +10,17 @@ public class BoardDTO {
 	private Long views;
 	private Date create_dt;
 	private Long category_id;
+	private String writer;
 	
 	
+	
+	
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
 	public Long getId() {
 		return id;
 	}

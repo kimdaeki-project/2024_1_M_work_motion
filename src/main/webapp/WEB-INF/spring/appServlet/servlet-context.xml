@@ -50,26 +50,24 @@
 			<exclude-mapping path="/member/*"/>
 			<exclude-mapping path="/company/join"/>
 			<exclude-mapping path="/resources/js/**/*"/>
-			<exclude-mapping path="/resources/css/**/*"/>
 			<beans:ref bean="MemberInterceptor"/>
 		</interceptor>
 		
 		<interceptor>
 			<mapping path="/company/*"/>
-			<exclude-mapping path="/company/join"/>
 			<beans:ref bean="Company"/>
 			
 		</interceptor>
 		
-		<interceptor>
-		<mapping path="/board/*" />
+<!-- 		<interceptor>
+		<mapping path="/board/notice" />
 		<exclude-mapping path="/board/list"/>
 		<exclude-mapping path="/board/detail"/>
 		<exclude-mapping path="/board/create"/>
 		<exclude-mapping path="/board/update"/>
 
 		<beans:ref bean="Notice"/>
-		</interceptor>
+		</interceptor> -->
 
 
 	
