@@ -12,7 +12,8 @@
 		<tr id="tr1">
 			<th scope="col">No</th>
 			<th scope="col">Title</th>
-			<th scope="col">Views</th>
+			<th scope="col">writer</th>
+			<th scope="col">Views</th>			
 			<th scope="col">Date</th>
 		</tr>
 	</thead>
@@ -23,6 +24,7 @@
 				<td class="tr">${dto.ID}</td>
 				<td class="listTitle"><a id="${dto.ID}" class="hihello"
 					href="./detail?id=${dto.ID}&category_ID=${dto.CATEGORY_ID}">${dto.TITLE}</a></td>
+				<td class="tr">${dto.WRITER}</td>
 				<td class="tr"><i class="fa-solid fa-eye"></i> ${dto.VIEWS}</td>
 				<td class="tr">${dto.CREATE_DT}</td>
 			</tr>

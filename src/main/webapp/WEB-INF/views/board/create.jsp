@@ -12,6 +12,7 @@
 			rows="3"></textarea>
 	</div>
 	<input type="hidden" name="category_id" value="${category.id}">
+	<input type="hidden" name="writer" value="${member.name}">
 	<button type="submit" class="btn btn-primary">등록하기</button>
 </form>
 

@@ -17,6 +17,7 @@ public class NoticeInterceptor extends HandlerInterceptorAdapter{
 	 HttpSession session = request.getSession();
 	 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 	 
+	 
 	 if(memberDTO.getRole_id() == 40 || memberDTO.getRole_id() == 30) {
 		 
 		 return true;

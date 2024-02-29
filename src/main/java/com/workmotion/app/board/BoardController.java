@@ -78,14 +78,16 @@ public class BoardController {
 	}
 	
 	@PostMapping("create")
-	public String create(BoardDTO boardDTO,Model model) throws Exception{
-
+	public String create(HttpSession session,BoardDTO boardDTO,Model model) throws Exception{
+	
+	MemberDTO memberDTO	= (MemberDTO)session.getAttribute("member");
 		 int result = boardService.create(boardDTO);
 		
 		String msg = "실패";
 		if (result > 0) {
 			msg = "성공";
 		}
+		model.addAttribute("member", memberDTO);
 		model.addAttribute("msg", msg);
 		model.addAttribute("path", "/board/list?id="+boardDTO.getCategory_id());
 		
@@ -115,13 +117,16 @@ public class BoardController {
 		return "index";
 	}
 	@PostMapping("update")
-	public String setUpdatePost(BoardDTO boardDTO, Model model) throws Exception{
+	public String setUpdatePost(HttpSession session,BoardDTO boardDTO, Model model) throws Exception{
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		
 		int result = boardService.setUpdate(boardDTO);
 		
 		String msg = "실패";
 		if (result > 0) {
 			msg = "성공";
 		}
+		model.addAttribute("member", memberDTO);
 		model.addAttribute("msg", msg);
 		model.addAttribute("path", "/board/detail?id="+boardDTO.getId());
 		

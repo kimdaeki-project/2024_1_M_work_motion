@@ -59,15 +59,15 @@
 			
 		</interceptor>
 		
-		<interceptor>
-		<mapping path="/board/*" />
+<!-- 		<interceptor>
+		<mapping path="/board/notice" />
 		<exclude-mapping path="/board/list"/>
 		<exclude-mapping path="/board/detail"/>
 		<exclude-mapping path="/board/create"/>
 		<exclude-mapping path="/board/update"/>
 
 		<beans:ref bean="Notice"/>
-		</interceptor>
+		</interceptor> -->
 
 
 	
