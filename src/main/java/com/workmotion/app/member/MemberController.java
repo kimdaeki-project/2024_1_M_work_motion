@@ -59,7 +59,7 @@ public class MemberController {
 				String social = email.substring(email.indexOf('@')+1, email.indexOf('.'));
 				String setFrom = "devksk7@naver.com";//발신자 이메일
 				String tomail = memberDTO.getEmail();
-				String title = "WorkMotion 비밀번호 변경 인증 이메일입니다";
+				String title = "WorkMotion 비밀번호 변경 이메일입니다";
 				sb.append(String.format("안녕하세요 %s님\n",memberDTO.getName()));
 				sb.append(String.format("WorkMotion 비밀번호: 임시 비밀 번호는 abcd%d입니다.", num));
 				String content = sb.toString();
