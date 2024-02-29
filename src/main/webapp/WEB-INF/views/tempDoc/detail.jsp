@@ -1503,7 +1503,7 @@ div.notice_type3 div.content div.wrap_notice {
 		};
 	</script>
 	<script src="/resources/js/document/referrer.js"></script>
-	<script src="/resources/js/document/approval.js"></script>
+	<script src="/resources/js/document/approvalSave.js"></script>
 
 </body>
 

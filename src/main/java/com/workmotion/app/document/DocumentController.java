@@ -35,6 +35,8 @@ public class DocumentController {
 		return "index";		
 	}	
 	
+	
+	
 	@GetMapping("temporarySaveDetail")
 	public String getTempDocDetail(DocumentDTO documentDTO,Model model)throws Exception{
 		System.out.println("dddd");
@@ -46,7 +48,7 @@ public class DocumentController {
 	}
 	
 	
-	//문서 종류 리스트 
+	// 서류 리스트 
 	@GetMapping("list")
 	public String getDocumentList(HttpSession session,Model model,Pager pager)throws Exception{
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");

@@ -7,7 +7,7 @@
 
 	<!-- 서류 자세히보기 -->
 	<select id="getDetail" resultMap="getDetailResult" parameterType="DocumentDTO">
-		SELECT D.*,M.NAME MEMBER_NAME,P.NAME POSITION_NAME,DF.ORI_NAME,DF.NAME  FROM DOCUMENT D
+		SELECT D.*,M.ID MID,M.NAME MEMBER_NAME,P.ID PID,P.NAME POSITION_NAME,DF.ID DFID,DF.ORI_NAME,DF.NAME  FROM DOCUMENT D
 			RIGHT JOIN MEMBER M
 			ON (D.MEMBER_ID = M.ID)
 			RIGHT JOIN POSITION P
@@ -25,15 +25,15 @@
 		<result column="MEMBER_ID" property="member_id" />
 		<result column="FILE_RANDOMNAME" property="file_randomname"/>
 			<association property="memberDTO" javaType="MemberDTO">
-				<id column="ID" property="id"/>
+				<id column="MID" property="id"/>
 				<result column="MEMBER_NAME" property="name"/>
 				<association property="position" javaType="PositionDTO">
-					<id column="ID" property="id"/>
+					<id column="PID" property="id"/>
 					<result column="POSITION_NAME" property="name"/>
 				</association>
 			</association>
 			<collection property="documentFileDTOs" javaType="List" ofType="DocumentFileDTO">
-				<id column="ID" property="id" />
+				<id column="DFID" property="id" />
 				<result column="ORI_NAME" property="ori_name"/>
 				<result column="NAME" property="name"/>
 			</collection>		
@@ -129,7 +129,7 @@
 		SELECT * FROM
 		(SELECT ROWNUM T,DT.*FROM
 		(
-		SELECT D.ID,D.TITLE,D.CREATE_DT,T.FILE_NM FROM DOCUMENT D
+		SELECT D.ID DID,D.TITLE,D.CREATE_DT,T.ID TID,T.FILE_NM FROM DOCUMENT D
 		FULL JOIN TEMPLETE T
 		ON (D.TEMPLETE_ID = T.ID)
 		<include refid="search"></include>
@@ -139,11 +139,11 @@
 		WHERE T BETWEEN #{startRow} AND #{lastRow}
 	</select>
 	<resultMap type="DocumentDTO" id="getDocumentResult">
-		<id column="ID" property="id" />
+		<id column="DID" property="id" />
 		<result column="TITLE" property="title" />
 		<result column="CREATE_DT" property="create_dt" />
 		<association property="templeteDTO" javaType="TempleteDTO">
-			<id column="ID" property="id" />
+			<id column="TID" property="id" />
 			<result column="FILE_NM" property="file_nm" />
 		</association>
 	</resultMap>
