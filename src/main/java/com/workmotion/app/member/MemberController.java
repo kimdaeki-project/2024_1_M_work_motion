@@ -4,13 +4,18 @@ package com.workmotion.app.member;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Random;
 import java.util.StringTokenizer;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +40,67 @@ public class MemberController {
 	private MemberService memberService;
 	@Autowired
 	private TossPaymentService tossPaymentService;
-
+	@Autowired
+	private JavaMailSender mailSenderNaver;
+	
+	
+	@ResponseBody
+	@PostMapping("findPassWord")
+	public int findPassWord(MemberDTO memberDTO,Model model) throws Exception {
+		int result = 0;
+		if(memberDTO != null) {
+			MemberDTO m = memberService.detailMember(memberDTO);			
+			if(m !=null) {   // 존재하는 아이디면
+				Random r = new Random();
+				int num = r.nextInt(999999);  //랜덤 난수 6자리
+				StringBuilder sb = new StringBuilder();
+				String email = m.getEmail();
+				String social = email.substring(email.indexOf('@')+1, email.indexOf('.'));
+				String setFrom = "devksk7@naver.com";//발신자 이메일
+				String tomail = memberDTO.getEmail();
+				String title = "WorkMotion 비밀번호 변경 인증 이메일입니다";
+				sb.append(String.format("안녕하세요 %s님\n",memberDTO.getName()));
+				sb.append(String.format("WorkMotion 비밀번호: 임시 비밀 번호는 abcd%d입니다.", num));
+				String content = sb.toString();
+				MimeMessage msg = mailSenderNaver.createMimeMessage();
+				MimeMessageHelper msgHelper = new MimeMessageHelper(msg, true, "utf-8");
+				msgHelper.setFrom(setFrom);
+				msgHelper.setTo(tomail);
+				msgHelper.setSubject(title);
+				msgHelper.setText(content);
+				// 메일 전송
+				mailSenderNaver.send(msg);
+				result = 2;
+				String sum = "abcd"+num;
+				String hashpassword = BCrypt.hashpw(sum, BCrypt.gensalt());
+				m.setPassword(hashpassword);
+				memberService.updateMember(m);
+				return result;
+			}else {//존재하지 않는 이메일인 경우 -> 가입되지 않은 사용자 -> 회원가입 할래?
+				return result = 1;
+				}		
+		}else {		// 파라미터가 들어오지 않을 경우
+				result = 0;
+			return result;
+		}
+		}
+		
+		
+	
+	
+	@PostMapping("findId")
+	@ResponseBody
+	public String findId(MemberDTO memberDTO) throws Exception {
+		String msg ="" ;
+		if(memberDTO!=null) {
+			memberDTO = memberService.findId(memberDTO);
+			if(memberDTO !=null) {
+				msg = memberDTO.getEmail();				
+			}
+		}
+		return msg; 
+	}
+	
 	@ResponseBody
 	@PostMapping("pwCheck")
 	public int pwCheck(HttpSession session, String pass, MemberDTO memberDTO) throws Exception {

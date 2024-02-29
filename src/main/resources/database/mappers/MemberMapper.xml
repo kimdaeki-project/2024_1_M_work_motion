@@ -6,6 +6,10 @@
 <mapper namespace="com.workmotion.app.member.MemberDAO">
 
 	
+	<!-- 아이디 찾기 -->
+	<select id="findId" parameterType="MemberDTO" resultType="MemberDTO">
+	SELECT * FROM member WHERE name = #{name} AND PHONE = #{phone}
+	</select>
 	<!--회원가입시 회사에서 멤버검색 -->
 	<select id="getCompanyMember" parameterType="MemberDTO" resultType="MemberDTO">
 	SELECT * FROM MEMBER WHERE COMPANY_ID = #{company_id}
