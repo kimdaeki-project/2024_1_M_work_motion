@@ -9,7 +9,7 @@ prefix="c" %>
 
 <div
     class="container p-0 pt-3"
-    id="container"
+    id="edit_container"
     data-bs-projectId="${project.id}"
     style="width: 80%;"
 >
