@@ -6,7 +6,6 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
     #container {
         display: flex;
         width: 100%;
-        justify-content: center;
         flex-direction: column;
         padding: 20px;
     }
