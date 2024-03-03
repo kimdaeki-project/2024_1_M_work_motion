@@ -38,7 +38,7 @@
 
 	<insert id="create" parameterType="BoardDTO">
 		INSERT INTO BOARD
-		VALUES(BOARD_SEQ.NEXTVAL,#{title},#{content},0,CURRENT_DATE,41,#{category_id})
+		VALUES(BOARD_SEQ.NEXTVAL,#{title},#{content},0,CURRENT_DATE,41,#{category_id},#{writer})
 	</insert>
 
 	<update id="getViews" parameterType="BoardDTO">

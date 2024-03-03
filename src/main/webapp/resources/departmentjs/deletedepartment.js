@@ -1,4 +1,4 @@
-console.log("ddddd")
+
 let checks = document.getElementsByClassName("checks");
 let deletebtn = document.getElementById("deleteDepartment");
 let department_id = document.getElementsByClassName("id");

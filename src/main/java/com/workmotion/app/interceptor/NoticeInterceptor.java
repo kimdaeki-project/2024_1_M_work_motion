@@ -17,12 +17,11 @@ public class NoticeInterceptor extends HandlerInterceptorAdapter{
 	 HttpSession session = request.getSession();
 	 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 	 
-	 System.out.println("여기는 노티스인터셉터");
+	 
 	 if(memberDTO.getRole_id() == 40 || memberDTO.getRole_id() == 30) {
 		 
 		 return true;
 	 }else {
-		 System.out.println("여기는 노티스인터셉터 if문 안");	 
 		 request.setAttribute("msg", "권한이 없습니다");
 		 request.setAttribute("path", "/board/list");
 		 request.setAttribute("page", "commons/result");

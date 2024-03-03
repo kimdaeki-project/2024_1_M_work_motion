@@ -36,20 +36,6 @@ public class ProductController {
 	@GetMapping("list")
 	public String getList(HttpSession session,Pager pager, Model model)throws Exception {
 		 List<ProductDTO> ar = productService.getList(pager);
-//		 if 0 (X)
-//		 session "no" "no"
-//		 else 
-//			
-//			 
-//			 ${no is not empty}
-//			 	alert (ehsso)
-//			 	location( rufwpckd)
-//		 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-//		TossPaymentDTO tossPaymentDTO = new TossPaymentDTO();
-//		tossPaymentDTO.setMember_id(memberDTO.getId());
-//		TossPaymentService tossPaymentService = new TossPaymentService();
-//		tossPaymentDTO = tossPaymentService.getTossPaymentDetail(tossPaymentDTO);
-//		 System.out.println(tossPaymentDTO.getCreate_dt());
 		 model.addAttribute("list", ar);
 		 model.addAttribute("page", "product/list");
 		 model.addAttribute("pager", pager);
@@ -65,7 +51,6 @@ public class ProductController {
 	
 	model.addAttribute("detail", productDTO);
 	model.addAttribute("page", "/product/detail");
-	System.out.println(productDTO.getPeriod());
 	return "index";
 		
 	}
@@ -75,7 +60,6 @@ public class ProductController {
 		 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		 CompanyDTO companyDTO = new CompanyDTO();
 		 companyDTO = productService.getPaymentDetail(memberDTO);
-		System.out.println(productDTO.getPeriod());
 		 model.addAttribute("product", productDTO);
 		model.addAttribute("company", companyDTO);
 		model.addAttribute("page", "/commons/payment");

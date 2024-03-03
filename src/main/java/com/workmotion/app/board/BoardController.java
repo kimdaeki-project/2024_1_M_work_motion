@@ -24,29 +24,26 @@ public class BoardController {
 
 	@GetMapping("list")
 	public String getBoardList(CategoryDTO categoryDTO, Pager pager, Model model) throws Exception {
-		throw new Exception("adssad");
+
 		
-//		System.out.println(categoryDTO.getName());
-//		System.out.println(categoryDTO.getId());
-//		model.addAttribute("category_id", categoryDTO.getId());
-//		List<Map<String, Object>> dtos = boardService.getBoardList(categoryDTO, pager);
-//		dtos.forEach(m -> m.forEach((k, v) -> System.out.println("key = " + k + " , " + "value = " + v)));
-//		String name = (String)dtos.get(0).get("NAME");
-//		model.addAttribute("name", name);
-//		model.addAttribute("list", dtos);
-//		model.addAttribute("pager", pager);
-//		model.addAttribute("page", "board/list");
-//		if(dtos.size() != 0) {
-//		model.addAttribute("category_id", dtos.get(0).get("CATEGORY_ID"));
-//		}
-//		return "index";
+
+		model.addAttribute("category_id", categoryDTO.getId());
+		List<Map<String, Object>> dtos = boardService.getBoardList(categoryDTO, pager);
+		
+		String name = (String)dtos.get(0).get("NAME");
+		model.addAttribute("name", name);
+		model.addAttribute("list", dtos);
+		model.addAttribute("pager", pager);
+		model.addAttribute("page", "board/list");
+		if(dtos.size() != 0) {
+		model.addAttribute("category_id", dtos.get(0).get("CATEGORY_ID"));
+		}
+		return "index";
 	}
 
 	@GetMapping("detail")
-	public String getBoardDetail(BoardDTO boardDTO,Long category_ID, Model model) throws Exception {
-		System.out.println("detail 1 :"+boardDTO.getId());
+	public String getBoardDetail(BoardDTO boardDTO,Long category_ID, Model model) throws Exception {	
 		boardDTO = boardService.getBoardDetail(boardDTO);
-		System.out.println("detail 2 :"+boardDTO.getId());
 		if(boardDTO.getViews() != null) {
 		boardDTO.setViews(boardDTO.getViews()+1);
 		}
@@ -74,7 +71,6 @@ public class BoardController {
 			}
 		}		
 		
-		System.out.println("get create category_id  : "+categoryDTO.getId());
 		model.addAttribute("category", categoryDTO);
 		model.addAttribute("page", "board/create");
 
@@ -83,15 +79,16 @@ public class BoardController {
 	}
 	
 	@PostMapping("create")
-	public String create(BoardDTO boardDTO,Model model) throws Exception{
-		System.out.println("board_id : "+boardDTO.getId());
-
+	public String create(HttpSession session,BoardDTO boardDTO,Model model) throws Exception{
+	
+	MemberDTO memberDTO	= (MemberDTO)session.getAttribute("member");
 		 int result = boardService.create(boardDTO);
 		
 		String msg = "실패";
 		if (result > 0) {
 			msg = "성공";
 		}
+		model.addAttribute("member", memberDTO);
 		model.addAttribute("msg", msg);
 		model.addAttribute("path", "/board/list?id="+boardDTO.getCategory_id());
 		
@@ -109,7 +106,7 @@ public class BoardController {
 			if(dto.getRole_id() == 40 || dto.getRole_id() == 30 ){
 			
 			}else {
-				model.addAttribute("msg","ㄲㅉ");
+				model.addAttribute("msg","권한이 없습니다");
 				model.addAttribute("path", "/");
 				return "/commons/result";
 				
@@ -121,13 +118,16 @@ public class BoardController {
 		return "index";
 	}
 	@PostMapping("update")
-	public String setUpdatePost(BoardDTO boardDTO, Model model) throws Exception{
+	public String setUpdatePost(HttpSession session,BoardDTO boardDTO, Model model) throws Exception{
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		
 		int result = boardService.setUpdate(boardDTO);
 		
 		String msg = "실패";
 		if (result > 0) {
 			msg = "성공";
 		}
+		model.addAttribute("member", memberDTO);
 		model.addAttribute("msg", msg);
 		model.addAttribute("path", "/board/detail?id="+boardDTO.getId());
 		
@@ -143,7 +143,6 @@ public class BoardController {
 			msg = "성공";
 		}
 		model.addAttribute("msg", msg);
-		System.out.println("delete : "+boardDTO.getId());
 		model.addAttribute("path", "/board/list?id="+category_ID);
 		
 		return "commons/result";

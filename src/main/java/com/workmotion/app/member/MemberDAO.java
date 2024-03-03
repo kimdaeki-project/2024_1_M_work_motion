@@ -45,10 +45,13 @@ public class MemberDAO {
     public CompanyDTO companyIdFind(CompanyDTO companyDTO)throws Exception {
     	return sqlSession.selectOne(NAMESPACE+"companyIdFind",companyDTO);
     }
-    public MemberDTO getCompanyMember(MemberDTO memberDTO)throws Exception{
-    	return sqlSession.selectOne(NAMESPACE+"getCompanyMember",memberDTO);
+    public List<MemberDTO> getCompanyMember(MemberDTO memberDTO)throws Exception{
+    	return sqlSession.selectList(NAMESPACE+"getCompanyMember",memberDTO);
     }
     public MemberDTO findId(MemberDTO memberDTO)throws Exception {
     	return sqlSession.selectOne(NAMESPACE+"findId",memberDTO);
+    }
+    public MemberDTO findPassWord(MemberDTO memberDTO) throws Exception {
+    	return sqlSession.selectOne(NAMESPACE+"findPassWord",memberDTO);
     }
 }
