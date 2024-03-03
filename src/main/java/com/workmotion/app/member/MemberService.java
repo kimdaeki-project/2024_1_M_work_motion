@@ -22,6 +22,11 @@ public class MemberService {
     @Autowired
     private ServletContext servletContext;
 
+    
+    public MemberDTO findId(MemberDTO memberDTO) throws Exception {
+    	return memberDAO.findId(memberDTO);
+    }
+    
     public CompanyDTO companyIdFind(CompanyDTO companyDTO)throws Exception {
     	return memberDAO.companyIdFind(companyDTO);
     }

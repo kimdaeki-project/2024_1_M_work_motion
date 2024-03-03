@@ -64,6 +64,7 @@
 		ON (m.DEPARTMENT_ID =
 		d.ID)
 		WHERE d.ID != #{member.department_id} AND d.name LIKE '%'||#{pager.search}||'%'
+		 OR m.name LIKE '%'||#{pager.search}||'%'
 		ORDER BY
 		m.department_id ASC,
 		m.id ASC

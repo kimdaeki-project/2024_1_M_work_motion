@@ -25,7 +25,9 @@
         <p id="paymentKey"></p>
         <p id="orderId"></p>
         <p id="amount"></p>
-        <p id="period"></p>
+        <div id="btn">
+       <a href="/"><button class="btn btn-success">홈페이지로 돌아가기</button></a>
+       </div>
       </div>
     </div>
     <script>
@@ -66,11 +68,14 @@
       const paymentKeyElement = document.getElementById("paymentKey");
       const orderIdElement = document.getElementById("orderId");
       const amountElement = document.getElementById("amount");
+      const btn = document.getElementById("btn").innerHTML;
 
       orderIdElement.textContent = "주문번호: " + urlParams.get("orderId");
       amountElement.textContent = "결제 금액: " + urlParams.get("amount");
       paymentKeyElement.textContent =
         "paymentKey: " + urlParams.get("paymentKey");
+      btn;
     </script>
+    
   </body>
 </html>

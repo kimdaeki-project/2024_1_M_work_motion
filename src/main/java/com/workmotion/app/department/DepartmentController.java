@@ -27,9 +27,10 @@ public class DepartmentController {
   
   //memberUpdate
 	@GetMapping("memberupdate")
-	public String memberUpdate (MemberDTO memberDTO,Pager pager, Model model)throws Exception {
+	public String memberUpdate (String department_name ,MemberDTO memberDTO,Pager pager, Model model)throws Exception {
 		
 		model.addAttribute("member", memberDTO);
+		model.addAttribute("department", department_name);
 	 List<MemberDTO> ar = departmentService.getDepartmentDetail(memberDTO,pager);	
 		model.addAttribute("detail", ar);
 		model.addAttribute("page", "department/memberupdate");
@@ -53,6 +54,7 @@ public class DepartmentController {
 	public String getDepartmentDetail(DepartmentDTO departmentDTO,Pager pager, Model model)throws Exception {
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setDepartment_id(departmentDTO.getId());
+		model.addAttribute("department", departmentDTO);
 	   List<MemberDTO> dtos = departmentService.getDepartmentDetail(memberDTO,pager);	
 	   System.out.println(pager);
 		model.addAttribute("detail", dtos);

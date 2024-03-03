@@ -7,7 +7,7 @@ public class TossPaymentDTO {
 	private String orderId;
 	private String amount;
 	private String paymentKey;
-	private Long member_id;
+	private Long company_id;
 	private String create_dt;
 	private Long period;
 
@@ -54,13 +54,6 @@ public class TossPaymentDTO {
 		this.id = id;
 	}
 
-	public Long getMember_id() {
-		return member_id;
-	}
-
-	public void setMember_id(Long member_id) {
-		this.member_id = member_id;
-	}
 
 	public Long getPeriod() {
 		return period;
@@ -68,6 +61,14 @@ public class TossPaymentDTO {
 
 	public void setPeriod(Long period) {
 		this.period = period;
+	}
+
+	public Long getCompany_id() {
+		return company_id;
+	}
+
+	public void setCompany_id(Long company_id) {
+		this.company_id = company_id;
 	}
 	
 }

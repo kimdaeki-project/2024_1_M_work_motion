@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.workmotion.app.member.MemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,18 +25,19 @@ public class TossPaymentController {
 
     @ResponseBody
     @PostMapping("server")
-    public void server(@RequestBody TossPaymentDTO tossPayMentDTO, HttpSession session) throws Exception {
+    public void server(@RequestBody TossPaymentDTO tossPayMentDTO, HttpSession session,
+    		Model model) throws Exception {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-        tossPayMentDTO.setMember_id(memberDTO.getId());
+        tossPayMentDTO.setCompany_id(memberDTO.getCompany_id());
         TossPaymentDTO buycheck = new TossPaymentDTO();
-        buycheck.setMember_id(memberDTO.getId());
+        buycheck.setCompany_id(memberDTO.getCompany_id());
         buycheck = tossPaymentService.getTossPaymentDetail(buycheck);
         System.out.println(buycheck);
         if (buycheck == null) {
             System.out.println(tossPayMentDTO.getAmount());
             System.out.println(tossPayMentDTO.getOrderId());
             System.out.println(tossPayMentDTO.getPaymentKey());
-            System.out.println(tossPayMentDTO.getMember_id());
+            System.out.println(tossPayMentDTO.getCompany_id());
             System.out.println(tossPayMentDTO.getPeriod());
             int result1 = tossPaymentService.createTossPayment(tossPayMentDTO);
 
@@ -64,7 +66,7 @@ public class TossPaymentController {
             System.out.println(tossPayMentDTO.getAmount());
             System.out.println(tossPayMentDTO.getOrderId());
             System.out.println(tossPayMentDTO.getPaymentKey());
-            System.out.println(tossPayMentDTO.getMember_id());
+            System.out.println(tossPayMentDTO.getCompany_id());
             System.out.println(tossPayMentDTO.getPeriod());
             tossPayMentDTO.setCreate_dt(buycheck.getCreate_dt());
             tossPayMentDTO.setPeriod(buycheck.getPeriod() + tossPayMentDTO.getPeriod());
@@ -91,9 +93,14 @@ public class TossPaymentController {
             datasane.close();
             int result = connection.getResponseCode();
             System.out.println(result);
-
+            
+            	TossPaymentDTO tossPaymentDTO2 = new TossPaymentDTO();
+            	tossPaymentDTO2.setCompany_id(memberDTO.getCompany_id());
+            	tossPaymentDTO2 = tossPaymentService.getTossPaymentDetail(tossPaymentDTO2);
             String date1 = tossPayMentDTO.getCreate_dt();
             System.out.println("date1 : " + date1);
+            System.out.println("tosspay2 : " +tossPaymentDTO2.getPeriod());
+           session.setAttribute("toss", tossPaymentDTO2.getPeriod());
         }
 
     }

@@ -48,4 +48,7 @@ public class MemberDAO {
     public MemberDTO getCompanyMember(MemberDTO memberDTO)throws Exception{
     	return sqlSession.selectOne(NAMESPACE+"getCompanyMember",memberDTO);
     }
+    public MemberDTO findId(MemberDTO memberDTO)throws Exception {
+    	return sqlSession.selectOne(NAMESPACE+"findId",memberDTO);
+    }
 }
