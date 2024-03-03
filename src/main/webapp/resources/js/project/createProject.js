@@ -4,7 +4,7 @@ const addButton = document.getElementById("addButton");
 const deleteButton = document.getElementById("deleteButton");
 const pillsMember = document.querySelector("[aria-controls=pills-member]");
 const container = document.getElementById("container");
-const project_id = container.getAttribute("data-bs-projectId");
+// const project_id = container.getAttribute("data-bs-projectId");
 const memberList = document.getElementById("memberList");
 const crewList = document.getElementById("crewList");
 const deleteProjectButton = document.getElementById("deleteProjectButton");
@@ -33,6 +33,7 @@ pillsMember.addEventListener("click", () => {});
 
 function createMemberList(memberList) {
     let html = "";
+    console.log(memberList);
     for (member of memberList) {
         if (member.selected == true) continue;
         html += `

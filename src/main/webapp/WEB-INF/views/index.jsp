@@ -288,13 +288,13 @@ prefix="c"%>
                 >
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <!-- <div class="sb-sidenav-menu-heading">Core</div>
                             <a class="nav-link" href="/">
                                 <div class="sb-nav-link-icon">
                                     <i class="fas fa-tachometer-alt"></i>
                                 </div>
                                 Dashboard
-                            </a>
+                            </a> -->
                             <div class="sb-sidenav-menu-heading">메뉴</div>
                             <a
                                 class="nav-link collapsed"
@@ -320,7 +320,7 @@ prefix="c"%>
                                 aria-controls="collapsePages"
                             >
                                 <div class="sb-nav-link-icon">
-                                    <i class="fas fa-book-open"></i>
+                                    <i class="fas fa-pen"></i>
                                 </div>
                                 전자결제
                                 <div class="sb-sidenav-collapse-arrow">
@@ -419,7 +419,7 @@ prefix="c"%>
                                     aria-controls="collapseHR"
                                 >
                                     <div class="sb-nav-link-icon">
-                                        <i class="fas fa-book-open"></i>
+                                        <i class="fas fa-users"></i>
                                     </div>
                                     인사 관리
                                     <div class="sb-sidenav-collapse-arrow">
@@ -496,14 +496,14 @@ prefix="c"%>
                                 aria-controls="collapseHR"
                             >
                                 <div class="sb-nav-link-icon">
-                                    <i class="fas fa-book-open"></i>
+                                    <i class="fas fa-credit-card"></i>
                                 </div>
                                 구독서비스
                                 <div class="sb-sidenav-collapse-arrow">
                                     <i class="fas fa-angle-down"></i>
                                 </div>
                             </a>
-                            <div class="sb-sidenav-menu-heading">Addons</div>
+                            <!-- <div class="sb-sidenav-menu-heading">Addons</div>
                             <a class="nav-link" href="charts.html">
                                 <div class="sb-nav-link-icon">
                                     <i class="fas fa-chart-area"></i>
@@ -515,7 +515,7 @@ prefix="c"%>
                                     <i class="fas fa-table"></i>
                                 </div>
                                 Tables
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                 </nav>

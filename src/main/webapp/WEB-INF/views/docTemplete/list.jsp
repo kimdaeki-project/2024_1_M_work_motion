@@ -1,15 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>templete List</title>
-</head>
-<body>
+<div class="container mt-4 p-4" >
+	<div class="d-flex justify-content-center mb-3">
+        <h2 class="">전자결제</h2>
+    </div>
   <c:if test="${member.role_id eq 30 or member.role_id eq 40}">
-	<div>
+	<div  class="justify-content-end d-flex">
 		<form class="row g-3">
 			<div class="col-auto">
 				<select name=kind class="form-select"
@@ -46,7 +43,7 @@
   </c:forEach>  
 </table>
 
-	<nav aria-label="Page navigation example">
+	<nav aria-label="Page navigation example"  class="justify-content-center d-flex">
 	  <ul class="pagination">
 	  	<c:if test="${!pager.start}">
 	    <li class="page-item">
@@ -70,11 +67,4 @@
 	  </ul>
 	</nav>
 	
-	
-
-
-
-
-
-</body>
-</html>
+</div>

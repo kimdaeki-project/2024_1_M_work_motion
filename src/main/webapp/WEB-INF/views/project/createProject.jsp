@@ -6,11 +6,7 @@ prefix="c" %>
     href="/resources/css/project/create.css"
     type="text/css"
 />
-<div
-    class="container p-0 pt-3"
-    id="container"
-    data-bs-projectId="${project.id}"
->
+<div class="container p-4 pt-3" data-bs-projectId="${project.id}">
     <h1 class="h3 mb-3">프로젝트 생성</h1>
     <div class="row">
         <div class="col-md-5 col-xl-4">
