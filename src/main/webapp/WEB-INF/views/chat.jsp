@@ -66,7 +66,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         ></script>
         <script src="/resources/js/emoji-button3.0.3 min.js"></script>
     </head>
-    <body data-bs-roomName="${room.name}" data-bs-memberId="${member.id}">
+    <body data-bs-roomName="${room.room_name}" data-bs-memberId="${member.id}">
         <section class="h-100">
             <div class="h-100">
                 <div class="row h-100">
@@ -75,6 +75,52 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             <div
                                 class="col-md-12 col-lg-12 col-xl-12 d-flex flex-column h-100"
                             >
+                                <div
+                                    class="d-flex justify-content-between align-items-center p-2"
+                                    style="background-color: #e7e3ff"
+                                >
+                                    <div class="d-flex">
+                                        <img
+                                            src="${room.avatar}"
+                                            alt="avatar"
+                                            class="d-flex align-self-center me-3 rounded-1"
+                                            width="60"
+                                        />
+                                        <div>
+                                            <div>${room.name}</div>
+                                            <!-- <i
+                                                class="fa-solid fa-user text-muted"
+                                            ></i> -->
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <a
+                                            class="nav-link dropdown-toggle"
+                                            id="navbarDropdown"
+                                            href="#"
+                                            role="button"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                            ><i class="fas fa-bars"></i
+                                        ></a>
+                                        <ul
+                                            class="dropdown-menu dropdown-menu-end"
+                                            aria-labelledby="navbarDropdown"
+                                        >
+                                            <li>
+                                                <a
+                                                    class="dropdown-item"
+                                                    href="#"
+                                                    id="exitRoomButton"
+                                                    >채팅방 나가기</a
+                                                >
+                                            </li>
+                                            <!-- <li>
+                                                <hr class="dropdown-divider" />
+                                            </li> -->
+                                        </ul>
+                                    </div>
+                                </div>
                                 <!-- 대화 들어가는 곳 -->
                                 <div
                                     class="pt-3 overflow-auto ps-1 pe-1"
@@ -137,5 +183,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </div>
         </section>
         <script type="text/javascript" src="/resources/js/chat.js"></script>
+        <!-- Bootstrap JS -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
     </body>
 </html>

@@ -52,4 +52,8 @@ public class ChatDAO {
     public List<MemberDTO> getRoomUsers(RoomInfoDTO roomInfoDTO) throws Exception {
         return sqlSession.selectList(NAMESPACE + "getRoomUsers", roomInfoDTO);
     }
+
+    public void exitRoom(RoomInfoDTO roomInfoDTO) {
+        sqlSession.delete(NAMESPACE + "exitRoom", roomInfoDTO);
+    }
 }

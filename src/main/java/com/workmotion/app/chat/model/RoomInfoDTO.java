@@ -10,6 +10,16 @@ public class RoomInfoDTO {
     private Long new_message_count;
     private String name;
 
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public Long getNew_message_count() {
         return new_message_count;
     }

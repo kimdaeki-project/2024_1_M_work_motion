@@ -23,12 +23,13 @@ public class ChatService {
         return result;
     }
 
-    public int addMember(RoomInfoDTO room, String memberId) throws Exception {
+    public int addMember(RoomInfoDTO room, String memberId, String avatar) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("members", memberId);
         map.put("room_name", room.getRoom_name());
         map.put("name", room.getName());
-        System.out.println(room.getName());
+        map.put("avatar", avatar);
+        System.out.println(map);
         int result = chatDAO.addMember(map);
         return result;
     }
@@ -38,12 +39,14 @@ public class ChatService {
         if (chatDAO.getRoom(room) == null) {
             room.setName(memberName);
             createRoom(room, memberId);
-            addMember(room, Long.toString(memberDTO.getId()));
+            addMember(room, Long.toString(memberDTO.getId()), memberId);
             room.setName(memberDTO.getName());
-            addMember(room, memberId);
+            addMember(room, memberId, Long.toString(memberDTO.getId()));
 
             return room;
         } else {
+            room.setName(memberDTO.getName());
+            addMember(room, memberId, Long.toString(memberDTO.getId()));
             resultRoom.setRoom_name(room.getRoom_name());
         }
 
@@ -51,9 +54,15 @@ public class ChatService {
         return resultRoom;
     }
 
-    public RoomInfoDTO getRoom(RoomInfoDTO room) throws Exception {
+    public RoomInfoDTO getRoom(RoomInfoDTO room, MemberDTO memberDTO) throws Exception {
         RoomInfoDTO resultRoom = new RoomInfoDTO();
-
+        room.setName(memberDTO.getName());
+        String[] ids = room.getRoom_name().split("-");
+        for (String id : ids) {
+            if (!id.equals(memberDTO.getId().toString())) {
+                addMember(room, id, Long.toString(memberDTO.getId()));
+            }
+        }
         resultRoom.setRoom_name(chatDAO.getRoom(room).getName());
 
 
@@ -92,5 +101,14 @@ public class ChatService {
 
     public List<MemberDTO> getRoomUsers(RoomInfoDTO roomInfoDTO) throws Exception {
         return chatDAO.getRoomUsers(roomInfoDTO);
+    }
+
+    public void exitRoom(RoomInfoDTO roomInfoDTO) throws Exception {
+//        String dateString = "9999-12-31";
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date date = sdf.parse(dateString);
+//
+//        roomInfoDTO.setJoin_dt(date);
+        chatDAO.exitRoom(roomInfoDTO);
     }
 }

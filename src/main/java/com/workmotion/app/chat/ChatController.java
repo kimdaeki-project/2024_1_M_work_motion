@@ -22,6 +22,7 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
@@ -92,10 +93,23 @@ public class ChatController {
     @GetMapping("/chat")
     public String getChat(Model model, RoomDTO roomDTO, HttpSession session) throws Exception {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+        RoomInfoDTO roomInfoDTO = new RoomInfoDTO();
+        roomInfoDTO.setMember_id(memberDTO.getId());
+        roomInfoDTO.setRoom_name(roomDTO.getName());
+        roomInfoDTO = chatService.getRoomInfo(roomInfoDTO);
         model.addAttribute("member", memberDTO);
-        model.addAttribute("room", roomDTO);
+        model.addAttribute("room", roomInfoDTO);
 
         return "chat";
+    }
+
+    @PostMapping("/chat/exitRoom")
+    @ResponseBody
+    public ResponseEntity<?> exitRoom(Model model, RoomInfoDTO roomInfoDTO, HttpSession session) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+        roomInfoDTO.setMember_id(memberDTO.getId());
+        chatService.exitRoom(roomInfoDTO);
+        return ResponseEntity.ok().body("success");
     }
 
     @GetMapping("/chat/getMessage")
@@ -122,7 +136,8 @@ public class ChatController {
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
         if (memberName == null) {
-            room = chatService.getRoom(room);
+            room = chatService.getRoom(room, memberDTO);
+            System.out.println("Hello");
         } else {
             room = chatService.getRoom(room, memberName, memberId, memberDTO);
 
@@ -149,6 +164,8 @@ public class ChatController {
         RoomInfoDTO roomInfoDTO = new RoomInfoDTO();
         roomInfoDTO.setMember_id(sender.getId());
         roomInfoDTO.setRoom_name(message.getRoom_name());
+        chatService.getRoom(roomInfoDTO, sender);
+        
         List<MemberDTO> memberList = chatService.getRoomUsers(roomInfoDTO);
         NotificationMessage notificationMessage = new NotificationMessage();
         NotificationDTO notificationDTO = new NotificationDTO();
@@ -195,6 +212,15 @@ public class ChatController {
         }
 
 
+    }
+
+    @MessageMapping("/exitRoom")
+    public void exitRoom(RoomInfoDTO roomInfoDTO, SimpMessageHeaderAccessor accessor) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) accessor.getSessionAttributes().get("member");
+        roomInfoDTO.setMember_id(memberDTO.getId());
+        chatService.exitRoom(roomInfoDTO);
+        String destination = "/notification/update/" + memberDTO.getId();
+        simpMessagingTemplate.convertAndSend(destination, roomInfoDTO);
     }
 
     @GetMapping("/chat/members/{member_id}")

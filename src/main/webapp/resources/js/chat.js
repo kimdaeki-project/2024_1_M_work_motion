@@ -168,11 +168,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     const data = await getMessage();
     let temp = true;
     let tempHeight;
-    for (let message of data.messages) {
+    const messages = data.messages.entries();
+    for (let [index, message] of messages) {
         if (data.room.recently_dt < message.time && temp) {
             temp = false;
             tempHeight = messageBox.scrollHeight;
-            showPrevLine();
+            if (data.messages.length > 10) {
+                showPrevLine();
+            }
         }
         messageBox.appendChild(showMessage(message, messageBox));
     }
@@ -436,4 +439,20 @@ attachButton.addEventListener("click", () => {
             sendMessage(url, "image");
         }
     });
+});
+
+const exitRoomButton = document.getElementById("exitRoomButton");
+exitRoomButton.addEventListener("click", async () => {
+    // const formData = new FormData();
+    // formData.append("room_name", room_name);
+    // const response = await fetch("/chat/exitRoom", {
+    //     method: "POST",
+    //     body: formData,
+    // });
+    stompClient.send(
+        "/app/exitRoom",
+        {},
+        JSON.stringify({ room_name: room_name })
+    );
+    window.close();
 });

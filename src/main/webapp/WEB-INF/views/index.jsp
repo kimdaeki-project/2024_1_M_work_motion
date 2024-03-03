@@ -8,6 +8,7 @@ prefix="c"%>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Work Motion</title>
+        <link rel="icon" href="/resources/images/favicon.ico" />
         <link
             rel="stylesheet"
             href="/resources/css/project/createTask.css"
@@ -211,40 +212,42 @@ prefix="c"%>
                     </div>
                 </div>
             </form>
-            <a
-                class="order-1 order-lg-0 me-4 me-lg-0"
-                data-bs-container="body"
-                data-bs-toggle="popover"
-                data-bs-placement="bottom"
-                data-bs-content="Bottom popover"
-                data-htmlcontent="#myPopoverContent"
-                href="javascript: void(0)"
-            >
-                <i class="fa-solid fa-bell"></i>
-            </a>
-            <div id="myPopoverContent" hidden>
-                <div class="d-flex justify-content-between m-2">
-                    <div class="title">알림</div>
-                    <div class="small text-muted">
-                        <a href="#" class="link-secondary">모두 읽음</a>
+            <div class="d-none d-md-inline-block me-0 me-md-3 my-2 my-md-0">
+                <a
+                    class="order-1 order-lg-0 me-lg-0"
+                    data-bs-container="body"
+                    data-bs-toggle="popover"
+                    data-bs-placement="bottom"
+                    data-bs-content="Bottom popover"
+                    data-htmlcontent="#myPopoverContent"
+                    href="javascript: void(0)"
+                >
+                    <i class="fa-solid fa-bell"></i>
+                </a>
+                <div id="myPopoverContent" hidden>
+                    <div class="d-flex justify-content-between m-2">
+                        <div class="title">알림</div>
+                        <div class="small text-muted">
+                            <a href="#" class="link-secondary">모두 읽음</a>
+                        </div>
                     </div>
+                    <div class="">
+                        <hr class="m-0" />
+                    </div>
+                    <ul class="list-group p-1">
+                        <li class="list-group-item">
+                            <i class="fa-solid fa-bell"></i>
+                            <div>경모님의 메시지</div>
+                            <div class="small text-muted">뭐하고있냐</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div>워크모션 프로젝트에 참여되었습니다.</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div>프로젝트 마감 일정이 1일 남았습니다.</div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="">
-                    <hr class="m-0" />
-                </div>
-                <ul class="list-group p-1">
-                    <li class="list-group-item">
-                        <i class="fa-solid fa-bell"></i>
-                        <div>경모님의 메시지</div>
-                        <div class="small text-muted">뭐하고있냐</div>
-                    </li>
-                    <li class="list-group-item">
-                        <div>워크모션 프로젝트에 참여되었습니다.</div>
-                    </li>
-                    <li class="list-group-item">
-                        <div>프로젝트 마감 일정이 1일 남았습니다.</div>
-                    </li>
-                </ul>
             </div>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">

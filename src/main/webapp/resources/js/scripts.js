@@ -196,25 +196,22 @@ messageTabButton.addEventListener("click", function () {
 
 function createChatRoomList(data) {
     let html = "";
+    console.log(data);
     for (let room of data) {
         html += `
-            <li class="p-2 border-bottom roomItem" data-bs-roomName=${
-                room.room_name
-            }>
+            <li class="p-2 border-bottom roomItem" data-bs-memberId=${
+                room.roomInfo.member_id
+            } data-bs-roomName=${room.room_name}>
                 <a href="#!" class="d-flex justify-content-between">
                 <div class="d-flex flex-row">
                     <div>
                     <img
-                        src="${
-                            room.sender.avatar != null
-                                ? room.sender.avatar.name
-                                : "https://bootdey.com/img/Content/avatar/avatar5.png"
-                        }"
+                        src="${room.roomInfo.avatar}"
                         alt="avatar" class="d-flex align-self-center me-3" width="60">
                     <span class="badge bg-success badge-dot"></span>
                     </div>
                     <div class="pt-1">
-                    <p class="fw-bold mb-0">${room.sender.name}</p>
+                    <p class="fw-bold mb-0">${room.roomInfo.name}</p>
                     ${
                         room.type == "message"
                             ? `<p class="small text-muted overflow-auto" text-overflow:ellipsis;">${room.message}</p>`
@@ -232,6 +229,7 @@ function createChatRoomList(data) {
                             ? `<span class="badge rounded-pill" style="background-color:#ff5c48!important; font-weight:500">${room.roomInfo.new_message_count}</span>`
                             : ""
                     }
+
                     
                 </div>
                 </a>
