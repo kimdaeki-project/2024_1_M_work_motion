@@ -37,6 +37,7 @@ closeMessengerButton.addEventListener("click", (event) => {
 });
 loadMembers();
 let clickedMember;
+let sortedGroupedByDepartment;
 async function loadMembers() {
     const messengerMemberList = document.getElementById("messengerMemberList");
     const response = await fetch("/v1/projects/members");
@@ -52,7 +53,7 @@ async function loadMembers() {
     }, {});
     const sortedGroupedByDepartmentName =
         Object.keys(groupedByDepartment).sort();
-    const sortedGroupedByDepartment = sortedGroupedByDepartmentName.map(
+    sortedGroupedByDepartment = sortedGroupedByDepartmentName.map(
         (departmentName) => {
             return {
                 department: departmentName,
@@ -60,6 +61,16 @@ async function loadMembers() {
             };
         }
     );
+    const index = sortedGroupedByDepartment.findIndex(
+        (el) => el.department == "부서없음"
+    );
+
+    if (index !== -1) {
+        const temp = sortedGroupedByDepartment[index];
+        sortedGroupedByDepartment[index] =
+            sortedGroupedByDepartment[sortedGroupedByDepartment.length - 1];
+        sortedGroupedByDepartment[sortedGroupedByDepartment.length - 1] = temp;
+    }
     messengerMemberList.innerHTML = createChatMemberList(
         sortedGroupedByDepartment
     );
@@ -574,3 +585,38 @@ function createNotificationToast(message) {
     // var toastElList = [].slice.call(document.querySelectorAll(".toast"));
     if (document.querySelector("div.popover-body") == null) toast.show();
 }
+
+const chatSearch = document.getElementById("chatSearchButton");
+chatSearch.addEventListener("click", () => {
+    const chatSearch = document.getElementById("chatSearch");
+    chatSearch.classList.toggle("d-none");
+    chatSearch.addEventListener("keyup", function (e) {
+        if (e.key == "Enter") {
+            const messengerMemberList = document.getElementById(
+                "messengerMemberList"
+            );
+            const searchName = chatSearch.value;
+
+            let members;
+            let searchResult = [];
+            sortedGroupedByDepartment.map((department) => {
+                members = department.members.filter((member) =>
+                    member.name.includes(searchName)
+                );
+                if (members.length > 0)
+                    searchResult.push({
+                        department: department.department,
+                        members: members,
+                    });
+            });
+            console.log(searchResult);
+
+            messengerMemberList.innerHTML = createChatMemberList(searchResult);
+            [
+                ...messengerMemberList.getElementsByClassName(
+                    "accordion-button"
+                ),
+            ].map((el) => el.click());
+        }
+    });
+});

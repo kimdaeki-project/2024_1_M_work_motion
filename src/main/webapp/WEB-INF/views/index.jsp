@@ -95,9 +95,10 @@ prefix="c"%>
                 font-size: 1.4vh;
                 line-height: 1vh;
                 font-weight: 100;
-                color: black;
             }
-
+            #messenger .sidebar button.active {
+                color: black !important;
+            }
             #messenger .nav-item .fa-user {
                 font-size: 2.4vh;
             }
@@ -600,7 +601,12 @@ prefix="c"%>
                             <div class="p-3 d-flex justify-content-between">
                                 <div class="fw-bold">메신저</div>
                                 <div>
-                                    <a href="#">
+                                    <input
+                                        class="d-none"
+                                        type="text"
+                                        id="chatSearch"
+                                    />
+                                    <a href="#" id="chatSearchButton">
                                         <i class="fas fa-search fw-lighter"></i>
                                     </a>
                                 </div>
