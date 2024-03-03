@@ -702,7 +702,6 @@ function createTask(tasks) {
                     <h6 class='m-0 mb-1'>담당자</h6>
                     <small>${task.task_member
                         .map((member) => {
-                            console.log(member);
                             return `
                             <a
                                 data-bs-toggle="modal"

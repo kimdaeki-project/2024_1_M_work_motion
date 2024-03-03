@@ -50,7 +50,6 @@ async function loadMembers() {
         acc[deptName].push(cur);
         return acc;
     }, {});
-    console.log(groupedByDepartment);
     const sortedGroupedByDepartmentName =
         Object.keys(groupedByDepartment).sort();
     const sortedGroupedByDepartment = sortedGroupedByDepartmentName.map(
@@ -61,7 +60,6 @@ async function loadMembers() {
             };
         }
     );
-    console.log(sortedGroupedByDepartment);
     messengerMemberList.innerHTML = createChatMemberList(
         sortedGroupedByDepartment
     );
@@ -159,7 +157,6 @@ async function loadMessages() {
     const response = await fetch("/chat/getRooms");
     const data = await response.json();
     const messageList = document.getElementById("messageList");
-    console.log(data);
     messageList.innerHTML = createChatRoomList(data);
     const roomItems = document.getElementsByClassName("roomItem");
     for (let i = 0; i < roomItems.length; i++) {
@@ -199,7 +196,6 @@ messageTabButton.addEventListener("click", function () {
 
 function createChatRoomList(data) {
     let html = "";
-    console.log(data);
     for (let room of data) {
         html += `
             <li class="p-2 border-bottom roomItem" data-bs-roomName=${
@@ -433,13 +429,11 @@ async function readNotification(id) {
     }
     const result = await fetch("/v1/notifications/" + id, { method: "PUT" });
     const resultData = await result.json();
-    console.log(resultData);
 }
 
 async function getNotifications() {
     const response = await fetch("/v1/notifications");
     const data = await response.json();
-    console.log(data);
     let notificationIds = [];
     for (let i = 0; i < data.length; i++) {
         data[i].content = JSON.parse(data[i].content);
@@ -477,7 +471,6 @@ stompClient.connect({}, function (frame) {
 });
 function renderNotification(message) {
     let html = "";
-    console.log(message);
     switch (message.type_name) {
         case "MESSAGE": {
             html = createMessageNotificationHtml(message);
@@ -504,7 +497,6 @@ function prependNotifications(html) {
     inner = popoverContentStart;
     inner += popoverContent;
     inner += popoverContentEnd;
-    console.log(inner);
     popoverHtml.innerHTML = inner;
 }
 
@@ -582,6 +574,5 @@ function createNotificationToast(message) {
     let toastEl = toastContainer.firstElementChild;
     let toast = bootstrap.Toast.getOrCreateInstance(toastEl);
     // var toastElList = [].slice.call(document.querySelectorAll(".toast"));
-    console.log(toast);
-    toast.show();
+    if (document.querySelector("div.popover-body") == null) toast.show();
 }

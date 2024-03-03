@@ -153,6 +153,10 @@ prefix="c"%>
             #memberContainer {
                 height: 54vh;
             }
+
+            .popover-body {
+                padding: 0;
+            }
         </style>
     </head>
     <body class="sb-nav-fixed" data-bs-memberId="${member.id}">
@@ -207,6 +211,41 @@ prefix="c"%>
                     </div>
                 </div>
             </form>
+            <a
+                class="order-1 order-lg-0 me-4 me-lg-0"
+                data-bs-container="body"
+                data-bs-toggle="popover"
+                data-bs-placement="bottom"
+                data-bs-content="Bottom popover"
+                data-htmlcontent="#myPopoverContent"
+                href="javascript: void(0)"
+            >
+                <i class="fa-solid fa-bell"></i>
+            </a>
+            <div id="myPopoverContent" hidden>
+                <div class="d-flex justify-content-between m-2">
+                    <div class="title">알림</div>
+                    <div class="small text-muted">
+                        <a href="#" class="link-secondary">모두 읽음</a>
+                    </div>
+                </div>
+                <div class="">
+                    <hr class="m-0" />
+                </div>
+                <ul class="list-group p-1">
+                    <li class="list-group-item">
+                        <i class="fa-solid fa-bell"></i>
+                        <div>경모님의 메시지</div>
+                        <div class="small text-muted">뭐하고있냐</div>
+                    </li>
+                    <li class="list-group-item">
+                        <div>워크모션 프로젝트에 참여되었습니다.</div>
+                    </li>
+                    <li class="list-group-item">
+                        <div>프로젝트 마감 일정이 1일 남았습니다.</div>
+                    </li>
+                </ul>
+            </div>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
