@@ -7,8 +7,11 @@ prefix="c" %>
     integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc="
     crossorigin="anonymous"
 />
-
-
+<link
+    rel="stylesheet"
+    href="/resources/css/project/createTask.css"
+    type="text/css"
+/>
 <!-- fullcalendar CDN -->
 <link
     href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css"
@@ -18,95 +21,14 @@ prefix="c" %>
 <!-- fullcalendar 언어 CDN -->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"></script>
 
-<style>
-    /* 캘린더 위의 해더 스타일(날짜가 있는 부분) */
-    .fc-header-toolbar {
-        padding-top: 1em;
-        padding-left: 1em;
-        padding-right: 1em;
-    }
-</style>
-<style>
-    #container {
-        height: 100%;
-        display: flex;
-        width: 100%;
-        flex-direction: row;
-        font-family: "Noto Sans KR", sans-serif;
-    }
-    .section {
-        width: 100%;
-        overflow: scroll;
-    }
-    .section .projectInfo {
-        width: 100%;
-        background-color: white;
-    }
-    .section .projectInfo .top {
-        display: flex;
-        justify-content: space-between;
-    }
-    .section .projectInfo .head {
-        display: flex;
-        flex-direction: column;
-    }
-    .section .projectInfo .body {
-        margin: 0px;
-        display: flex;
-        margin-left: 10vh;
-    }
-    .section .projectInfo .body a {
-        margin-right: 2vh;
-        text-decoration: none;
-    }
-
-    .section .projectInfo .body a:link {
-        color: black;
-    }
-    .section .projectInfo .body a:visited {
-        color: black;
-    }
-
-    .section .title {
-        font-size: xx-large;
-        font-weight: 900;
-    }
-    .article {
-        display: flex;
-        justify-content: space-around;
-        background-color: #f5f4f4;
-    }
-    .article #taskContentSection {
-        min-width: 60%;
-    }
-    .article .side {
-        background-color: white;
-        margin-top: 100px;
-        width: 40vh;
-        height: 500px;
-    }
-    .taskCard {
-        background-color: white;
-        margin: 10px;
-        border-radius: 20px;
-        border: 1px solid #c8c8c882;
-    }
-    .taskCard .cardHead {
-        display: flex;
-        flex-direction: column;
-        padding: 10px;
-    }
-    .taskCard .cardBody {
-        padding: 10px;
-    }
-    #crewList {
-        max-height: 31vh;
-        overflow: auto;
-    }
-</style>
-<div id="container">
+<div id="container" class="container mt-3">
     <div class="section">
-        <div class="projectInfo mb-3" data-bs-projectId="${project.id}" data-bs-ownerId="${project.owner_id}" data-bs-memberId="${member.id}">
+        <div
+            class="projectInfo mb-3"
+            data-bs-projectId="${project.id}"
+            data-bs-ownerId="${project.owner_id}"
+            data-bs-memberId="${member.id}"
+        >
             <div class="top p-3">
                 <div class="head">
                     <span class="title"> ${project.name}</span>
@@ -114,11 +36,13 @@ prefix="c" %>
                 </div>
 
                 <div>
-                    <a
-                        class="btn btn-primary"
-                        href="/projects/setting?id=${project.id}"
-                        >설정</a
-                    >
+                    <c:if test="${owner.id == member.id}">
+                        <a
+                            class="btn btn-primary"
+                            href="/projects/setting?id=${project.id}"
+                            >설정</a
+                        >
+                    </c:if>
                     <a
                         class="btn btn-primary"
                         href="/tasks/create?id=${project.id}"
@@ -126,7 +50,7 @@ prefix="c" %>
                     >
                 </div>
             </div>
-            <div class="body">
+            <div class="tabNav p-3">
                 <ul class="nav nav-underline" role="tablist" id="pills-tab">
                     <li class="nav-item">
                         <a
@@ -184,38 +108,37 @@ prefix="c" %>
                         <div class="card">
                             <div class="card-body">
                                 <!-- comment box -->
-                                <form
-                                    action="#"
-                                    class="comment-area-box mb-3"
-                                    id="articleForm"
-                                >
-                                    <!-- <input
-                                    type="hidden"
-                                    name="project_id"
-                                    value="${project.id}"
-                                /> -->
-                                    <span class="input-icon">
-                                        <textarea
-                                            rows="3"
-                                            class="form-control"
-                                            placeholder="Write something..."
-                                            id="summernote"
-                                            name="content"
-                                        ></textarea>
-                                    </span>
-                                    <div class="comment-area-btn">
-                                        <div class="float-end">
+                                <div>
+                                    <form
+                                        action="#"
+                                        class="comment-area-box mb-3"
+                                        id="articleForm"
+                                    >
+                                        <!-- <input
+                                            type="hidden"
+                                            name="project_id"
+                                            value="${project.id}"
+                                        /> -->
+                                        <span class="input-icon">
+                                            <textarea
+                                                rows="3"
+                                                class="form-control"
+                                                placeholder="Write something..."
+                                                id="summernote"
+                                                name="content"
+                                            ></textarea>
+                                        </span>
+                                        <div class="comment-area-btn">
                                             <button
                                                 type="button"
                                                 class="btn btn-sm btn-dark waves-effect waves-light"
                                                 id="submitArticleButton"
                                             >
-                                                Post
+                                                글쓰기
                                             </button>
                                         </div>
-                                    </div>
-                                </form>
-
+                                    </form>
+                                </div>
                                 <div id="article"></div>
                             </div>
                         </div>
@@ -238,7 +161,6 @@ prefix="c" %>
                                     value="${project.id}"
                                 /> -->
                                 <div id="task"></div>
-
                             </div>
                         </div>
                         <!-- end card-->
@@ -326,16 +248,8 @@ prefix="c" %>
                                             class="d-flex align-items-center pb-1"
                                             id="tooltips-container"
                                         >
-                                                
-                                            
                                             <img
-                                            
-                                            <c:if test="${crew.avatar.name != null}">
                                                 src="${crew.avatar.name}"
-                                            </c:if>
-                                            <c:if test="${crew.avatar.name == null}">
-                                                src="https://bootdey.com/img/Content/avatar/avatar5.png"
-                                            </c:if>
                                                 class="rounded-circle img-fluid avatar-md img-thumbnail bg-transparent"
                                                 alt=""
                                             />
@@ -607,16 +521,15 @@ prefix="c" %>
 
 <!-- Modal -->
 <div
-    class="modal fade"
+    class="modal h-100 fade"
     id="staticBackdrop"
-    data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
 >
-    <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content h-50">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">
                     멤버 추가

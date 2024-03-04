@@ -27,9 +27,10 @@ public class DepartmentController {
   
   //memberUpdate
 	@GetMapping("memberupdate")
-	public String memberUpdate (MemberDTO memberDTO,Pager pager, Model model)throws Exception {
+	public String memberUpdate (String department_name ,MemberDTO memberDTO,Pager pager, Model model)throws Exception {
 		
 		model.addAttribute("member", memberDTO);
+		model.addAttribute("department", department_name);
 	 List<MemberDTO> ar = departmentService.getDepartmentDetail(memberDTO,pager);	
 		model.addAttribute("detail", ar);
 		model.addAttribute("page", "department/memberupdate");
@@ -43,7 +44,6 @@ public class DepartmentController {
 		List<MemberDTO> ar = departmentService.getDepartmentList(pager);
 		model.addAttribute("list", ar);
 		model.addAttribute("pager", pager);
-		System.out.println(pager.getLastNum());
 		model.addAttribute("page", "department/departmentList");
 		return "index";		
 	}
@@ -53,8 +53,8 @@ public class DepartmentController {
 	public String getDepartmentDetail(DepartmentDTO departmentDTO,Pager pager, Model model)throws Exception {
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setDepartment_id(departmentDTO.getId());
+		model.addAttribute("department", departmentDTO);
 	   List<MemberDTO> dtos = departmentService.getDepartmentDetail(memberDTO,pager);	
-	   System.out.println(pager);
 		model.addAttribute("detail", dtos);
 		model.addAttribute("pager", pager);
 		model.addAttribute("page", "department/departmentDetail");
@@ -68,14 +68,9 @@ public class DepartmentController {
 	@GetMapping("memberList")
 	public String getMemberList(MemberDTO memberDTO,Pager pager, Model model) throws Exception{
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println(pager);
 		map.put("pager", pager);
 		map.put("member", memberDTO);
-		List<Map<String, Object>> dtos = departmentService.getMemberList(map);
-//		model.addAttribute("list", dto);
-//		model.addAttribute("page", "department/memberList");
-		
-		dtos.forEach(m -> m.forEach((k,v)->System.out.println("key = " + k + " , " + "value = " + v)));;
+		List<Map<String, Object>> dtos = departmentService.getMemberList(map);		
 		
 		model.addAttribute("member", memberDTO);
 		model.addAttribute("list", dtos);
@@ -168,7 +163,6 @@ public class DepartmentController {
 	@PostMapping("departmentDelete")
 	public int deleteDepartment(Long [] id, Model model)throws Exception {
 		int result=0;
-		System.out.println("id[0] : "+id[0]);
 	DepartmentDTO departmentDTO = new DepartmentDTO();
 	
 		for(Long a : id) {

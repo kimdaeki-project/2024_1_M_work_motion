@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.workmotion.app.company.CompanyDTO;
 import com.workmotion.app.member.MemberDTO;
+import com.workmotion.app.tosspayment.TossPaymentDTO;
+import com.workmotion.app.tosspayment.TossPaymentService;
 import com.workmotion.app.util.Pager;
 
 @Controller
@@ -32,16 +34,8 @@ public class ProductController {
 	
 	
 	@GetMapping("list")
-	public String getList(Pager pager, Model model)throws Exception {
+	public String getList(HttpSession session,Pager pager, Model model)throws Exception {
 		 List<ProductDTO> ar = productService.getList(pager);
-		 
-		 
-		 LocalDateTime startDate = LocalDateTime.of(2024, 02, 19, 06, 8);
-		 LocalDateTime lastDate = LocalDateTime.of(2024, 02, 19, 06, 8);
-		 
-		 LocalDateTime plusDate = startDate.plusHours(06);
-		 startDate.isAfter(plusDate);
-		System.out.println(plusDate);
 		 model.addAttribute("list", ar);
 		 model.addAttribute("page", "product/list");
 		 model.addAttribute("pager", pager);
@@ -57,7 +51,6 @@ public class ProductController {
 	
 	model.addAttribute("detail", productDTO);
 	model.addAttribute("page", "/product/detail");
-	System.out.println(productDTO.getPeriod());
 	return "index";
 		
 	}
@@ -67,7 +60,6 @@ public class ProductController {
 		 MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		 CompanyDTO companyDTO = new CompanyDTO();
 		 companyDTO = productService.getPaymentDetail(memberDTO);
-		System.out.println(productDTO.getPeriod());
 		 model.addAttribute("product", productDTO);
 		model.addAttribute("company", companyDTO);
 		model.addAttribute("page", "/commons/payment");

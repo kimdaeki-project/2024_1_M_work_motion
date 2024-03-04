@@ -6,10 +6,12 @@ prefix="c" %>
     href="/resources/css/project/setting.css"
     type="text/css"
 />
+
 <div
     class="container p-0 pt-3"
-    id="container"
+    id="edit_container"
     data-bs-projectId="${project.id}"
+    style="width: 80%;"
 >
     <h1 class="h3 mb-3">프로젝트 설정</h1>
     <div class="row">
@@ -78,7 +80,7 @@ prefix="c" %>
                             >
                                 <input
                                     type="hidden" name="id" value="${project.id}">
-                                <div class="row">
+                                <div class="row mb-3">
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <input
@@ -113,7 +115,7 @@ ${project.info}</textarea
                                             >
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <!-- <div class="col-md-4">
                                         <div class="text-center">
                                             <img
                                                 alt="Andrew Jones"
@@ -133,7 +135,7 @@ ${project.info}</textarea
                                                 format</small
                                             >
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <button
@@ -162,24 +164,39 @@ ${project.info}</textarea
                                 method="post"
                                 enctype="application/x-www-form-urlencoded"
                             >
-                                <div id="memberList">
+                                <div id="memberList" class="mb-3 overflow-auto" style="max-height: 40vh;">
                                     <c:forEach items="${crews}" var="crew">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="member_id" value="${crew.id}">
-                                            <div class="memberCard">
-                                                <div class="avatar">
-                                                </div>
-                                                <div class="info">
-                                                    <div class="name">${crew.name}</div>
-                                                    <div class="role">${crew.position.name}</div>
-                                                </div>
-                                            </div>
+                                        <div class="d-flex form-check align-items-center">
+                                            <input class="form-check-input me-3" type="checkbox" name="member_id" value="${crew.id}" id="checbox${crew.id}">
+                                            <label
+                                                    class="d-flex align-items-center pb-1 w-100"
+                                                    id="tooltips-container"
+                                                    for="checbox${crew.id}"
+                                                >
+                                                    <img
+                                                        src="${crew.avatar.name}"
+                                                        class="rounded-circle img-fluid avatar-md img-thumbnail bg-transparent"
+                                                        alt=""
+                                                    />
+                                                    <div class="w-100 ms-2">
+                                                        <h5 class="mb-1">
+                                                            ${crew.name}<i
+                                                                class="mdi mdi-check-decagram text-info ms-1"
+                                                            ></i>
+                                                        </h5>
+                                                        <p
+                                                            class="mb-0 font-13 text-muted"
+                                                        >
+                                                            ${crew.position.name}
+                                                        </p>
+                                                    </div>
+                                                </label>
                                         </div>
                                     </c:forEach>
                                 </div>
                                 <button
                                     type="button"
-                                    class="btn btn-primary"
+                                    class="btn btn-danger"
                                     id="deleteButton"
                                 >
                                     삭제하기

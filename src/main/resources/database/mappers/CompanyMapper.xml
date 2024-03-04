@@ -44,7 +44,7 @@
         #{phone_num},
         #{info},
         CURRENT_DATE,
-        #{customerkey},1
+        #{customerkey}
         )
     </insert>
 

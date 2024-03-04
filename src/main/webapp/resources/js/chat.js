@@ -18,7 +18,6 @@ const callback = (entries, observer) => {
     entries.forEach(async (entry) => {
         if (entry.isIntersecting) {
             const $result = document.querySelector("#messageBox");
-            console.log("Intersecting");
             Page++;
             observer.unobserve($end);
             const loadingElement = document.createElement("div");
@@ -38,13 +37,15 @@ const callback = (entries, observer) => {
             loadingElementHeight = loadingElement.offsetHeight;
             const data = await getMessage();
             loadingElement.remove();
-            let messageElements = "";
+            let messageElements = new DocumentFragment();
             for (let message of data.messages) {
                 $result.prepend();
-                messageElements += showMessage(message).innerHTML;
+                messageElements.appendChild(
+                    showMessage(message, messageElements)
+                );
             }
             const tempHeight = messageBox.scrollHeight;
-            $result.insertAdjacentHTML("afterbegin", messageElements);
+            $result.insertBefore(messageElements, $result.firstChild);
             $end = $result.firstElementChild;
             messageBox.scrollTop =
                 messageBox.scrollHeight - tempHeight - loadingElementHeight;
@@ -76,48 +77,52 @@ function chageDate(timestamp) {
 
     // 날짜와 시간을 AM/PM 형식으로 변환
     var hours = date.getHours();
-    var ampm = hours >= 12 ? "PM" : "AM";
+    var ampm = hours >= 12 ? "오후" : "오전";
     hours = hours % 12;
     hours = hours ? hours : 12; // 0 시간을 12시로 표시
     var minutes = date.getMinutes();
     minutes = minutes < 10 ? "0" + minutes : minutes;
 
     // 결과 문자열 생성
-    var result =
-        hours +
-        ":" +
-        minutes +
-        " " +
-        ampm +
-        " | " +
-        monthAbbreviation +
-        " " +
-        date.getDate();
+    var result = ampm + " " + hours + ":" + minutes;
+    // +
+    // " " +
+    // ampm +
+    // " | " +
+    // monthAbbreviation +
+    // " " +
+    // date.getDate();
     return result;
 }
 
 const messageInput = document.getElementById("messageInput");
+
+messageInput.addEventListener("keydown", function (e) {
+    if (e.key == "Enter" && !e.shiftKey) {
+        e.preventDefault();
+    }
+});
 messageInput.addEventListener("keyup", function (e) {
-    if (e.key == "Enter") {
+    if (e.key == "Enter" && !e.shiftKey) {
         sendMessageButton.click();
     }
 });
 sendMessageButton.addEventListener("click", function () {
-    sendMessage(messageInput.value);
+    sendMessage(messageInput.value, "message");
     messageInput.value = "";
 });
 
-function sendMessage(value) {
-    if (value != "") {
+function sendMessage(value, type) {
+    if (value.trim() != "" && value.length != 0) {
         message = {
             sender_id: member_id,
-            message: value.trim(),
+            message: value,
             time: new Date(),
             room_name: room_name,
+            type: type,
         };
         stompClient.send("/app/sendMessage", {}, JSON.stringify(message));
     }
-    readMessage();
 }
 function readMessage() {
     message = {
@@ -130,12 +135,13 @@ function readMessage() {
 }
 const messageBox = document.getElementById("messageBox");
 stompClient.connect({}, function (frame) {
-    console.log("Connected: " + frame);
     stompClient.subscribe(
         "/chat/messages/" + room_name,
         function (outputMessage) {
             readMessage();
-            messageBox.append(showMessage(JSON.parse(outputMessage.body)));
+            messageBox.append(
+                showMessage(JSON.parse(outputMessage.body), messageBox)
+            );
             messageBox.scrollTop = messageBox.scrollHeight;
         }
     );
@@ -152,6 +158,7 @@ async function getMessage() {
     );
     const data = await response.json();
     if (response.status == 200) {
+        readMessage();
         return data;
     }
     return null;
@@ -159,22 +166,22 @@ async function getMessage() {
 
 document.addEventListener("DOMContentLoaded", async function () {
     const data = await getMessage();
-    console.log(data);
     let temp = true;
     let tempHeight;
-    for (let message of data.messages) {
-        console.log(data.room.recently_dt, message.time);
+    const messages = data.messages.entries();
+    for (let [index, message] of messages) {
         if (data.room.recently_dt < message.time && temp) {
             temp = false;
             tempHeight = messageBox.scrollHeight;
-            showPrevLine();
+            if (data.messages.length > 10) {
+                showPrevLine();
+            }
         }
-        messageBox.appendChild(showMessage(message));
+        messageBox.appendChild(showMessage(message, messageBox));
     }
 
     const $result = document.querySelector("#messageBox");
     $end = $result.firstElementChild;
-    console.log($end);
     if (data.messages.length >= 20) {
         observer.observe($end);
     }
@@ -186,13 +193,17 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 });
 
-function showMessage(message) {
+function showMessage(message, element) {
     var messageElement = document.createElement("li");
     message.time = chageDate(message.time);
     if (message.sender_id == member_id) {
-        messageElement.innerHTML = createSendMessage(message);
+        messageElement.innerHTML = createSendMessage(message, element, "send");
     } else {
-        messageElement.innerHTML = createReceiveMessage(message);
+        messageElement.innerHTML = createReceiveMessage(
+            message,
+            element,
+            "recieve"
+        );
     }
     return messageElement;
 }
@@ -203,7 +214,7 @@ function showPrevLine() {
         class="d-flex flex-row justify-content-center"
     >
         <p
-        class="small p-1 me-3 mb-2 text-white rounded-3 bg-warning"
+        class="small p-1 me-3 mb-2 mt-2 text-white rounded-3 bg-warning"
         >
             여기까지 읽었습니다.
         </p>
@@ -211,58 +222,237 @@ function showPrevLine() {
     `;
 }
 
-function createSendMessage(message) {
-    const html = `
-    <div
-        class="d-flex flex-row justify-content-end"
-    >
-        <div>
-            <p
-                class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
+function createSendMessage(message, element, type) {
+    let show = true;
+    let html = "";
+    const prevMessage = getPrevMessageInfo(element, type);
+    if (
+        prevMessage != null &&
+        prevMessage?.name == message.sender.name &&
+        prevMessage?.time == message.time
+    ) {
+        prevMessage.pTag[1].classList.add("d-none");
+        show = false;
+    }
+
+    if (show) {
+        html = `
+            <div
+            class="d-flex flex-row justify-content-end mt-2 "
             >
-                ${message.message}
-            </p>
-            <p
-                class="small me-3 mb-1 rounded-3 text-muted"
+                <div class="d-flex flex-column align-items-end ">
+                        <p
+                        class="small text-muted me-3 mb-0 d-none"
+                        >${message.sender.name}</p>
+                    <div class="d-flex align-items-end">
+                        <p
+                            class="small me-1 mb-0 rounded-3 text-muted"
+                        >${message.time}</p>
+                        ${
+                            message.type == "message"
+                                ? `<p
+                                        class="small p-2 me-2 mb-0 text-white rounded-4 bg-primary message"
+                                        style="border-top-right-radius:0px!important;"
+                                    >${message.message.replace(
+                                        /\n/g,
+                                        "<br>"
+                                    )}</p>`
+                                : `<img
+                                        src="${message.message}"
+                                        class="me-2 mb-0 rounded-4 message"
+                                    /><p></p>`
+                        }
+                        
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        html = `
+            <div
+            class="d-flex flex-row justify-content-end mt-1"
             >
-                ${message.time}
-            </p>
-        </div>
-        <img
-            src="https://bootdey.com/img/Content/avatar/avatar5.png"
-            alt="avatar 1"
-            style="width: 45px; height: 100%"
-        />
-    </div>
-    `;
+                <div class="d-flex flex-column align-items-end message">
+                        <p
+                        class="small text-muted me-3 mb-0 d-none"
+                        >${message.sender.name}</p>
+                    <div class="d-flex align-items-end">
+                        <p
+                            class="small me-1 mb-0 rounded-3 text-muted"
+                        >${message.time}</p>
+                        ${
+                            message.type == "message"
+                                ? `<p
+                                        class="small p-2 me-2 mb-0 text-white rounded-4 bg-primary message"
+                                    >${message.message.replace(
+                                        /\n/g,
+                                        "<br>"
+                                    )}</p>`
+                                : `<img
+                                        src="${message.message}"
+                                        class="me-2 mb-0 rounded-4 message"
+                                    /><p></p>`
+                        }
+                    </div>
+                </div>
+            </div>
+            `;
+        return html;
+    }
     return html;
 }
 
-function createReceiveMessage(message) {
-    const html = `
+function createReceiveMessage(message, element, type) {
+    let show = true;
+    let html = "";
+    const prevMessage = getPrevMessageInfo(element, type);
+    if (
+        prevMessage != null &&
+        prevMessage?.name == message.sender.name &&
+        prevMessage?.time == message.time
+    ) {
+        prevMessage.pTag[2].classList.add("d-none");
+        show = false;
+        html = `
+        <div
+        class="d-flex flex-row justify-content-start mt-1"
+        >
+            <span style='width:45px;'></span>
+            <div class="d-flex flex-column align-items-start">
+                        <p
+                        class="small text-muted ms-3 mb-0 d-none"
+                        >${message.sender.name}</p>
+                <div class="d-flex align-items-end">
+                ${
+                    message.type == "message"
+                        ? `<p
+                                class="small p-2 ms-2 mb-0  rounded-4  message"
+                                style="background-color: #f5f6f7;"
+                            >${message.message.replace(/\n/g, "<br>")}</p>`
+                        : `<img
+                                src="${message.message}"
+                                class="me-2 mb-0 rounded-4 message"
+                            /><p></p>`
+                }
+                <p
+                    class="small ms-1 rounded-3 text-muted mb-0"
+                >${message.time}</p>
+                </div>
+            </div>
+        </div>
+        `;
+        return html;
+    }
+    html = `
     <div
-        class="d-flex flex-row justify-content-start"
+        class="d-flex flex-row justify-content-start mt-2"
     >
         <img
-            src="https://bootdey.com/img/Content/avatar/avatar5.png"
+            src="${message.sender.avatar.name}"
             alt="avatar 1"
             style="width: 45px; height: 100%"
         />
-        <div>
+        <div class="d-flex flex-column align-items-start">
             <p
-                class="small p-2 ms-3 mb-1 rounded-3"
-                style="
-                    background-color: #f5f6f7;
-                "
-            >
-                ${message.message}
-            </p>
-            <p
-                class="small ms-3 mb-1 rounded-3 text-muted float-end"
-            >
-            ${message.time}
-            </p>
+            class="small text-muted ms-3 mb-0"
+            >${message.sender.name}</p>
+            <div class="d-flex align-items-end">
+                ${
+                    message.type == "message"
+                        ? `<p
+                                class="small p-2 ms-2 mb-0  rounded-4  message"
+                                style="border-top-left-radius:0px!important;background-color: #f5f6f7;"
+                            >${message.message.replace(/\n/g, "<br>")}</p>`
+                        : `<img
+                                src="${message.message}"
+                                class="me-2 mb-0 rounded-4 message"
+                            /><p></p>`
+                }
+                <p
+                    class="small ms-1 rounded-3 text-muted mb-0"
+                >${message.time}</p>
+            </div>
         </div>
     </div>`;
     return html;
 }
+
+function getPrevMessageInfo(element, type) {
+    const pTag =
+        element?.lastChild?.firstElementChild?.getElementsByTagName("p");
+    if (!pTag || pTag?.length == 0) return null;
+    let name, message, time;
+    if (type == "recieve") {
+        name = pTag[0].innerText;
+        // message = pTag[1].innerText;
+        time = pTag[2].innerText;
+    } else {
+        name = pTag[0].innerText;
+        // message = pTag[2].innerText;
+        time = pTag[1].innerText;
+    }
+
+    return { name, message, time, pTag };
+}
+
+const emojiButton = document.querySelector("#emojiButton");
+const picker = new EmojiButton({
+    i18n: {
+        search: "Search emojis...",
+        categories: {
+            recents: "Recent Emojis",
+            smileys: "Smileys & Emotion",
+            people: "People & Body",
+            animals: "Animals & Nature",
+            food: "Food & Drink",
+            activities: "Activities",
+            travel: "Travel & Places",
+            objects: "Objects",
+            symbols: "Symbols",
+            flags: "Flags",
+        },
+        notFound: "No emojis found",
+    },
+});
+
+picker.on("emoji", (emoji) => {
+    messageInput.value += emoji;
+});
+
+emojiButton.addEventListener("click", () => {
+    picker.togglePicker(document.getElementById("emoji-wrapper"));
+});
+
+const attachButton = document.getElementById("attachButton");
+attachButton.addEventListener("click", () => {
+    const attachInput = document.getElementById("attachInput");
+    attachInput.click();
+    attachInput.addEventListener("change", async (e) => {
+        const form = document.getElementById("frm");
+        const formData = new FormData(form);
+        const response = await fetch("/v1/files", {
+            method: "POST",
+            body: formData,
+        });
+        const data = await response.json();
+        for (let url of data) {
+            sendMessage(url, "image");
+        }
+    });
+});
+
+const exitRoomButton = document.getElementById("exitRoomButton");
+exitRoomButton.addEventListener("click", async () => {
+    // const formData = new FormData();
+    // formData.append("room_name", room_name);
+    // const response = await fetch("/chat/exitRoom", {
+    //     method: "POST",
+    //     body: formData,
+    // });
+    stompClient.send(
+        "/app/exitRoom",
+        {},
+        JSON.stringify({ room_name: room_name })
+    );
+    window.close();
+});

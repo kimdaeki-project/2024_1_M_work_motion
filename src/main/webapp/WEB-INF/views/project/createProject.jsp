@@ -6,11 +6,7 @@ prefix="c" %>
     href="/resources/css/project/create.css"
     type="text/css"
 />
-<div
-    class="container p-0 pt-3"
-    id="container"
-    data-bs-projectId="${project.id}"
->
+<div class="container p-4 pt-3" data-bs-projectId="${project.id}">
     <h1 class="h3 mb-3">프로젝트 생성</h1>
     <div class="row">
         <div class="col-md-5 col-xl-4">
@@ -79,8 +75,8 @@ prefix="c" %>
                                     name="crew"
                                     id="crewInput"
                                 />
-                                <div class="row">
-                                    <div class="col-md-8">
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <input
                                                 type="hidden"
@@ -114,27 +110,6 @@ ${project.info}</textarea
                                             >
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="text-center">
-                                            <img
-                                                alt="Andrew Jones"
-                                                src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                                                class="rounded-circle img-responsive mt-2"
-                                                width="128"
-                                                height="128"
-                                            />
-                                            <div class="mt-2">
-                                                <span class="btn btn-primary"
-                                                    ><i class="fa fa-upload"></i
-                                                ></span>
-                                            </div>
-                                            <small
-                                                >For best results, use an image
-                                                at least 128px by 128px in .jpg
-                                                format</small
-                                            >
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <button
@@ -149,12 +124,12 @@ ${project.info}</textarea
                     </div>
                 </div>
                 <div
-                    class="tab-pane fade"
+                    class="tab-pane fade d-flex"
                     id="pills-member"
                     role="tabpanel"
                     aria-labelledby="pills-member-tab"
                 >
-                    <div class="card">
+                    <div class="card w-50">
                         <div class="card-body">
                             <h5 class="card-title mb-3">멤버</h5>
                             <form
@@ -164,18 +139,30 @@ ${project.info}</textarea
                                 enctype="application/x-www-form-urlencoded"
                             >
                                 <div id="memberList"></div>
-
-                                <button
-                                    type="button"
-                                    class="btn btn-primary"
-                                    id="addButton"
-                                >
-                                    추가하기
-                                </button>
                             </form>
                         </div>
                     </div>
-                    <div class="card">
+                    <div
+                        class="div p-2 d-flex flex-column justify-content-center"
+                    >
+                        <button
+                            type="button"
+                            class="btn btn-primary mb-4"
+                            style="width: max-content"
+                            id="addButton"
+                        >
+                            추가
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            style="width: max-content"
+                            id="deleteButton"
+                        >
+                            삭제
+                        </button>
+                    </div>
+                    <div class="card w-50">
                         <div class="card-body">
                             <h5 class="card-title mb-3">크루</h5>
                             <form
@@ -185,14 +172,6 @@ ${project.info}</textarea
                                 enctype="application/x-www-form-urlencoded"
                             >
                                 <div id="crewList"></div>
-
-                                <button
-                                    type="button"
-                                    class="btn btn-primary"
-                                    id="deleteButton"
-                                >
-                                    삭제하기
-                                </button>
                             </form>
                         </div>
                     </div>

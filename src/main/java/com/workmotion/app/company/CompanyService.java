@@ -20,7 +20,6 @@ public class CompanyService {
 		Long totalCount = companyDAO.companyTotalCount(pager);
 		pager.makePage(totalCount);
 		UUID uuid = UUID.randomUUID();
-		System.out.println(uuid);
 		
 		return companyDAO.getCompanyList(pager);
 	}

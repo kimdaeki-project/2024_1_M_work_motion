@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c" %>
+prefix="c"%>
 
 <!DOCTYPE html>
 <html lang="kr">
@@ -8,6 +8,7 @@ prefix="c" %>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Work Motion</title>
+        <link rel="icon" href="/resources/images/favicon.ico" />
         <link
             rel="stylesheet"
             href="/resources/css/project/createTask.css"
@@ -34,6 +35,9 @@ prefix="c" %>
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
+        <!-- Socket -->
+        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
         <!-- Jquery -->
         <script
@@ -66,6 +70,7 @@ prefix="c" %>
                 right: 5%;
                 width: 40vh;
             }
+
             #messenger {
                 width: 40vh;
                 height: 60vh;
@@ -75,11 +80,13 @@ prefix="c" %>
                 border-top-right-radius: 1vh;
                 z-index: 2;
             }
+
             #messenger .sidebar {
                 width: 5vh;
                 border-top-left-radius: 1vh;
                 background-color: #e6e6e6;
             }
+
             #messenger .sidebar button {
                 padding: 0px;
                 width: 1.4vh;
@@ -88,14 +95,18 @@ prefix="c" %>
                 font-size: 1.4vh;
                 line-height: 1vh;
                 font-weight: 100;
-                color: black;
+            }
+            #messenger .sidebar button.active {
+                color: black !important;
             }
             #messenger .nav-item .fa-user {
                 font-size: 2.4vh;
             }
+
             #messenger .nav-item .fa-comment {
                 font-size: 2.2vh;
             }
+
             #messengerBody {
                 background-color: white;
             }
@@ -103,6 +114,7 @@ prefix="c" %>
             .fa-search {
                 color: lightgray;
             }
+
             #chat3 .form-control {
                 border-color: transparent;
             }
@@ -119,23 +131,33 @@ prefix="c" %>
                 margin-left: 2.9rem;
                 margin-top: -0.75rem;
             }
+
             a {
                 text-decoration: none;
             }
+
             .memberList.selected {
                 background-color: #f2f2f2;
             }
+
             .memberList:hover {
                 background-color: #f2f2f2;
             }
+
             .accordionCustom {
                 height: 2vh;
             }
+
             .accordion-collapse.collapse.show + .accordion-button .arrow-icon {
                 transform: rotate(180deg);
             }
+
             #memberContainer {
                 height: 54vh;
+            }
+
+            .popover-body {
+                padding: 0;
             }
         </style>
     </head>
@@ -143,6 +165,7 @@ prefix="c" %>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="/">WorkMotion</a>
+
             <!-- Sidebar Toggle-->
             <button
                 class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
@@ -152,19 +175,81 @@ prefix="c" %>
                 <i class="fas fa-bars"></i>
             </button>
             <!-- Navbar Search-->
+
             <form
                 class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
             >
                 <div class="input-group">
-                	<div>
-					<a class="btn btn-primary" href="/tna/in">출 근</a>
-                	</div>
-                	&nbsp
-                	<div>
-					<a class="btn btn-primary" href="/tna/out">퇴 근</a>
-                	</div>
+                    <div class="me-2">
+                        <c:if test="${member.role_id == 40}">
+                            <c:if test="${!empty check}">
+                                <a href="/product/list"
+                                    ><button
+                                        type="button"
+                                        class="btn btn-primary"
+                                    >
+                                        현재 구독서비스
+                                        이용중입니다(${toss}주남음)
+                                    </button></a
+                                >
+                            </c:if>
+                            <c:if test="${empty check}">
+                                <a href="/product/list"
+                                    ><button
+                                        type="button"
+                                        class="btn btn-danger"
+                                    >
+                                        구독서비스를 이용해주세요
+                                    </button></a
+                                >
+                            </c:if>
+                        </c:if>
+                    </div>
+                    <div class="me-2">
+                        <a class="btn btn-primary" href="/tna/in">출 근</a>
+                    </div>
+                    <div class="me-2">
+                        <a class="btn btn-primary" href="/tna/out">퇴 근</a>
+                    </div>
                 </div>
             </form>
+            <div class="d-none d-md-inline-block me-0 me-md-3 my-2 my-md-0">
+                <a
+                    class="order-1 order-lg-0 me-lg-0"
+                    data-bs-container="body"
+                    data-bs-toggle="popover"
+                    data-bs-placement="bottom"
+                    data-bs-content="Bottom popover"
+                    data-htmlcontent="#myPopoverContent"
+                    href="javascript: void(0)"
+                >
+                    <i class="fa-solid fa-bell"></i>
+                </a>
+                <div id="myPopoverContent" hidden>
+                    <div class="d-flex justify-content-between m-2">
+                        <div class="title">알림</div>
+                        <div class="small text-muted">
+                            <a href="#" class="link-secondary">모두 읽음</a>
+                        </div>
+                    </div>
+                    <div class="">
+                        <hr class="m-0" />
+                    </div>
+                    <ul class="list-group p-1">
+                        <li class="list-group-item">
+                            <i class="fa-solid fa-bell"></i>
+                            <div>경모님의 메시지</div>
+                            <div class="small text-muted">뭐하고있냐</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div>워크모션 프로젝트에 참여되었습니다.</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div>프로젝트 마감 일정이 1일 남았습니다.</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
@@ -204,13 +289,13 @@ prefix="c" %>
                 >
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <!-- <div class="sb-sidenav-menu-heading">Core</div>
                             <a class="nav-link" href="/">
                                 <div class="sb-nav-link-icon">
                                     <i class="fas fa-tachometer-alt"></i>
                                 </div>
                                 Dashboard
-                            </a>
+                            </a> -->
                             <div class="sb-sidenav-menu-heading">메뉴</div>
                             <a
                                 class="nav-link collapsed"
@@ -227,7 +312,6 @@ prefix="c" %>
                                     <i class="fas fa-angle-down"></i>
                                 </div>
                             </a>
-
                             <a
                                 class="nav-link collapsed"
                                 href="#"
@@ -237,7 +321,7 @@ prefix="c" %>
                                 aria-controls="collapsePages"
                             >
                                 <div class="sb-nav-link-icon">
-                                    <i class="fas fa-book-open"></i>
+                                    <i class="fas fa-pen"></i>
                                 </div>
                                 전자결제
                                 <div class="sb-sidenav-collapse-arrow">
@@ -318,58 +402,63 @@ prefix="c" %>
                                             >
                                             <a
                                                 class="nav-link"
-                                                href="/receiver/list"
+                                                href="/referrer/list"
                                                 >참조함</a
                                             >
                                         </nav>
                                     </div>
                                 </nav>
                             </div>
-                            <a
-                                class="nav-link collapsed"
-                                href="/hr/list"
-                                data-bs-target="#collapseHR"
-                                aria-expanded="false"
-                                aria-controls="collapseHR"
+                            <c:if
+                                test="${member.role_id > 29 and member.role_id < 51}"
                             >
-                                <div class="sb-nav-link-icon">
-                                    <i class="fas fa-book-open"></i>
-                                </div>
-                                인사 관리
-                                <div class="sb-sidenav-collapse-arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </div>
-                            </a>
-                            <a
-                                class="nav-link collapsed"
-                                href="/department/departmentList"
-                                data-bs-target="#collapseHR"
-                                aria-expanded="false"
-                                aria-controls="collapseHR"
-                            >
-                                <div class="sb-nav-link-icon">
-                                    <i class="fas fa-book-open"></i>
-                                </div>
-                                부서 관리
-                                <div class="sb-sidenav-collapse-arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </div>
-                            </a>
-                            <a
-                                class="nav-link collapsed"
-                                href="/company/list"
-                                data-bs-target="#collapseHR"
-                                aria-expanded="false"
-                                aria-controls="collapseHR"
-                            >
-                                <div class="sb-nav-link-icon">
-                                    <i class="fas fa-book-open"></i>
-                                </div>
-                                회사 관리
-                                <div class="sb-sidenav-collapse-arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </div>
-                            </a>
+                                <a
+                                    class="nav-link collapsed"
+                                    href="/hr/list"
+                                    data-bs-target="#collapseHR"
+                                    aria-expanded="false"
+                                    aria-controls="collapseHR"
+                                >
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    인사 관리
+                                    <div class="sb-sidenav-collapse-arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </a>
+                                <a
+                                    class="nav-link collapsed"
+                                    href="/tna/list"
+                                    data-bs-target="#collapseHR"
+                                    aria-expanded="false"
+                                    aria-controls="collapseHR"
+                                >
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-calendar"></i>
+                                    </div>
+                                    근태 관리
+                                    <div class="sb-sidenav-collapse-arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </a>
+                                <a
+                                    class="nav-link collapsed"
+                                    href="/department/departmentList"
+                                    data-bs-target="#collapseHR"
+                                    aria-expanded="false"
+                                    aria-controls="collapseHR"
+                                >
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-book-open"></i>
+                                    </div>
+                                    부서 관리
+                                    <div class="sb-sidenav-collapse-arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </a>
+                            </c:if>
+
                             <a
                                 class="nav-link collapsed"
                                 href="/board/list?id=1"
@@ -415,12 +504,22 @@ prefix="c" %>
                                     <i class="fas fa-angle-down"></i>
                                 </div>
                             </a>
-                            <a class="nav-link collapsed" href="/product/list" data-bs-target="#collapseHR" aria-expanded="false" aria-controls="collapseHR">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            <a
+                                class="nav-link collapsed"
+                                href="/product/list"
+                                data-bs-target="#collapseHR"
+                                aria-expanded="false"
+                                aria-controls="collapseHR"
+                            >
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
                                 구독서비스
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
                             </a>
-                            <div class="sb-sidenav-menu-heading">Addons</div>
+                            <!-- <div class="sb-sidenav-menu-heading">Addons</div>
                             <a class="nav-link" href="charts.html">
                                 <div class="sb-nav-link-icon">
                                     <i class="fas fa-chart-area"></i>
@@ -432,7 +531,7 @@ prefix="c" %>
                                     <i class="fas fa-table"></i>
                                 </div>
                                 Tables
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                 </nav>
@@ -440,18 +539,21 @@ prefix="c" %>
             <div id="layoutSidenav_content">
                 <main class="h-100">
                     <c:import url="/WEB-INF/views/${page}.jsp" />
+                    <div
+                        class="toast-container position-absolute top-0 end-0 p-3"
+                    ></div>
                     <button
                         type="button"
                         class="btn btn-primary position-fixed bottom-0"
                         id="messengerButton"
                     >
                         메신저
-                        <span
+                        <!-- <span
                             class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"
                             ><span class="visually-hidden"
                                 >unread messages</span
                             ></span
-                        >
+                        > -->
                     </button>
                     <div
                         class="position-fixed bottom-0 animate__animated d-flex d-none"
@@ -514,7 +616,12 @@ prefix="c" %>
                             <div class="p-3 d-flex justify-content-between">
                                 <div class="fw-bold">메신저</div>
                                 <div>
-                                    <a href="#">
+                                    <input
+                                        class="d-none"
+                                        type="text"
+                                        id="chatSearch"
+                                    />
+                                    <a href="#" id="chatSearchButton">
                                         <i class="fas fa-search fw-lighter"></i>
                                     </a>
                                 </div>

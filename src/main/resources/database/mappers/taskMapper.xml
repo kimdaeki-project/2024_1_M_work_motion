@@ -35,7 +35,20 @@
         (
         SELECT ROWNUM rn, t.* FROM
         (
-        <include refid="getTask"></include>
+        SELECT
+        tsk.*, mv.*,
+        mv2.member_name as writer_name,
+        mv2.member_role_id AS writer_role_id,
+        mv2.member_company_id AS writer_company_id,
+        mv2.member_email AS writer_email,
+        mv2.member_department_id AS writer_department_id,
+        mv2.member_position_id AS writer_position_id,
+        mv2.member_phone AS writer_phone,
+        mv2.avatar_name AS writer_avatar_name
+        FROM TASK tsk
+        LEFT JOIN TASK_MEMBER tm ON tsk.ID = tm.TASK_ID
+        LEFT JOIN MEMBER_VIEW mv ON mv.MEMBER_ID = tm.MEMBER_ID
+        LEFT JOIN MEMBER_VIEW mv2 ON tsk.WRITER_ID = mv2.MEMBER_ID
         ORDER BY CREATE_DT DESC
         ) t
         WHERE PROJECT_ID = #{project.id}
@@ -52,8 +65,9 @@
             <result column="id" property="id"/>
             <association property="avatar" javaType="Avatar" columnPrefix="avatar_" autoMapping="true"/>
         </association>
-        <collection property="task_member" javaType="List" ofType="MemberDTO" columnPrefix="member_" autoMapping="true">
-            <id column="id" property="id"/>
+        <collection property="task_member" javaType="List" ofType="MemberDTO" autoMapping="true"
+                    resultMap="com.workmotion.app.project.dao.CrewDAO.getMember">
+
         </collection>
     </resultMap>
 
