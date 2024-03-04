@@ -410,7 +410,7 @@ prefix="c"%>
                                 </nav>
                             </div>
                             <c:if
-                                test="${member.role_id > 29 and member.role_id < 41}"
+                                test="${member.role_id > 29 and member.role_id < 51}"
                             >
                                 <a
                                     class="nav-link collapsed"
@@ -548,12 +548,12 @@ prefix="c"%>
                         id="messengerButton"
                     >
                         메신저
-                        <span
+                        <!-- <span
                             class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"
                             ><span class="visually-hidden"
                                 >unread messages</span
                             ></span
-                        >
+                        > -->
                     </button>
                     <div
                         class="position-fixed bottom-0 animate__animated d-flex d-none"
