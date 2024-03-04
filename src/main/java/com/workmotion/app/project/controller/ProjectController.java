@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/projects/*")
@@ -26,14 +27,11 @@ public class ProjectController {
     @Autowired
     private CrewService crewService;
     private final CustomResponse customResponse = new CustomResponse();
-    private final MemberDTO memberDTO = new MemberDTO();
 
-    {
-        memberDTO.setId(15L);
-    }
 
     @GetMapping("create")
-    public String createProject(Model model) throws Exception {
+    public String createProject(Model model, HttpSession session) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
         List<MemberDTO> memberDTOList = crewService.getAllMemberList(memberDTO);
         model.addAttribute("members", memberDTOList);
         model.addAttribute("member", memberDTO);
@@ -42,7 +40,8 @@ public class ProjectController {
     }
 
     @PostMapping("create")
-    public String createProject(ProjectDTO projectDTO, Model model) throws Exception {
+    public String createProject(ProjectDTO projectDTO, Model model, HttpSession session) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
         projectDTO.setOwner_id(memberDTO.getId());
 
         int result = projectService.createProject(projectDTO);
@@ -59,7 +58,9 @@ public class ProjectController {
     }
 
     @GetMapping("list")
-    public String getProjectList(Model model) throws Exception {
+    public String getProjectList(Model model, HttpSession session) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+
         model.addAttribute("myProjects", projectService.getMyProjectList(memberDTO));
         model.addAttribute("includeProjects", projectService.getProjectList(memberDTO));
         model.addAttribute("page", "project/index");
@@ -68,7 +69,8 @@ public class ProjectController {
 
     @GetMapping("detail")
     public String getProjectDetail(Model model, ProjectDTO projectDTO, HttpSession session) throws Exception {
-        model.addAttribute("member", (MemberDTO) session.getAttribute("member"));
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+        model.addAttribute("member", memberDTO);
         model.addAttribute("project", projectService.getProjectDetail(projectDTO));
         //model.addAttribute("tasks", taskService.getTaskList(projectDTO));
         model.addAttribute("crews", crewService.getCrewList(projectDTO));
@@ -78,15 +80,34 @@ public class ProjectController {
     }
 
     @GetMapping("setting")
-    public String settingProject(Model model, ProjectDTO projectDTO) throws Exception {
-        model.addAttribute("project", projectService.getProjectDetail(projectDTO));
+    public String settingProject(Model model, ProjectDTO projectDTO, HttpSession session) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+        projectDTO = projectService.getProjectDetail(projectDTO);
+        model.addAttribute("project", projectDTO);
+        System.out.println(projectDTO.getOwner_id() + ":" + memberDTO.getId());
+        if (!Objects.equals(projectDTO.getOwner_id(), memberDTO.getId())) {
+            customResponse.setRedirectUrl("/projects/detail?id=" + projectDTO.getId());
+            customResponse.setMessage("권한 없음");
+            model.addAttribute("response", customResponse);
+            model.addAttribute("page", "project/result");
+            return "index";
+        }
         model.addAttribute("crews", crewService.getCrewList(projectDTO));
         model.addAttribute("page", "project/editProject");
         return "index";
     }
 
     @PostMapping("update")
-    public String updateProject(Model model, ProjectDTO projectDTO) throws Exception {
+    public String updateProject(Model model, ProjectDTO projectDTO, HttpSession session) throws Exception {
+        ProjectDTO projectDetail = projectService.getProjectDetail(projectDTO);
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+        if (!Objects.equals(projectDetail.getOwner_id(), memberDTO.getId())) {
+            customResponse.setRedirectUrl("/projects/detail?id=" + projectDTO.getId());
+            customResponse.setMessage("권한 없음");
+            model.addAttribute("response", customResponse);
+            model.addAttribute("page", "project/result");
+            return "index";
+        }
         int result = projectService.updateProject(projectDTO);
         customResponse.setResult(result);
         customResponse.setRedirectUrl("/projects/detail?id=" + projectDTO.getId());
@@ -97,7 +118,16 @@ public class ProjectController {
     }
 
     @PostMapping("delete")
-    public String deleteProject(Model model, ProjectDTO projectDTO) throws Exception {
+    public String deleteProject(Model model, ProjectDTO projectDTO, HttpSession session) throws Exception {
+        projectDTO = projectService.getProjectDetail(projectDTO);
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+        if (!Objects.equals(projectDTO.getOwner_id(), memberDTO.getId())) {
+            customResponse.setRedirectUrl("/projects/detail?id=" + projectDTO.getId());
+            customResponse.setMessage("권한 없음");
+            model.addAttribute("response", customResponse);
+            model.addAttribute("page", "project/result");
+            return "index";
+        }
         int result = projectService.deleteProject(projectDTO);
         customResponse.setResult(result);
         customResponse.setRedirectUrl("/projects/list");

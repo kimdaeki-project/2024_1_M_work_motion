@@ -1,8 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c" %>
-
-<div class="container mt-3">
+<link
+    rel="stylesheet"
+    href="/resources/css/project/createTask.css"
+    type="text/css"
+/>
+<div class="container m-3 p-4 mt-3">
+    <div class="text-center mb-2">
+        <h1>업무 작성</h1>
+    </div>
     <form
         action="/tasks/create"
         method="post"

@@ -6,7 +6,6 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
     #container {
         display: flex;
         width: 100%;
-        justify-content: center;
         flex-direction: column;
         padding: 20px;
     }
@@ -43,8 +42,8 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
     }
 </style>
 
-<div id="container">
-    <div class="header mb-3">
+<div id="container" class="container p-3 mt-4">
+    <div class="header mb-4">
         <h1>프로젝트</h1>
         <a type="button" class="btn btn-primary" href="/projects/create"
             >프로젝트 추가</a
@@ -88,7 +87,7 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
             </a>
         </c:forEach>
     </div>
-    <h2>참여중인 프로젝트</h2>
+    <h2 class="mt-3">참여중인 프로젝트</h2>
     <div id="comProjectList">
         <c:forEach items="${includeProjects}" var="project">
             <a href="/projects/detail?id=${project.id}" class="projectCard">

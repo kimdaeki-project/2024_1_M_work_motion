@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <div class="container">
-        <div class="row justify-content-center">
+    <div class="container mt-4 p-4">
+        <div class="row">
             <div class="col">
-                <div class="card shadow-lg border-0 rounded-lg ">
+                <div class="card shadow-lg border-0 rounded-lg">
                     <div class="card-header"><h3 class="text-center font-weight-light my-4">My page</h3></div>
                     
                     <c:if test="${not empty dto.avatar}">
-                        <div>
-                            <img  src="${dto.avatar.name}">
+                        <div class="m-auto mt-3">
+                            <img  src="${dto.avatar.name}" class="img-thumbnail" width="200px">
                         </div>
                         
                     </c:if>

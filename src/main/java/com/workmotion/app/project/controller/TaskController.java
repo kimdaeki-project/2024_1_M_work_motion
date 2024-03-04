@@ -1,5 +1,6 @@
 package com.workmotion.app.project.controller;
 
+import com.workmotion.app.member.MemberDTO;
 import com.workmotion.app.project.model.CustomResponse;
 import com.workmotion.app.project.model.ProjectDTO;
 import com.workmotion.app.project.model.TaskDTO;
@@ -12,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/tasks/*")
@@ -30,8 +33,9 @@ public class TaskController {
     }
 
     @PostMapping("create")
-    public String create(Model model, TaskDTO taskDTO, Integer addScheduleInput) throws Exception {
-        taskDTO.setWriter_id(15L);
+    public String create(Model model, TaskDTO taskDTO, Integer addScheduleInput, HttpSession session) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+        taskDTO.setWriter_id(memberDTO.getId());
         int result = taskService.createTask(taskDTO);
         result = taskService.addCharge(taskDTO, taskDTO.getCharge());
         if (taskDTO.getHas_schedule() == 1) {

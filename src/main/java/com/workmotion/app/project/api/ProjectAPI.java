@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -18,11 +19,7 @@ public class ProjectAPI {
     private ProjectService projectService;
     @Autowired
     private CrewService crewService;
-    private final MemberDTO memberDTO = new MemberDTO();
 
-    {
-        memberDTO.setId(15L);
-    }
 
     @PostMapping("/projects")
     public ResponseEntity<?> createProject(ProjectDTO projectDTO) throws Exception {
@@ -31,12 +28,14 @@ public class ProjectAPI {
     }
 
     @GetMapping("/projects")
-    public ResponseEntity<List<ProjectDTO>> getProjectList() throws Exception {
+    public ResponseEntity<List<ProjectDTO>> getProjectList(HttpSession session) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
         return new ResponseEntity<>(projectService.getProjectList(memberDTO), HttpStatus.OK);
     }
 
     @GetMapping("/myprojects")
-    public ResponseEntity<List<ProjectDTO>> getMyProjectList() throws Exception {
+    public ResponseEntity<List<ProjectDTO>> getMyProjectList(HttpSession session) throws Exception {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
         return new ResponseEntity<>(projectService.getMyProjectList(memberDTO), HttpStatus.OK);
     }
 
