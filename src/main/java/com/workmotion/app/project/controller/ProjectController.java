@@ -120,7 +120,7 @@ public class ProjectController {
     @PostMapping("delete")
     public String deleteProject(Model model, ProjectDTO projectDTO, HttpSession session) throws Exception {
         projectDTO = projectService.getProjectDetail(projectDTO);
-        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
         if (!Objects.equals(projectDTO.getOwner_id(), memberDTO.getId())) {
             customResponse.setRedirectUrl("/projects/detail?id=" + projectDTO.getId());
             customResponse.setMessage("권한 없음");
