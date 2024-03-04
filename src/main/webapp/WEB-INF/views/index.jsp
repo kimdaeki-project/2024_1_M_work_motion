@@ -429,6 +429,21 @@ prefix="c"%>
                                 </a>
                                 <a
                                     class="nav-link collapsed"
+                                    href="/tna/list"
+                                    data-bs-target="#collapseHR"
+                                    aria-expanded="false"
+                                    aria-controls="collapseHR"
+                                >
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-calendar"></i>
+                                    </div>
+                                    근태 관리
+                                    <div class="sb-sidenav-collapse-arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </a>
+                                <a
+                                    class="nav-link collapsed"
                                     href="/department/departmentList"
                                     data-bs-target="#collapseHR"
                                     aria-expanded="false"
