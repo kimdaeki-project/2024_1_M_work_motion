@@ -6,7 +6,10 @@ prefix="c" %>
     href="/resources/css/project/createTask.css"
     type="text/css"
 />
-<div class="container mt-3">
+<div class="container m-3 p-4 mt-3">
+    <div class="text-center mb-2">
+        <h1>업무 작성</h1>
+    </div>
     <form
         action="/tasks/update"
         method="POST"
